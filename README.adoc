@@ -1,0 +1,41 @@
+= Glossarist Concept/Term Models
+
+== General
+
+Glossarist `Concept` and `Term` models are used in glossarist-supported
+sites for RDF and JSON-LD generation.
+
+
+== Origin
+
+Term modelled according to ISO/IEC Directives 2, 16.6:
+
+* Multiple preferred terms
+* Single definition
+* Multiple notes
+* Multiple admitted terms
+* Multiple deprecated terms
+* Multiple examples
+* Single domain
+* Multiple sources
+
+Paragraph/TextElement may contain a formula.
+
+Definition: Definition modelled according to ISO/IEC Directives 2, 17:
+
+* Can be a symbol or abbreviation
+* A DefinitionCollection is represented as a single clause
+
+== UML Models
+
+=== Concept
+
+image::images/concept.png[]
+
+=== Term
+
+image::images/term.png[]
+
+=== TermCollection
+
+image::images/term-collection.png[]

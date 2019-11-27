@@ -1,0 +1,126 @@
+@startuml
+
+'******* CONFIGURATION ************************************************
+!include style.uml.inc
+
+'******* CLASS DEFINITION *********************************************
+class Term {
+  +id: String[0..1]
+  +labels: TermLabel[1..*]
+  +synonym: <<BasicDocument>> LocalizedString[0..*]
+  +related: RelatedTerm[0..*]
+  +domain: <<BasicDocument>> LocalizedString[0..1]
+  +grammar: <<BasicDocument>> LocalizedString[0..*]
+  +definition: <<BasicDocument>> Definition[1..*]
+  +note: <<BasicDocument>> ParagraphBlock[0..*]
+  +example: <<BasicDocument>> ParagraphBlock[0..*]
+  +source: TermSource[0..*]
+  +country: Iso3166Code[0..*]
+  +abbreviations: String[0..*]
+  +status: TermStatus[1]
+  +dates: TermDate[0..*]
+}
+
+class TermLabel {
+  +status: TermLabelClassification
+  +label: Label
+}
+
+class Label {
+  +content: <<BasicDocument>> LocalizedString[1..*]
+}
+
+enum TermLabelClassification {
+  preferred
+  admitted
+  deprecated
+}
+
+enum TermStatus{
+  draft
+  notValid
+  valid
+  superseded
+  retired
+}
+
+class TermDate {
+  +status: DateStatus
+  +date: Iso8601Date
+}
+
+enum TermDateType {
+  accepted
+  amended
+  retired
+}
+
+'Review Indicator	<empty field> or 'Under Review in Source Document'
+'Date Accepted	yyyy-mm-dd
+'Date Amended	yyyy-mm-dd
+'Review Date	yyyy-mm-dd
+'Review Status	pending', 'tentative', 'final'
+'Review Type	supersession', 'retirement'
+'Review Decision	withdrawn', 'accepted', 'notAccepted'
+'Review Decision Date	yyyy-mm-dd
+'Review Decision Event	String
+'Review Decision Notes	String
+'Glossary Release	"release1' = 1, 'release1_retired' = -1, 'release2' = 2, release2_retired' = -2 etc"
+
+
+class RelatedTerm {
+  +type: RelatedTermType
+  +content: <<BasicDocument>> LocalizedString
+}
+
+enum RelatedTermType <<enumeration>>{
+  deprecates
+  supersedes
+  narrower
+  broader
+  equivalent
+  compare
+  contrast
+  see
+}
+
+class TermSource <<Term>>{
+  +status: TermSourceStatus
+  +type: TermSourceType
+  +origin: <<Bibliography>> Citation
+  +modification: <<BasicDocument>> ParagraphBlock[0..1]
+}
+
+class DefinitionCollection{
+  +definitions: Definition[0..*]
+}
+
+class Definition <<BasicDocument>>{
+
+}
+
+enum TermSourceType {
+  authoritative
+  lineage
+}
+
+enum TermSourceStatus {
+  identical
+  modified
+  restyled
+  context-added
+  generalisation
+  specialisation
+  unspecified
+}
+
+'******* CLASS RELATIONS **********************************************
+Term <-- TermSource
+TermSource <-- TermSourceStatus
+Term <-- RelatedTerm
+RelatedTerm <-- RelatedTermType
+
+DefinitionCollection <-- Definition
+
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+
+'******* CONFIGURATION ************************************************
+!include style.uml.inc
+
+'******* CLASS DEFINITION *********************************************
+class TermCollection <<Term>> {
+  +terms: Term[0..*]
+}
+
+@enduml
