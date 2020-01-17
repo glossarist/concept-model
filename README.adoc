@@ -6,6 +6,11 @@ Glossarist `Concept` and `Term` models are used in glossarist-supported
 sites for RDF and JSON-LD generation.
 
 
+== Concept-Term interaction cycle
+
+image::images/concept-term-cycle.png[]
+
+
 == Origin
 
 Term modelled according to ISO/IEC Directives 2, 16.6:
@@ -28,9 +33,11 @@ Definition: Definition modelled according to ISO/IEC Directives 2, 17:
 
 == UML Models
 
+////
 === Concept
 
 image::images/concept.png[]
+////
 
 === Term
 
