@@ -4,8 +4,8 @@
 !include style.uml.inc
 
 '******* CLASS DEFINITION *********************************************
-class TermCollection <<Term>> {
-  +terms: Term[0..*]
+class ConceptCollection {
+  +concepts: Concept[0..*]
 }
 
 @enduml

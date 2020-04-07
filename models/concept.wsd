@@ -4,39 +4,24 @@
 !include style.uml.inc
 
 '******* CLASS DEFINITION *********************************************
-class Term {
+class Concept {
   +id: String[0..1]
-  +labels: TermLabel[1..*]
-  +synonym: <<BasicDocument>> LocalizedString[0..*]
-  +related: RelatedTerm[0..*]
-  +domain: <<BasicDocument>> LocalizedString[0..1]
-  +grammar: <<BasicDocument>> LocalizedString[0..*]
+  +labels: ConceptLabel[1..*]
+  +related: RelatedConcept[0..*]
+  +designations: Designation[1..*]
   +definition: <<BasicDocument>> Definition[1..*]
-  +note: <<BasicDocument>> ParagraphBlock[0..*]
-  +example: <<BasicDocument>> ParagraphBlock[0..*]
-  +source: TermSource[0..*]
-  +country: Iso3166Code[0..*]
-  +abbreviations: String[0..*]
-  +status: TermStatus[1]
-  +dates: TermDate[0..*]
+  +notes: <<BasicDocument>> ParagraphBlock[0..*]
+  +examples: <<BasicDocument>> ParagraphBlock[0..*]
+  +sources: ConceptSource[0..*]
+  +status: ConceptStatus
+  +dates: ConceptDate[0..*]
 }
 
-class TermLabel {
-  +status: TermLabelClassification
-  +label: Label
+class ConceptLabel {
+  +label: <<BasicDocument>> LocalizedString[1..*]
 }
 
-class Label {
-  +content: <<BasicDocument>> LocalizedString[1..*]
-}
-
-enum TermLabelClassification {
-  preferred
-  admitted
-  deprecated
-}
-
-enum TermStatus{
+enum ConceptStatus{
   draft
   notValid
   valid
@@ -44,12 +29,12 @@ enum TermStatus{
   retired
 }
 
-class TermDate {
-  +status: DateStatus
+class ConceptDate {
   +date: Iso8601Date
+  +type: ConceptDateType
 }
 
-enum TermDateType {
+enum ConceptDateType {
   accepted
   amended
   retired
@@ -68,12 +53,12 @@ enum TermDateType {
 'Glossary Release	"release1' = 1, 'release1_retired' = -1, 'release2' = 2, release2_retired' = -2 etc"
 
 
-class RelatedTerm {
-  +type: RelatedTermType
+class RelatedConcept {
+  +type: RelatedConceptType
   +content: <<BasicDocument>> LocalizedString
 }
 
-enum RelatedTermType <<enumeration>>{
+enum RelatedConceptType <<enumeration>>{
   deprecates
   supersedes
   narrower
@@ -84,27 +69,22 @@ enum RelatedTermType <<enumeration>>{
   see
 }
 
-class TermSource <<Term>>{
-  +status: TermSourceStatus
-  +type: TermSourceType
+class ConceptSource <<Concept>>{
+  +status: ConceptSourceStatus
+  +type: ConceptSourceType
   +origin: <<Bibliography>> Citation
   +modification: <<BasicDocument>> ParagraphBlock[0..1]
 }
 
-class DefinitionCollection{
-  +definitions: Definition[0..*]
-}
-
 class Definition <<BasicDocument>>{
-
 }
 
-enum TermSourceType {
+enum ConceptSourceType {
   authoritative
   lineage
 }
 
-enum TermSourceStatus {
+enum ConceptSourceStatus {
   identical
   modified
   restyled
@@ -115,12 +95,21 @@ enum TermSourceStatus {
 }
 
 '******* CLASS RELATIONS **********************************************
-Term <-- TermSource
-TermSource <-- TermSourceStatus
-Term <-- RelatedTerm
-RelatedTerm <-- RelatedTermType
+Concept <-- ConceptSource
+Concept <-- ConceptLabel
+Concept <-- RelatedConcept
+Concept <-- ConceptDate
+Concept <-- RelatedConcept
+Concept <-- ConceptSource
+Concept <-- Definition
+Concept <-- Designation
+Concept <-- ConceptStatus
 
-DefinitionCollection <-- Definition
+ConceptSource <-- ConceptSourceStatus
+ConceptSource <-- ConceptSourceType
+RelatedConcept <-- RelatedConceptType
 
+ConceptDate <-- ConceptDateType
 
 @enduml
+

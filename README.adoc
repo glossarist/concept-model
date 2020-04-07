@@ -1,10 +1,11 @@
-= Glossarist Concept/Term Models
+= Glossarist Concept/Term Models (ISO 10241-1)
 
 == General
 
-Glossarist `Concept` and `Term` models are used in glossarist-supported
+Glossarist `Concept` and `Designation` models are used in glossarist-supported
 sites for RDF and JSON-LD generation.
 
+These models align with ISO 10241-1 and the concept systems described in ISO 704.
 
 == Concept-Term interaction cycle
 
@@ -13,7 +14,7 @@ image::images/concept-term-cycle.png[]
 
 == Origin
 
-Term modelled according to ISO/IEC Directives 2, 16.6:
+Term modelled according to ISO 10241-1 and ISO/IEC Directives 2, 16.6:
 
 * Multiple preferred terms
 * Single definition
@@ -33,16 +34,14 @@ Definition: Definition modelled according to ISO/IEC Directives 2, 17:
 
 == UML Models
 
-////
 === Concept
 
 image::images/concept.png[]
-////
 
-=== Term
+=== Designation
 
-image::images/term.png[]
+image::images/designation.png[]
 
-=== TermCollection
+=== ConceptCollection
 
-image::images/term-collection.png[]
+image::images/concept-collection.png[]
