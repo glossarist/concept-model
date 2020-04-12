@@ -6,19 +6,17 @@
 '******* CLASS DEFINITION *********************************************
 class Concept {
   +id: String[0..1]
-  +labels: ConceptLabel[1..*]
   +related: RelatedConcept[0..*]
   +designations: Designation[1..*]
+  +domain: <<BasicDocument>> LocalizedString[0..1]
+  +subject: <<BasicDocument>> LocalizedString[0..1]
+  +usageInfo: <<BasicDocument>> LocalizedString[0..1]
   +definition: <<BasicDocument>> Definition[1..*]
   +notes: <<BasicDocument>> ParagraphBlock[0..*]
   +examples: <<BasicDocument>> ParagraphBlock[0..*]
   +sources: ConceptSource[0..*]
   +status: ConceptStatus
   +dates: ConceptDate[0..*]
-}
-
-class ConceptLabel {
-  +label: <<BasicDocument>> LocalizedString[1..*]
 }
 
 enum ConceptStatus{
@@ -40,16 +38,16 @@ enum ConceptDateType {
   retired
 }
 
-'Review Indicator	<empty field> or 'Under Review in Source Document'
-'Date Accepted	yyyy-mm-dd
-'Date Amended	yyyy-mm-dd
-'Review Date	yyyy-mm-dd
-'Review Status	pending', 'tentative', 'final'
-'Review Type	supersession', 'retirement'
-'Review Decision	withdrawn', 'accepted', 'notAccepted'
-'Review Decision Date	yyyy-mm-dd
-'Review Decision Event	String
-'Review Decision Notes	String
+'Review Indicator	<empty field> or 'Under Review in Source Document'
+'Date Accepted	yyyy-mm-dd
+'Date Amended	yyyy-mm-dd
+'Review Date	yyyy-mm-dd
+'Review Status	pending', 'tentative', 'final'
+'Review Type	supersession', 'retirement'
+'Review Decision	withdrawn', 'accepted', 'notAccepted'
+'Review Decision Date	yyyy-mm-dd
+'Review Decision Event	String
+'Review Decision Notes	String
 'Glossary Release	"release1' = 1, 'release1_retired' = -1, 'release2' = 2, release2_retired' = -2 etc"
 
 
@@ -69,7 +67,7 @@ enum RelatedConceptType <<enumeration>>{
   see
 }
 
-class ConceptSource <<Concept>>{
+class ConceptSource {
   +status: ConceptSourceStatus
   +type: ConceptSourceType
   +origin: <<Bibliography>> Citation

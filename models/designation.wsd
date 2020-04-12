@@ -5,19 +5,45 @@
 
 '******* CLASS DEFINITION *********************************************
 class Designation {
-  +text: <<BasicDocument>> LocalizedString
-  +type: DesignationType
-  +grammarInfo: GrammarInfo[0..1]
   +normativeStatus: NormativeStatus
-  +pronunciation: <<BasicDocument>> LocalizedString[0..*]
+  +geographicArea: Iso3166Code[0..*]
+}
 
-  +domain: <<BasicDocument>> LocalizedString[0..1]
-  +subject: <<BasicDocument>> LocalizedString[0..1]
-  +usageInfo: <<BasicDocument>> LocalizedString[0..1]
-
+class ExpressionDesignation {
+  +text: <<BasicDocument>> LocalizedString
   +language: Iso639ThreeCharCode
   +script: Iso15924Code[0..1]
-  +geographicArea: Iso3166Code[0..*]
+  +pronunciation: <<BasicDocument>> LocalizedString[0..*]
+  +grammarInfo: GrammarInfo[0..1]
+  +pronunciation: <<BasicDocument>> LocalizedString[0..*]
+}
+
+class SymbolDesignation {
+  +isInternational: Boolean[0..1]
+}
+
+class PrefixDesignation {
+}
+
+class SuffixDesignation {
+}
+
+class AbbreviationDesignation {
+}
+
+class AcronymDesignation {
+  +isInternational: Boolean[0..1]
+}
+
+class LetterSymbolDesignation {
+  +text: <<BasicDocument>> LocalizedString
+  +language: Iso639ThreeCharCode
+  +script: Iso15924Code[0..1]
+}
+
+class GraphicalSymbolDesignation {
+  +text: <<BasicDocument>> LocalizedString[0..1]
+  +image: Image[0..1]
   +isInternational: Boolean[0..1]
 }
 
@@ -25,15 +51,6 @@ enum NormativeStatus {
   preferred
   admitted
   deprecated
-}
-
-enum DesignationType {
-  expression
-  symbol
-  prefix
-  suffix
-  abbreviation
-  acronym
 }
 
 class GrammarInfo {
@@ -68,12 +85,23 @@ enum Iso3166Code {
 enum Iso15924Code {
 }
 
-Designation <-- GrammarInfo
+Designation <|-- ExpressionDesignation
+Designation <|-- SymbolDesignation
 Designation <-- NormativeStatus
-Designation <-- DesignationType
-Designation <-- Iso639ThreeCharCode
 Designation <-- Iso3166Code
-Designation <-- Iso15924Code
+
+ExpressionDesignation <|-- PrefixDesignation
+ExpressionDesignation <|-- SuffixDesignation
+ExpressionDesignation <|-- AbbreviationDesignation
+ExpressionDesignation <|-- AcronymDesignation
+ExpressionDesignation <-- Iso639ThreeCharCode
+ExpressionDesignation <-- Iso15924Code
+ExpressionDesignation <-- GrammarInfo
+
+SymbolDesignation <|-- LetterSymbolDesignation
+SymbolDesignation <|-- GraphicalSymbolDesignation
+LetterSymbolDesignation <-- Iso15924Code
+LetterSymbolDesignation <-- Iso639ThreeCharCode
 
 GrammarInfo <|-- GrammarNoun
 GrammarInfo <|-- GrammarAdjective
