@@ -40,6 +40,23 @@ enum ConceptDateType {
   retired
 }
 
+class RelatedConcept {
+  +type: RelatedConceptType
+  +content: <<BasicDocument>> LocalizedString
+}
+
+enum RelatedConceptType <<enumeration>>{
+  deprecates
+  supersedes
+  narrower
+  broader
+  equivalent
+  compare
+  contrast
+  see
+}
+
+
 RelatedConcept <-- RelatedConceptType
 ConceptDate <-- ConceptDateType
 Concept <|-- LocalizedConcept

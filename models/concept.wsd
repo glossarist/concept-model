@@ -29,22 +29,6 @@ class Concept {
 'Glossary Release	"release1' = 1, 'release1_retired' = -1, 'release2' = 2, release2_retired' = -2 etc"
 
 
-class RelatedConcept {
-  +type: RelatedConceptType
-  +content: <<BasicDocument>> LocalizedString
-}
-
-enum RelatedConceptType <<enumeration>>{
-  deprecates
-  supersedes
-  narrower
-  broader
-  equivalent
-  compare
-  contrast
-  see
-}
-
 class ConceptSource {
   +status: ConceptSourceStatus
   +type: ConceptSourceType
