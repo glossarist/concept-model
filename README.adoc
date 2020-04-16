@@ -42,6 +42,6 @@ image::images/concept.png[]
 
 image::images/designation.png[]
 
-=== ConceptCollection
+=== ManagedConcept and ManagedConceptCollection
 
-image::images/concept-collection.png[]
+image::images/managed-concept.png[]

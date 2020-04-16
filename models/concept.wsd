@@ -6,7 +6,6 @@
 '******* CLASS DEFINITION *********************************************
 class Concept {
   +id: String[0..1]
-  +related: RelatedConcept[0..*]
   +designations: Designation[1..*]
   +domain: <<BasicDocument>> LocalizedString[0..1]
   +subject: <<BasicDocument>> LocalizedString[0..1]
@@ -15,27 +14,6 @@ class Concept {
   +notes: <<BasicDocument>> ParagraphBlock[0..*]
   +examples: <<BasicDocument>> ParagraphBlock[0..*]
   +sources: ConceptSource[0..*]
-  +status: ConceptStatus
-  +dates: ConceptDate[0..*]
-}
-
-enum ConceptStatus{
-  draft
-  notValid
-  valid
-  superseded
-  retired
-}
-
-class ConceptDate {
-  +date: Iso8601Date
-  +type: ConceptDateType
-}
-
-enum ConceptDateType {
-  accepted
-  amended
-  retired
 }
 
 'Review Indicator	<empty field> or 'Under Review in Source Document'
@@ -95,19 +73,12 @@ enum ConceptSourceStatus {
 '******* CLASS RELATIONS **********************************************
 Concept <-- ConceptSource
 Concept <-- ConceptLabel
-Concept <-- RelatedConcept
-Concept <-- ConceptDate
-Concept <-- RelatedConcept
 Concept <-- ConceptSource
 Concept <-- Definition
 Concept <-- Designation
-Concept <-- ConceptStatus
 
 ConceptSource <-- ConceptSourceStatus
 ConceptSource <-- ConceptSourceType
-RelatedConcept <-- RelatedConceptType
-
-ConceptDate <-- ConceptDateType
 
 @enduml
 
