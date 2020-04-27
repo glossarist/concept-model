@@ -10,7 +10,8 @@ class Concept {
   +domain: <<BasicDocument>> LocalizedString[0..1]
   +subject: <<BasicDocument>> LocalizedString[0..1]
   +usageInfo: <<BasicDocument>> LocalizedString[0..1]
-  +definition: <<BasicDocument>> Definition[1..*]
+  +definition: <<BasicDocument>> Definition[0..*]
+  +nonverbalrep: <<BasicDocument>>  NonVerbRep[0..*]
   +notes: <<BasicDocument>> ParagraphBlock[0..*]
   +examples: <<BasicDocument>> ParagraphBlock[0..*]
   +sources: ConceptSource[0..*]
@@ -29,6 +30,12 @@ class Concept {
 'Review Decision Notes	String
 'Glossary Release	"release1' = 1, 'release1_retired' = -1, 'release2' = 2, release2_retired' = -2 etc"
 
+
+class NonVerbRep {
+  +image: <<BasicDocument>> Image[0..1]
+  +table: <<BasicDocument>> Table[0..1]
+  +formula: <<BasicDocument>> FormulaBlock[0..1]
+}
 
 class ConceptSource {
   +status: ConceptSourceStatus
@@ -77,6 +84,7 @@ Concept <-- ConceptSource
 Concept <-- Definition
 Concept <-- Designation
 Concept <-- RelatedConcept
+Concept <-- NonVerbRep
 
 ConceptSource <-- ConceptSourceStatus
 ConceptSource <-- ConceptSourceType
