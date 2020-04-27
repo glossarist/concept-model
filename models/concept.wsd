@@ -14,6 +14,7 @@ class Concept {
   +notes: <<BasicDocument>> ParagraphBlock[0..*]
   +examples: <<BasicDocument>> ParagraphBlock[0..*]
   +sources: ConceptSource[0..*]
+  +related: RelatedConcept[0..*]
 }
 
 'Review Indicator	<empty field> or 'Under Review in Source Document'
@@ -54,15 +55,32 @@ enum ConceptSourceStatus {
   unspecified
 }
 
+class RelatedConcept {
+  +type: RelatedConceptType
+  +content: <<BasicDocument>> LocalizedString
+}
+
+enum RelatedConceptType {
+  deprecates
+  supersedes
+  narrower
+  broader
+  equivalent
+  compare
+  contrast
+  see
+}
+
 '******* CLASS RELATIONS **********************************************
-Concept <-- ConceptSource
-Concept <-- ConceptLabel
 Concept <-- ConceptSource
 Concept <-- Definition
 Concept <-- Designation
+Concept <-- RelatedConcept
 
 ConceptSource <-- ConceptSourceStatus
 ConceptSource <-- ConceptSourceType
+
+RelatedConcept <-- RelatedConceptType
 
 @enduml
 

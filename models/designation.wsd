@@ -15,7 +15,6 @@ class ExpressionDesignation {
   +script: Iso15924Code[0..1]
   +pronunciation: <<BasicDocument>> LocalizedString[0..*]
   +grammarInfo: GrammarInfo[0..1]
-  +pronunciation: <<BasicDocument>> LocalizedString[0..*]
 }
 
 class SymbolDesignation {
@@ -54,9 +53,13 @@ enum NormativeStatus {
 }
 
 class GrammarInfo {
-  +gender: DesignationGender[0..1]
+  +gender: DesignationGender[0..*]
   +isPreposition: Boolean[0..1]
   +isParticiple: Boolean[0..1]
+  +isAdjective: Boolean[0..1]
+  +isVerb: Boolean[0..1]
+  +isAdverb: Boolean[0..1]
+  +isNoun: Boolean[0..1]
 }
 
 enum GrammarGender {
@@ -66,18 +69,6 @@ enum GrammarGender {
   common
 }
 
-class GrammarNoun {
-}
-
-class GrammarAdjective {
-}
-
-class GrammarVerb {
-}
-
-class GrammarAdverb {
-}
-
 enum Iso639ThreeCharCode {
 }
 enum Iso3166Code {
@@ -85,28 +76,19 @@ enum Iso3166Code {
 enum Iso15924Code {
 }
 
-Designation <|-- ExpressionDesignation
+Designation <|-left- ExpressionDesignation
 Designation <|-- SymbolDesignation
 Designation <-- NormativeStatus
-Designation <-- Iso3166Code
 
 ExpressionDesignation <|-- PrefixDesignation
 ExpressionDesignation <|-- SuffixDesignation
 ExpressionDesignation <|-- AbbreviationDesignation
 ExpressionDesignation <|-- AcronymDesignation
-ExpressionDesignation <-- Iso639ThreeCharCode
-ExpressionDesignation <-- Iso15924Code
 ExpressionDesignation <-- GrammarInfo
 
 SymbolDesignation <|-- LetterSymbolDesignation
 SymbolDesignation <|-- GraphicalSymbolDesignation
-LetterSymbolDesignation <-- Iso15924Code
-LetterSymbolDesignation <-- Iso639ThreeCharCode
 
-GrammarInfo <|-- GrammarNoun
-GrammarInfo <|-- GrammarAdjective
-GrammarInfo <|-- GrammarVerb
-GrammarInfo <|-- GrammarAdverb
 GrammarInfo <-- GrammarGender
 
 @enduml
