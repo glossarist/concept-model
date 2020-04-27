@@ -6,6 +6,7 @@
 '******* CLASS DEFINITION *********************************************
 class Designation {
   +normativeStatus: NormativeStatus
+  +absent: Boolean[0..1]
   +geographicArea: Iso3166Code[0..*]
 }
 
