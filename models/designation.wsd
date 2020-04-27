@@ -11,7 +11,7 @@ class Designation {
 }
 
 class ExpressionDesignation {
-  +text: <<BasicDocument>> LocalizedString
+  +text: GlossaristTextElementType
   +language: Iso639ThreeCharCode
   +script: Iso15924Code[0..1]
   +pronunciation: <<BasicDocument>> LocalizedString[0..*]
@@ -81,6 +81,22 @@ enum Iso3166Code {
 enum Iso15924Code {
 }
 
+class TextElement <<BasicDocument>> {
+}
+
+class GlossaristTextElement {
+}
+
+class EmptySlot {
+}
+
+class TextElementType <<BasicDocument>> {
+}
+
+class GlossaristTextElementType {
+  +elements: GlossaristTextElement[0..1]
+}
+
 Designation <|-left- ExpressionDesignation
 Designation <|-- SymbolDesignation
 Designation <-- NormativeStatus
@@ -96,6 +112,13 @@ SymbolDesignation <|-- LetterSymbolDesignation
 SymbolDesignation <|-- GraphicalSymbolDesignation
 
 GrammarInfo <-- GrammarGender
+
+TextElementType <|-- GlossaristTextElementType
+
+ExpressionDesignation <-- GlossaristTextElementType
+GlossaristTextElement <|-- TextElement
+GlossaristTextElement <|-- EmptySlot
+GlossaristTextElementType <-- GlossaristTextElement
 
 @enduml
 
