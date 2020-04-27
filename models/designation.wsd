@@ -28,10 +28,14 @@ class SuffixDesignation {
 }
 
 class AbbreviationDesignation {
+  +isInternational: Boolean[0..1]
+  +abbreviationType: AbbreviationType[0..1]
 }
 
-class AcronymDesignation {
-  +isInternational: Boolean[0..1]
+enum AbbreviationType {
+  truncation
+  acronym
+  initialism
 }
 
 class LetterSymbolDesignation {
@@ -83,8 +87,9 @@ Designation <-- NormativeStatus
 ExpressionDesignation <|-- PrefixDesignation
 ExpressionDesignation <|-- SuffixDesignation
 ExpressionDesignation <|-- AbbreviationDesignation
-ExpressionDesignation <|-- AcronymDesignation
 ExpressionDesignation <-- GrammarInfo
+
+AbbreviationDesignation <-- AbbreviationType
 
 SymbolDesignation <|-- LetterSymbolDesignation
 SymbolDesignation <|-- GraphicalSymbolDesignation

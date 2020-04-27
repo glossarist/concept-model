@@ -58,6 +58,7 @@ enum ConceptSourceStatus {
 class RelatedConcept {
   +type: RelatedConceptType
   +content: <<BasicDocument>> LocalizedString
+  +ref: <<StandocDocument>> ReferenceToTermbase[0..1]
 }
 
 enum RelatedConceptType {
