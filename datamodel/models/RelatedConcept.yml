@@ -8,10 +8,10 @@ attributes:
     type: RelatedConceptType
   content:
     definition:
-    type: "\<<BasicDocument>> LocalizedString"
+    type: "\\<<BasicDocument>> LocalizedString"
   ref:
     definition:
-    type: "\<<StandocDocument>> ReferenceToTermbase"
+    type: "\\<<StandardDocument>> ReferenceToTermbase"
     cardinality:
       min: 0
       max: 1
