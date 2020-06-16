@@ -1,0 +1,10 @@
+name: ConceptDateType
+modelType: enum
+type: enumeration
+values:
+  accepted:
+    definition:
+  amended:
+    definition:
+  retired:
+    definition:

@@ -1,0 +1,11 @@
+name: ConceptDate
+modelType: class
+definition: |
+
+attributes:
+  date:
+    definition:
+    type: Iso8601Date
+  type:
+    definition:
+    type: ConceptDateType

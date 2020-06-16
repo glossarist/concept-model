@@ -1,0 +1,28 @@
+name: Concept models
+title: Concept models
+caption: Concept models
+directive: concepts
+imports:
+  Concept:
+  ConceptSource:
+  ConceptSourceStatus:
+  ConceptSourceType:
+  Designation:
+  GlossaristDefinition:
+  NonVerbRep:
+  RelatedConcept:
+  RelatedConceptType:
+
+# '******* CLASS RELATIONS **********************************************
+# Concept <-- ConceptSource
+# Concept <-- Definition
+# Concept <-- Designation
+# Concept <-- RelatedConcept
+# Concept <-- NonVerbRep
+# Concept <-- GlossaristDefinition
+#
+# ConceptSource <-- ConceptSourceStatus
+# ConceptSource <-- ConceptSourceType
+#
+# RelatedConcept <-- RelatedConceptType
+#

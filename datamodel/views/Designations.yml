@@ -1,0 +1,36 @@
+name: Designation models
+title: Designation models
+caption: Designation models
+directive: designation
+imports:
+  Designation:
+  NormativeStatus:
+  ExpressionDesignation:
+  GrammarInfo:
+  SymbolDesignation:
+  PrefixDesignation:
+  SuffixDesignation:
+  AbbreviationDesignation:
+  AbbreviationType:
+  LetterSymbolDesignation:
+  GraphicalSymbolDesignation:
+  GrammarGender:
+
+# Designation <-- NormativeStatus
+#
+# ExpressionDesignation <|-- PrefixDesignation
+# ExpressionDesignation <|-- SuffixDesignation
+# ExpressionDesignation <|-- AbbreviationDesignation
+# ExpressionDesignation <-- GrammarInfo
+#
+# AbbreviationDesignation <-- AbbreviationType
+#
+# GrammarInfo <-- GrammarGender
+#
+# TextElementType <|-- GlossaristTextElementType
+#
+# ExpressionDesignation <-- GlossaristTextElementType
+# GlossaristTextElement <|-- TextElement
+# GlossaristTextElement <|-- EmptySlot
+# GlossaristTextElementType <-- GlossaristTextElement
+#

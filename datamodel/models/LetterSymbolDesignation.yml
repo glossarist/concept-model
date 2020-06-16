@@ -1,0 +1,22 @@
+name: LetterSymbolDesignation
+modelType: class
+definition: |
+attributes:
+  text:
+    definition:
+    type: <<BasicDocument>> LocalizedString
+  language:
+    definition:
+    type: Iso639ThreeCharCode
+  script:
+    definition:
+    type: Iso15924Code
+    cardinality:
+      min: 0
+      max: 1
+relations:
+  - target: SymbolDesignation
+    relationship:
+      target:
+        type: inheritance
+    direction: up

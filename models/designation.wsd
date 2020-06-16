@@ -59,7 +59,7 @@ enum NormativeStatus {
 }
 
 class GrammarInfo {
-  +gender: DesignationGender[0..*]
+  +gender: GrammarGender[0..*]
   +isPreposition: Boolean[0..1]
   +isParticiple: Boolean[0..1]
   +isAdjective: Boolean[0..1]

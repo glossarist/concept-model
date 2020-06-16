@@ -1,0 +1,10 @@
+name: AbbreviationType
+modelType: enum
+type: enumeration
+values:
+  truncation:
+    definition:
+  acronym:
+    definition:
+  initialism:
+    definition:

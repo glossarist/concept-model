@@ -1,0 +1,19 @@
+name: AbbreviationDesignation
+modelType: class
+definition: |
+attributes:
+  isInternational:
+    definition:
+    type: Boolean
+  abbreviationType:
+    definition:
+    type: AbbreviationType
+    cardinality:
+      min: 0
+      max: 1
+relations:
+  - target: ExpressionDesignation
+    relationship:
+      target:
+        type: inheritance
+    direction: up

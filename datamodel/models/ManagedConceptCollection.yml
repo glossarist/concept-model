@@ -1,0 +1,10 @@
+name: ManagedConceptCollection
+modelType: class
+definition: |
+attributes:
+  concepts:
+    definition:
+    type: ManagedConcept
+    cardinality:
+      min: 0
+      max: '*'

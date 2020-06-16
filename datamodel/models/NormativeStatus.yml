@@ -1,0 +1,10 @@
+name: NormativeStatus
+modelType: enum
+type: enumeration
+values:
+  preferred:
+    definition:
+  admitted:
+    definition:
+  deprecated:
+    definition:

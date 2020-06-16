@@ -1,0 +1,30 @@
+name: NonVerbRep
+modelType: class
+definition: |
+
+attributes:
+
+  image:
+    definition:
+    type: <<BasicDocument>> Image
+    cardinality:
+      min: 0
+      max: 1
+  table:
+    definition:
+    type: <<BasicDocument>> Table
+    cardinality:
+      min: 0
+      max: 1
+  formula:
+    definition:
+    type: <<BasicDocument>> FormulaBlock
+    cardinality:
+      min: 0
+      max: 1
+  sources:
+    definition:
+    type: ConceptSource
+    cardinality:
+      min: 0
+      max: '*'

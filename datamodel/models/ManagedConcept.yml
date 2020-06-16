@@ -1,0 +1,25 @@
+name: ManagedConcept
+modelType: class
+definition: |
+attributes:
+  related:
+    definition:
+    type: RelatedConcept
+    cardinality:
+      min: 0
+      max: '*'
+  status:
+    definition:
+    type: ConceptStatus
+  dates:
+    definition:
+    type: ConceptDate
+    cardinality:
+      min: 0
+      max: '*'
+  localizedConcepts:
+    definition:
+    type: LocalizedConcept
+    cardinality:
+      min: 0
+      max: 1

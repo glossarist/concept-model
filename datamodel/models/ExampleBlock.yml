@@ -1,0 +1,60 @@
+name: ExampleBlock
+modelType: class
+definition: |
+
+attributes:
+  name:
+    definition:
+    type: TextElement
+    cardinality:
+      min: 0
+      max: '*'
+  unnumbered:
+    definition:
+    type: Boolean
+    cardinality:
+      min: 0
+      max: 1
+  subsequence:
+    definition:
+    type: String
+    cardinality:
+      min: 0
+      max: 1
+  formula:
+    type: FormulaBlock
+    definition:
+    cardinality:
+      min: 0
+      max: '*'
+  lists:
+    type: UnorderedList
+    definition:
+    cardinality:
+      min: 0
+      max: '*'
+  quotes:
+    type: QuoteBlock
+    definition:
+    cardinality:
+      min: 0
+      max: '*'
+  sourcecode:
+    type: SourcecodeBlock
+    definition:
+    cardinality:
+      min: 0
+      max: '*'
+  paragraphs:
+    type: ParagraphWithFootnote
+    definition:
+    cardinality:
+      min: 0
+      max: '*'
+
+relations:
+  - target: BasicBlock
+    relationship:
+      target:
+        type: inheritance
+    direction: up

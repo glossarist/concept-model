@@ -1,0 +1,10 @@
+name: PrefixDesignation
+modelType: class
+definition: |
+attributes:
+relations:
+  - target: ExpressionDesignation
+    relationship:
+      target:
+        type: inheritance
+    direction: up

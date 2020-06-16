@@ -1,0 +1,13 @@
+name: SymbolDesignation
+modelType: class
+definition: |
+attributes:
+  isInternational:
+    definition:
+    type: Boolean
+relations:
+  - target: Designation
+    relationship:
+      target:
+        type: inheritance
+    direction: up

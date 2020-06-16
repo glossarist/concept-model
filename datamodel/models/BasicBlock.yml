@@ -1,0 +1,16 @@
+name: BasicBlock
+modelType: class
+definition:
+attributes:
+  id:
+    type: String
+  notes:
+    type: ParagraphBlock
+    cardinality:
+      min: 0
+      max: '*'
+  contribMetadata:
+    type: ContributionElementMetadata
+      min: 0
+      max: '*'
+relations:

@@ -1,0 +1,12 @@
+name: GrammarGender
+modelType: enum
+type: enumeration
+values:
+  masculine:
+    definition:
+  feminine:
+    definition:
+  neuter:
+    definition:
+  common:
+    definition:

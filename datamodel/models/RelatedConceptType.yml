@@ -1,0 +1,21 @@
+name: RelatedConceptType
+modelType: enum
+type: enumeration
+values:
+  deprecates:
+    definition:
+  supersedes:
+    definition:
+  narrower:
+    definition:
+  broader:
+    definition:
+  equivalent:
+    definition:
+  compare:
+    definition:
+  contrast:
+    definition:
+  see:
+    definition:
+

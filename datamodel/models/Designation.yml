@@ -1,0 +1,26 @@
+name: Designation
+modelType: class
+definition: |
+
+attributes:
+  normativeStatus:
+    definition:
+    type: NormativeStatus
+  absent:
+    definition:
+    type: Boolean
+    cardinality:
+      min: 0
+      max: 1
+  geographicArea:
+    definition:
+    type: Iso3166Code
+    cardinality:
+      min: 0
+      max: '*'
+  sources:
+    definition:
+    type: ConceptSource
+    cardinality:
+      min: 0
+      max: '*'

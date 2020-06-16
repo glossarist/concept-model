@@ -1,0 +1,20 @@
+name: ConceptSource
+modelType: class
+definition: |
+
+attributes:
+  status:
+    definition:
+    type: ConceptSourceStatus
+  type:
+    definition:
+    type: ConceptSourceType
+  origin:
+    definition:
+    type: <<Bibliography>> Citation
+  modification:
+    definition:
+    type: <<BasicDocument>> ParagraphBlock
+    cardinality:
+      min: 0
+      max: 1

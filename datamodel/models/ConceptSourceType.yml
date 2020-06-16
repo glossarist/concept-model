@@ -1,0 +1,8 @@
+name: ConceptSourceType
+modelType: enum
+type: enumeration
+values:
+  authoritative:
+    definition:
+  lineage:
+    definition:

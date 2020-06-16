@@ -1,0 +1,15 @@
+name: Managed concepts
+title: Managed concepts and collection
+caption: Managed concepts and collection classes
+directive: managed-concepts
+imports:
+  ManagedConceptCollection:
+  ManagedConcept:
+  RelatedConcept:
+  ConceptStatus:
+  LocalizedConcept:
+  Concept:
+  ConceptDate:
+  ConceptDateType:
+  RelatedConceptType:
+

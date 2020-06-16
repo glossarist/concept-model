@@ -1,0 +1,25 @@
+name: GraphicalSymbolDesignation
+modelType: class
+definition: |
+attributes:
+  text:
+    definition:
+    type: <<BasicDocument>> LocalizedString
+    cardinality:
+      min: 0
+      max: 1
+  image:
+    definition:
+    type: Image
+    cardinality:
+      min: 0
+      max: 1
+  isInternational:
+    definition:
+    type: Boolean
+relations:
+  - target: SymbolDesignation
+    relationship:
+      target:
+        type: inheritance
+    direction: up
