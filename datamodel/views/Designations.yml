@@ -15,6 +15,49 @@ imports:
   LetterSymbolDesignation:
   GraphicalSymbolDesignation:
   GrammarGender:
+relations:
+  - source: NormativeStatus
+    target: Designation
+  - source: PrefixDesignation
+    target: ExpressionDesignation
+    relationship:
+      target:
+        type: inheritance
+  - source: SuffixDesignation
+    target: ExpressionDesignation
+    relationship:
+      target:
+        type: inheritance
+  - source: AbbreviationDesignation
+    target: ExpressionDesignation
+    relationship:
+      target:
+        type: inheritance
+  - source: GrammarInfo
+    target: ExpressionDesignation
+  - source: AbbreviationType
+    target: AbbreviationDesignation
+  - source: GrammarGender
+    target: GrammarInfo
+  - source: GlossaristTextElementType
+    target: TextElementType
+    relationship:
+      target:
+        type: inheritance
+  - source: GlossaristTextElementType
+    target: ExpressionDesignation
+  - source: TextElement
+    target: GlossaristTextElement
+    relationship:
+      target:
+        type: inheritance
+  - source: EmptySlot
+    target: GlossaristTextElement
+    relationship:
+      target:
+        type: inheritance
+  - source: GlossaristTextElement
+    target: GlossaristTextElementType
 
 # Designation <-- NormativeStatus
 #

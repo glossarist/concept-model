@@ -1,0 +1,13 @@
+diagram ConceptSource {
+  title 'Concept source related classes'
+  class ConceptSource {
+    +status: 'ConceptSourceStatus' 
+    +type: 'ConceptSourceType' 
+    +origin: '<<Bibliography>> Citation' 
+    +modification: '<<BasicDocument>> ParagraphBlock' [0..1]
+  }
+  enum ConceptSourceStatus {
+  }
+  enum ConceptSourceType {
+  }
+}

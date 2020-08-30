@@ -1,0 +1,94 @@
+diagram Concepts {
+  title 'Concept models'
+  association {
+    owner ConceptSource
+    member_type direct
+    member Concept
+  }
+  association {
+    owner Definition
+    member_type direct
+    member Concept
+  }
+  association {
+    owner Designation
+    member_type direct
+    member Concept
+  }
+  association {
+    owner RelatedConcept
+    member_type direct
+    member Concept
+  }
+  association {
+    owner NonVerbRep
+    member_type direct
+    member Concept
+  }
+  association {
+    owner GlossaristDefinition
+    member_type direct
+    member Concept
+  }
+  association {
+    owner ConceptSourceStatus
+    member_type direct
+    member ConceptSource
+  }
+  association {
+    owner ConceptSourceType
+    member_type direct
+    member ConceptSource
+  }
+  association {
+    owner RelatedConceptType
+    member_type direct
+    member RelatedConcept
+  }
+  class Concept {
+    +id: 'String' [0..1]
+    +designations: 'Designation' [1..*]
+    +domain: '<<BasicDocument>> LocalizedString' [0..1]
+    +subject: '<<BasicDocument>> LocalizedString' [0..1]
+    +usageInfo: '<<BasicDocument>> LocalizedString' [0..1]
+    +definition: 'GlossaristDefinition' [0..*]
+    +nonverbalrep: 'NonVerbRep' [0..*]
+    +notes: 'GlossaristDefinition' [0..*]
+    +examples: 'GlossaristDefinition' [0..*]
+    +sources: 'ConceptSource' [0..*]
+    +related: 'RelatedConcept' [0..*]
+  }
+  class ConceptSource {
+    +status: 'ConceptSourceStatus' 
+    +type: 'ConceptSourceType' 
+    +origin: '<<Bibliography>> Citation' 
+    +modification: '<<BasicDocument>> ParagraphBlock' [0..1]
+  }
+  enum ConceptSourceStatus {
+  }
+  enum ConceptSourceType {
+  }
+  class Designation {
+    +normativeStatus: 'NormativeStatus' 
+    +absent: 'Boolean' [0..1]
+    +geographicArea: 'Iso3166Code' [0..*]
+    +sources: 'ConceptSource' [0..*]
+  }
+  class GlossaristDefinition {
+    +content: 'ParagraphBlock' [1..*]
+    +sources: 'ConceptSource' [0..*]
+  }
+  class NonVerbRep {
+    +image: '<<BasicDocument>> Image' [0..1]
+    +table: '<<BasicDocument>> Table' [0..1]
+    +formula: '<<BasicDocument>> FormulaBlock' [0..1]
+    +sources: 'ConceptSource' [0..*]
+  }
+  class RelatedConcept {
+    +type: 'RelatedConceptType' 
+    +content: '\<<BasicDocument>> LocalizedString' 
+    +ref: '\<<StandardDocument>> ReferenceToTermbase' [0..1]
+  }
+  enum RelatedConceptType {
+  }
+}
