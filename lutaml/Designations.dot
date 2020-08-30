@@ -1,0 +1,177 @@
+digraph G {
+  graph [splines="ortho" pad=0.5 ranksep="1.2.equally" nodesep="1.2.equally"]
+  edge [color="gray50"]
+  node [shape="box"]
+
+  Designation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>Designation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ normativeStatus : NormativeStatus</TD></TR>
+            <TR><TD ALIGN="LEFT">+ absent : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ geographicArea : Iso3166Code&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ sources : ConceptSource&#91;0..*&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  ExpressionDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>ExpressionDesignation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ text : GlossaristTextElementType</TD></TR>
+            <TR><TD ALIGN="LEFT">+ language : Iso639ThreeCharCode</TD></TR>
+            <TR><TD ALIGN="LEFT">+ script : Iso15924Code&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ pronunciation : &#60;&#60;BasicDocument&#62;&#62; LocalizedString&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ grammarInfo : GrammarInfo&#91;0..*&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  GrammarInfo [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>GrammarInfo</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ gender : GrammarGender&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isPreposition : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isParticiple : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isAdjective : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isVerb : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isAdverb : Boolean&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isNoun : Boolean&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  SymbolDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>SymbolDesignation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ isInternational : Boolean</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  PrefixDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>PrefixDesignation</B></TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  SuffixDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>SuffixDesignation</B></TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  AbbreviationDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>AbbreviationDesignation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ isInternational : Boolean</TD></TR>
+            <TR><TD ALIGN="LEFT">+ abbreviationType : AbbreviationType&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  LetterSymbolDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>LetterSymbolDesignation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ text : &#60;&#60;BasicDocument&#62;&#62; LocalizedString</TD></TR>
+            <TR><TD ALIGN="LEFT">+ language : Iso639ThreeCharCode</TD></TR>
+            <TR><TD ALIGN="LEFT">+ script : Iso15924Code&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  GraphicalSymbolDesignation [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>GraphicalSymbolDesignation</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ text : &#60;&#60;BasicDocument&#62;&#62; LocalizedString&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ image : Image&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ isInternational : Boolean</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+
+  NormativeStatus -> Designation [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  PrefixDesignation -> ExpressionDesignation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  SuffixDesignation -> ExpressionDesignation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  AbbreviationDesignation -> ExpressionDesignation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  GrammarInfo -> ExpressionDesignation [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  AbbreviationType -> AbbreviationDesignation [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  GrammarGender -> GrammarInfo [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  GlossaristTextElementType -> TextElementType [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  GlossaristTextElementType -> ExpressionDesignation [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  TextElement -> GlossaristTextElement [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  EmptySlot -> GlossaristTextElement [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  GlossaristTextElement -> GlossaristTextElementType [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  ExpressionDesignation -> Designation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  SymbolDesignation -> Designation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  LetterSymbolDesignation -> SymbolDesignation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+  GraphicalSymbolDesignation -> SymbolDesignation [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+}

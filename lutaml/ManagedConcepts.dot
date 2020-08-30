@@ -1,0 +1,127 @@
+digraph G {
+  graph [splines="ortho" pad=0.5 ranksep="1.2.equally" nodesep="1.2.equally"]
+  edge [color="gray50"]
+  node [shape="box"]
+
+  ManagedConceptCollection [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>ManagedConceptCollection</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ concepts : ManagedConcept&#91;0..*&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  ManagedConcept [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>ManagedConcept</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ related : RelatedConcept&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ status : ConceptStatus</TD></TR>
+            <TR><TD ALIGN="LEFT">+ dates : ConceptDate&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ localizedConcepts : LocalizedConcept&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  RelatedConcept [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>RelatedConcept</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ type : RelatedConceptType</TD></TR>
+            <TR><TD ALIGN="LEFT">+ content : \&#60;&#60;BasicDocument&#62;&#62; LocalizedString</TD></TR>
+            <TR><TD ALIGN="LEFT">+ ref : \&#60;&#60;StandardDocument&#62;&#62; ReferenceToTermbase&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  LocalizedConcept [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>LocalizedConcept</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ language : Iso639ThreeCharCode</TD></TR>
+            <TR><TD ALIGN="LEFT">+ script : Iso15924Code&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ concept : Concept</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  Concept [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>Concept</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ id : String&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ designations : Designation&#91;1..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ domain : &#60;&#60;BasicDocument&#62;&#62; LocalizedString&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ subject : &#60;&#60;BasicDocument&#62;&#62; LocalizedString&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ usageInfo : &#60;&#60;BasicDocument&#62;&#62; LocalizedString&#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ definition : GlossaristDefinition&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ nonverbalrep : NonVerbRep&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ notes : GlossaristDefinition&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ examples : GlossaristDefinition&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ sources : ConceptSource&#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+ related : RelatedConcept&#91;0..*&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  ConceptDate [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>ConceptDate</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ date : Iso8601Date</TD></TR>
+            <TR><TD ALIGN="LEFT">+ type : ConceptDateType</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+
+  LocalizedConcept -> Concept [dir="direct" arrowtail="onormal" arrowhead="onormal"]
+}

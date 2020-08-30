@@ -1,0 +1,27 @@
+digraph G {
+  graph [splines="ortho" pad=0.5 ranksep="1.2.equally" nodesep="1.2.equally"]
+  edge [color="gray50"]
+  node [shape="box"]
+
+  ConceptSource [shape="plain" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><B>ConceptSource</B></TD>
+  </TR>
+  
+  <TR>
+    <TD>
+          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+            <TR><TD ALIGN="LEFT">+ status : ConceptSourceStatus</TD></TR>
+            <TR><TD ALIGN="LEFT">+ type : ConceptSourceType</TD></TR>
+            <TR><TD ALIGN="LEFT">+ origin : &#60;&#60;Bibliography&#62;&#62; Citation</TD></TR>
+            <TR><TD ALIGN="LEFT">+ modification : &#60;&#60;BasicDocument&#62;&#62; ParagraphBlock&#91;0..1&#93;</TD></TR>
+          </TABLE>
+        </TD>
+  </TR>
+  
+  </TABLE>
+  >]
+
+
+}
