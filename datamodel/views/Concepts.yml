@@ -12,8 +12,27 @@ imports:
   NonVerbRep:
   RelatedConcept:
   RelatedConceptType:
-
 # '******* CLASS RELATIONS **********************************************
+relations:
+  - source: ConceptSource
+    target: Concept
+  - source: Definition
+    target: Concept
+  - source: Designation
+    target: Concept
+  - source: RelatedConcept
+    target: Concept
+  - source: NonVerbRep
+    target: Concept
+  - source: GlossaristDefinition
+    target: Concept
+  - source: ConceptSourceStatus
+    target: ConceptSource
+  - source: ConceptSourceType
+    target: ConceptSource
+  - source: RelatedConceptType
+    target: RelatedConcept
+
 # Concept <-- ConceptSource
 # Concept <-- Definition
 # Concept <-- Designation

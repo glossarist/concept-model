@@ -1,0 +1,66 @@
+diagram ManagedConcepts {
+  title 'Managed concepts and collection'
+  class ManagedConceptCollection {
+    +concepts: ManagedConcept [0..*]
+  }
+  class ManagedConcept {
+    +related: RelatedConcept [0..*]
+    +status: ConceptStatus
+    +dates: ConceptDate [0..*]
+    +localizedConcepts: LocalizedConcept [0..1]
+  }
+  class RelatedConcept {
+    +type: RelatedConceptType
+    +content: <<BasicDocument>> LocalizedString
+    +ref: <<StandardDocument>> ReferenceToTermbase [0..1]
+  }
+  enum ConceptStatus {
+    draft
+    notValid
+    valid
+    superseded
+    retired
+  }
+  class LocalizedConcept {
+    +language: Iso639ThreeCharCode
+    +script: Iso15924Code [0..1]
+    +concept: Concept
+  }
+  association {
+    owner LocalizedConcept
+    member_type inheritance
+    member Concept
+  }
+  class Concept {
+    +id: String [0..1]
+    +designations: Designation [1..*]
+    +domain: <<BasicDocument>> LocalizedString [0..1]
+    +subject: <<BasicDocument>> LocalizedString [0..1]
+    +usageInfo: <<BasicDocument>> LocalizedString [0..1]
+    +definition: GlossaristDefinition [0..*]
+    +nonverbalrep: NonVerbRep [0..*]
+    +notes: GlossaristDefinition [0..*]
+    +examples: GlossaristDefinition [0..*]
+    +sources: ConceptSource [0..*]
+    +related: RelatedConcept [0..*]
+  }
+  class ConceptDate {
+    +date: Iso8601Date
+    +type: ConceptDateType
+  }
+  enum ConceptDateType {
+    accepted
+    amended
+    retired
+  }
+  enum RelatedConceptType {
+    deprecates
+    supersedes
+    narrower
+    broader
+    equivalent
+    compare
+    contrast
+    see
+  }
+}
