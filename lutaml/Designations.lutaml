@@ -61,19 +61,22 @@ diagram Designations {
     member GlossaristTextElementType
   }
   class Designation {
-    +normativeStatus: 'NormativeStatus' 
-    +absent: 'Boolean' [0..1]
-    +geographicArea: 'Iso3166Code' [0..*]
-    +sources: 'ConceptSource' [0..*]
+    +normativeStatus: NormativeStatus 
+    +absent: Boolean [0..1]
+    +geographicArea: Iso3166Code [0..*]
+    +sources: ConceptSource [0..*]
   }
   enum NormativeStatus {
+    preferred
+    admitted
+    deprecated
   }
   class ExpressionDesignation {
-    +text: 'GlossaristTextElementType' 
-    +language: 'Iso639ThreeCharCode' 
-    +script: 'Iso15924Code' [0..1]
-    +pronunciation: '<<BasicDocument>> LocalizedString' [0..*]
-    +grammarInfo: 'GrammarInfo' [0..*]
+    +text: GlossaristTextElementType 
+    +language: Iso639ThreeCharCode 
+    +script: Iso15924Code [0..1]
+    +pronunciation: <<BasicDocument>> LocalizedString [0..*]
+    +grammarInfo: GrammarInfo [0..*]
   }
   association {
     owner ExpressionDesignation
@@ -81,16 +84,16 @@ diagram Designations {
     member Designation
   }
   class GrammarInfo {
-    +gender: 'GrammarGender' [0..*]
-    +isPreposition: 'Boolean' [0..1]
-    +isParticiple: 'Boolean' [0..1]
-    +isAdjective: 'Boolean' [0..1]
-    +isVerb: 'Boolean' [0..1]
-    +isAdverb: 'Boolean' [0..1]
-    +isNoun: 'Boolean' [0..1]
+    +gender: GrammarGender [0..*]
+    +isPreposition: Boolean [0..1]
+    +isParticiple: Boolean [0..1]
+    +isAdjective: Boolean [0..1]
+    +isVerb: Boolean [0..1]
+    +isAdverb: Boolean [0..1]
+    +isNoun: Boolean [0..1]
   }
   class SymbolDesignation {
-    +isInternational: 'Boolean' 
+    +isInternational: Boolean 
   }
   association {
     owner SymbolDesignation
@@ -102,15 +105,18 @@ diagram Designations {
   class SuffixDesignation {
   }
   class AbbreviationDesignation {
-    +isInternational: 'Boolean' 
-    +abbreviationType: 'AbbreviationType' [0..1]
+    +isInternational: Boolean 
+    +abbreviationType: AbbreviationType [0..1]
   }
   enum AbbreviationType {
+    truncation
+    acronym
+    initialism
   }
   class LetterSymbolDesignation {
-    +text: '<<BasicDocument>> LocalizedString' 
-    +language: 'Iso639ThreeCharCode' 
-    +script: 'Iso15924Code' [0..1]
+    +text: <<BasicDocument>> LocalizedString 
+    +language: Iso639ThreeCharCode 
+    +script: Iso15924Code [0..1]
   }
   association {
     owner LetterSymbolDesignation
@@ -118,9 +124,9 @@ diagram Designations {
     member SymbolDesignation
   }
   class GraphicalSymbolDesignation {
-    +text: '<<BasicDocument>> LocalizedString' [0..1]
-    +image: 'Image' [0..1]
-    +isInternational: 'Boolean' 
+    +text: <<BasicDocument>> LocalizedString [0..1]
+    +image: Image [0..1]
+    +isInternational: Boolean 
   }
   association {
     owner GraphicalSymbolDesignation
@@ -128,5 +134,9 @@ diagram Designations {
     member SymbolDesignation
   }
   enum GrammarGender {
+    masculine
+    feminine
+    neuter
+    common
   }
 }

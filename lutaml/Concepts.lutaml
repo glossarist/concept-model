@@ -46,49 +46,66 @@ diagram Concepts {
     member RelatedConcept
   }
   class Concept {
-    +id: 'String' [0..1]
-    +designations: 'Designation' [1..*]
-    +domain: '<<BasicDocument>> LocalizedString' [0..1]
-    +subject: '<<BasicDocument>> LocalizedString' [0..1]
-    +usageInfo: '<<BasicDocument>> LocalizedString' [0..1]
-    +definition: 'GlossaristDefinition' [0..*]
-    +nonverbalrep: 'NonVerbRep' [0..*]
-    +notes: 'GlossaristDefinition' [0..*]
-    +examples: 'GlossaristDefinition' [0..*]
-    +sources: 'ConceptSource' [0..*]
-    +related: 'RelatedConcept' [0..*]
+    +id: String [0..1]
+    +designations: Designation [1..*]
+    +domain: <<BasicDocument>> LocalizedString [0..1]
+    +subject: <<BasicDocument>> LocalizedString [0..1]
+    +usageInfo: <<BasicDocument>> LocalizedString [0..1]
+    +definition: GlossaristDefinition [0..*]
+    +nonverbalrep: NonVerbRep [0..*]
+    +notes: GlossaristDefinition [0..*]
+    +examples: GlossaristDefinition [0..*]
+    +sources: ConceptSource [0..*]
+    +related: RelatedConcept [0..*]
   }
   class ConceptSource {
-    +status: 'ConceptSourceStatus' 
-    +type: 'ConceptSourceType' 
-    +origin: '<<Bibliography>> Citation' 
-    +modification: '<<BasicDocument>> ParagraphBlock' [0..1]
+    +status: ConceptSourceStatus
+    +type: ConceptSourceType
+    +origin: <<Bibliography>> Citation
+    +modification: <<BasicDocument>> ParagraphBlock [0..1]
   }
   enum ConceptSourceStatus {
+    identical
+    modified
+    restyled
+    context-added
+    generalisation
+    specialisation
+    unspecified
   }
   enum ConceptSourceType {
+    authoritative
+    lineage
   }
   class Designation {
-    +normativeStatus: 'NormativeStatus' 
-    +absent: 'Boolean' [0..1]
-    +geographicArea: 'Iso3166Code' [0..*]
-    +sources: 'ConceptSource' [0..*]
+    +normativeStatus: NormativeStatus
+    +absent: Boolean [0..1]
+    +geographicArea: Iso3166Code [0..*]
+    +sources: ConceptSource [0..*]
   }
   class GlossaristDefinition {
-    +content: 'ParagraphBlock' [1..*]
-    +sources: 'ConceptSource' [0..*]
+    +content: ParagraphBlock [1..*]
+    +sources: ConceptSource [0..*]
   }
   class NonVerbRep {
-    +image: '<<BasicDocument>> Image' [0..1]
-    +table: '<<BasicDocument>> Table' [0..1]
-    +formula: '<<BasicDocument>> FormulaBlock' [0..1]
-    +sources: 'ConceptSource' [0..*]
+    +image: <<BasicDocument>> Image [0..1]
+    +table: <<BasicDocument>> Table [0..1]
+    +formula: <<BasicDocument>> FormulaBlock [0..1]
+    +sources: ConceptSource [0..*]
   }
   class RelatedConcept {
-    +type: 'RelatedConceptType' 
-    +content: '<<BasicDocument>> LocalizedString' 
-    +ref: '<<StandardDocument>> ReferenceToTermbase' [0..1]
+    +type: RelatedConceptType
+    +content: <<BasicDocument>> LocalizedString
+    +ref: <<StandardDocument>> ReferenceToTermbase [0..1]
   }
   enum RelatedConceptType {
+    deprecates
+    supersedes
+    narrower
+    broader
+    equivalent
+    compare
+    contrast
+    see
   }
 }
