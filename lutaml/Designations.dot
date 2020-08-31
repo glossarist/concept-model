@@ -12,10 +12,10 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ normativeStatus : NormativeStatus </TD></TR>
-            <TR><TD ALIGN="LEFT">+ absent : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ geographicArea : Iso3166Code &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ sources : ConceptSource &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+normativeStatus : NormativeStatus </TD></TR>
+            <TR><TD ALIGN="LEFT">+absent : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+geographicArea : Iso3166Code &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -32,11 +32,11 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ text : GlossaristTextElementType </TD></TR>
-            <TR><TD ALIGN="LEFT">+ language : Iso639ThreeCharCode </TD></TR>
-            <TR><TD ALIGN="LEFT">+ script : Iso15924Code &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ pronunciation : LocalizedString &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ grammarInfo : GrammarInfo &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+text : GlossaristTextElementType </TD></TR>
+            <TR><TD ALIGN="LEFT">+language : Iso639ThreeCharCode </TD></TR>
+            <TR><TD ALIGN="LEFT">+script : Iso15924Code &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+pronunciation : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+grammarInfo : GrammarInfo &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -53,13 +53,13 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ gender : GrammarGender &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isPreposition : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isParticiple : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isAdjective : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isVerb : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isAdverb : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isNoun : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+gender : GrammarGender &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isPreposition : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isParticiple : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isAdjective : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isVerb : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isAdverb : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isNoun : Boolean &#91;0..1&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -76,7 +76,7 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ isInternational : Boolean </TD></TR>
+            <TR><TD ALIGN="LEFT">+isInternational : Boolean </TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -111,8 +111,8 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ isInternational : Boolean </TD></TR>
-            <TR><TD ALIGN="LEFT">+ abbreviationType : AbbreviationType &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isInternational : Boolean </TD></TR>
+            <TR><TD ALIGN="LEFT">+abbreviationType : AbbreviationType &#91;0..1&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -129,9 +129,9 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ text : LocalizedString </TD></TR>
-            <TR><TD ALIGN="LEFT">+ language : Iso639ThreeCharCode </TD></TR>
-            <TR><TD ALIGN="LEFT">+ script : Iso15924Code &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+text : &#60;&#60;BasicDocument&#62;&#62;LocalizedString </TD></TR>
+            <TR><TD ALIGN="LEFT">+language : Iso639ThreeCharCode </TD></TR>
+            <TR><TD ALIGN="LEFT">+script : Iso15924Code &#91;0..1&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -148,9 +148,9 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ text : LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ image : Image &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ isInternational : Boolean </TD></TR>
+            <TR><TD ALIGN="LEFT">+text : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+image : Image &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+isInternational : Boolean </TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -167,9 +167,9 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> preferred</TD></TR>
-            <TR><TD ALIGN="LEFT"> admitted</TD></TR>
-            <TR><TD ALIGN="LEFT"> deprecated</TD></TR>
+            <TR><TD ALIGN="LEFT">preferred</TD></TR>
+            <TR><TD ALIGN="LEFT">admitted</TD></TR>
+            <TR><TD ALIGN="LEFT">deprecated</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -186,9 +186,9 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> truncation</TD></TR>
-            <TR><TD ALIGN="LEFT"> acronym</TD></TR>
-            <TR><TD ALIGN="LEFT"> initialism</TD></TR>
+            <TR><TD ALIGN="LEFT">truncation</TD></TR>
+            <TR><TD ALIGN="LEFT">acronym</TD></TR>
+            <TR><TD ALIGN="LEFT">initialism</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -205,10 +205,10 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> masculine</TD></TR>
-            <TR><TD ALIGN="LEFT"> feminine</TD></TR>
-            <TR><TD ALIGN="LEFT"> neuter</TD></TR>
-            <TR><TD ALIGN="LEFT"> common</TD></TR>
+            <TR><TD ALIGN="LEFT">masculine</TD></TR>
+            <TR><TD ALIGN="LEFT">feminine</TD></TR>
+            <TR><TD ALIGN="LEFT">neuter</TD></TR>
+            <TR><TD ALIGN="LEFT">common</TD></TR>
           </TABLE>
         </TD>
   </TR>

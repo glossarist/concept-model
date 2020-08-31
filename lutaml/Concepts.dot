@@ -12,17 +12,17 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ id : String &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ designations : Designation &#91;1..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ domain : LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ subject : LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ usageInfo : LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ definition : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ nonverbalrep : NonVerbRep &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ notes : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ examples : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ sources : ConceptSource &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ related : RelatedConcept &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+id : String &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+designations : Designation &#91;1..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+domain : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+subject : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+usageInfo : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+definition : GlossaristDefinition &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+nonverbalrep : NonVerbRep &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+notes : GlossaristDefinition &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+examples : GlossaristDefinition &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+related : RelatedConcept &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -39,10 +39,10 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ status : ConceptSourceStatus</TD></TR>
-            <TR><TD ALIGN="LEFT">+ type : ConceptSourceType</TD></TR>
-            <TR><TD ALIGN="LEFT">+ origin : Citation</TD></TR>
-            <TR><TD ALIGN="LEFT">+ modification : ParagraphBlock &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+status : ConceptSourceStatus</TD></TR>
+            <TR><TD ALIGN="LEFT">+type : ConceptSourceType</TD></TR>
+            <TR><TD ALIGN="LEFT">+origin : &#60;&#60;Bibliography&#62;&#62;Citation</TD></TR>
+            <TR><TD ALIGN="LEFT">+modification : &#60;&#60;BasicDocument&#62;&#62;ParagraphBlock &#91;0..1&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -59,10 +59,10 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ normativeStatus : NormativeStatus</TD></TR>
-            <TR><TD ALIGN="LEFT">+ absent : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ geographicArea : Iso3166Code &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ sources : ConceptSource &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+normativeStatus : NormativeStatus</TD></TR>
+            <TR><TD ALIGN="LEFT">+absent : Boolean &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+geographicArea : Iso3166Code &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -79,8 +79,8 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ content : ParagraphBlock &#91;1..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ sources : ConceptSource &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+content : ParagraphBlock &#91;1..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -97,10 +97,10 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ image : Image &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ table : Table &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ formula : FormulaBlock &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+ sources : ConceptSource &#91;0..*&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+image : &#60;&#60;BasicDocument&#62;&#62;Image &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+table : &#60;&#60;BasicDocument&#62;&#62;Table &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+formula : &#60;&#60;BasicDocument&#62;&#62;FormulaBlock &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -117,9 +117,9 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+ type : RelatedConceptType</TD></TR>
-            <TR><TD ALIGN="LEFT">+ content : LocalizedString</TD></TR>
-            <TR><TD ALIGN="LEFT">+ ref : ReferenceToTermbase &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+type : RelatedConceptType</TD></TR>
+            <TR><TD ALIGN="LEFT">+content : &#60;&#60;BasicDocument&#62;&#62;LocalizedString</TD></TR>
+            <TR><TD ALIGN="LEFT">+ref : &#60;&#60;StandardDocument&#62;&#62;ReferenceToTermbase &#91;0..1&#93;</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -136,13 +136,13 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> identical</TD></TR>
-            <TR><TD ALIGN="LEFT"> modified</TD></TR>
-            <TR><TD ALIGN="LEFT"> restyled</TD></TR>
-            <TR><TD ALIGN="LEFT"> context-added</TD></TR>
-            <TR><TD ALIGN="LEFT"> generalisation</TD></TR>
-            <TR><TD ALIGN="LEFT"> specialisation</TD></TR>
-            <TR><TD ALIGN="LEFT"> unspecified</TD></TR>
+            <TR><TD ALIGN="LEFT">identical</TD></TR>
+            <TR><TD ALIGN="LEFT">modified</TD></TR>
+            <TR><TD ALIGN="LEFT">restyled</TD></TR>
+            <TR><TD ALIGN="LEFT">context-added</TD></TR>
+            <TR><TD ALIGN="LEFT">generalisation</TD></TR>
+            <TR><TD ALIGN="LEFT">specialisation</TD></TR>
+            <TR><TD ALIGN="LEFT">unspecified</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -159,8 +159,8 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> authoritative</TD></TR>
-            <TR><TD ALIGN="LEFT"> lineage</TD></TR>
+            <TR><TD ALIGN="LEFT">authoritative</TD></TR>
+            <TR><TD ALIGN="LEFT">lineage</TD></TR>
           </TABLE>
         </TD>
   </TR>
@@ -177,14 +177,14 @@ digraph G {
   <TR>
     <TD>
           <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT"> deprecates</TD></TR>
-            <TR><TD ALIGN="LEFT"> supersedes</TD></TR>
-            <TR><TD ALIGN="LEFT"> narrower</TD></TR>
-            <TR><TD ALIGN="LEFT"> broader</TD></TR>
-            <TR><TD ALIGN="LEFT"> equivalent</TD></TR>
-            <TR><TD ALIGN="LEFT"> compare</TD></TR>
-            <TR><TD ALIGN="LEFT"> contrast</TD></TR>
-            <TR><TD ALIGN="LEFT"> see</TD></TR>
+            <TR><TD ALIGN="LEFT">deprecates</TD></TR>
+            <TR><TD ALIGN="LEFT">supersedes</TD></TR>
+            <TR><TD ALIGN="LEFT">narrower</TD></TR>
+            <TR><TD ALIGN="LEFT">broader</TD></TR>
+            <TR><TD ALIGN="LEFT">equivalent</TD></TR>
+            <TR><TD ALIGN="LEFT">compare</TD></TR>
+            <TR><TD ALIGN="LEFT">contrast</TD></TR>
+            <TR><TD ALIGN="LEFT">see</TD></TR>
           </TABLE>
         </TD>
   </TR>
