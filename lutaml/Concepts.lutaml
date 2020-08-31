@@ -86,8 +86,8 @@ diagram Concepts {
   }
   class RelatedConcept {
     +type: 'RelatedConceptType' 
-    +content: '\<<BasicDocument>> LocalizedString' 
-    +ref: '\<<StandardDocument>> ReferenceToTermbase' [0..1]
+    +content: '<<BasicDocument>> LocalizedString' 
+    +ref: '<<StandardDocument>> ReferenceToTermbase' [0..1]
   }
   enum RelatedConceptType {
   }
