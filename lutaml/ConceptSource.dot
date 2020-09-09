@@ -6,18 +6,26 @@ digraph G {
   ConceptSource [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSource</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSource</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+status : ConceptSourceStatus </TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+status : ConceptSourceStatus </TD></TR>
             <TR><TD ALIGN="LEFT">+type : ConceptSourceType </TD></TR>
-            <TR><TD ALIGN="LEFT">+origin : &#60;&#60;Bibliography&#62;&#62;Citation </TD></TR>
-            <TR><TD ALIGN="LEFT">+modification : &#60;&#60;BasicDocument&#62;&#62;ParagraphBlock &#91;0..1&#93;</TD></TR>
-          </TABLE>
+            <TR><TD ALIGN="LEFT">+origin : «Bibliography»Citation </TD></TR>
+            <TR><TD ALIGN="LEFT">+modification : «BasicDocument»ParagraphBlock &#91;0..1&#93;</TD></TR>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -26,21 +34,29 @@ digraph G {
   ConceptSourceStatus [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSourceStatus</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSourceStatus</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">identical</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">identical</TD></TR>
             <TR><TD ALIGN="LEFT">modified</TD></TR>
             <TR><TD ALIGN="LEFT">restyled</TD></TR>
             <TR><TD ALIGN="LEFT">context-added</TD></TR>
             <TR><TD ALIGN="LEFT">generalisation</TD></TR>
             <TR><TD ALIGN="LEFT">specialisation</TD></TR>
             <TR><TD ALIGN="LEFT">unspecified</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -49,16 +65,24 @@ digraph G {
   ConceptSourceType [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSourceType</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSourceType</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">authoritative</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">authoritative</TD></TR>
             <TR><TD ALIGN="LEFT">lineage</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>

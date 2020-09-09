@@ -3,28 +3,60 @@ digraph G {
   edge [color="gray50"]
   node [shape="box" fontname="Helvetica-bold"]
 
-  Concept [shape="plain" fontname="Helvetica" label=<
+  Definition [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>Concept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER">«BasicDocument»</TD></TR>\n<TR><TD ALIGN="CENTER"><B>Definition</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+id : String &#91;0..1&#93;</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  </TABLE>
+  >]
+  
+  Concept [shape="plain" fontname="Helvetica" label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
+    <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>Concept</B></TD></TR>
+  </TABLE>
+  </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+id : String &#91;0..1&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+designations : Designation &#91;1..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+domain : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+subject : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+usageInfo : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+domain : «BasicDocument»LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+subject : «BasicDocument»LocalizedString &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+usageInfo : «BasicDocument»LocalizedString &#91;0..1&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+definition : GlossaristDefinition &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+nonverbalrep : NonVerbRep &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+notes : GlossaristDefinition &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+examples : GlossaristDefinition &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+related : RelatedConcept &#91;0..*&#93;</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -33,18 +65,26 @@ digraph G {
   ConceptSource [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSource</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSource</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+status : ConceptSourceStatus</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+status : ConceptSourceStatus</TD></TR>
             <TR><TD ALIGN="LEFT">+type : ConceptSourceType</TD></TR>
-            <TR><TD ALIGN="LEFT">+origin : &#60;&#60;Bibliography&#62;&#62;Citation</TD></TR>
-            <TR><TD ALIGN="LEFT">+modification : &#60;&#60;BasicDocument&#62;&#62;ParagraphBlock &#91;0..1&#93;</TD></TR>
-          </TABLE>
+            <TR><TD ALIGN="LEFT">+origin : «Bibliography»Citation</TD></TR>
+            <TR><TD ALIGN="LEFT">+modification : «BasicDocument»ParagraphBlock &#91;0..1&#93;</TD></TR>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -53,18 +93,22 @@ digraph G {
   Designation [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>Designation</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>Designation</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+normativeStatus : NormativeStatus</TD></TR>
-            <TR><TD ALIGN="LEFT">+absent : Boolean &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+geographicArea : Iso3166Code &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
-          </TABLE>
-        </TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -73,16 +117,24 @@ digraph G {
   GlossaristDefinition [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>GlossaristDefinition</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>GlossaristDefinition</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+content : ParagraphBlock &#91;1..*&#93;</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+content : ParagraphBlock &#91;1..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -91,18 +143,26 @@ digraph G {
   NonVerbRep [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>NonVerbRep</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>NonVerbRep</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+image : &#60;&#60;BasicDocument&#62;&#62;Image &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+table : &#60;&#60;BasicDocument&#62;&#62;Table &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+formula : &#60;&#60;BasicDocument&#62;&#62;FormulaBlock &#91;0..1&#93;</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+image : «BasicDocument»Image &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+table : «BasicDocument»Table &#91;0..1&#93;</TD></TR>
+            <TR><TD ALIGN="LEFT">+formula : «BasicDocument»FormulaBlock &#91;0..1&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -111,17 +171,25 @@ digraph G {
   RelatedConcept [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>RelatedConcept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>RelatedConcept</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+type : RelatedConceptType</TD></TR>
-            <TR><TD ALIGN="LEFT">+content : &#60;&#60;BasicDocument&#62;&#62;LocalizedString</TD></TR>
-            <TR><TD ALIGN="LEFT">+ref : &#60;&#60;StandardDocument&#62;&#62;ReferenceToTermbase &#91;0..1&#93;</TD></TR>
-          </TABLE>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+type : RelatedConceptType</TD></TR>
+            <TR><TD ALIGN="LEFT">+content : «BasicDocument»LocalizedString</TD></TR>
+            <TR><TD ALIGN="LEFT">+ref : «StandardDocument»ReferenceToTermbase &#91;0..1&#93;</TD></TR>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -130,21 +198,29 @@ digraph G {
   ConceptSourceStatus [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSourceStatus</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSourceStatus</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">identical</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">identical</TD></TR>
             <TR><TD ALIGN="LEFT">modified</TD></TR>
             <TR><TD ALIGN="LEFT">restyled</TD></TR>
             <TR><TD ALIGN="LEFT">context-added</TD></TR>
             <TR><TD ALIGN="LEFT">generalisation</TD></TR>
             <TR><TD ALIGN="LEFT">specialisation</TD></TR>
             <TR><TD ALIGN="LEFT">unspecified</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -153,16 +229,24 @@ digraph G {
   ConceptSourceType [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptSourceType</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptSourceType</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">authoritative</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">authoritative</TD></TR>
             <TR><TD ALIGN="LEFT">lineage</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -171,13 +255,15 @@ digraph G {
   RelatedConceptType [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>RelatedConceptType</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>RelatedConceptType</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">deprecates</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">deprecates</TD></TR>
             <TR><TD ALIGN="LEFT">supersedes</TD></TR>
             <TR><TD ALIGN="LEFT">narrower</TD></TR>
             <TR><TD ALIGN="LEFT">broader</TD></TR>
@@ -185,8 +271,14 @@ digraph G {
             <TR><TD ALIGN="LEFT">compare</TD></TR>
             <TR><TD ALIGN="LEFT">contrast</TD></TR>
             <TR><TD ALIGN="LEFT">see</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>

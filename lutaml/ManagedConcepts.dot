@@ -6,15 +6,23 @@ digraph G {
   ManagedConceptCollection [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ManagedConceptCollection</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ManagedConceptCollection</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+concepts : ManagedConcept &#91;0..*&#93;</TD></TR>
-          </TABLE>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+concepts : ManagedConcept &#91;0..*&#93;</TD></TR>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -23,18 +31,26 @@ digraph G {
   ManagedConcept [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ManagedConcept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ManagedConcept</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+related : RelatedConcept &#91;0..*&#93;</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+related : RelatedConcept &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+status : ConceptStatus</TD></TR>
             <TR><TD ALIGN="LEFT">+dates : ConceptDate &#91;0..*&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+localizedConcepts : LocalizedConcept &#91;0..1&#93;</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -43,17 +59,22 @@ digraph G {
   RelatedConcept [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>RelatedConcept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>RelatedConcept</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+type : RelatedConceptType</TD></TR>
-            <TR><TD ALIGN="LEFT">+content : &#60;&#60;BasicDocument&#62;&#62;LocalizedString</TD></TR>
-            <TR><TD ALIGN="LEFT">+ref : &#60;&#60;StandardDocument&#62;&#62;ReferenceToTermbase &#91;0..1&#93;</TD></TR>
-          </TABLE>
-        </TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -62,17 +83,25 @@ digraph G {
   LocalizedConcept [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>LocalizedConcept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>LocalizedConcept</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+language : Iso639ThreeCharCode</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+language : Iso639ThreeCharCode</TD></TR>
             <TR><TD ALIGN="LEFT">+script : Iso15924Code &#91;0..1&#93;</TD></TR>
             <TR><TD ALIGN="LEFT">+concept : Concept</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -81,25 +110,22 @@ digraph G {
   Concept [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>Concept</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>Concept</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+id : String &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+designations : Designation &#91;1..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+domain : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+subject : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+usageInfo : &#60;&#60;BasicDocument&#62;&#62;LocalizedString &#91;0..1&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+definition : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+nonverbalrep : NonVerbRep &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+notes : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+examples : GlossaristDefinition &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+sources : ConceptSource &#91;0..*&#93;</TD></TR>
-            <TR><TD ALIGN="LEFT">+related : RelatedConcept &#91;0..*&#93;</TD></TR>
-          </TABLE>
-        </TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -108,16 +134,24 @@ digraph G {
   ConceptDate [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptDate</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptDate</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">+date : Iso8601Date</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">+date : Iso8601Date</TD></TR>
             <TR><TD ALIGN="LEFT">+type : ConceptDateType</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -126,19 +160,27 @@ digraph G {
   ConceptStatus [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptStatus</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptStatus</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">draft</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">draft</TD></TR>
             <TR><TD ALIGN="LEFT">notValid</TD></TR>
             <TR><TD ALIGN="LEFT">valid</TD></TR>
             <TR><TD ALIGN="LEFT">superseded</TD></TR>
             <TR><TD ALIGN="LEFT">retired</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -147,17 +189,25 @@ digraph G {
   ConceptDateType [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>ConceptDateType</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>ConceptDateType</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">accepted</TD></TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+              <TR><TD ALIGN="LEFT">accepted</TD></TR>
             <TR><TD ALIGN="LEFT">amended</TD></TR>
             <TR><TD ALIGN="LEFT">retired</TD></TR>
-          </TABLE>
+  </TABLE>
         </TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
@@ -166,26 +216,32 @@ digraph G {
   RelatedConceptType [shape="plain" fontname="Helvetica" label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="10">
     <TR>
-    <TD><B>RelatedConceptType</B></TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="CENTER"><B>RelatedConceptType</B></TD></TR>
+  </TABLE>
+  </TD>
   </TR>
   
   <TR>
-    <TD>
-          <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
-            <TR><TD ALIGN="LEFT">deprecates</TD></TR>
-            <TR><TD ALIGN="LEFT">supersedes</TD></TR>
-            <TR><TD ALIGN="LEFT">narrower</TD></TR>
-            <TR><TD ALIGN="LEFT">broader</TD></TR>
-            <TR><TD ALIGN="LEFT">equivalent</TD></TR>
-            <TR><TD ALIGN="LEFT">compare</TD></TR>
-            <TR><TD ALIGN="LEFT">contrast</TD></TR>
-            <TR><TD ALIGN="LEFT">see</TD></TR>
-          </TABLE>
-        </TD>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
+  </TR>
+  
+  <TR>
+    <TD><TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0">
+    <TR><TD ALIGN="LEFT"></TD></TR>
+  </TABLE></TD>
   </TR>
   
   </TABLE>
   >]
 
+  LocalizedConcept -> ManagedConcept [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  ConceptStatus -> ManagedConcept [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  ConceptDate -> ManagedConcept [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  RelatedConcept -> ManagedConcept [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  ConceptDateType -> ConceptDate [dir="direct" arrowtail="onormal" arrowhead="vee"]
+  RelatedConceptType -> RelatedConcept [dir="direct" arrowtail="onormal" arrowhead="vee"]
   LocalizedConcept -> Concept [dir="direct" arrowtail="onormal" arrowhead="onormal"]
 }

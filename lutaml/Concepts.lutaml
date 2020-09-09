@@ -45,6 +45,7 @@ diagram Concepts {
     member_type direct
     member RelatedConcept
   }
+  class Definition <<BasicDocument>> {}
   class Concept {
     +id: String [0..1]
     +designations: Designation [1..*]
@@ -77,12 +78,7 @@ diagram Concepts {
     authoritative
     lineage
   }
-  class Designation {
-    +normativeStatus: NormativeStatus
-    +absent: Boolean [0..1]
-    +geographicArea: Iso3166Code [0..*]
-    +sources: ConceptSource [0..*]
-  }
+  class Designation {}
   class GlossaristDefinition {
     +content: ParagraphBlock [1..*]
     +sources: ConceptSource [0..*]
