@@ -1,4 +1,35 @@
 diagram ManagedConcepts {
+  association {
+    owner LocalizedConcept
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptStatus
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptDate
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner RelatedConcept
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptDateType
+    member_type direct
+    member ConceptDate
+  }
+  association {
+    owner RelatedConceptType
+    member_type direct
+    member RelatedConcept
+  }
+
   title 'Managed concepts and collection'
   class ManagedConceptCollection {
     +concepts: ManagedConcept [0..*]
@@ -9,11 +40,7 @@ diagram ManagedConcepts {
     +dates: ConceptDate [0..*]
     +localizedConcepts: LocalizedConcept [0..1]
   }
-  class RelatedConcept {
-    +type: RelatedConceptType
-    +content: <<BasicDocument>> LocalizedString
-    +ref: <<StandardDocument>> ReferenceToTermbase [0..1]
-  }
+  class RelatedConcept {}
   enum ConceptStatus {
     draft
     notValid
@@ -31,19 +58,7 @@ diagram ManagedConcepts {
     member_type inheritance
     member Concept
   }
-  class Concept {
-    +id: String [0..1]
-    +designations: Designation [1..*]
-    +domain: <<BasicDocument>> LocalizedString [0..1]
-    +subject: <<BasicDocument>> LocalizedString [0..1]
-    +usageInfo: <<BasicDocument>> LocalizedString [0..1]
-    +definition: GlossaristDefinition [0..*]
-    +nonverbalrep: NonVerbRep [0..*]
-    +notes: GlossaristDefinition [0..*]
-    +examples: GlossaristDefinition [0..*]
-    +sources: ConceptSource [0..*]
-    +related: RelatedConcept [0..*]
-  }
+  class Concept {}
   class ConceptDate {
     +date: Iso8601Date
     +type: ConceptDateType
@@ -53,14 +68,5 @@ diagram ManagedConcepts {
     amended
     retired
   }
-  enum RelatedConceptType {
-    deprecates
-    supersedes
-    narrower
-    broader
-    equivalent
-    compare
-    contrast
-    see
-  }
+  enum RelatedConceptType {}
 }
