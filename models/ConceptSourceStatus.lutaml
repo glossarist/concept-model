@@ -1,0 +1,9 @@
+enum ConceptSourceStatus {
+  identical
+  modified
+  restyled
+  context-added
+  generalisation
+  specialisation
+  unspecified
+}

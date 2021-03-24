@@ -1,22 +1,7 @@
 diagram ConceptSource {
   title 'Concept source related classes'
-  class ConceptSource {
-    +status: ConceptSourceStatus 
-    +type: ConceptSourceType 
-    +origin: <<Bibliography>> Citation 
-    +modification: <<BasicDocument>> ParagraphBlock [0..1]
-  }
-  enum ConceptSourceStatus {
-    identical
-    modified
-    restyled
-    context-added
-    generalisation
-    specialisation
-    unspecified
-  }
-  enum ConceptSourceType {
-    authoritative
-    lineage
-  }
+
+  include ../models/ConceptSource.lutaml
+  include ../models/ConceptSourceStatus.lutaml
+  include ../models/ConceptSourceType.lutaml
 }

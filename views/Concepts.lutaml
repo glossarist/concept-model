@@ -26,7 +26,7 @@ diagram Concepts {
     member Concept
   }
   association {
-    owner GlossaristDefinition
+    owner DetailedDefinition
     member_type direct
     member Concept
   }
@@ -52,10 +52,10 @@ diagram Concepts {
     +domain: <<BasicDocument>> LocalizedString [0..1]
     +subject: <<BasicDocument>> LocalizedString [0..1]
     +usageInfo: <<BasicDocument>> LocalizedString [0..1]
-    +definition: GlossaristDefinition [0..*]
+    +definition: DetailedDefinition [0..*]
     +nonverbalrep: NonVerbRep [0..*]
-    +notes: GlossaristDefinition [0..*]
-    +examples: GlossaristDefinition [0..*]
+    +notes: DetailedDefinition [0..*]
+    +examples: DetailedDefinition [0..*]
     +sources: ConceptSource [0..*]
     +related: RelatedConcept [0..*]
   }
@@ -78,8 +78,8 @@ diagram Concepts {
     authoritative
     lineage
   }
-  class Designation {}
-  class GlossaristDefinition {
+
+  class DetailedDefinition {
     +content: ParagraphBlock [1..*]
     +sources: ConceptSource [0..*]
   }

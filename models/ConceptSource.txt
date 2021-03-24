@@ -1,0 +1,6 @@
+class ConceptSource {
+  +status: ConceptSourceStatus
+  +type: ConceptSourceType
+  +origin: <<Bibliography>> Citation
+  +modification: <<BasicDocument>> ParagraphBlock [0..1]
+}

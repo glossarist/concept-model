@@ -68,9 +68,11 @@ diagram Designations {
   }
   class TextElement <<BasicDocument>> {}
   class TextElementType <<BasicDocument>> {}
-  enum Iso3166Code {}
-  enum Iso639ThreeCharCode {}
-  enum Iso15924Code {}
+
+  data_type Iso3166Code {}
+  data_type Iso639ThreeCharCode {}
+  data_type Iso15924Code {}
+
   enum NormativeStatus {
     preferred
     admitted
@@ -109,6 +111,7 @@ diagram Designations {
   }
   class SuffixDesignation {
   }
+
   class AbbreviationDesignation {
     +isInternational: Boolean
     +abbreviationType: AbbreviationType [0..1]
@@ -118,6 +121,7 @@ diagram Designations {
     acronym
     initialism
   }
+
   class LetterSymbolDesignation {
     +text: <<BasicDocument>> LocalizedString
     +language: Iso639ThreeCharCode
@@ -128,11 +132,13 @@ diagram Designations {
     member_type inheritance
     member SymbolDesignation
   }
+
   class GraphicalSymbolDesignation {
     +text: <<BasicDocument>> LocalizedString [0..1]
     +image: Image [0..1]
     +isInternational: Boolean [0..1]
   }
+
   association {
     owner GraphicalSymbolDesignation
     member_type inheritance
