@@ -52,7 +52,7 @@ image::images/ConceptSource.png[]
 
 === Designation
 
-image::images/Designation.png[]
+image::images/Designations.png[]
 
 === ManagedConcept and ManagedConceptCollection
 
