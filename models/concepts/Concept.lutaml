@@ -1,0 +1,13 @@
+class Concept {
+  +id: String [0..1]
+  +designations: Designation [1..*]
+  +domain: <<BasicDocument>> LocalizedString [0..1]
+  +subject: <<BasicDocument>> LocalizedString [0..1]
+  +usageInfo: <<BasicDocument>> LocalizedString [0..1]
+  +definition: DetailedDefinition [0..*]
+  +nonverbalrep: NonVerbRep [0..*]
+  +notes: DetailedDefinition [0..*]
+  +examples: DetailedDefinition [0..*]
+  +sources: ConceptSource [0..*]
+  +related: RelatedConcept [0..*]
+}

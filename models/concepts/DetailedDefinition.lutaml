@@ -1,0 +1,4 @@
+class DetailedDefinition {
+  +content: ParagraphBlock [1..*]
+  +sources: ConceptSource [0..*]
+}

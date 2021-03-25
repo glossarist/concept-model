@@ -1,0 +1,10 @@
+enum RelatedConceptType {
+  deprecates
+  supersedes
+  narrower
+  broader
+  equivalent
+  compare
+  contrast
+  see
+}

@@ -1,0 +1,6 @@
+class ManagedConcept {
+  +related: RelatedConcept [0..*]
+  +status: ConceptStatus
+  +dates: ConceptDate [0..*]
+  +localizedConcepts: LocalizedConcept [0..1]
+}

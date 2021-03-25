@@ -1,0 +1,7 @@
+class ExpressionDesignation {
+  +text: GlossaristTextElementType
+  +language: Iso639ThreeCharCode
+  +script: Iso15924Code [0..1]
+  +pronunciation: <<BasicDocument>> LocalizedString [0..*]
+  +grammarInfo: GrammarInfo [0..*]
+}

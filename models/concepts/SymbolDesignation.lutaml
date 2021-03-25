@@ -1,0 +1,3 @@
+class SymbolDesignation {
+  +isInternational: Boolean [0..1]
+}

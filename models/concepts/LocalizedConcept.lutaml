@@ -1,0 +1,5 @@
+class LocalizedConcept {
+  +language: Iso639ThreeCharCode
+  +script: Iso15924Code [0..1]
+  +concept: Concept
+}

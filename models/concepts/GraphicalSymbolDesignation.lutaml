@@ -1,0 +1,5 @@
+class GraphicalSymbolDesignation {
+  +text: <<BasicDocument>> LocalizedString [0..1]
+  +image: Image [0..1]
+  +isInternational: Boolean [0..1]
+}

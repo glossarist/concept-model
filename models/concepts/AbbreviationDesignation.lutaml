@@ -1,0 +1,4 @@
+class AbbreviationDesignation {
+  +isInternational: Boolean
+  +abbreviationType: AbbreviationType [0..1]
+}

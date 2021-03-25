@@ -1,0 +1,7 @@
+enum ConceptStatus {
+  draft
+  notValid
+  valid
+  superseded
+  retired
+}

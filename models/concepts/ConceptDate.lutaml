@@ -1,0 +1,4 @@
+class ConceptDate {
+  +date: Iso8601Date
+  +type: ConceptDateType
+}

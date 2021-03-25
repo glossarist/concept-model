@@ -1,0 +1,6 @@
+enum GrammarGender {
+  masculine
+  feminine
+  neuter
+  common
+}

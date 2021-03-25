@@ -1,5 +1,16 @@
 diagram Concepts {
   title 'Concept models'
+
+  include ../models/basic_document/Definition.lutaml
+  include ../models/concepts/Concept.lutaml
+  include ../models/concepts/ConceptSource.lutaml
+  include ../models/concepts/ConceptSourceStatus.lutaml
+  include ../models/concepts/ConceptSourceType.lutaml
+  include ../models/concepts/DetailedDefinition.lutaml
+  include ../models/concepts/NonVerbRep.lutaml
+  include ../models/concepts/RelatedConcept.lutaml
+  include ../models/concepts/RelatedConceptType.lutaml
+
   association {
     owner ConceptSource
     member_type direct
@@ -44,64 +55,5 @@ diagram Concepts {
     owner RelatedConceptType
     member_type direct
     member RelatedConcept
-  }
-  class Definition <<BasicDocument>> {}
-  class Concept {
-    +id: String [0..1]
-    +designations: Designation [1..*]
-    +domain: <<BasicDocument>> LocalizedString [0..1]
-    +subject: <<BasicDocument>> LocalizedString [0..1]
-    +usageInfo: <<BasicDocument>> LocalizedString [0..1]
-    +definition: DetailedDefinition [0..*]
-    +nonverbalrep: NonVerbRep [0..*]
-    +notes: DetailedDefinition [0..*]
-    +examples: DetailedDefinition [0..*]
-    +sources: ConceptSource [0..*]
-    +related: RelatedConcept [0..*]
-  }
-  class ConceptSource {
-    +status: ConceptSourceStatus
-    +type: ConceptSourceType
-    +origin: <<Bibliography>> Citation
-    +modification: <<BasicDocument>> ParagraphBlock [0..1]
-  }
-  enum ConceptSourceStatus {
-    identical
-    modified
-    restyled
-    context-added
-    generalisation
-    specialisation
-    unspecified
-  }
-  enum ConceptSourceType {
-    authoritative
-    lineage
-  }
-
-  class DetailedDefinition {
-    +content: ParagraphBlock [1..*]
-    +sources: ConceptSource [0..*]
-  }
-  class NonVerbRep {
-    +image: <<BasicDocument>> Image [0..1]
-    +table: <<BasicDocument>> Table [0..1]
-    +formula: <<BasicDocument>> FormulaBlock [0..1]
-    +sources: ConceptSource [0..*]
-  }
-  class RelatedConcept {
-    +type: RelatedConceptType
-    +content: <<BasicDocument>> LocalizedString
-    +ref: <<StandardDocument>> ReferenceToTermbase [0..1]
-  }
-  enum RelatedConceptType {
-    deprecates
-    supersedes
-    narrower
-    broader
-    equivalent
-    compare
-    contrast
-    see
   }
 }

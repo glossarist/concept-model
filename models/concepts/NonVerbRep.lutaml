@@ -1,0 +1,6 @@
+class NonVerbRep {
+  +image: <<BasicDocument>> Image [0..1]
+  +table: <<BasicDocument>> Table [0..1]
+  +formula: <<BasicDocument>> FormulaBlock [0..1]
+  +sources: ConceptSource [0..*]
+}

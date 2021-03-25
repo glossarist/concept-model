@@ -1,4 +1,16 @@
 diagram ManagedConcepts {
+  title 'Managed concepts and collection'
+
+  include ../models/concepts/ManagedConceptCollection.lutaml
+  include ../models/concepts/ManagedConcept.lutaml
+  include ../models/concepts/RelatedConcept.lutaml
+  include ../models/concepts/ConceptStatus.lutaml
+  include ../models/concepts/LocalizedConcept.lutaml
+  include ../models/concepts/ConceptDate.lutaml
+  include ../models/concepts/ConceptDateType.lutaml
+  include ../models/concepts/RelatedConceptType.lutaml
+  include ../models/concepts/Concept.lutaml
+
   association {
     owner LocalizedConcept
     member_type direct
@@ -29,44 +41,9 @@ diagram ManagedConcepts {
     member_type direct
     member RelatedConcept
   }
-
-  title 'Managed concepts and collection'
-  class ManagedConceptCollection {
-    +concepts: ManagedConcept [0..*]
-  }
-  class ManagedConcept {
-    +related: RelatedConcept [0..*]
-    +status: ConceptStatus
-    +dates: ConceptDate [0..*]
-    +localizedConcepts: LocalizedConcept [0..1]
-  }
-  class RelatedConcept {}
-  enum ConceptStatus {
-    draft
-    notValid
-    valid
-    superseded
-    retired
-  }
-  class LocalizedConcept {
-    +language: Iso639ThreeCharCode
-    +script: Iso15924Code [0..1]
-    +concept: Concept
-  }
   association {
     owner LocalizedConcept
     member_type inheritance
     member Concept
   }
-  class Concept {}
-  class ConceptDate {
-    +date: Iso8601Date
-    +type: ConceptDateType
-  }
-  enum ConceptDateType {
-    accepted
-    amended
-    retired
-  }
-  enum RelatedConceptType {}
 }

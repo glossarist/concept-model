@@ -1,0 +1,3 @@
+class ManagedConceptCollection {
+  +concepts: ManagedConcept [0..*]
+}

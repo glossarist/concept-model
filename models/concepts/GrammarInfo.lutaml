@@ -1,0 +1,9 @@
+class GrammarInfo {
+  +gender: GrammarGender [0..*]
+  +isPreposition: Boolean [0..1]
+  +isParticiple: Boolean [0..1]
+  +isAdjective: Boolean [0..1]
+  +isVerb: Boolean [0..1]
+  +isAdverb: Boolean [0..1]
+  +isNoun: Boolean [0..1]
+}
