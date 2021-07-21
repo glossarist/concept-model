@@ -1,0 +1,49 @@
+diagram ManagedConcepts {
+  title 'Managed concepts and collection'
+
+  include models/concept-model/models/concepts/ManagedConceptCollection.lutaml
+  include models/concept-model/models/concepts/ManagedConcept.lutaml
+  include models/concept-model/models/concepts/RelatedConcept.lutaml
+  include models/concept-model/models/concepts/ConceptStatus.lutaml
+  include models/concept-model/models/concepts/LocalizedConcept.lutaml
+  include models/concept-model/models/concepts/ConceptDate.lutaml
+  include models/concept-model/models/concepts/ConceptDateType.lutaml
+  include models/concept-model/models/concepts/RelatedConceptType.lutaml
+  include models/concept-model/models/concepts/Concept.lutaml
+
+  association {
+    owner LocalizedConcept
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptStatus
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptDate
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner RelatedConcept
+    member_type direct
+    member ManagedConcept
+  }
+  association {
+    owner ConceptDateType
+    member_type direct
+    member ConceptDate
+  }
+  association {
+    owner RelatedConceptType
+    member_type direct
+    member RelatedConcept
+  }
+  association {
+    owner LocalizedConcept
+    member_type inheritance
+    member Concept
+  }
+}

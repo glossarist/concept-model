@@ -1,0 +1,59 @@
+diagram Concepts {
+  title 'Concept models'
+
+  include models/concept-model/models/basic_document/Definition.lutaml
+  include models/concept-model/models/concepts/Concept.lutaml
+  include models/concept-model/models/concepts/ConceptSource.lutaml
+  include models/concept-model/models/concepts/ConceptSourceStatus.lutaml
+  include models/concept-model/models/concepts/ConceptSourceType.lutaml
+  include models/concept-model/models/concepts/DetailedDefinition.lutaml
+  include models/concept-model/models/concepts/NonVerbRep.lutaml
+  include models/concept-model/models/concepts/RelatedConcept.lutaml
+  include models/concept-model/models/concepts/RelatedConceptType.lutaml
+
+  association {
+    owner ConceptSource
+    member_type direct
+    member Concept
+  }
+  association {
+    owner Definition
+    member_type direct
+    member Concept
+  }
+  association {
+    owner Designation
+    member_type direct
+    member Concept
+  }
+  association {
+    owner RelatedConcept
+    member_type direct
+    member Concept
+  }
+  association {
+    owner NonVerbRep
+    member_type direct
+    member Concept
+  }
+  association {
+    owner DetailedDefinition
+    member_type direct
+    member Concept
+  }
+  association {
+    owner ConceptSourceStatus
+    member_type direct
+    member ConceptSource
+  }
+  association {
+    owner ConceptSourceType
+    member_type direct
+    member ConceptSource
+  }
+  association {
+    owner RelatedConceptType
+    member_type direct
+    member RelatedConcept
+  }
+}
