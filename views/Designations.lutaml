@@ -1,5 +1,6 @@
 diagram Designations {
   title 'Designation models'
+  caption 'Designation models'
 
   include ../models/data_types/Iso3166Code.lutaml
   include ../models/data_types/Iso639ThreeCharCode.lutaml

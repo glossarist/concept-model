@@ -1,5 +1,6 @@
 diagram ManagedConcepts {
   title 'Managed concepts and collection'
+  caption 'Managed concepts and collection'
 
   include ../models/concepts/ManagedConceptCollection.lutaml
   include ../models/concepts/ManagedConcept.lutaml

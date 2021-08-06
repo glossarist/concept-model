@@ -1,5 +1,6 @@
 diagram Concepts {
   title 'Concept models'
+  caption 'Concept models'
 
   include ../models/basic_document/Definition.lutaml
   include ../models/concepts/Concept.lutaml
