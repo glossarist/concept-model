@@ -2,21 +2,21 @@ diagram Designations {
   title 'Designation models'
   caption 'Designation models'
 
-  include models/concept-model/models/data_types/Iso3166Code.lutaml
-  include models/concept-model/models/data_types/Iso639ThreeCharCode.lutaml
-  include models/concept-model/models/data_types/Iso15924Code.lutaml
-  include models/concept-model/models/concepts/Designation.lutaml
-  include models/concept-model/models/concepts/NormativeStatus.lutaml
-  include models/concept-model/models/concepts/ExpressionDesignation.lutaml
-  include models/concept-model/models/concepts/GrammarInfo.lutaml
-  include models/concept-model/models/concepts/SymbolDesignation.lutaml
-  include models/concept-model/models/concepts/PrefixDesignation.lutaml
-  include models/concept-model/models/concepts/SuffixDesignation.lutaml
-  include models/concept-model/models/concepts/AbbreviationDesignation.lutaml
-  include models/concept-model/models/concepts/AbbreviationType.lutaml
-  include models/concept-model/models/concepts/LetterSymbolDesignation.lutaml
-  include models/concept-model/models/concepts/GraphicalSymbolDesignation.lutaml
-  include models/concept-model/models/concepts/GrammarGender.lutaml
+  include ../models/data_types/Iso3166Code.lutaml
+  include ../models/data_types/Iso639ThreeCharCode.lutaml
+  include ../models/data_types/Iso15924Code.lutaml
+  include ../models/concepts/Designation.lutaml
+  include ../models/concepts/NormativeStatus.lutaml
+  include ../models/concepts/ExpressionDesignation.lutaml
+  include ../models/concepts/GrammarInfo.lutaml
+  include ../models/concepts/SymbolDesignation.lutaml
+  include ../models/concepts/PrefixDesignation.lutaml
+  include ../models/concepts/SuffixDesignation.lutaml
+  include ../models/concepts/AbbreviationDesignation.lutaml
+  include ../models/concepts/AbbreviationType.lutaml
+  include ../models/concepts/LetterSymbolDesignation.lutaml
+  include ../models/concepts/GraphicalSymbolDesignation.lutaml
+  include ../models/concepts/GrammarGender.lutaml
 
   association {
     owner NormativeStatus

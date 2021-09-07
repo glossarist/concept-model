@@ -2,15 +2,15 @@ diagram ManagedConcepts {
   title 'Managed concepts and collection'
   caption 'Managed concepts and collection'
 
-  include models/concept-model/models/concepts/ManagedConceptCollection.lutaml
-  include models/concept-model/models/concepts/ManagedConcept.lutaml
-  include models/concept-model/models/concepts/RelatedConcept.lutaml
-  include models/concept-model/models/concepts/ConceptStatus.lutaml
-  include models/concept-model/models/concepts/LocalizedConcept.lutaml
-  include models/concept-model/models/concepts/ConceptDate.lutaml
-  include models/concept-model/models/concepts/ConceptDateType.lutaml
-  include models/concept-model/models/concepts/RelatedConceptType.lutaml
-  include models/concept-model/models/concepts/Concept.lutaml
+  include ../models/concepts/ManagedConceptCollection.lutaml
+  include ../models/concepts/ManagedConcept.lutaml
+  include ../models/concepts/RelatedConcept.lutaml
+  include ../models/concepts/ConceptStatus.lutaml
+  include ../models/concepts/LocalizedConcept.lutaml
+  include ../models/concepts/ConceptDate.lutaml
+  include ../models/concepts/ConceptDateType.lutaml
+  include ../models/concepts/RelatedConceptType.lutaml
+  include ../models/concepts/Concept.lutaml
 
   association {
     owner LocalizedConcept

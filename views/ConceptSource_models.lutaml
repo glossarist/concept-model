@@ -2,7 +2,7 @@ diagram ConceptSource {
   title 'Concept source related classes'
   caption 'Concept source related classes'
 
-  include models/concept-model/models/concepts/ConceptSource.lutaml
-  include models/concept-model/models/concepts/ConceptSourceStatus.lutaml
-  include models/concept-model/models/concepts/ConceptSourceType.lutaml
+  include ../models/concepts/ConceptSource.lutaml
+  include ../models/concepts/ConceptSourceStatus.lutaml
+  include ../models/concepts/ConceptSourceType.lutaml
 }

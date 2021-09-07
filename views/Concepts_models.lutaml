@@ -2,15 +2,15 @@ diagram Concepts {
   title 'Concept models'
   caption 'Concept models'
 
-  include models/concept-model/models/basic_document/Definition.lutaml
-  include models/concept-model/models/concepts/Concept.lutaml
-  include models/concept-model/models/concepts/ConceptSource.lutaml
-  include models/concept-model/models/concepts/ConceptSourceStatus.lutaml
-  include models/concept-model/models/concepts/ConceptSourceType.lutaml
-  include models/concept-model/models/concepts/DetailedDefinition.lutaml
-  include models/concept-model/models/concepts/NonVerbRep.lutaml
-  include models/concept-model/models/concepts/RelatedConcept.lutaml
-  include models/concept-model/models/concepts/RelatedConceptType.lutaml
+  include ../models/basic_document/Definition.lutaml
+  include ../models/concepts/Concept.lutaml
+  include ../models/concepts/ConceptSource.lutaml
+  include ../models/concepts/ConceptSourceStatus.lutaml
+  include ../models/concepts/ConceptSourceType.lutaml
+  include ../models/concepts/DetailedDefinition.lutaml
+  include ../models/concepts/NonVerbRep.lutaml
+  include ../models/concepts/RelatedConcept.lutaml
+  include ../models/concepts/RelatedConceptType.lutaml
 
   association {
     owner ConceptSource
