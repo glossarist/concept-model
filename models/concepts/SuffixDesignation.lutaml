@@ -1,2 +1,5 @@
 class SuffixDesignation {
+  definition {
+    A designation realised as a suffix.
+  }
 }

@@ -1,6 +1,25 @@
 class NonVerbRep {
-  +image: <<BasicDocument>> Image [0..1]
-  +table: <<BasicDocument>> Table [0..1]
-  +formula: <<BasicDocument>> FormulaBlock [0..1]
-  +sources: ConceptSource [0..*]
+  definition {
+    A non-verbal representation of the term, used to help define it.
+  }
+  +image: <<BasicDocument>> Image [0..1] {
+    definition {
+      An image used to help define a term.
+    }
+  }
+  +table: <<BasicDocument>> Table [0..1] {
+    definition {
+      A table used to help define a term.
+    }
+  }
+  +formula: <<BasicDocument>> FormulaBlock [0..1] {
+    definition {
+      A formula used to help define a term.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic source for the non-verbal representation of the term.
+    }
+  }
 }

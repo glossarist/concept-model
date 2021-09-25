@@ -1,5 +1,20 @@
 enum NormativeStatus {
-  preferred
-  admitted
-  deprecated
+  definition {
+    Normative status of a designation of a term.
+  }
+  preferred {
+    definition {
+      This is the preferred designation of a term.
+    }
+  }
+  admitted {
+    definition {
+      This is an acceptable designation of a term.
+    }
+  }
+  deprecated {
+    definition {
+      This is a deprecated designation of a term.
+    }
+  }
 }

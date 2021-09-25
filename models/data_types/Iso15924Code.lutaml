@@ -1,1 +1,5 @@
-data_type Iso15924Code {}
+data_type Iso15924Code {
+  definition {
+    Code identifying a language script, from ISO 15924.
+  }
+}

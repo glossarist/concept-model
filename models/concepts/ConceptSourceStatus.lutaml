@@ -1,9 +1,40 @@
 enum ConceptSourceStatus {
-  identical
-  modified
-  restyled
-  context-added
-  generalisation
-  specialisation
-  unspecified
+  definition {
+    The status of the managed term in the present context, relative to the term as found in the bibliographic source.
+  }
+  identical {
+    definition {
+      The managed term in the present context is identical to the term as found in the bibliographic source.
+    }
+  }
+  modified {
+    definition {
+      The managed term in the present context has been modified from the term as found in the bibliographic source.
+    }
+  }
+  restyled {
+    definition {
+      The managed term in the present context has been restyled from the term as found in the bibliographic source.
+    }
+  }
+  context-added {
+    definition {
+      The managed term in the present context has had context added to it, relative to the term as found in the bibliographic source.
+    }
+  }
+  generalisation {
+    definition {
+      The managed term in the present context is a generalisation of the term as found in the bibliographic source.
+    }
+  }
+  specialisation {
+    definition {
+      The managed term in the present context is a specialisation of the term as found in the bibliographic source.
+    }
+  }
+  unspecified {
+    definition {
+      The managed term in the present context is in an unspecified relation to the term as found in the bibliographic source.
+    }
+  }
 }

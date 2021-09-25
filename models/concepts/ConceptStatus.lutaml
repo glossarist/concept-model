@@ -1,7 +1,30 @@
 enum ConceptStatus {
-  draft
-  notValid
-  valid
-  superseded
-  retired
+  definition {
+    The normative status of the managed term.
+  }
+  draft {
+    definition {
+      The term is under development, and is not yet valid.
+    }
+  }
+  notValid {
+    definition {
+      The term is not valid.
+    }
+  }
+  valid {
+    definition {
+      The term is valid and in force.
+    }
+  }
+  superseded {
+    definition {
+      The term is not valid, and has been superseded by a new valid term.
+    }
+  }
+  retired {
+    definition {
+      The term was formerly valid, and is no longer valid.
+    }
+  }
 }

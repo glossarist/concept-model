@@ -1,13 +1,60 @@
 class Concept {
-  +id: String [0..1]
-  +designations: Designation [1..*]
-  +domain: <<BasicDocument>> LocalizedString [0..1]
-  +subject: <<BasicDocument>> LocalizedString [0..1]
-  +usageInfo: <<BasicDocument>> LocalizedString [0..1]
-  +definition: DetailedDefinition [0..*]
-  +nonverbalrep: NonVerbRep [0..*]
-  +notes: DetailedDefinition [0..*]
-  +examples: DetailedDefinition [0..*]
-  +sources: ConceptSource [0..*]
-  +related: RelatedConcept [0..*]
+  definition {
+    A managed terminological entry with its definition.
+  }
+  +id: String [0..1] {
+    definition {
+      An optional identifier for the term, to be used in cross-references.
+    }
+  }
+  +designations: Designation [1..*]  {
+    definition {
+      A name under which the term being defined is known.
+    }
+  }
+  +domain: <<BasicDocument>> LocalizedString [0..1]  {
+    definition {
+      An optional semantic domain for the term being defined, in case the term is ambiguous between several semantic domains.
+    }
+  }
+  +subject: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Subject of the term.
+    }
+  }
+  +usageInfo: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Information about how the term is to be used.
+    }
+  }
+  +definition: DetailedDefinition [0..*] {
+    definition {
+      The definition of the term.
+    }
+  }
+  +nonverbalrep: NonVerbRep [0..*] {
+    definition {
+      A non-verbal representation used to help define the term.
+    }
+  }
+  +notes: DetailedDefinition [0..*] {
+    definition {
+      Zero or more notes about the term.
+    }
+  }
+  +examples: DetailedDefinition [0..*] {
+    definition {
+      Zero or more examples of how the term is to be used.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Zero or more bibliographical sources for the term. 
+    }
+  }
+  +related: RelatedConcept [0..*] {
+    definition {
+      Zero or more terms related to the current term.
+    }
+  }
 }

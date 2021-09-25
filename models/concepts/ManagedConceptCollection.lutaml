@@ -1,3 +1,10 @@
 class ManagedConceptCollection {
-  +concepts: ManagedConcept [0..*]
+  definition {
+    A collection of managed terms.
+  }
+  +concepts: ManagedConcept [0..*] {
+    definition {
+      Zero or more managed terms.
+    }
+  }
 }

@@ -1,6 +1,25 @@
 enum GrammarGender {
-  masculine
-  feminine
-  neuter
-  common
+  definition {
+    The grammatical gender of the designation.
+  }
+  masculine {
+    definition {
+      Masculine gender.
+    }
+  }
+  feminine {
+    definition {
+      Feminine gender.
+    }
+  }
+  neuter {
+    definition {
+      Neuter gender.
+    }
+  }
+  common {
+    definition {
+      Masculine + Feminine gender.
+    }
+  }
 }

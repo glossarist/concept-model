@@ -1,4 +1,15 @@
 class DetailedDefinition {
-  +content: ParagraphBlock [1..*]
-  +sources: ConceptSource [0..*]
+  definition {
+    A definition of the managed term.
+  }
+  +content: ParagraphBlock [1..*] {
+    definition {
+      The text of the definition of the managed term.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references for this particular definition of the managed term.
+    }
+  }
 }

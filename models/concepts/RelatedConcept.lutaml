@@ -1,5 +1,20 @@
 class RelatedConcept {
-  +type: RelatedConceptType
-  +content: <<BasicDocument>> LocalizedString
-  +ref: <<StandardDocument>> ReferenceToTermbase [0..1]
+  definition {
+    A term related to the current term.
+  }
+  +type: RelatedConceptType {
+    definition {
+      The relation of the term to the current term.
+    }
+  }
+  +content: <<BasicDocument>> LocalizedString {
+    definition {
+      The designation of the related term.
+    }
+  }
+  +ref: <<StandardDocument>> ReferenceToTermbase [0..1] {
+    definition {
+      A citation of the related term, in a Termbase.
+    }
+  }
 }

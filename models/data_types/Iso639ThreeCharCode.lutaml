@@ -1,1 +1,5 @@
-data_type Iso639ThreeCharCode {}
+data_type Iso639ThreeCharCode {
+  definition {
+    3-letter code identifying a language, from ISO 639.
+  }
+}

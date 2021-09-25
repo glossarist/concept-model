@@ -1,5 +1,20 @@
 class GraphicalSymbolDesignation {
-  +text: <<BasicDocument>> LocalizedString [0..1]
-  +image: Image [0..1]
-  +isInternational: Boolean [0..1]
+  definition {
+    A designation realised as a graphical symbol.
+  }
+  +text: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      A textual description of the designation.
+    }
+  }
+  +image: Image [0..1] {
+    definition {
+      The graphical symbol form of the designation.
+    }
+  }
+  +isInternational: Boolean [0..1] {
+    definition {
+      Whether the designation is valid in all regions, or is region-specific.
+    }
+  }
 }

@@ -1,2 +1,5 @@
 class PrefixDesignation {
+  definition {
+    A designation realised as a prefix.
+  }
 }

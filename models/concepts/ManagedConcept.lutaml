@@ -1,6 +1,25 @@
 class ManagedConcept {
-  +related: RelatedConcept [0..*]
-  +status: ConceptStatus
-  +dates: ConceptDate [0..*]
-  +localizedConcepts: LocalizedConcept [0..1]
+  definition {
+    A managed term, including its relations with other terms.
+  }
+  +related: RelatedConcept [0..*] {
+    definition {
+      Terms related to the term.
+    }
+  }
+  +status: ConceptStatus {
+    definition {
+      The normative status of the term.
+    }
+  }
+  +dates: ConceptDate [0..*] {
+    definition {
+      Dates in the lifecycle of the management of the term.
+    }
+  }
+  +localizedConcepts: LocalizedConcept [0..1] {
+    definition {
+      Localisations of the term to different languages.
+    }
+  }
 }

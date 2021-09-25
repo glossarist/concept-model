@@ -1,4 +1,15 @@
 class ConceptDate {
-  +date: Iso8601Date
-  +type: ConceptDateType
+  definition {
+    A date relevant to the lifecycle of the managed term.
+  }
+  +date: Iso8601Date {
+    definition {
+      The date associated with the managed term.
+    }
+  }
+  +type: ConceptDateType {
+    definition {
+      The event which occured on the given date and associated with the lifecycle of the managed term.
+    }
+  }
 }

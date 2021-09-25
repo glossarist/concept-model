@@ -1,1 +1,5 @@
-class TextElement <<BasicDocument>> {}
+class TextElement <<BasicDocument>> {
+  definition {
+    Inline text element.
+  }
+}

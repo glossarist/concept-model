@@ -1,1 +1,3 @@
-class TextElementType <<BasicDocument>> {}
+class TextElementType <<BasicDocument>> {
+  String consisting of Text Elements.
+}

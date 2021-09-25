@@ -1,5 +1,20 @@
 enum ConceptDateType {
-  accepted
-  amended
-  retired
+  definition {
+    Kinds of events associated with the lifecycle of a managed term on nominated dates.
+  }
+  accepted {
+    definition {
+      An event of the term being accepted by an authority.
+    }
+  }
+  amended {
+    definition {
+      An event of the term being amended by an authority.
+    }
+  }
+  retired {
+    definition {
+      An event of the term being retired by an authority.
+    }
+  }
 }

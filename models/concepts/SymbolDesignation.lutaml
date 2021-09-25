@@ -1,3 +1,10 @@
 class SymbolDesignation {
-  +isInternational: Boolean [0..1]
+  definition {
+    A designation realised as a symbol (graphical or textual)
+  }
+  +isInternational: Boolean [0..1] {
+    definition {
+      Whether the designation is valid across all regions, or is region-specific.
+    }
+  }
 }

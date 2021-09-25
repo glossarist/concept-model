@@ -1,6 +1,25 @@
 class ConceptSource {
-  +status: ConceptSourceStatus
-  +type: ConceptSourceType
-  +origin: <<Bibliography>> Citation
-  +modification: <<BasicDocument>> ParagraphBlock [0..1]
+  definition {
+    Bibliographic source for a managed term.
+  }
+  +status: ConceptSourceStatus {
+    definition {
+      The status of the managed term in the present context, relative to the term as found in the bibliographic source.
+    }
+  }
+  +type: ConceptSourceType {
+    definition {
+      The type of the managed term in the present context.
+    }
+  }
+  +origin: <<Bibliography>> Citation {
+    definition {
+      The bibliographic citation for the managed term.
+    }
+  }
+  +modification: <<BasicDocument>> ParagraphBlock [0..1] {
+    definition {
+      A description of the modification to the cited definition of the term, if any, as it is to be applied in the present context.
+    }
+  }
 }

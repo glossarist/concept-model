@@ -1,4 +1,15 @@
 class AbbreviationDesignation {
-  +isInternational: Boolean
-  +abbreviationType: AbbreviationType [0..1]
+  definition {
+    Designation of an abbrevation.
+  }
+  +isInternational: Boolean {
+    definition {
+      Whether an abbreviation is the same across languages, or language-specific.
+    }
+  }
+  +abbreviationType: AbbreviationType [0..1] {
+    definition {
+      Type of abbreviation, according to how it is formed.
+    }
+  }
 }

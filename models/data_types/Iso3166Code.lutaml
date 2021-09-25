@@ -1,1 +1,5 @@
-data_type Iso3166Code {}
+data_type Iso3166Code {
+  definition {
+    Code identifying a region, from ISO 3166.
+  }
+}

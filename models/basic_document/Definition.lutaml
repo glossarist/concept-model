@@ -1,1 +1,5 @@
-class Definition <<BasicDocument>> {}
+class Definition <<BasicDocument>> {
+  definition {
+    Definition of a term.
+  }
+}
