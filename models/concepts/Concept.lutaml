@@ -22,11 +22,6 @@ class Concept {
       Subject of the term.
     }
   }
-  +usageInfo: <<BasicDocument>> LocalizedString [0..1] {
-    definition {
-      Information about how the term is to be used.
-    }
-  }
   +definition: DetailedDefinition [0..*] {
     definition {
       The definition of the term.

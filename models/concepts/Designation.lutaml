@@ -12,6 +12,22 @@ class Designation {
       Indication that the term designation is missing.
     }
   }
+  +fieldofapplication: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Text used to disambiguate a designation from other, homonymous designations,
+      by describing the subject field that the designation is used in. The fieldofapplication
+      is derived from a domain, but is supplementary, language-specific text appended 
+      to the designation.
+    }
+  }
+  +usageinfo: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Text used to disambiguate a designation from other, homonymous designations,
+      by describing how the designation is used. The usageinfo
+      is supplementary, language-specific text appended
+      to the designation.
+    }
+  }
   +geographicArea: Iso3166Code [0..*] {
     definition {
       The geographic area in which the managed term is known under this designation.
