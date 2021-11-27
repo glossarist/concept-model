@@ -17,6 +17,7 @@ diagram Designations {
   include ../models/concepts/LetterSymbolDesignation.lutaml
   include ../models/concepts/GraphicalSymbolDesignation.lutaml
   include ../models/concepts/GrammarGender.lutaml
+  include ../models/concepts/GrammarNumber.lutaml
 
   association {
     owner NormativeStatus
@@ -47,6 +48,11 @@ diagram Designations {
     owner AbbreviationType
     member_type direct
     member AbbreviationDesignation
+  }
+  association {
+    owner GrammarNumber
+    member_type direct
+    member GrammarInfo
   }
   association {
     owner GrammarGender
