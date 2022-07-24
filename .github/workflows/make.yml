@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: metanorma/metanorma-build-scripts/plantuml-setup-action@master
+      - uses: metanorma/ci/plantuml-setup-action@main
 
       - uses: ruby/setup-ruby@v1
         with:
