@@ -39,6 +39,11 @@ enum RelatedConceptType {
   }
   see {
     definition {
+      Refer to the related term for the definition of the current term.
+    }
+  }
+  see-also {
+    definition {
       For a better understanding of the current term, one should also see the related term.
     }
   }
