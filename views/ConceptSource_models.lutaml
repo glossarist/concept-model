@@ -1,8 +1,0 @@
-diagram ConceptSource {
-  title 'Concept source related classes'
-  caption 'Concept source related classes'
-
-  include ../models/concepts/ConceptSource.lutaml
-  include ../models/concepts/ConceptSourceStatus.lutaml
-  include ../models/concepts/ConceptSourceType.lutaml
-}
