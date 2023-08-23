@@ -17,6 +17,11 @@ class ManagedConcept {
       Dates in the lifecycle of the management of the term.
     }
   }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Zero or more bibliographical sources for the term. 
+    }
+  }
   +localizedConcepts: LocalizedConcept [0..1] {
     definition {
       Localisations of the term to different languages.
