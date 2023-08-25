@@ -1,15 +1,15 @@
 %YAML 1.1
 ---
-$schema: "http://json-schema.org/draft-04/schema"
+$schema: "http://json-schema.org/draft-06/schema"
 id: "https://github.com/glossarist/concept-model/concept"
-title:
-  YAML Schema for Concept model
+title: YAML Schema for Concept model
 description: |
   A metaschema for glossarist concept model V2.
 type: object
 properties:
   id:
     type: string
+    format: uuid
   data:
     type: object
     properties:
@@ -18,7 +18,8 @@ properties:
       localizedConcepts:
         type: object
         propertyNames:
-          pattern: "^[a-z]{3}$"
+          minLength: 3
+          maxLength: 3
   status:
     type: string
   dateAccepted:

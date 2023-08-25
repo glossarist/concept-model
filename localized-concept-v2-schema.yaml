@@ -1,9 +1,8 @@
 %YAML 1.1
 ---
-$schema: "http://json-schema.org/draft-04/schema"
+$schema: "http://json-schema.org/draft-06/schema"
 id: "https://github.com/glossarist/concept-model/localized-concept"
-title:
-  YAML Schema for LocalizedConcept model
+title: YAML Schema for LocalizedConcept model
 description: |
   A schema for glossarist localized concept model V2.
 type: object
@@ -16,6 +15,8 @@ properties:
     properties:
       language_code:
         type: string
+        minLength: 3
+        maxLength: 3
       terms:
         type: array
         items:
