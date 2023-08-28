@@ -2,7 +2,7 @@ name: generate_documentation
 
 on:
   push:
-    branches: [ main, create_yaml_schema_for_glossarist_model_v2 ]
+    branches: [ main ]
 
 jobs:
   make:
