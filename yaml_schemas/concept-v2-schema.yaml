@@ -1,0 +1,50 @@
+%YAML 1.1
+---
+$schema: "http://json-schema.org/draft-06/schema"
+id: "https://github.com/glossarist/concept-model/concept"
+title: YAML Schema for Concept model
+description: |
+  A metaschema for glossarist concept model V2.
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: A unique identifier(UUID) for the concept
+    examples:
+      - 01fa30d3-4e4b-4142-b68a-c299b55b3fb8
+      - 12969ded-ba28-48de-b009-1f1140236c60
+  data:
+    type: object
+    description: Data related to the concept
+    properties:
+      identifier:
+        type: string
+        description: An identifier for the concept being discussed
+        examples:
+          - "1234"
+          - "foobar"
+      localizedConcepts:
+        type: object
+        description: Three digit language code followed by the `id` of the localization for that language.
+        examples:
+          - eng: 2f8ef44a-f92e-4a37-8907-2d43e327ed74
+          - ara: 39fcd2af-9ef1-4a69-71a4-2d3de569afce
+        propertyNames:
+          minLength: 3
+          maxLength: 3
+  status:
+    type: string
+    description: Status of the concept
+    examples:
+      - draft
+      - not_valid
+      - valid
+      - superseded
+      - retired
+  dateAccepted:
+    type: string
+    format: date-time
+    description: Date and time when the concept was accepted.
+    examples:
+      - "2021-05-01T00:00:00+00:00"
