@@ -1,0 +1,37 @@
+name: generate_documentation
+
+on:
+  push:
+    branches: [ main, create_yaml_schema_for_glossarist_model_v2 ]
+
+jobs:
+  make:
+    name: Generating HTML documentation
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install json-schema-for-humans
+        run: pip install json-schema-for-humans
+
+      - name: Create direcotry for HTML documentation
+        run: mkdir html_documentation
+
+      - name: Generate HTML documentation
+        run: generate-schema-doc yaml_schemas html_documentation
+
+      - name: Upload HTML documentation as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: html_documentation
+          path: html_documentation
