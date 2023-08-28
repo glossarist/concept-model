@@ -1,0 +1,127 @@
+%YAML 1.1
+---
+$schema: "http://json-schema.org/draft-06/schema"
+id: "https://github.com/glossarist/concept-model/localized-concept"
+title: YAML Schema for LocalizedConcept model
+description: |
+  A schema for glossarist localized concept model V2.
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+    description: A unique identifier(UUID) for the localized concept
+    examples:
+      - 04b276ad-f69e-45b7-a908-9c61fa94697f
+      - 12969ded-ba28-48de-b009-1f1140236c60
+  data:
+    type: object
+    description: The data related to the localized concept
+    properties:
+      language_code:
+        type: string
+        minLength: 3
+        maxLength: 3
+        description: Three digit language code for the current localization
+        examples:
+          - eng
+          - ara
+          - fra
+          - deu
+      terms:
+        type: array
+        description: List of terms(designations) for the concept
+        items:
+          type: object
+          properties:
+            normative_status:
+              type: string
+              description: Normative status of the localized concept
+              examples:
+                - preferred
+                - deprecated
+                - admitted
+            type:
+              type: string
+              description: Type of the designation
+              examples:
+                - expression
+                - symbol
+                - abbreviation
+            designation:
+              type: string
+              description: The localized term
+              examples:
+                - geometric node
+                - entity
+      definition:
+        type: array
+        items:
+          type: object
+          description: List of all the definitons for current localization
+          properties:
+            content:
+              type: string
+              description: content of a single definition
+              example: some definition of a geometric node
+      notes:
+        type: array
+        items:
+          type: object
+          description: List of notes for current localization
+          properties:
+            content:
+              type: string
+              description: content of a single note
+      examples:
+        type: array
+        items:
+          type: object
+          description: List of all examples for current localization
+          properties:
+            content:
+              type: string
+              description: content of a single example
+      sources:
+        type: array
+        description: List of all sources for current localization
+        items:
+          type: object
+          properties:
+            type:
+              type: string
+              description: Type of the current source
+              examples:
+                - authoritative
+                - lineage
+            origin:
+              type: object
+              properties:
+                ref:
+                  type: string
+                clause:
+                  type: string
+                link:
+                  type: string
+      authoritativeSource:
+        type: object
+        definition: The authoritative source for current localization
+        properties:
+          link:
+            type: string
+            description: Link of the authoritative source. This can also be merged in the sources list with type set to `authoritative`
+
+  status:
+    type: string
+    description: Status of the localized concept
+    examples:
+      - draft
+      - not_valid
+      - valid
+      - superseded
+      - retired
+  dateAccepted:
+    type: string
+    description: Date and time when the localized concept was accepted.
+    examples:
+      - "2021-05-01T00:00:00+00:00"
