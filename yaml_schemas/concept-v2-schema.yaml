@@ -24,7 +24,7 @@ properties:
         examples:
           - "1234"
           - "foobar"
-      localizedConcepts:
+      localized_concepts:
         type: object
         description: Three digit language code followed by the `id` of the localization for that language.
         examples:
@@ -42,7 +42,7 @@ properties:
       - valid
       - superseded
       - retired
-  dateAccepted:
+  date_accepted:
     type: string
     format: date-time
     description: Date and time when the concept was accepted.
