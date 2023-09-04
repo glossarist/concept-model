@@ -103,7 +103,7 @@ properties:
                   type: string
                 link:
                   type: string
-      authoritativeSource:
+      authoritative_source:
         type: object
         definition: The authoritative source for current localization
         properties:
@@ -120,7 +120,7 @@ properties:
       - valid
       - superseded
       - retired
-  dateAccepted:
+  date_accepted:
     type: string
     description: Date and time when the localized concept was accepted.
     examples:
