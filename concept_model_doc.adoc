@@ -1,0 +1,26 @@
+= Concept Model
+:doctype: standard
+:status: draft-standard
+
+Glossarist Concept model is used in glossarist-supported sites for RDF and JSON-LD generation.
+
+These models align with ISO 10241-1 and the concept systems described in ISO 704.
+
+These models are meant to be fully compatible with the data in the IEC Electropedia.
+
+== Concept
+
+[source,yaml]
+----
+include::yaml_schemas/concept-v2-schema.yaml[]
+----
+
+== Localized Concept
+
+[source,yaml]
+----
+include::yaml_schemas/localized-concept-v2-schema.yaml[]
+----
+
+[bibliography]
+== Bibliography
