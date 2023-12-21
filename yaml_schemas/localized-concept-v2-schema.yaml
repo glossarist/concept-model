@@ -19,41 +19,153 @@ properties:
     description: The data related to the localized concept
     properties:
       language_code:
-        type: string
-        minLength: 3
-        maxLength: 3
-        description: Three digit language code for the current localization
-        examples:
-          - eng
-          - ara
-          - fra
-          - deu
+        $ref: "#/definitions/language_code"
       terms:
         type: array
         description: List of terms(designations) for the concept
         items:
-          type: object
-          properties:
-            normative_status:
-              type: string
-              description: Normative status of the localized concept
-              examples:
-                - preferred
-                - deprecated
-                - admitted
-            type:
-              type: string
-              description: Type of the designation
-              examples:
-                - expression
-                - symbol
-                - abbreviation
-            designation:
-              type: string
-              description: The localized term
-              examples:
-                - geometric node
-                - entity
+          anyOf:
+            - type: object
+              additionalProperties: false
+              description: Expression designation for a localized term
+              properties:
+                normative_status:
+                  $ref: "#/definitions/normative_status"
+                geographical_area:
+                  $ref: "#/definitions/geographical_area"
+                usage_info:
+                  $ref: "#/definitions/usage_info"
+                type:
+                  type: string
+                  description: Type of the designation
+                  const: expression
+                designation:
+                  type: string
+                  description: The localized term
+                  examples:
+                    - geometric node
+                    - entity
+                language:
+                  $ref: "#/definitions/language_code"
+                grammar_info:
+                  type: object
+                  description: Grammatical information about a designation.
+                  properties:
+                    gender:
+                      type: string
+                      description: The grammatical gender of the designation.
+                      enum: [m, f, n, c]
+                    number:
+                      type: string
+                      description: The grammatical number of the designation.
+                      enum: [singular, dual, plural]
+                    preposition:
+                      type: boolean
+                      description: The designation is a preposition.
+                    participle:
+                      type: boolean
+                      description: The designation is a participle.
+                    adj:
+                      type: boolean
+                      description: The designation is an adjective.
+                    verb:
+                      type: boolean
+                      description: The designation is a verb.
+                    adverb:
+                      type: boolean
+                      description: The designation is an adverb.
+                    noun:
+                      type: boolean
+                      description: The designation is a noun.
+            - type: object
+              additionalProperties: false
+              description: Abbreviation designation for a localized term
+              properties:
+                normative_status:
+                  $ref: "#/definitions/normative_status"
+                geographical_area:
+                  $ref: "#/definitions/geographical_area"
+                usage_info:
+                  $ref: "#/definitions/usage_info"
+                type:
+                  type: string
+                  description: Type of the designation
+                  const: abbreviation
+                designation:
+                  type: string
+                  description: The abbreviation for localized term
+                  examples:
+                    - j
+                    - ATS
+            - type: object
+              additionalProperties: false
+              description: Symbol designation for a localized term
+              properties:
+                normative_status:
+                  $ref: "#/definitions/normative_status"
+                geographical_area:
+                  $ref: "#/definitions/geographical_area"
+                usage_info:
+                  $ref: "#/definitions/usage_info"
+                type:
+                  type: string
+                  description: Type of the designation
+                  const: symbol
+                international:
+                  type: boolean
+                  description: Whether the designation is valid across all regions, or is region-specific.
+                designation:
+                  type: string
+                  description: The symbol used to represent the localized term
+                  examples:
+                    - ♔
+                    - M
+            - type: object
+              additionalProperties: false
+              description: Graphical Symbol designation for a localized term
+              properties:
+                normative_status:
+                  $ref: "#/definitions/normative_status"
+                geographical_area:
+                  $ref: "#/definitions/geographical_area"
+                usage_info:
+                  $ref: "#/definitions/usage_info"
+                type:
+                  type: string
+                  description: Type of the designation
+                  const: graphical_symbol
+                international:
+                  type: boolean
+                  description: Whether the designation is valid across all regions, or is region-specific.
+                designation:
+                  type: string
+                  description: The symbol used to represent the localized term
+                  examples:
+                    - ♕
+                    - ♖
+            - type: object
+              additionalProperties: false
+              description: Letter Symbol designation for a localized term
+              properties:
+                normative_status:
+                  $ref: "#/definitions/normative_status"
+                geographical_area:
+                  $ref: "#/definitions/geographical_area"
+                usage_info:
+                  $ref: "#/definitions/usage_info"
+                type:
+                  type: string
+                  description: Type of the designation
+                  const: letter_symbol
+                international:
+                  type: boolean
+                  description: Whether the designation is valid across all regions, or is region-specific.
+                designation:
+                  type: string
+                  description: The symbol used to represent the localized term
+                  examples:
+                    - C
+                    - L
       definition:
         type: array
         items:
@@ -125,3 +237,35 @@ properties:
     description: Date and time when the localized concept was accepted.
     examples:
       - "2021-05-01T00:00:00+00:00"
+
+definitions:
+  normative_status:
+    type: string
+    description: Normative status of the localized concept
+    examples:
+      - preferred
+      - deprecated
+      - admitted
+  geographical_area:
+    type: string
+    description: The Iso3166 Code for geographic area in which the managed term is known under this designation.
+    examples:
+      - US-AL
+      - US-NY
+  usage_info:
+    type: string
+    description: >-
+      Text used to disambiguate a designation from other, homonymous designations,
+      by describing how the designation is used. The usageinfo
+      is supplementary, language-specific text appended
+      to the designation.
+  language_code:
+    type: string
+    minLength: 3
+    maxLength: 3
+    description: Three digit Iso15924 language code for the current localization
+    examples:
+      - eng
+      - ara
+      - fra
+      - deu
