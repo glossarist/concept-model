@@ -1,0 +1,182 @@
+%YAML 1.1
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema
+---
+$schema: "http://json-schema.org/draft-07/schema"
+id: "https://github.com/glossarist/concept-model/concept"
+title: YAML Schema for Concept model
+description: |
+  A metaschema for glossarist concept model V2.
+type: object
+properties:
+  id:
+    type: string
+    description: A management identifier for the concept
+    examples:
+      - '1234'
+      - 12969ded-ba28-48de-b009-1f1140236c60
+  data:
+    type: object
+    description: Data related to the concept
+    properties:
+      identifier:
+        type: string
+        description: A unique identifier for the concept
+        examples:
+          - "1234"
+          - "foobar"
+      localized_concepts:
+        type: object
+        description: Three digit language code followed by the `id` of the localization for that language.
+        examples:
+          - eng: '1234'
+          - ara: 39fcd2af-9ef1-4a69-71a4-2d3de569afce
+        propertyNames:
+          $ref: "#/$defs/iso639_three_char_code"
+        additionalProperties:
+          type: string
+      related:
+        type: array
+        items:
+          $ref: "#/$defs/related_concept"
+        description: Zero or more terms related to the current term.
+      sources:
+        type: array
+        items:
+          $ref: "#/$defs/concept_source"
+        description: Zero or more bibliographical sources for the term.
+      dates:
+        type: array
+        items:
+          $ref: "#/$defs/concept_date"
+        description: Dates in the lifecycle of the management of the term.
+  status:
+    $ref: "#/$defs/concept_status"
+  date_accepted:
+    type: string
+    format: date-time
+    description: Date and time when the concept was accepted.
+    examples:
+      - "2021-05-01T00:00:00+00:00"
+
+$defs:
+  # Concept Status enum
+  concept_status:
+    type: string
+    description: The normative status of the managed term.
+    enum:
+      - draft
+      - not_valid
+      - valid
+      - superseded
+      - retired
+
+  # Concept Date
+  concept_date:
+    type: object
+    description: A date relevant to the lifecycle of the managed term.
+    properties:
+      date:
+        type: string
+        format: date
+        description: The date associated with the managed term.
+      type:
+        $ref: "#/$defs/concept_date_type"
+    required:
+      - date
+      - type
+
+  # Concept Date Type enum
+  concept_date_type:
+    type: string
+    description: Kinds of events associated with the lifecycle of a managed term on nominated dates.
+    enum:
+      - accepted
+      - amended
+      - retired
+
+  # Related Concept
+  related_concept:
+    type: object
+    description: A term related to the current term.
+    properties:
+      type:
+        $ref: "#/$defs/related_concept_type"
+      ref:
+        type: string
+        description: Reference to the related concept
+      content:
+        type: string
+        description: Content describing the relationship
+
+  # Related Concept Type enum
+  related_concept_type:
+    type: string
+    description: The relation of a term to the current term.
+    enum:
+      - deprecates
+      - supersedes
+      - narrower
+      - broader
+      - equivalent
+      - compare
+      - contrast
+      - see
+      - see-also
+
+  # Concept Source
+  concept_source:
+    type: object
+    description: Bibliographic reference for a concept or designation
+    properties:
+      type:
+        $ref: "#/$defs/concept_source_type"
+      status:
+        $ref: "#/$defs/concept_source_status"
+      origin:
+        type: object
+        properties:
+          ref:
+            type: string
+          clause:
+            type: string
+          link:
+            type: string
+      link:
+        type: string
+        description: Link of the source
+
+  # Concept Source Type enum
+  concept_source_type:
+    type: string
+    description: Type of concept source.
+    enum:
+      - authoritative
+      - lineage
+    examples:
+      - authoritative
+      - lineage
+
+  # Concept Source Status enum
+  concept_source_status:
+    type: string
+    description: The status of the managed term in the present context, relative to the term as found in the bibliographic source.
+    enum:
+      - identical
+      - modified
+      - restyled
+      - context-added
+      - generalisation
+      - specialisation
+      - unspecified
+
+  # Data Types
+  iso639_three_char_code:
+    type: string
+    minLength: 3
+    maxLength: 3
+    description: Three digit ISO-639 language code
+    examples:
+      - eng
+      - ara
+      - fra
+      - deu
