@@ -292,6 +292,7 @@ $defs:
       - truncation
       - acronym
       - initialism
+      - other
 
   normative_status:
     type: string
