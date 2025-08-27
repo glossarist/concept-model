@@ -40,20 +40,9 @@ properties:
           $ref: "#/$defs/detailed_definition"
 
       domain:
-        type: array
-        description: One or more domains or subject areas of the localized concept. This linkage can be made at the concept level through various related_concept_type values.
-        items:
-          type: object
-          properties:
-            ref:
-              type: string
-              description: Reference to the domain concept.
-            label:
-              type: string
-              description: A human-readable label for the domain.
-            description:
-              type: string
-              description: A description of the domain.
+        type: string
+        description: Domain or subject area of the localized concept.
+        example: 'application module: Aec_service_life_arm'
 
       notes:
         type: array
