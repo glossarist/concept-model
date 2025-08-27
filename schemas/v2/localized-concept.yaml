@@ -349,15 +349,23 @@ $defs:
     type: string
     description: Status of the concept source
     enum:
-      - concept_source
-      - status
+      - identical
+      - similar
+      - modified
+      - restyle
+      - context_added
+      - generalisation
+      - specialisation
+      - unspecified
+      - related
+      - not_equal
 
   concept_source_types:
     type: string
     description: Type of the concept source
     enum:
-      - concept_source
-      - type
+      - authoritative
+      - lineage
 
   concept_source:
     type: object
