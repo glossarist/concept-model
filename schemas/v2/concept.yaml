@@ -1,8 +1,7 @@
 %YAML 1.1
 # yaml-language-server: $schema=http://json-schema.org/draft-07/schema
 ---
-$schema: "http://json-schema.org/draft-07/schema"
-id: "https://github.com/glossarist/concept-model/concept"
+$id: "https://github.com/glossarist/concept-model/concept"
 title: YAML Schema for Concept model
 description: |
   A metaschema for glossarist concept model V2.
