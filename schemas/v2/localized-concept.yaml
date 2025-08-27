@@ -356,17 +356,28 @@ $defs:
       - superseded
       - retired
 
+  concept_source_statuses:
+    type: string
+    description: Status of the concept source
+    enum:
+      - concept_source
+      - status
+
+  concept_source_types:
+    type: string
+    description: Type of the concept source
+    enum:
+      - concept_source
+      - type
+
   concept_source:
     type: object
     description: Bibliographic reference for a concept or designation
     properties:
+      status:
+        $ref: "#/$defs/concept_source_statuses"
       type:
-        type: string
-        description: Type of the current source
-        enum:
-          - authoritative
-          - lineage
-          - informative
+        $ref: "#/$defs/concept_source_types"
       origin:
         $ref: "#/$defs/citation"
       modification:
