@@ -368,17 +368,73 @@ $defs:
           - lineage
           - informative
       origin:
-        type: object
-        properties:
-          ref:
-            type: string
-          clause:
-            type: string
-          link:
-            type: string
+        $ref: "#/$defs/citation"
+      modification:
+        type: string
+        description: Modification of the concept source
+
+  citation:
+    type: object
+    properties:
+      text:
+        type: string
+      source:
+        type: string
+      id:
+        type: string
+      version:
+        type: string
+      locality:
+        $ref: "#/$defs/locality"
       link:
         type: string
         description: Link of the source
+      original:
+        type: string
+      ref:
+        type: string
+      clause:
+        type: string
+      custom_locality:
+        $ref: "#/$defs/custom_locality"
+
+  locality:
+    type: string
+    description: The locality of the origin
+    properties:
+      type:
+        type: string
+        description: Type of the locality
+        pattern:
+          format: section|clause|part|paragraph|chapter|page|title|line|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+
+        example: clause
+      reference_from:
+        type: string
+        description: The source of the type of the locality
+        example: 3.2.1
+      reference_to:
+        type: string
+        description: The target of the type of the locality
+        example: 3.2.2
+
+  custom_locality:
+    type: array
+    items:
+      type: object
+      description: Custom locality for the origin
+      properties:
+        name:
+          type: string
+          description: Name of the custom locality
+          examples:
+            - schema
+            - version
+        value:
+          type: string
+          description: Value of the custom locality
+          examples:
+            - Aec_service_life_arm
+            - '2'
 
   detailed_definition:
     type: object
