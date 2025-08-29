@@ -30,7 +30,7 @@ jobs:
         run: generate-schema-doc yaml_schemas html_documentation
 
       - name: Upload HTML documentation as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html_documentation
           path: html_documentation
