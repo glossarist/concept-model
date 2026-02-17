@@ -40,12 +40,101 @@ The following features are supported:
 * A DefinitionCollection is represented as a single clause
 
 
+== Authoritative source
+
+An *authoritative source* is the "source of truth" for a terminological entry
+or any of its parts. It is the bibliographic reference from which the content
+originates, represented in the model by the `ConceptSource` class.
+
+=== Source type
+
+Each `ConceptSource` carries a `type` attribute of type `ConceptSourceType`,
+which distinguishes between two kinds of source:
+
+`authoritative`::
+The source is the definitive origin of the content. This is the primary
+reference that the entry is based on.
+
+`lineage`::
+The source documents the historical derivation or provenance of the content,
+but is not itself the authoritative reference.
+
+For example, a term may originate from ISO 19101 (authoritative) but also
+reference an earlier ITU definition from which the ISO definition was derived
+(lineage).
+
+=== Source status
+
+The `status` attribute of type `ConceptSourceStatus` describes the relationship
+between the entry content and the cited source:
+
+`identical`:: The content is identical to what appears in the source.
+`modified`:: The content has been modified from the source.
+`restyled`:: The content has been restyled (e.g. formatting changes) from the source.
+`context-added`:: Additional context has been added to the source content.
+`generalisation`:: The content is a generalisation of the source content.
+`specialisation`:: The content is a specialisation of the source content.
+`unspecified`:: The relationship to the source is unspecified.
+
+The optional `modification` attribute on `ConceptSource` can provide a
+description of any change made relative to the cited source.
+
+=== Multi-level source hierarchy
+
+Sources can be attached at multiple levels of the model, allowing different
+parts of a terminological entry to have their own authoritative sources:
+
+`ManagedConcept.sources`::
+Sources at the managed concept level, applicable to the concept as a whole
+rather than to any specific localisation.
+
+`Concept.sources`::
+Sources at the localised concept level, applicable to a specific language
+version of the concept. This allows different language versions to cite
+different authoritative sources. For example, English terms sourced from one
+standard and French terms from another.
+
+`Designation.sources`::
+Sources for individual terms (designations), when a particular term originates
+from a different source than the overall concept.
+
+`DetailedDefinition.sources`::
+Sources for individual definitions, notes, or examples, allowing each to
+reference its own authoritative source independently of the enclosing concept's
+sources.
+
+`NonVerbRep.sources`::
+Sources for non-verbal representations (images, tables, formulas).
+
+This hierarchy means that a concept may have multiple authoritative sources.
+A concept's definition may come from one standard while a specific term for
+that concept comes from another, with each part independently referencing its
+own authoritative source. Multiple sources may also define the concept
+identically, in which case each is listed as an `authoritative` source with
+`identical` status.
+
+=== The glossary as authoritative source
+
+In some cases, the glossary itself is the authoritative source. For example,
+when a term and its definition originate within the glossary rather than being
+adopted from an external standard. In this case, the `origin` attribute of the
+`ConceptSource` references the glossary's own bibliographic citation.
+
+The TC 204 Geolexica site is an example of this: the entire glossary represents
+ISO 14812 terminology, so the authoritative source for every entry is the
+glossary itself.
+
+NOTE: The `ConceptSource` model is shown in the <<ConceptSource>> UML diagram
+below.
+
+
 == UML Models
 
 === Concept
 
 image::images/Concepts.png[]
 
+[[ConceptSource]]
 === ConceptSource
 
 image::images/ConceptSource.png[]
