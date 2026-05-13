@@ -1,83 +1,194 @@
 %YAML 1.1
 # yaml-language-server: $schema=http://json-schema.org/draft-07/schema
 ---
-$id: "https://github.com/glossarist/concept-model/localized-concept"
+$id: "https://www.glossarist.org/schemas/v2/localized-concept"
 title: YAML Schema for LocalizedConcept model
 description: |
-  A schema for glossarist localized concept model V2.
+  A schema for the glossarist localized concept model V2.
+
+  A LocalizedConcept represents a concept in a specific language. It contains
+  the language-specific data: designations (terms), definition, notes,
+  examples, sources, and grammar information.
+
+  In glossarist-ruby, this maps to the Concept > LocalizedConcept class which
+  wraps ConceptData with localization metadata (classification, entry_status,
+  review_type).
+
+  The model consistently applies three ISO standards wherever text
+  representation is specified:
+  - ISO 639:    language codes (3-character, e.g., eng, jpn, zho)
+  - ISO 15924:  script codes (4-character, e.g., Latn, Hani, Cyrl)
+  - ISO 24229:  conversion system codes (e.g., Var:jpn-Hrkt:Latn:Hepburn-1886)
+
+  These three attributes cascade from ConceptData (defaults) through
+  Designation::Base (per-designation override) to Pronunciation
+  (per-pronunciation override).
 type: object
 properties:
   id:
     type: string
-    format: uuid
-    description: A unique identifier of the localized concept
+    description: |
+      A unique identifier of the localized concept. In glossarist-ruby,
+      this is a deterministic UUID v5 derived from serialized content.
     examples:
-      - '3'
       - 12969ded-ba28-48de-b009-1f1140236c60
+
   data:
     type: object
-    description: The data related to the localized concept
+    description: |
+      The language-specific data payload. In glossarist-ruby, this maps
+      to ConceptData embedded within LocalizedConcept.
     properties:
       language_code:
-        $ref: "#/$defs/language_code"
-      designations:
+        $ref: "#/$defs/iso639_three_char_code"
+
+      script:
+        $ref: "#/$defs/iso15924_code"
+
+      system:
+        $ref: "#/$defs/iso24229_conversion_system_code"
+
+      entry_status:
+        type: string
+        description: |
+          The status of this localized entry in the glossary lifecycle.
+          Provides the default status for designations.
+        enum:
+          - valid
+          - not_valid
+          - superseded
+          - retired
+
+      terms:
         type: array
-        description: List of designations (terms) of the concept
+        description: |
+          List of designations (terms) for the concept in this language.
+          Each designation can be an expression, abbreviation, symbol,
+          letter_symbol, or graphical_symbol. The `type` field determines
+          which designation class to instantiate.
         items:
-          anyOf:
-            - $ref: "#/$defs/designation_expression"
-            - $ref: "#/$defs/designation_abbreviation"
-            - $ref: "#/$defs/designation_symbol"
-            - $ref: "#/$defs/designation_graphical_symbol"
-            - $ref: "#/$defs/designation_letter_symbol"
-            - $ref: "#/$defs/designation_prefix"
-            - $ref: "#/$defs/designation_suffix"
+          $ref: "#/$defs/designation"
 
       definition:
         type: array
         items:
           $ref: "#/$defs/detailed_definition"
+        description: |
+          One or more definitions of the concept, each with optional
+          bibliographic sources.
 
       domain:
         type: string
-        description: Domain or subject area of the localized concept.
-        example: 'application module: Aec_service_life_arm'
+        description: |
+          URI reference to the domain or subject area of the concept.
+          Accepts three MECE URI forms:
+          - Relative URI: a local reference identifier
+          - URN: a formal URN-based identifier
+          - URL: an HTTP(S) link to the domain resource
+        examples:
+          - "section-103-01"
+          - "urn:iec:std:iec:60050-103-01"
+          - "https://www.electropedia.org/iev/iev.nsf/display?openform&ievref=103-01"
 
       notes:
         type: array
         items:
-          type: object
-          description: List of notes for current localization
-          properties:
-            content:
-              type: string
-              description: content of a single note
+          $ref: "#/$defs/detailed_definition"
+        description: |
+          Supplementary notes for the concept. Each note can have its
+          own bibliographic sources.
 
       examples:
         type: array
         items:
-          type: object
-          description: List of all examples for current localization
-          properties:
-            content:
-              type: string
-              description: content of a single example
-
-      non_verbal:
-        type: array
-        items:
-          $ref: "#/$defs/non_verbal_rep"
-        description: A non-verbal representation used to help define the term.
+          $ref: "#/$defs/detailed_definition"
+        description: |
+          Illustrative examples for the concept. Each example can have
+          its own bibliographic sources.
 
       sources:
         type: array
-        description: List of all sources for current localization
+        description: |
+          List of bibliographic sources for this localization.
         items:
           $ref: "#/$defs/concept_source"
 
-      authoritative_source:
-        $ref: "#/$defs/concept_source"
-        description: The authoritative source for current localization
+      dates:
+        type: array
+        items:
+          $ref: "#/$defs/concept_date"
+        description: |
+          Dates in the lifecycle of this localized concept
+          (accepted, amended, retired).
+
+      related:
+        type: array
+        items:
+          $ref: "#/$defs/related_concept"
+        description: |
+          Related concepts specific to this localization.
+
+      references:
+        type: array
+        items:
+          $ref: "#/$defs/concept_reference"
+        description: |
+          Typed references to other concepts, either local (within the
+          same glossary) or external (in another registry).
+
+      lineage_source_similarity:
+        type: integer
+        description: |
+          Similarity percentage to the lineage source, used for tracking
+          how closely this concept matches its origin.
+
+      release:
+        type: string
+        description: |
+          Release version of this localized concept.
+        examples:
+          - "1.0"
+          - "2.1"
+
+      review_date:
+        type: string
+        format: date-time
+        description: Date of the last review of this localized concept.
+
+      review_decision_date:
+        type: string
+        format: date-time
+        description: Date when the review decision was made.
+
+      review_decision_event:
+        type: string
+        description: The event that triggered the review decision.
+        examples:
+          - published
+          - withdrawn
+
+      non_verbal_rep:
+        type: array
+        items:
+          $ref: "#/$defs/non_verbal_representation"
+        description: |
+          Non-verbal representations used to help define the concept
+          (ISO 10241-1 §6.5). Each representation is a resource reference
+          to an image, table, or formula that lives outside the concept model.
+
+  classification:
+    type: string
+    description: |
+      Classification of the localized concept. Used to categorize
+      concepts within a glossary structure.
+    examples:
+      - admitted
+      - preferred
+
+  review_type:
+    type: string
+    description: |
+      The type of review applied to this localized concept.
 
   status:
     $ref: "#/$defs/concept_status"
@@ -85,236 +196,341 @@ properties:
   date_accepted:
     type: string
     format: date-time
-    description: Date and time when the localized concept was accepted.
+    description: |
+      Date and time when the localized concept was accepted. Stored as
+      a simplified form; internally mapped to a ConceptDate with type
+      "accepted".
     examples:
       - "2021-05-01T00:00:00+00:00"
 
 $defs:
-  # Base Designation class
+  # ── Designation (polymorphic dispatch) ──────────────────────────────────
+  designation:
+    oneOf:
+      - $ref: "#/$defs/designation_expression"
+      - $ref: "#/$defs/designation_abbreviation"
+      - $ref: "#/$defs/designation_symbol"
+      - $ref: "#/$defs/designation_letter_symbol"
+      - $ref: "#/$defs/designation_graphical_symbol"
+    discriminator:
+      propertyName: type
+    description: |
+      A designation for a concept. The `type` field determines which
+      designation class is used:
+      - "expression": a word or phrase (default)
+      - "abbreviation": a shortened form (acronym, initialism, truncation)
+      - "symbol": a non-letter symbol
+      - "letter_symbol": a letter used as a symbol
+      - "graphical_symbol": a graphical/iconic symbol
+
+  # ── Designation::Base ───────────────────────────────────────────────────
   designation_base:
     type: object
-    description: Base properties for all designations
+    description: |
+      Base properties shared by all designation types. Every designation
+      can specify its own language, script, conversion system, and
+      pronunciation, overriding the ConceptData-level defaults.
+
+      The three ISO metadata attributes cascade from ConceptData through
+      Designation::Base to Pronunciation:
+      - ConceptData provides language_code, script, system as defaults
+      - Designation::Base overrides per-designation with language, script, system
+      - Pronunciation overrides per-pronunciation entry
     properties:
+      designation:
+        type: string
+        description: |
+          The text of the designation (the term itself).
+        examples:
+          - geometric node
+          - ISO
+          - Ω
+
       normative_status:
         $ref: "#/$defs/normative_status"
+
+      geographical_area:
+        type: string
+        description: |
+          The geographic area in which the designation is used.
+          An ISO 3166-1 alpha-2 country code or free-text description.
+        examples:
+          - US
+          - GB
+          - DE
+
+      type:
+        type: string
+        description: |
+          The designation type discriminator. Used for polymorphic
+          deserialization.
+        enum:
+          - expression
+          - abbreviation
+          - symbol
+          - letter_symbol
+          - graphical_symbol
+
+      language:
+        $ref: "#/$defs/iso639_three_char_code"
+
+      script:
+        $ref: "#/$defs/iso15924_code"
+
+      system:
+        $ref: "#/$defs/iso24229_conversion_system_code"
+
+      international:
+        type: boolean
+        description: |
+          Whether the designation is valid across all languages/regions
+          (true) or is specific to a language/region (false or absent).
+          Applies to symbols and abbreviations that are internationally
+          recognized (e.g., mathematical symbols, SI unit abbreviations).
+
       absent:
         type: boolean
-        description: Indication that the term designation is missing.
-      field_of_application:
-        type: string
-        description: Text used to disambiguate a designation from other, homonymous designations, by describing the subject field that the designation is used in.
-      usage_info:
-        type: string
-        description: Text used to disambiguate a designation from other, homonymous designations, by describing how the designation is used.
-      geographical_area:
+        description: |
+          Indicates that the designation is explicitly absent for this
+          concept in this language. Used when a concept exists in other
+          languages but no equivalent designation exists in this language.
+
+      pronunciation:
         type: array
         items:
-          $ref: "#/$defs/iso3166_code"
-        description: The geographic area in which the managed term is known under this designation.
+          $ref: "#/$defs/pronunciation"
+        description: |
+          Zero or more pronunciation entries for this designation.
+          Multiple entries allow different transcription systems, scripts,
+          or dialect variants of the same designation.
+
       sources:
         type: array
         items:
           $ref: "#/$defs/concept_source"
-        description: Bibliographic references for this designation.
+        description: |
+          Bibliographic sources specific to this designation (ISO 10241-1
+          §6.8). Sources indicate where the designation was taken from,
+          with optional modification notes.
 
-  # Expression Designation
+      term_type:
+        $ref: "#/$defs/iso12620_term_type"
+
+      related:
+        type: array
+        items:
+          $ref: "#/$defs/designation_relationship"
+        description: |
+          Term-level (designation-to-designation) relationships within
+          the same concept entry. Used for linking abbreviated forms to
+          their full forms, short forms to expanded forms, etc. (TBX
+          xref types on term information groups).
+
+  # ── Pronunciation ───────────────────────────────────────────────────────
+  pronunciation:
+    type: object
+    description: |
+      A pronunciation or transcription of a designation, following
+      ISO 24229 spelling system conventions.
+
+      Each pronunciation entry specifies the phonetic text and the context
+      in which it is expressed:
+      - `content`: the phonetic/transcribed text
+      - `language` (ISO 639): the language being pronounced
+      - `script` (ISO 15924): the script used for the pronunciation text
+      - `country` (ISO 3166-1): the country variant for dialect differences
+      - `system`: the transcription/romanization system (ISO 24229 code
+        or a simple identifier like "IPA")
+
+      A designation can have multiple pronunciations for different systems
+      or dialects.
+    properties:
+      content:
+        type: string
+        description: |
+          The phonetic or transcribed text of the pronunciation.
+        examples:
+          - "toːkjoː"
+          - "Tōkyō"
+          - "ˈæp.əl"
+      language:
+        $ref: "#/$defs/iso639_three_char_code"
+      script:
+        $ref: "#/$defs/iso15924_code"
+      country:
+        $ref: "#/$defs/iso3166_alpha2_code"
+      system:
+        $ref: "#/$defs/iso24229_conversion_system_code"
+    required:
+      - content
+
+  # ── Expression Designation ──────────────────────────────────────────────
   designation_expression:
     allOf:
       - $ref: "#/$defs/designation_base"
       - type: object
-        additionalProperties: false
-        description: Expression designation for a localized term
+        description: |
+          An expression designation — a word or phrase used as a term.
+          The most common designation type. Inherits all Base attributes
+          and adds grammar info, usage context, and prefix.
         properties:
           type:
             type: string
-            description: Type of the designation
             const: expression
-          designation:
+            default: expression
+          prefix:
             type: string
-            description: The localized term
+            description: |
+              A prefix associated with the expression designation.
+          usage_info:
+            type: string
+            description: |
+              Text used to disambiguate a designation from other,
+              homonymous designations, by describing how the
+              designation is used.
             examples:
-              - geometric node
-              - entity
-          language:
-            $ref: "#/$defs/iso639_three_char_code"
-          script:
-            $ref: "#/$defs/iso15924_code"
-          pronunciation:
-            type: array
-            items:
-              type: string
-            description: A pronunciation guide to the designation.
+              - science
+              - telecom
+          field_of_application:
+            type: string
+            description: |
+              Text used to disambiguate a designation by describing the
+              subject field in which the designation is used. Also known
+              as "specific use" in IEC terminology.
+            examples:
+              - "in communication theory"
+              - "in physics"
           grammar_info:
             type: array
             items:
               $ref: "#/$defs/grammar_info"
-            description: Grammatical information about the designation.
+            description: |
+              Grammatical information about the designation, including
+              gender, number, and part of speech.
 
-  # Abbreviation Designation
+  # ── Abbreviation Designation ────────────────────────────────────────────
   designation_abbreviation:
     allOf:
       - $ref: "#/$defs/designation_base"
       - type: object
-        additionalProperties: false
-        description: Abbreviation designation for a localized term
+        description: |
+          An abbreviation designation — a shortened form of a word or
+          phrase. Extends Expression (inherits usage_info, field_of_application,
+          grammar_info) and adds abbreviation type booleans.
         properties:
           type:
             type: string
-            description: Type of the designation
             const: abbreviation
-          designation:
+            default: abbreviation
+          prefix:
             type: string
-            description: The abbreviation for localized term
-            examples:
-              - j
-              - ATS
-          is_international:
+          usage_info:
+            type: string
+          field_of_application:
+            type: string
+          grammar_info:
+            type: array
+            items:
+              $ref: "#/$defs/grammar_info"
+          acronym:
             type: boolean
-            description: Whether an abbreviation is the same across languages, or language-specific.
-          abbreviation_type:
-            $ref: "#/$defs/abbreviation_type"
+            description: The abbreviation is an acronym (pronounced as a word).
+          initialism:
+            type: boolean
+            description: The abbreviation is an initialism (each letter pronounced).
+          truncation:
+            type: boolean
+            description: The abbreviation is a truncation (shortened form).
 
-  # Symbol Designation
+  # ── Symbol Designation ──────────────────────────────────────────────────
   designation_symbol:
     allOf:
       - $ref: "#/$defs/designation_base"
       - type: object
-        additionalProperties: false
-        description: Symbol designation for a localized term
+        description: |
+          A symbol designation — a non-letter symbol representing a concept.
+          Inherits all Base attributes including `international`.
         properties:
           type:
             type: string
-            description: Type of the designation
             const: symbol
-          international:
-            type: boolean
-            description: Whether the designation is valid across all regions, or is region-specific.
-          designation:
-            type: string
-            description: The symbol used to represent the localized term
-            examples:
-              - ♔
-              - M
+            default: symbol
 
-  # Graphical Symbol Designation
-  designation_graphical_symbol:
-    allOf:
-      - $ref: "#/$defs/designation_base"
-      - type: object
-        additionalProperties: false
-        description: Graphical Symbol designation for a localized term
-        properties:
-          type:
-            type: string
-            description: Type of the designation
-            const: graphical_symbol
-          international:
-            type: boolean
-            description: Whether the designation is valid across all regions, or is region-specific.
-          designation:
-            type: string
-            description: The symbol used to represent the localized term
-            examples:
-              - ♕
-              - ♖
-
-  # Letter Symbol Designation
+  # ── Letter Symbol Designation ───────────────────────────────────────────
   designation_letter_symbol:
     allOf:
       - $ref: "#/$defs/designation_base"
       - type: object
-        additionalProperties: false
-        description: Letter Symbol designation for a localized term
+        description: |
+          A letter symbol designation — a single letter used as a symbol.
+          Extends Symbol and adds a text representation. Inherits language,
+          script, system, international, absent, and pronunciation from Base.
         properties:
           type:
             type: string
-            description: Type of the designation
             const: letter_symbol
-          international:
-            type: boolean
-            description: Whether the designation is valid across all regions, or is region-specific.
-          designation:
+            default: letter_symbol
+          text:
             type: string
-            description: The symbol used to represent the localized term
+            description: |
+              The textual representation of the letter symbol.
             examples:
-              - C
-              - L
+              - "A"
+              - "C"
 
-  # Prefix Designation
-  designation_prefix:
+  # ── Graphical Symbol Designation ────────────────────────────────────────
+  designation_graphical_symbol:
     allOf:
       - $ref: "#/$defs/designation_base"
       - type: object
-        additionalProperties: false
-        description: Prefix designation for a localized term
+        description: |
+          A graphical symbol designation — an iconic or graphical symbol.
+          Extends Symbol and adds text and image representations. Inherits
+          language, script, system, international, absent, and pronunciation
+          from Base.
         properties:
           type:
             type: string
-            description: Type of the designation
-            const: prefix
-          designation:
+            const: graphical_symbol
+            default: graphical_symbol
+          text:
             type: string
-            description: The prefix used to represent the localized term
-
-  # Suffix Designation
-  designation_suffix:
-    allOf:
-      - $ref: "#/$defs/designation_base"
-      - type: object
-        additionalProperties: false
-        description: Suffix designation for a localized term
-        properties:
-          type:
+            description: |
+              A textual description of the graphical symbol.
+            examples:
+              - "king"
+          image:
             type: string
-            description: Type of the designation
-            const: suffix
-          designation:
-            type: string
-            description: The suffix used to represent the localized term
+            description: |
+              The graphical symbol character, glyph reference, or image path.
+            examples:
+              - "♔"
+              - "♕"
 
-  # Enums and Types
-  abbreviation_type:
-    type: string
-    description: Type of abbreviation, according to how it is formed.
-    enum:
-      - truncation
-      - acronym
-      - initialism
-      - other
-
-  normative_status:
-    type: string
-    description: Normative status of a designation of a term.
-    enum:
-      - preferred
-      - admitted
-      - deprecated
-
-  grammar_gender:
-    type: string
-    description: The grammatical gender of the designation.
-    enum:
-      - masculine
-      - feminine
-      - neuter
-      - common
-
-  grammar_number:
-    type: string
-    description: The grammatical number of the designation.
-    enum:
-      - singular
-      - dual
-      - plural
-
+  # ── Grammar Info ────────────────────────────────────────────────────────
   grammar_info:
     type: object
-    description: Grammatical information about a designation.
+    description: |
+      Grammatical information about a designation, including gender,
+      number, and part-of-speech booleans. In glossarist-ruby, the
+      GrammarInfo model uses boolean attributes for each part of speech.
     properties:
       gender:
-        $ref: "#/$defs/grammar_gender"
+        description: |
+          Grammatical gender(s) of the designation.
+        oneOf:
+          - $ref: "#/$defs/grammar_gender"
+          - type: array
+            items:
+              $ref: "#/$defs/grammar_gender"
       number:
-        $ref: "#/$defs/grammar_number"
+        description: |
+          Grammatical number(s) of the designation.
+        oneOf:
+          - $ref: "#/$defs/grammar_number"
+          - type: array
+            items:
+              $ref: "#/$defs/grammar_number"
       preposition:
         type: boolean
         description: The designation is a preposition.
@@ -334,19 +550,180 @@ $defs:
         type: boolean
         description: The designation is a noun.
 
+  # ── Enums ───────────────────────────────────────────────────────────────
+  normative_status:
+    type: string
+    description: |
+      Normative status of a designation within a concept. Indicates
+      whether the designation is the preferred term, an admitted
+      alternative, deprecated, or superseded by another designation.
+    enum:
+      - preferred
+      - admitted
+      - deprecated
+      - superseded
+
+  grammar_gender:
+    type: string
+    description: Grammatical gender of the designation.
+    enum:
+      - m
+      - f
+      - n
+      - c
+
+  grammar_number:
+    type: string
+    description: Grammatical number of the designation.
+    enum:
+      - singular
+      - dual
+      - plural
+
+  abbreviation_type:
+    type: string
+    description: Type of abbreviation, according to how it is formed.
+    enum:
+      - truncation
+      - acronym
+      - initialism
+
+  iso12620_term_type:
+    type: string
+    description: |
+      ISO 12620 term type classification for designations.
+
+      A categorization of a term with respect to formal representations
+      of terms or where or how they are used (ISO 12620 / TBX termType).
+
+      Orthographic / structural:
+        abbreviation, acronym, clipped_term, full_form, initialism,
+        short_form, transliterated_form, transcribed_form, variant
+
+      Symbolic / formulaic:
+        equation, formula, logical_expression, symbol
+
+      Usage / provenance:
+        common_name, entry_term, internationalism,
+        international_scientific_term, part_number,
+        phraseological_unit, shortcut, sku, standard_text,
+        synonym, synonymous_phrase
+    enum:
+      - abbreviation
+      - acronym
+      - clipped_term
+      - common_name
+      - entry_term
+      - equation
+      - formula
+      - full_form
+      - initialism
+      - internationalism
+      - international_scientific_term
+      - logical_expression
+      - part_number
+      - phraseological_unit
+      - transcribed_form
+      - transliterated_form
+      - short_form
+      - shortcut
+      - sku
+      - standard_text
+      - symbol
+      - synonym
+      - synonymous_phrase
+      - variant
+
+  designation_relationship:
+    type: object
+    description: |
+      A term-level (designation-to-designation) relationship within the
+      same concept entry. Used in TBX as xref elements on term information
+      groups (<tig>) to link related designations.
+
+      These differ from concept-level relationships (related_concept) in
+      that they relate designations of the SAME concept, not different
+      concepts. For example, linking an abbreviation "WWW" to its full
+      form "World Wide Web" within the same concept entry.
+    properties:
+      type:
+        type: string
+        description: |
+          The type of designation relationship.
+        enum:
+          - abbreviated_form_for
+          - short_form_for
+      target:
+        type: string
+        description: |
+          The text of the target designation being referenced.
+        examples:
+          - "World Wide Web"
+          - "United States of America"
+    required:
+      - type
+
   concept_status:
     type: string
-    description: Status of the concept
+    description: Status of the concept in the glossary lifecycle.
     enum:
       - draft
+      - submitted
       - not_valid
+      - invalid
       - valid
       - superseded
       - retired
 
-  concept_source_statuses:
+  # ── Detailed Definition ─────────────────────────────────────────────────
+  detailed_definition:
+    type: object
+    description: |
+      A definition, note, or example with optional bibliographic sources.
+      Used for definition, notes, and examples arrays in ConceptData.
+    properties:
+      content:
+        type: string
+        description: The text content of the definition, note, or example.
+        examples:
+          - "some definition of a geometric node"
+      sources:
+        type: array
+        items:
+          $ref: "#/$defs/concept_source"
+        description: |
+          Bibliographic references specific to this definition, note,
+          or example.
+
+  # ── Concept Source ──────────────────────────────────────────────────────
+  concept_source:
+    type: object
+    description: |
+      Bibliographic reference for a concept or designation.
+    properties:
+      type:
+        $ref: "#/$defs/concept_source_type"
+      status:
+        $ref: "#/$defs/concept_source_status"
+      origin:
+        $ref: "#/$defs/citation"
+      modification:
+        type: string
+        description: |
+          Free-text description of how the concept was modified from
+          the source.
+
+  concept_source_type:
     type: string
-    description: Status of the concept source
+    description: Type of concept source.
+    enum:
+      - authoritative
+      - lineage
+
+  concept_source_status:
+    type: string
+    description: |
+      The status of the concept relative to the bibliographic source.
     enum:
       - identical
       - similar
@@ -359,162 +736,296 @@ $defs:
       - related
       - not_equal
 
-  concept_source_types:
-    type: string
-    description: Type of the concept source
-    enum:
-      - authoritative
-      - lineage
-
-  concept_source:
+  # ── Related Concept ─────────────────────────────────────────────────────
+  related_concept:
     type: object
-    description: Bibliographic reference for a concept or designation
+    description: A concept related to the current concept with a typed relationship.
     properties:
-      status:
-        $ref: "#/$defs/concept_source_statuses"
       type:
-        $ref: "#/$defs/concept_source_types"
-      origin:
-        $ref: "#/$defs/citation"
-      modification:
+        $ref: "#/$defs/related_concept_type"
+      content:
         type: string
-        description: Modification of the concept source
+        description: Free-text content describing the relationship.
+      ref:
+        description: A structured or unstructured citation reference.
+        oneOf:
+          - type: string
+          - $ref: "#/$defs/citation"
 
+  related_concept_type:
+    type: string
+    description: |
+      The type of relation between concepts. See concept.yaml for full
+      documentation of each type and its ISO standard provenance.
+    enum:
+      - deprecates
+      - supersedes
+      - superseded_by
+      - narrower
+      - broader
+      - broader_generic
+      - narrower_generic
+      - broader_partitive
+      - narrower_partitive
+      - broader_instantial
+      - narrower_instantial
+      - equivalent
+      - close_match
+      - broad_match
+      - narrow_match
+      - related_match
+      - compare
+      - contrast
+      - see
+      - related_concept
+      - related_concept_broader
+      - related_concept_narrower
+      - sequentially_related_concept
+      - spatially_related_concept
+      - temporally_related_concept
+      - homograph
+      - false_friend
+
+  # ── Concept Reference ───────────────────────────────────────────────────
+  concept_reference:
+    type: object
+    description: |
+      A typed reference to another concept, either local (within the
+      same glossary) or external (in another registry). External references
+      use `source` (registry URN prefix) and `concept_id`, or a direct
+      `urn` field for formal URN references.
+    properties:
+      term:
+        type: string
+        description: The term of the referenced concept.
+      concept_id:
+        type: string
+        description: Identifier of the referenced concept.
+      source:
+        type: string
+        description: |
+          The source registry or standard URN prefix for external references.
+        examples:
+          - "urn:iec:std:iec:60050"
+          - "urn:iso:std:iso:10241"
+      ref_type:
+        type: string
+        description: |
+          The type of reference. "local" or "designation" for internal
+          references; "urn" or "domain" for external/domain references.
+        enum:
+          - local
+          - designation
+          - urn
+          - domain
+      urn:
+        type: string
+        description: |
+          Direct URN reference to the concept, used when the full URN is
+          known. Takes precedence over source + concept_id construction.
+        examples:
+          - "urn:iec:std:iec:60050-102-102-04-22"
+          - "urn:iso:std:iso:10241:term:3.1.1"
+
+  # ── Concept Date ────────────────────────────────────────────────────────
+  concept_date:
+    type: object
+    description: A date relevant to the lifecycle of the concept.
+    properties:
+      date:
+        type: string
+        format: date-time
+        description: The date in ISO 8601 format.
+      type:
+        $ref: "#/$defs/concept_date_type"
+    required:
+      - date
+      - type
+
+  concept_date_type:
+    type: string
+    description: Kinds of events associated with the concept lifecycle.
+    enum:
+      - accepted
+      - amended
+      - retired
+
+  # ── Citation ────────────────────────────────────────────────────────────
   citation:
     type: object
+    description: |
+      A bibliographic citation reference. Can be structured (with source,
+      id, version, locality) or unstructured (plain text).
     properties:
       text:
         type: string
+        description: Unstructured (plain text) reference.
       source:
         type: string
+        description: Source document identifier in a structured reference.
       id:
         type: string
+        description: Document identifier in a structured reference.
       version:
         type: string
+        description: Document version in a structured reference.
+      ref:
+        description: The full reference string or structured hash.
+        oneOf:
+          - type: string
+          - type: object
+            properties:
+              source:
+                type: string
+              id:
+                type: string
+              version:
+                type: string
       locality:
         $ref: "#/$defs/locality"
       link:
         type: string
-        description: Link of the source
+        description: URL link to the source document.
       original:
         type: string
-      ref:
-        type: string
+        description: Original reference text before parsing.
       clause:
-        type: string
+        description: Shorthand for a clause locality.
+        oneOf:
+          - type: string
+          - $ref: "#/$defs/locality"
       custom_locality:
-        $ref: "#/$defs/custom_locality"
+        type: array
+        items:
+          $ref: "#/$defs/custom_locality"
 
+  # ── Locality ────────────────────────────────────────────────────────────
   locality:
-    type: string
-    description: The locality of the origin
+    type: object
+    description: A locality within a cited document.
     properties:
       type:
         type: string
-        description: Type of the locality
-        pattern:
-          format: section|clause|part|paragraph|chapter|page|title|line|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+
-        example: clause
+        description: The type of locality.
+        pattern: "^(section|clause|part|paragraph|chapter|page|title|line|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+)$"
       reference_from:
         type: string
-        description: The source of the type of the locality
-        example: 3.2.1
+        description: The starting point of the locality reference.
       reference_to:
         type: string
-        description: The target of the type of the locality
-        example: 3.2.2
+        description: The ending point of the locality reference.
 
   custom_locality:
-    type: array
-    items:
-      type: object
-      description: Custom locality for the origin
-      properties:
-        name:
-          type: string
-          description: Name of the custom locality
-          examples:
-            - schema
-            - version
-        value:
-          type: string
-          description: Value of the custom locality
-          examples:
-            - Aec_service_life_arm
-            - '2'
-
-  detailed_definition:
     type: object
-    description: A definition of the concept.
+    description: A custom locality entry with a name-value pair.
     properties:
-      content:
+      name:
         type: string
-        description: The text of the definition of the concept.
-        example: some definition of a geometric node
-      sources:
-        type: array
-        items:
-          $ref: "#/$defs/concept_source"
-        description: Bibliographic references for this particular definition of the concept.
+        description: Name of the custom locality.
+      value:
+        type: string
+        description: Value of the custom locality.
 
-  # Data Types
+  # ── ISO Standard Code Types ─────────────────────────────────────────────
   iso639_three_char_code:
     type: string
     minLength: 3
     maxLength: 3
-    description: Three digit ISO-639 language code
+    description: |
+      ISO 639 three-character language code. Identifies the language
+      of content, designations, or pronunciations.
     examples:
       - eng
       - ara
       - fra
       - deu
-
-  iso3166_code:
-    type: string
-    description: The ISO-3166 Code for geographic area
-    examples:
-      - DE
-      - US
+      - jpn
+      - zho
 
   iso15924_code:
     type: string
-    description: The ISO-15924 script code
+    description: |
+      ISO 15924 four-letter script code. Identifies the writing system
+      used for content, designations, or pronunciations.
     examples:
       - Latn
       - Arab
       - Cyrl
+      - Hani
+      - Hans
+      - Hant
 
-  # Legacy aliases for backward compatibility
-  geographical_area:
-    $ref: "#/$defs/iso3166_code"
-
-  usage_info:
+  iso3166_alpha2_code:
     type: string
-    description: >-
-      Text used to disambiguate a designation from other, homonymous designations,
-      by describing how the designation is used. The usageinfo
-      is supplementary, language-specific text appended
-      to the designation.
+    minLength: 2
+    maxLength: 2
+    description: |
+      ISO 3166-1 alpha-2 country code. Used to distinguish dialect
+      variants in pronunciations.
+    examples:
+      - US
+      - GB
+      - DE
+      - FR
 
-  language_code:
-    $ref: "#/$defs/iso639_three_char_code"
+  iso24229_conversion_system_code:
+    type: string
+    description: |
+      ISO 24229 conversion system code. Identifies the writing system
+      conversion used for transcriptions, romanizations, and
+      transliterations.
 
-  # Non-verbal representation
-  non_verbal_rep:
+      Simple identifiers:
+        - "IPA": International Phonetic Alphabet
+        - "polivanov": Polivanov transcription system
+
+      ISO 24229 structured codes follow patterns like:
+        - "Var:{srcLang}-{srcScript}:{tgtScript}:{systemName}"
+        - "UN:{srcLang}-{srcScript}:{tgtScript}:{year}"
+      examples:
+        - IPA
+        - polivanov
+        - Var:jpn-Hrkt:Latn:Hepburn-1886
+        - Var:jpn-Hrkt:Latn:Kunrei-1937
+        - UN:ara-Arab:Latn:2017
+
+  # ── Non-verbal representation (resource reference) ──────────────────────
+  non_verbal_representation:
     type: object
-    description: A non-verbal representation of the term, used to help define it.
+    description: |
+      A reference to a non-verbal representation resource (image, table,
+      or formula) used to help define the concept (ISO 10241-1 §6.5).
+
+      Non-verbal representations are associated resources that live
+      outside the concept model. They are referenced by URI and can be
+      shared across concepts. The resource belongs either to the dataset
+      package (relative path) or is externally referenced (URL/URN).
     properties:
-      image:
-        type: object
-        description: An image used to help define a term.
-      table:
-        type: object
-        description: A table used to help define a term.
-      formula:
-        type: object
-        description: A formula used to help define a term.
+      type:
+        type: string
+        description: |
+          The type of non-verbal representation.
+        enum:
+          - image
+          - table
+          - formula
+      ref:
+        type: string
+        description: |
+          URI reference to the resource. Can be:
+          - Relative path within the GCR package (e.g., "assets/figure-1.svg")
+          - URN (e.g., "urn:gcr:assets:formula-1")
+          - URL (e.g., "https://example.org/images/figure-1.png")
+      text:
+        type: string
+        description: |
+          Optional text description or alt text for the representation.
       sources:
         type: array
         items:
           $ref: "#/$defs/concept_source"
-        description: Bibliographic source for the non-verbal representation of the term.
+        description: |
+          Bibliographic sources for the non-verbal representation.
+    required:
+      - type
+      - ref
