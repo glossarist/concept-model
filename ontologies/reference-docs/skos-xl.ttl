@@ -1,0 +1,62 @@
+# SKOS-XL Namespace Reference
+#
+# Source: https://www.w3.org/TR/skos-reference/#xl
+# Namespace: http://www.w3.org/2008/05/skos-xl#
+# W3C Recommendation 18 August 2009 (Section on SKOS-XL)
+#
+# This is a reference copy of the key classes and properties from the
+# SKOS-XL extension used by the Glossarist ontology for designation handling.
+
+@prefix xl:       <http://www.w3.org/2008/05/skos-xl#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2008/05/skos-xl> a owl:Ontology ;
+  rdfs:label "SKOS-XL"@en ;
+  rdfs:comment "An extension to SKOS that allows label properties (prefLabel, altLabel, hiddenLabel) to be represented as resources rather than plain literals."@en ;
+  owl:imports <http://www.w3.org/2004/02/skos/core> .
+
+# ── Classes ──────────────────────────────────────────────────────────────
+
+xl:Label a owl:Class ;
+  rdfs:label "Label"@en ;
+  rdfs:comment "An instance of xl:Label is a resource representing a lexical label."@en .
+
+# ── Label Properties (linking concepts to label resources) ───────────────
+
+xl:prefLabel a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:prefLabel ;
+  rdfs:range xl:Label ;
+  rdfs:label "preferred label"@en ;
+  rdfs:comment "If C xl:prefLabel L and C xl:prefLabel L', then L and L' are the same resource."@en .
+
+xl:altLabel a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:altLabel ;
+  rdfs:range xl:Label ;
+  rdfs:label "alternative label"@en ;
+  rdfs:comment "An alternative label resource for a concept."@en .
+
+xl:hiddenLabel a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:hiddenLabel ;
+  rdfs:range xl:Label ;
+  rdfs:label "hidden label"@en ;
+  rdfs:comment "A hidden label resource for a concept."@en .
+
+# ── Literal Form ─────────────────────────────────────────────────────────
+
+xl:literalForm a owl:DatatypeProperty ;
+  rdfs:domain xl:Label ;
+  rdfs:label "literal form"@en ;
+  rdfs:comment "The literal form of an xl:Label."@en .
+
+# ── Label Relation ───────────────────────────────────────────────────────
+
+xl:labelRelation a owl:ObjectProperty , owl:SymmetricProperty ;
+  rdfs:domain xl:Label ;
+  rdfs:range xl:Label ;
+  rdfs:label "label relation"@en ;
+  rdfs:comment "Relates two xl:Label instances."@en .

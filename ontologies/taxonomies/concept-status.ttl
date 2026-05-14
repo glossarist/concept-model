@@ -1,0 +1,51 @@
+# Concept Status Taxonomy
+#
+# SKOS ConceptScheme for managed concept lifecycle status values.
+# Source: ISO 10241-1, glossarist config.yml concept.status
+
+@prefix gloss: <https://www.glossarist.org/ontologies/> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:status a skos:ConceptScheme ;
+  skos:prefLabel "Concept Status"@en ;
+  skos:definition "Lifecycle status of a managed terminology concept."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+
+gloss:status/draft a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "draft"@en ;
+  skos:definition "The concept is in draft form and has not yet been submitted."@en .
+
+gloss:status/submitted a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "submitted"@en ;
+  skos:definition "The concept has been submitted for review."@en .
+
+gloss:status/not_valid a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "not valid"@en ;
+  skos:definition "The concept has been reviewed and is not valid."@en .
+
+gloss:status/invalid a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "invalid"@en ;
+  skos:definition "The concept is invalid."@en .
+
+gloss:status/valid a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "valid"@en ;
+  skos:definition "The concept has been reviewed and is valid."@en .
+
+gloss:status/superseded a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "superseded"@en ;
+  skos:definition "The concept has been superseded by a newer version."@en .
+
+gloss:status/retired a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "retired"@en ;
+  skos:definition "The concept has been retired from active use."@en .
+
+gloss:status skos:hasTopConcept gloss:status/draft , gloss:status/valid , gloss:status/retired .

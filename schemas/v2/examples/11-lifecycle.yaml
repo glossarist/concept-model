@@ -1,0 +1,37 @@
+# 11 — Lifecycle & Review
+#
+# Managed concepts and localizations have lifecycle metadata:
+# status, dates, review information.
+
+---
+id: "702-01-01"
+data:
+  identifier: "702-01-01"
+  localized_concepts:
+    eng: bbbbbbbb-aaaa-bbbb-cccc-dddddddddddd
+
+  # Structured dates (alternative to simplified date_accepted at top level)
+  dates:
+    - date: "1992-03-01T00:00:00+00:00"
+      type: accepted
+    - date: "2016-08-01T00:00:00+00:00"
+      type: amended
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-702"
+        version: "1992"
+
+  # This concept supersedes an older entry
+  related:
+    - type: supersedes
+      ref:
+        source: "IEC"
+        id: "60050-702"
+        version: "1988"
+
+# Concept lifecycle status
+status: valid
+date_accepted: "1992-03-01T00:00:00+00:00"

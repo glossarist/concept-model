@@ -1,0 +1,46 @@
+# 08 — Japanese localization for 121-01-01
+#
+# Japanese uses multiple scripts simultaneously. The script cascade
+# (ConceptData → Designation → Pronunciation) is demonstrated here.
+
+---
+id: 77777777-aaaa-bbbb-cccc-dddddddddddd
+data:
+  # ConceptData-level defaults
+  language_code: jpn
+  script: Hani
+
+  terms:
+    # Kanji form — uses concept-level script (Hani)
+    - type: expression
+      designation: "電磁界"
+      normative_status: preferred
+
+    # Katakana form — overrides script to Kana
+    - type: expression
+      designation: "デンジカイ"
+      normative_status: admitted
+      script: Kana
+      pronunciation:
+        - content: "denjikai"
+          language: jpn
+          script: Latn
+          system: "Var:jpn-Hrkt:Latn:Hepburn-1886"
+
+    # Latin script form — overrides script to Latn
+    - type: expression
+      designation: "denjikai"
+      normative_status: admitted
+      script: Latn
+
+  definition:
+    - content: >-
+        界は電界の強さ及び磁界の強さによって定まる場
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-121"
+        version: "1998"
+status: valid

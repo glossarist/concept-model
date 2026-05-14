@@ -1,0 +1,179 @@
+# ISO 25964 SKOS-Thes Namespace Reference
+#
+# Source: http://purl.org/iso25964/skos-thes
+# Date: 2015-03-17
+# Authors: Antoine Isaac, Johan De Smedt
+#
+# This is a reference copy of the key classes and properties from the
+# ISO 25964 SKOS-Thes ontology used by the Glossarist ontology.
+# The full ontology is available at http://purl.org/iso25964/skos-thes
+
+@prefix iso-thes: <http://purl.org/iso25964/skos-thes#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix xl:       <http://www.w3.org/2008/05/skos-xl#> .
+
+<http://purl.org/iso25964/skos-thes> a owl:Ontology ;
+  rdfs:label "ISO 25964 SKOS-Thes"@en ;
+  rdfs:comment "Mapping between ISO 25964 data model and SKOS schema."@en ;
+  owl:imports <http://www.w3.org/2004/02/skos/core> ;
+  owl:imports <http://www.w3.org/2008/05/skos-xl> .
+
+# ── Classes ──────────────────────────────────────────────────────────────
+
+iso-thes:ConceptGroup a owl:Class ;
+  rdfs:subClassOf skos:Collection ;
+  rdfs:label "Concept Group"@en ;
+  rdfs:comment "A group of concepts making up a subset of the thesaurus."@en ;
+  owl:disjointWith iso-thes:ThesaurusArray .
+
+iso-thes:ThesaurusArray a owl:Class ;
+  rdfs:subClassOf skos:Collection ;
+  rdfs:label "Thesaurus Array"@en ;
+  rdfs:comment "An array is a group of sibling concepts."@en .
+
+iso-thes:PreferredTerm a owl:Class ;
+  rdfs:subClassOf xl:Label ;
+  rdfs:label "Preferred Term"@en ;
+  rdfs:comment "Instances are objects of skosxl:prefLabel statements."@en .
+
+iso-thes:SimpleNonPreferredTerm a owl:Class ;
+  rdfs:subClassOf xl:Label ;
+  rdfs:label "Simple Non Preferred Term"@en ;
+  rdfs:comment "Instances are objects of skosxl:altLabel or skosxl:hiddenLabel statements."@en .
+
+iso-thes:SplitNonPreferredTerm a owl:Class ;
+  rdfs:subClassOf xl:Label ;
+  rdfs:label "Split Non Preferred Term"@en ;
+  rdfs:comment "A concept represented by a combination of two or more preferred terms."@en .
+
+iso-thes:CompoundEquivalence a owl:Class ;
+  rdfs:label "Compound Equivalence"@en ;
+  rdfs:comment "Links a split non-preferred term to its component preferred terms."@en .
+
+# ── Object Properties (Hierarchical) ────────────────────────────────────
+
+iso-thes:broaderGeneric a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:broader ;
+  owl:inverseOf iso-thes:narrowerGeneric ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "broader term (generic)"@en ;
+  rdfs:comment "ISO 25964-1: BTG — The immediate class-generalized class relationship."@en .
+
+iso-thes:narrowerGeneric a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:narrower ;
+  owl:inverseOf iso-thes:broaderGeneric ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "narrower term (generic)"@en ;
+  rdfs:comment "ISO 25964-1: NTG — The immediate class-specialized class relationship."@en .
+
+iso-thes:broaderPartitive a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:broader ;
+  owl:inverseOf iso-thes:narrowerPartitive ;
+  a owl:TransitiveProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "broader term (partitive)"@en ;
+  rdfs:comment "ISO 25964-1: BTP — Part-whole relationship (transitive)."@en .
+
+iso-thes:narrowerPartitive a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:narrower ;
+  owl:inverseOf iso-thes:broaderPartitive ;
+  a owl:TransitiveProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "narrower term (partitive)"@en ;
+  rdfs:comment "ISO 25964-1: NTP — Whole-part relationship (transitive)."@en .
+
+iso-thes:broaderInstantial a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:broader ;
+  owl:inverseOf iso-thes:narrowerInstantial ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "broader term (instantial)"@en ;
+  rdfs:comment "ISO 25964-1: BTI — The immediate instance-class relationship."@en .
+
+iso-thes:narrowerInstantial a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:narrower ;
+  owl:inverseOf iso-thes:broaderInstantial ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "narrower term (instantial)"@en ;
+  rdfs:comment "ISO 25964-1: NTI — The immediate class-instance relationship."@en .
+
+# ── Object Properties (Group/Array structure) ───────────────────────────
+
+iso-thes:subGroup a owl:ObjectProperty, owl:TransitiveProperty ;
+  owl:inverseOf iso-thes:superGroup ;
+  rdfs:domain iso-thes:ConceptGroup ;
+  rdfs:range iso-thes:ConceptGroup ;
+  rdfs:label "sub group"@en ;
+  rdfs:comment "All members of the object subGroup are members of the subject group."@en .
+
+iso-thes:superGroup a owl:ObjectProperty, owl:TransitiveProperty ;
+  owl:inverseOf iso-thes:subGroup ;
+  rdfs:domain iso-thes:ConceptGroup ;
+  rdfs:range iso-thes:ConceptGroup ;
+  rdfs:label "super group"@en .
+
+iso-thes:subordinateArray a owl:ObjectProperty ;
+  owl:inverseOf iso-thes:superOrdinate ;
+  rdfs:domain skos:Concept ;
+  rdfs:range iso-thes:ThesaurusArray ;
+  rdfs:label "subordinate array"@en .
+
+iso-thes:superOrdinate a owl:ObjectProperty ;
+  owl:inverseOf iso-thes:subordinateArray ;
+  rdfs:domain iso-thes:ThesaurusArray ;
+  rdfs:range skos:Concept ;
+  rdfs:label "super ordinate"@en .
+
+iso-thes:microThesaurusOf a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:inScheme ;
+  rdfs:domain iso-thes:ConceptGroup ;
+  rdfs:range skos:ConceptScheme ;
+  rdfs:label "micro-thesaurus of"@en .
+
+# ── Object Properties (Term relations) ──────────────────────────────────
+
+iso-thes:plusUseTerm a owl:ObjectProperty ;
+  rdfs:subPropertyOf xl:labelRelation ;
+  owl:inverseOf iso-thes:plusUFTerm ;
+  rdfs:domain iso-thes:SplitNonPreferredTerm ;
+  rdfs:range iso-thes:PreferredTerm ;
+  rdfs:label "USE+"@en .
+
+iso-thes:plusUFTerm a owl:ObjectProperty ;
+  rdfs:subPropertyOf xl:labelRelation ;
+  owl:inverseOf iso-thes:plusUseTerm ;
+  rdfs:domain iso-thes:PreferredTerm ;
+  rdfs:range iso-thes:SplitNonPreferredTerm ;
+  rdfs:label "UF+"@en .
+
+iso-thes:plusUse a owl:ObjectProperty ;
+  rdfs:domain iso-thes:CompoundEquivalence ;
+  rdfs:range iso-thes:PreferredTerm ;
+  rdfs:label "component preferred term"@en .
+
+iso-thes:plusUF a owl:ObjectProperty ;
+  rdfs:domain iso-thes:CompoundEquivalence ;
+  rdfs:range iso-thes:SplitNonPreferredTerm ;
+  rdfs:label "split non preferred term"@en .
+
+# ── Data Properties ─────────────────────────────────────────────────────
+
+iso-thes:status a owl:DatatypeProperty ;
+  rdfs:domain [ a owl:Class ; owl:unionOf ( skos:Concept xl:Label ) ] ;
+  rdfs:range xsd:string ;
+  rdfs:label "status"@en ;
+  rdfs:comment "ISO status on ThesaurusConcept or ThesaurusTerm."@en .
+
+# ── Disjointness ────────────────────────────────────────────────────────
+
+[ a owl:AllDisjointClasses ;
+  owl:members ( iso-thes:PreferredTerm iso-thes:SimpleNonPreferredTerm iso-thes:SplitNonPreferredTerm ) ] .

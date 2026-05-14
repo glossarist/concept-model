@@ -1,0 +1,25 @@
+# 08 — Multi-Language & Multi-Script
+#
+# A managed concept with multiple localizations in different languages
+# and scripts. The localization map keys are ISO 639 three-character codes.
+#
+# Also demonstrates the per-designation language/script/system cascade:
+#   ConceptData defaults → Designation overrides → Pronunciation overrides
+
+---
+id: "121-01-01"
+data:
+  identifier: "121-01-01"
+  localized_concepts:
+    eng: 55555555-aaaa-bbbb-cccc-dddddddddddd
+    ara: 66666666-aaaa-bbbb-cccc-dddddddddddd
+    jpn: 77777777-aaaa-bbbb-cccc-dddddddddddd
+    rus: 88888888-aaaa-bbbb-cccc-dddddddddddd
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-121"
+        version: "1998"
+status: valid
+date_accepted: "1998-08-01T00:00:00+00:00"

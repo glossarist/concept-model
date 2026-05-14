@@ -1,0 +1,35 @@
+# Entry Status Taxonomy
+#
+# SKOS ConceptScheme for localized concept entry lifecycle status.
+# Source: ISO 10241-1, glossarist config.yml localized-concept entry_status
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:entstatus a skos:ConceptScheme ;
+  skos:prefLabel "Entry Status"@en ;
+  skos:definition "Lifecycle status of a localized concept entry within a glossary."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+
+gloss:entstatus/valid a skos:Concept ;
+  skos:inScheme gloss:entstatus ;
+  skos:prefLabel "valid"@en ;
+  skos:definition "The localized entry is valid and current."@en .
+
+gloss:entstatus/not_valid a skos:Concept ;
+  skos:inScheme gloss:entstatus ;
+  skos:prefLabel "not valid"@en ;
+  skos:definition "The localized entry is not valid."@en .
+
+gloss:entstatus/superseded a skos:Concept ;
+  skos:inScheme gloss:entstatus ;
+  skos:prefLabel "superseded"@en ;
+  skos:definition "The localized entry has been superseded by a newer version."@en .
+
+gloss:entstatus/retired a skos:Concept ;
+  skos:inScheme gloss:entstatus ;
+  skos:prefLabel "retired"@en ;
+  skos:definition "The localized entry has been retired from active use."@en .
+
+gloss:entstatus skos:hasTopConcept gloss:entstatus/valid , gloss:entstatus/retired .

@@ -1,0 +1,219 @@
+# SKOS Core Namespace Reference
+#
+# Source: https://www.w3.org/TR/skos-reference/
+# Namespace: http://www.w3.org/2004/02/skos/core#
+# W3C Recommendation 18 August 2009
+#
+# This is a reference copy of the key classes and properties from the
+# SKOS Core vocabulary used by the Glossarist ontology.
+
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.w3.org/2004/02/skos/core> a owl:Ontology ;
+  rdfs:label "SKOS Core"@en ;
+  rdfs:comment "An RDF vocabulary for representing thesauri, classification schemes, taxonomies, and other types of structured controlled vocabulary."@en ;
+  dcterms:title "SKOS Vocabulary"@en ;
+  dcterms:date "2009-08-18"^^xsd:date .
+
+# ── Classes ──────────────────────────────────────────────────────────────
+
+skos:Concept a owl:Class ;
+  rdfs:label "Concept"@en ;
+  rdfs:comment "An idea or notion; a unit of thought."@en ;
+  owl:disjointWith skos:Collection , skos:ConceptScheme .
+
+skos:ConceptScheme a owl:Class ;
+  rdfs:label "Concept Scheme"@en ;
+  rdfs:comment "A set of concepts, optionally including statements about semantic relationships between those concepts."@en ;
+  owl:disjointWith skos:Concept .
+
+skos:Collection a owl:Class ;
+  rdfs:label "Collection"@en ;
+  rdfs:comment "A meaningful collection of concepts."@en ;
+  owl:disjointWith skos:Concept , skos:ConceptScheme .
+
+skos:OrderedCollection a owl:Class ;
+  rdfs:subClassOf skos:Collection ;
+  rdfs:label "Ordered Collection"@en ;
+  rdfs:comment "An ordered collection of concepts, where both the grouping and the ordering are meaningful."@en .
+
+# ── Semantic Relationship Properties ─────────────────────────────────────
+
+skos:broader a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:broaderTransitive ;
+  owl:inverseOf skos:narrower ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has broader"@en ;
+  rdfs:comment "Relates a concept to a concept that is more general in meaning."@en .
+
+skos:narrower a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:narrowerTransitive ;
+  owl:inverseOf skos:broader ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has narrower"@en ;
+  rdfs:comment "Relates a concept to a concept that is more specific in meaning."@en .
+
+skos:related a owl:ObjectProperty , owl:SymmetricProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has related"@en ;
+  rdfs:comment "Relates a concept to a concept with which there is an associative semantic relationship."@en .
+
+skos:broaderTransitive a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has broader transitive"@en ;
+  rdfs:comment "skos:broaderTransitive is the transitive closure of skos:broader."@en .
+
+skos:narrowerTransitive a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has narrower transitive"@en ;
+  rdfs:comment "skos:narrowerTransitive is the transitive closure of skos:narrower."@en .
+
+# ── Mapping Properties ───────────────────────────────────────────────────
+
+skos:mappingRelation a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:semanticRelation ;
+  rdfs:label "is in mapping relation with"@en ;
+  rdfs:comment "Relates two concepts coming, by convention, from different schemes, and that have comparable meanings."@en .
+
+skos:closeMatch a owl:ObjectProperty , owl:SymmetricProperty ;
+  rdfs:subPropertyOf skos:mappingRelation ;
+  rdfs:label "is in close match with"@en ;
+  rdfs:comment "Relates two concepts that are sufficiently similar that they can be used interchangeably in some information retrieval applications."@en .
+
+skos:exactMatch a owl:ObjectProperty , owl:SymmetricProperty , owl:TransitiveProperty ;
+  rdfs:subPropertyOf skos:closeMatch ;
+  rdfs:label "has exact match"@en ;
+  rdfs:comment "Relates two concepts having exactly the same meaning."@en .
+
+skos:broadMatch a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:mappingRelation , skos:broader ;
+  owl:inverseOf skos:narrowMatch ;
+  rdfs:label "has broader match"@en ;
+  rdfs:comment "Relates a concept to a concept in a different concept scheme that is more general in meaning."@en .
+
+skos:narrowMatch a owl:ObjectProperty ;
+  rdfs:subPropertyOf skos:mappingRelation , skos:narrower ;
+  owl:inverseOf skos:broadMatch ;
+  rdfs:label "has narrower match"@en ;
+  rdfs:comment "Relates a concept to a concept in a different concept scheme that is more specific in meaning."@en .
+
+skos:relatedMatch a owl:ObjectProperty , owl:SymmetricProperty ;
+  rdfs:subPropertyOf skos:mappingRelation , skos:related ;
+  rdfs:label "has related match"@en ;
+  rdfs:comment "Relates two concepts from different concept schemes that have an associative relationship."@en .
+
+# ── Lexical Label Properties ─────────────────────────────────────────────
+
+skos:prefLabel a owl:AnnotationProperty , owl:DatatypeProperty ;
+  rdfs:subPropertyOf rdfs:label ;
+  rdfs:domain skos:Concept ;
+  rdfs:label "preferred lexical label"@en ;
+  rdfs:comment "The preferred lexical label for a resource, in a given language."@en .
+
+skos:altLabel a owl:AnnotationProperty ;
+  rdfs:subPropertyOf rdfs:label ;
+  rdfs:domain skos:Concept ;
+  rdfs:label "alternative lexical label"@en ;
+  rdfs:comment "An alternative lexical label for a resource."@en .
+
+skos:hiddenLabel a owl:AnnotationProperty ;
+  rdfs:subPropertyOf rdfs:label ;
+  rdfs:domain skos:Concept ;
+  rdfs:label "hidden lexical label"@en ;
+  rdfs:comment "A lexical label for a resource that should be hidden when generating visual displays of the resource, but should still be accessible to free text search operations."@en .
+
+# ── Notation ─────────────────────────────────────────────────────────────
+
+skos:notation a owl:DatatypeProperty ;
+  rdfs:label "notation"@en ;
+  rdfs:comment "A notation, also known as classification code, is a string of characters such as 'UBA' or 'LCS-15' that can be used to identify a concept within the context of a given concept scheme."@en .
+
+# ── Documentation Properties ─────────────────────────────────────────────
+
+skos:note a owl:AnnotationProperty ;
+  rdfs:label "note"@en ;
+  rdfs:comment "A general note, for any purpose."@en .
+
+skos:definition a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "definition"@en ;
+  rdfs:comment "A statement or formal explanation of the meaning of a concept."@en .
+
+skos:scopeNote a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "scope note"@en ;
+  rdfs:comment "A note that helps to clarify the meaning and/or the use of a concept."@en .
+
+skos:example a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "example"@en ;
+  rdfs:comment "An example of the use of a concept."@en .
+
+skos:historyNote a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "history note"@en ;
+  rdfs:comment "A note about the past state/use/meaning of a concept."@en .
+
+skos:editorialNote a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "editorial note"@en ;
+  rdfs:comment "A note for an editor, translator or maintainer of the vocabulary."@en .
+
+skos:changeNote a owl:AnnotationProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "change note"@en ;
+  rdfs:comment "A note about a modification to a concept."@en .
+
+# ── Concept Scheme Properties ────────────────────────────────────────────
+
+skos:inScheme a owl:ObjectProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:ConceptScheme ;
+  rdfs:label "is in scheme"@en ;
+  rdfs:comment "Relates a resource (for example a concept) to a concept scheme in which it is included."@en .
+
+skos:hasTopConcept a owl:ObjectProperty ;
+  owl:inverseOf skos:topConceptOf ;
+  rdfs:domain skos:ConceptScheme ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has top concept"@en ;
+  rdfs:comment "Relates, by convention, a concept scheme to a concept which is topmost in the broader/narrower concept hierarchies for that scheme."@en .
+
+skos:topConceptOf a owl:ObjectProperty ;
+  owl:inverseOf skos:hasTopConcept ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:ConceptScheme ;
+  rdfs:label "is top concept in scheme"@en ;
+  rdfs:comment "Relates a concept to the concept scheme that it is a top level concept of."@en .
+
+# ── Collection Properties ────────────────────────────────────────────────
+
+skos:member a owl:ObjectProperty ;
+  rdfs:domain skos:Collection ;
+  rdfs:range [ a owl:Class ; owl:unionOf ( skos:Concept skos:Collection ) ] ;
+  rdfs:label "has member"@en ;
+  rdfs:comment "Relates a collection to one of its members."@en .
+
+skos:memberList a owl:ObjectProperty , owl:FunctionalProperty ;
+  rdfs:domain skos:OrderedCollection ;
+  rdfs:range rdf:List ;
+  rdfs:label "has member list"@en ;
+  rdfs:comment "Relates an ordered collection to the RDF list containing its members."@en .
+
+# ── Semantic Relation (super-property) ───────────────────────────────────
+
+skos:semanticRelation a owl:ObjectProperty ;
+  rdfs:domain skos:Concept ;
+  rdfs:range skos:Concept ;
+  rdfs:label "is in semantic relation with"@en ;
+  rdfs:comment "Links a concept to a concept related by meaning."@en .
