@@ -1,0 +1,39 @@
+# Grammar Gender Taxonomy
+#
+# SKOS ConceptScheme for grammatical gender values.
+# Source: ISO 12620, glossarist config.yml grammar_info.gender
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:gender a skos:ConceptScheme ;
+  skos:prefLabel "Grammar Gender"@en ;
+  skos:definition "Grammatical gender classification for designations."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+
+gloss:gender/m a skos:Concept ;
+  skos:inScheme gloss:gender ;
+  skos:prefLabel "masculine"@en ;
+  skos:altLabel "m"@en ;
+  skos:definition "Masculine grammatical gender."@en .
+
+gloss:gender/f a skos:Concept ;
+  skos:inScheme gloss:gender ;
+  skos:prefLabel "feminine"@en ;
+  skos:altLabel "f"@en ;
+  skos:definition "Feminine grammatical gender."@en .
+
+gloss:gender/n a skos:Concept ;
+  skos:inScheme gloss:gender ;
+  skos:prefLabel "neuter"@en ;
+  skos:altLabel "n"@en ;
+  skos:definition "Neuter grammatical gender."@en .
+
+gloss:gender/c a skos:Concept ;
+  skos:inScheme gloss:gender ;
+  skos:prefLabel "common"@en ;
+  skos:altLabel "c"@en ;
+  skos:definition "Common grammatical gender (combined masculine/feminine)."@en .
+
+gloss:gender skos:hasTopConcept gloss:gender/m , gloss:gender/f , gloss:gender/n , gloss:gender/c .

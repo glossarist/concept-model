@@ -23,6 +23,11 @@ properties:
         examples:
           - "1234"
           - "foobar"
+      uri:
+        type: string
+        description: Optional URI for the concept
+        examples:
+          - "https://example.org/concepts/1234"
       localized_concepts:
         type: object
         description: Three digit language code followed by the `id` of the localization for that language.
@@ -33,6 +38,11 @@ properties:
           $ref: "#/$defs/iso639_three_char_code"
         additionalProperties:
           type: string
+      domains:
+        type: array
+        items:
+          $ref: "#/$defs/concept_reference"
+        description: Domain/subject area references (replaces legacy groups field).
       related:
         type: array
         items:
@@ -64,7 +74,9 @@ $defs:
     description: The normative status of the managed term.
     enum:
       - draft
+      - submitted
       - not_valid
+      - invalid
       - valid
       - superseded
       - retired
@@ -101,8 +113,10 @@ $defs:
       type:
         $ref: "#/$defs/related_concept_type"
       ref:
-        type: string
         description: Reference to the related concept
+        oneOf:
+          - type: string
+          - $ref: "#/$defs/concept_reference"
       content:
         type: string
         description: Content describing the relationship
@@ -112,15 +126,64 @@ $defs:
     type: string
     description: The relation of a term to the current term.
     enum:
+      # Lifecycle
       - deprecates
       - supersedes
-      - narrower
+      - superseded_by
+      # Hierarchical (SKOS)
       - broader
+      - narrower
+      # ISO 25964 generic
+      - broader_generic
+      - narrower_generic
+      # ISO 25964 partitive
+      - broader_partitive
+      - narrower_partitive
+      # ISO 25964 instantial
+      - broader_instantial
+      - narrower_instantial
+      # SKOS mapping
       - equivalent
+      - close_match
+      - broad_match
+      - narrow_match
+      - related_match
+      # Associative (SKOS)
+      - see
+      - related_concept
+      - related_concept_broader
+      - related_concept_narrower
+      # Comparative
       - compare
       - contrast
-      - see
-      - see-also
+      # Spatiotemporal
+      - sequentially_related
+      - spatially_related
+      - temporally_related
+      # Lexical
+      - homograph
+      - false_friend
+      # Designation-level
+      - abbreviated_form_for
+      - short_form_for
+
+  # Concept Reference
+  concept_reference:
+    type: object
+    description: A typed reference to another concept (local or external).
+    properties:
+      concept_id:
+        type: string
+        description: The target concept identifier.
+      source:
+        type: string
+        description: URN prefix for external references.
+      ref_type:
+        type: string
+        description: The type of reference (domain, relationship, etc.).
+      urn:
+        type: string
+        description: Direct URN reference.
 
   # Concept Source
   concept_source:
@@ -132,17 +195,10 @@ $defs:
       status:
         $ref: "#/$defs/concept_source_status"
       origin:
-        type: object
-        properties:
-          ref:
-            type: string
-          clause:
-            type: string
-          link:
-            type: string
-      link:
+        $ref: "#/$defs/citation"
+      modification:
         type: string
-        description: Link of the source
+        description: How the concept was modified from the source.
 
   # Concept Source Type enum
   concept_source_type:
@@ -151,22 +207,78 @@ $defs:
     enum:
       - authoritative
       - lineage
-    examples:
-      - authoritative
-      - lineage
 
   # Concept Source Status enum
   concept_source_status:
     type: string
-    description: The status of the managed term in the present context, relative to the term as found in the bibliographic source.
+    description: The status of the managed term relative to the source.
     enum:
       - identical
+      - similar
       - modified
-      - restyled
-      - context-added
+      - restyle
+      - context_added
       - generalisation
       - specialisation
       - unspecified
+      - related
+      - not_equal
+
+  # Citation
+  citation:
+    type: object
+    description: A bibliographic citation.
+    properties:
+      text:
+        type: string
+      source:
+        type: string
+      id:
+        type: string
+      version:
+        type: string
+      locality:
+        $ref: "#/$defs/locality"
+      link:
+        type: string
+      original:
+        type: string
+      ref:
+        description: Reference identifier (string or structured hash).
+        oneOf:
+          - type: string
+          - type: object
+            properties:
+              source:
+                type: string
+              id:
+                type: string
+              version:
+                type: string
+      clause:
+        type: string
+      custom_locality:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+
+  # Locality
+  locality:
+    type: object
+    description: A locality within a cited document.
+    properties:
+      type:
+        type: string
+        description: Type of the locality (section, clause, page, etc.)
+      reference_from:
+        type: string
+      reference_to:
+        type: string
 
   # Data Types
   iso639_three_char_code:

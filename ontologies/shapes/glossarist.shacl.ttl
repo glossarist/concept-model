@@ -1,0 +1,246 @@
+# Glossarist SHACL Shapes
+#
+# Validation shapes for the Glossarist ontology.
+# Validates instance data against the ontology constraints.
+#
+# Requires: SHACL vocabulary (http://www.w3.org/ns/shacl#)
+
+@prefix gloss:  <https://www.glossarist.org/ontologies/> .
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xl:     <http://www.w3.org/2008/05/skos-xl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+# ══════════════════════════════════════════════════════════════════════════
+# Concept shapes
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:ConceptShape a sh:NodeShape ;
+  sh:targetClass gloss:Concept ;
+  sh:class skos:Concept ;
+  sh:property [
+    sh:path gloss:identifier ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasLocalization ;
+    sh:class gloss:LocalizedConcept ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasStatus ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDate ;
+    sh:class gloss:ConceptDate ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSource ;
+    sh:class gloss:ConceptSource ;
+  ] .
+
+gloss:LocalizedConceptShape a sh:NodeShape ;
+  sh:targetClass gloss:LocalizedConcept ;
+  sh:class skos:Concept ;
+  sh:property [
+    sh:path gloss:isLocalizationOf ;
+    sh:class gloss:Concept ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:language ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDesignation ;
+    sh:class gloss:Designation ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDefinition ;
+    sh:class gloss:DetailedDefinition ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasEntryStatus ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+  ] .
+
+# ══════════════════════════════════════════════════════════════════════════
+# Designation shapes
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:DesignationShape a sh:NodeShape ;
+  sh:targetClass gloss:Designation ;
+  sh:class xl:Label ;
+  sh:property [
+    sh:path xl:literalForm ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:normativeStatus ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasPronunciation ;
+    sh:class gloss:Pronunciation ;
+  ] ;
+  sh:property [
+    sh:path gloss:isInternational ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:isAbsent ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:ExpressionShape a sh:NodeShape ;
+  sh:targetClass gloss:Expression ;
+  sh:property [
+    sh:path gloss:hasGrammarInfo ;
+    sh:class gloss:GrammarInfo ;
+  ] .
+
+gloss:AbbreviationShape a sh:NodeShape ;
+  sh:targetClass gloss:Abbreviation ;
+  sh:property [
+    sh:path gloss:isAcronym ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:isInitialism ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:isTruncation ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:SymbolShape a sh:NodeShape ;
+  sh:targetClass gloss:Symbol .
+
+gloss:LetterSymbolShape a sh:NodeShape ;
+  sh:targetClass gloss:LetterSymbol ;
+  sh:property [
+    sh:path gloss:text ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:GraphicalSymbolShape a sh:NodeShape ;
+  sh:targetClass gloss:GraphicalSymbol ;
+  sh:property [
+    sh:path gloss:text ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:image ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] .
+
+# ══════════════════════════════════════════════════════════════════════════
+# Supporting class shapes
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:PronunciationShape a sh:NodeShape ;
+  sh:targetClass gloss:Pronunciation ;
+  sh:property [
+    sh:path gloss:pronunciationContent ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:DetailedDefinitionShape a sh:NodeShape ;
+  sh:targetClass gloss:DetailedDefinition ;
+  sh:property [
+    sh:path rdf:value ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:ConceptSourceShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptSource ;
+  sh:property [
+    sh:path gloss:sourceType ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sourceStatus ;
+    sh:class skos:Concept ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sourceOrigin ;
+    sh:class gloss:Citation ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:ConceptDateShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptDate ;
+  sh:property [
+    sh:path gloss:dateValue ;
+    sh:datatype xsd:dateTime ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:dateType ;
+    sh:class skos:Concept ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:NonVerbalRepresentationShape a sh:NodeShape ;
+  sh:targetClass gloss:NonVerbalRepresentation ;
+  sh:property [
+    sh:path gloss:representationType ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:in ( "image" "table" "formula" ) ;
+  ] ;
+  sh:property [
+    sh:path gloss:representationRef ;
+    sh:datatype xsd:anyURI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:CitationShape a sh:NodeShape ;
+  sh:targetClass gloss:Citation ;
+  sh:or (
+    [ sh:property [ sh:path gloss:citationText ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path gloss:citationSource ; sh:minCount 1 ] ]
+  ) .
+
+gloss:LocalityShape a sh:NodeShape ;
+  sh:targetClass gloss:Locality ;
+  sh:property [
+    sh:path gloss:localityType ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:referenceFrom ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .

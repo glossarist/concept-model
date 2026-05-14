@@ -1,0 +1,46 @@
+# Normative Status Taxonomy
+#
+# SKOS ConceptScheme for designation normative status.
+# Source: ISO 10241-1, glossarist config.yml designation.base.normative_status
+#
+# Alignment with ISO 25964:
+#   gloss:norm/preferred → also typed as iso-thes:PreferredTerm
+#   gloss:norm/admitted  → also typed as iso-thes:SimpleNonPreferredTerm
+#   gloss:norm/deprecated → also typed as iso-thes:SimpleNonPreferredTerm
+#   gloss:norm/superseded → also typed as iso-thes:SimpleNonPreferredTerm
+
+@prefix gloss:     <https://www.glossarist.org/ontologies/> .
+@prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
+@prefix iso-thes:  <http://purl.org/iso25964/skos-thes#> .
+@prefix dcterms:   <http://purl.org/dc/terms/> .
+
+gloss:norm a skos:ConceptScheme ;
+  skos:prefLabel "Normative Status"@en ;
+  skos:definition "Normative status of a designation within a concept entry."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+
+gloss:norm/preferred a skos:Concept , iso-thes:PreferredTerm ;
+  skos:inScheme gloss:norm ;
+  skos:prefLabel "preferred"@en ;
+  skos:definition "The preferred designation for this concept in this language."@en ;
+  rdfs:seeAlso iso-thes:PreferredTerm .
+
+gloss:norm/admitted a skos:Concept , iso-thes:SimpleNonPreferredTerm ;
+  skos:inScheme gloss:norm ;
+  skos:prefLabel "admitted"@en ;
+  skos:definition "An admitted (accepted but not preferred) designation."@en ;
+  rdfs:seeAlso iso-thes:SimpleNonPreferredTerm .
+
+gloss:norm/deprecated a skos:Concept , iso-thes:SimpleNonPreferredTerm ;
+  skos:inScheme gloss:norm ;
+  skos:prefLabel "deprecated"@en ;
+  skos:definition "A deprecated designation that should no longer be used."@en ;
+  rdfs:seeAlso iso-thes:SimpleNonPreferredTerm .
+
+gloss:norm/superseded a skos:Concept , iso-thes:SimpleNonPreferredTerm ;
+  skos:inScheme gloss:norm ;
+  skos:prefLabel "superseded"@en ;
+  skos:definition "A superseded designation that has been replaced."@en ;
+  rdfs:seeAlso iso-thes:SimpleNonPreferredTerm .
+
+gloss:norm skos:hasTopConcept gloss:norm/preferred .

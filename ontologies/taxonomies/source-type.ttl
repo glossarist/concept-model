@@ -1,0 +1,25 @@
+# Source Type Taxonomy
+#
+# SKOS ConceptScheme for concept source types.
+# Source: ISO 10241-1, glossarist config.yml concept_source.type
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:srctype a skos:ConceptScheme ;
+  skos:prefLabel "Source Type"@en ;
+  skos:definition "Type of bibliographic source for a concept or designation."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+
+gloss:srctype/authoritative a skos:Concept ;
+  skos:inScheme gloss:srctype ;
+  skos:prefLabel "authoritative"@en ;
+  skos:definition "The concept is directly sourced from an authoritative standard or document."@en .
+
+gloss:srctype/lineage a skos:Concept ;
+  skos:inScheme gloss:srctype ;
+  skos:prefLabel "lineage"@en ;
+  skos:definition "The concept's lineage or historical reference."@en .
+
+gloss:srctype skos:hasTopConcept gloss:srctype/authoritative , gloss:srctype/lineage .

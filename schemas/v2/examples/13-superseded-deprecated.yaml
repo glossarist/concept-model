@@ -1,0 +1,44 @@
+# 13 — Superseded & Deprecated Concept Lifecycle
+#
+# Demonstrates the deprecated/superseded lifecycle: a concept that was
+# replaced by a newer entry. Shows superseded_by at the managed level,
+# deprecated normative_status on designations, and retired dates.
+#
+# Companion: 13-superseded-deprecated-localized.yaml
+
+---
+id: "112-01-02"
+data:
+  identifier: "112-01-02"
+  localized_concepts:
+    eng: cccccccc-aaaa-bbbb-cccc-dddddddddddd
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-112"
+        version: "2010"
+
+# This concept is superseded — replaced by a newer entry
+related:
+  - type: superseded_by
+    content: "replaced by updated definition"
+    ref:
+      source: "IEC"
+      id: "112-01-03"
+
+  - type: deprecates
+    content: "deprecated older entry"
+    ref:
+      source: "IEC"
+      id: "112-01-01"
+
+# Concept lifecycle status: superseded
+status: superseded
+
+dates:
+  - date: "2010-01-01T00:00:00+00:00"
+    type: accepted
+  - date: "2023-06-01T00:00:00+00:00"
+    type: retired

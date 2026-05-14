@@ -1,0 +1,30 @@
+# Grammar Number Taxonomy
+#
+# SKOS ConceptScheme for grammatical number values.
+# Source: ISO 12620, glossarist config.yml grammar_info.number
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:number a skos:ConceptScheme ;
+  skos:prefLabel "Grammar Number"@en ;
+  skos:definition "Grammatical number classification for designations."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+
+gloss:number/singular a skos:Concept ;
+  skos:inScheme gloss:number ;
+  skos:prefLabel "singular"@en ;
+  skos:definition "Singular grammatical number (one item)."@en .
+
+gloss:number/dual a skos:Concept ;
+  skos:inScheme gloss:number ;
+  skos:prefLabel "dual"@en ;
+  skos:definition "Dual grammatical number (two items)."@en .
+
+gloss:number/plural a skos:Concept ;
+  skos:inScheme gloss:number ;
+  skos:prefLabel "plural"@en ;
+  skos:definition "Plural grammatical number (more than one item)."@en .
+
+gloss:number skos:hasTopConcept gloss:number/singular , gloss:number/dual , gloss:number/plural .
