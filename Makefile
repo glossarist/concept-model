@@ -19,7 +19,7 @@ PNG := $(patsubst views/%.lutaml,images/%.png,$(SRC))
 
 all: $(PNG)
 
-images/%.png: views/%.lutaml
+images/%.png: views/%.lutaml | images
 	lutaml lml generate -t png -o $@ $<
 
 views/%.lutaml: models/%.wsd | views
@@ -28,7 +28,10 @@ views/%.lutaml: models/%.wsd | views
 views:
 	mkdir views
 
+images:
+	mkdir images
+
 clean:
-	$(RM) images/*.png
+	-$(RM) images/*.png
 
 .PHONY: clean
