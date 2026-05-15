@@ -1,1 +1,6 @@
 .DS_Store
+.vscode/
+Gemfile.lock
+html_documentation/
+images/*.png
+reference-docs/*.owl
