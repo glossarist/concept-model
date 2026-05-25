@@ -1,0 +1,24 @@
+# 05 — Domains (Localized): per-language domain URI
+#
+# LocalizedConcept.data.domain is a simple URI string.
+# It can be relative, a URN, or an HTTP URL.
+---
+id: 11111111-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+  domain: urn:iec:std:iec:60050-103-01
+  terms:
+  - type: expression
+    designation: functional
+    normative_status: preferred
+  definition:
+  - content: relating to a correspondence that associates uniquely to each element
+      of a set an element of another set
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-103
+        version: '2009'
+status: valid

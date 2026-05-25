@@ -28,13 +28,23 @@ gloss:ConceptShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
+    sh:path gloss:uri ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
     sh:path gloss:hasLocalization ;
     sh:class gloss:LocalizedConcept ;
   ] ;
   sh:property [
     sh:path gloss:hasStatus ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/conceptstatus> ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasRelatedConcept ;
+    sh:class gloss:RelatedConcept ;
   ] ;
   sh:property [
     sh:path gloss:hasDate ;
@@ -43,6 +53,10 @@ gloss:ConceptShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:hasSource ;
     sh:class gloss:ConceptSource ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDomain ;
+    sh:class gloss:Reference ;
   ] .
 
 gloss:LocalizedConceptShape a sh:NodeShape ;
@@ -55,7 +69,7 @@ gloss:LocalizedConceptShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path dcterms:language ;
+    sh:path gloss:language ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] ;
@@ -68,9 +82,70 @@ gloss:LocalizedConceptShape a sh:NodeShape ;
     sh:class gloss:DetailedDefinition ;
   ] ;
   sh:property [
+    sh:path gloss:hasNote ;
+    sh:class gloss:DetailedDefinition ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasExample ;
+    sh:class gloss:DetailedDefinition ;
+  ] ;
+  sh:property [
     sh:path gloss:hasEntryStatus ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/entstatus> ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasRelatedConcept ;
+    sh:class gloss:RelatedConcept ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDate ;
+    sh:class gloss:ConceptDate ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSource ;
+    sh:class gloss:ConceptSource ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasReference ;
+    sh:class gloss:Reference ;
+  ] ;
+  sh:property [
+    sh:path gloss:classification ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:domain ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:script ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:conversionSystem ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:release ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:lineageSimilarity ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:reviewType ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+    sh:in ( "editorial" "substantive" ) ;
   ] .
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -88,11 +163,41 @@ gloss:DesignationShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:normativeStatus ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/norm> ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasTermType ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/termtype> ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasRelatedConcept ;
+    sh:class gloss:RelatedConcept ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSource ;
+    sh:class gloss:ConceptSource ;
   ] ;
   sh:property [
     sh:path gloss:hasPronunciation ;
     sh:class gloss:Pronunciation ;
+  ] ;
+  sh:property [
+    sh:path gloss:language ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:script ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:conversionSystem ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
   ] ;
   sh:property [
     sh:path gloss:isInternational ;
@@ -102,6 +207,11 @@ gloss:DesignationShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:isAbsent ;
     sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:register ;
+    sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .
 
@@ -154,6 +264,12 @@ gloss:GraphicalSymbolShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
+gloss:PrefixShape a sh:NodeShape ;
+  sh:targetClass gloss:Prefix .
+
+gloss:SuffixShape a sh:NodeShape ;
+  sh:targetClass gloss:Suffix .
+
 # ══════════════════════════════════════════════════════════════════════════
 # Supporting class shapes
 # ══════════════════════════════════════════════════════════════════════════
@@ -165,6 +281,26 @@ gloss:PronunciationShape a sh:NodeShape ;
     sh:datatype xsd:string ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:pronunciationLanguage ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:pronunciationScript ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:pronunciationCountry ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:pronunciationSystem ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
   ] .
 
 gloss:DetailedDefinitionShape a sh:NodeShape ;
@@ -173,6 +309,10 @@ gloss:DetailedDefinitionShape a sh:NodeShape ;
     sh:path rdf:value ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSource ;
+    sh:class gloss:ConceptSource ;
   ] .
 
 gloss:ConceptSourceShape a sh:NodeShape ;
@@ -180,16 +320,23 @@ gloss:ConceptSourceShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:sourceType ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/srctype> ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
     sh:path gloss:sourceStatus ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/srcstatus> ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
     sh:path gloss:sourceOrigin ;
     sh:class gloss:Citation ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:modification ;
+    sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .
 
@@ -204,7 +351,13 @@ gloss:ConceptDateShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:dateType ;
     sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/datetype> ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:eventDescription ;
+    sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .
 
@@ -222,14 +375,58 @@ gloss:NonVerbalRepresentationShape a sh:NodeShape ;
     sh:datatype xsd:anyURI ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSource ;
+    sh:class gloss:ConceptSource ;
   ] .
 
-gloss:CitationShape a sh:NodeShape ;
-  sh:targetClass gloss:Citation ;
+gloss:ReferenceShape a sh:NodeShape ;
+  sh:targetClass gloss:Reference ;
   sh:or (
-    [ sh:property [ sh:path gloss:citationText ; sh:minCount 1 ] ]
-    [ sh:property [ sh:path gloss:citationSource ; sh:minCount 1 ] ]
-  ) .
+    [ sh:property [ sh:path gloss:source ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path gloss:refId ; sh:minCount 1 ] ]
+  ) ;
+  sh:property [
+    sh:path gloss:source ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:refId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:refVersion ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:refLink ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:refType ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:urn ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:term ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasLocality ;
+    sh:class gloss:Locality ;
+    sh:maxCount 1 ;
+  ] .
 
 gloss:LocalityShape a sh:NodeShape ;
   sh:targetClass gloss:Locality ;
@@ -241,6 +438,102 @@ gloss:LocalityShape a sh:NodeShape ;
   ] ;
   sh:property [
     sh:path gloss:referenceFrom ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:referenceTo ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:CitationShape a sh:NodeShape ;
+  sh:targetClass gloss:Citation ;
+  sh:property [
+    sh:path gloss:hasCitationRef ;
+    sh:class gloss:CitationRef ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasCitationLocality ;
+    sh:class gloss:Locality ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:citationLink ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:citationOriginal ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasCustomLocality ;
+    sh:class gloss:CustomLocality ;
+  ] .
+
+gloss:CitationRefShape a sh:NodeShape ;
+  sh:targetClass gloss:CitationRef ;
+  sh:property [
+    sh:path gloss:citationRefSource ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:citationRefId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:citationRefVersion ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:ConceptRefShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptRef ;
+  sh:property [
+    sh:path gloss:conceptRefSource ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:conceptRefId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:CustomLocalityShape a sh:NodeShape ;
+  sh:targetClass gloss:CustomLocality ;
+  sh:property [
+    sh:path gloss:customLocalityName ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:customLocalityValue ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:GrammarInfoShape a sh:NodeShape ;
+  sh:targetClass gloss:GrammarInfo ;
+  sh:property [
+    sh:path gloss:gender ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/gender> ;
+  ] ;
+  sh:property [
+    sh:path gloss:number ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/number> ;
+  ] ;
+  sh:property [
+    sh:path gloss:partOfSpeech ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .

@@ -3,14 +3,17 @@
 # IRI:    https://www.glossarist.org/ontologies/glossarist
 # Prefix: gloss:
 #
-# An OWL ontology for the Glossarist concept model (ISO 10241-1 terminology
-# management). Aligns with SKOS (concepts, labels, relationships), SKOS-XL
+# An OWL ontology for the Glossarist concept model. Builds on and extends
+# multiple ISO standards: ISO 10241-1 (terminology entries), ISO 30042/TBX
+# (data exchange), ISO 12620 (data category registry), ISO 25964/SKOS
+# (thesaurus interoperability), ISO 639/15924/24229 (language/script/system
+# identifiers). Aligns with SKOS (concepts, labels, relationships), SKOS-XL
 # (reified lexical labels for designations), ISO 25964 SKOS-Thes (hierarchical
 # relationship subtypes, concept groups), PROV-O (source provenance), and
 # Dublin Core Terms (language, bibliographic citation).
 #
 # Every class and property here has a direct correspondence to a field in the
-# Glossarist YAML schema (schemas/v2/concept.yaml, localized-concept.yaml).
+# Glossarist YAML schema (schemas/v3/concept.yaml, localized-concept.yaml).
 
 @prefix gloss:    <https://www.glossarist.org/ontologies/> .
 @prefix owl:      <http://www.w3.org/2002/07/owl#> .
@@ -27,8 +30,11 @@
 <https://www.glossarist.org/ontologies/glossarist> a owl:Ontology ;
   rdfs:label "Glossarist Ontology"@en ;
   rdfs:comment """
-    An OWL ontology for the Glossarist concept model implementing
-    ISO 10241-1 terminology management.
+    An OWL ontology for the Glossarist concept model. Builds on and extends
+    multiple ISO standards: ISO 10241-1 (terminology entries), ISO 30042/TBX
+    (data exchange), ISO 12620 (data category registry), ISO 25964/SKOS
+    (thesaurus interoperability), ISO 639/15924/24229 (language/script/system
+    identifiers).
 
     Design principles:
     - gloss:Concept rdfs:subClassOf skos:Concept — instant SKOS interop
@@ -45,7 +51,7 @@
   owl:imports <http://purl.org/iso25964/skos-thes> ;
   owl:imports <http://www.w3.org/ns/prov#> ;
   dcterms:title "Glossarist Ontology"@en ;
-  dcterms:description "OWL ontology for ISO 10241-1 terminology management."@en ;
+  dcterms:description "OWL ontology for terminology management (ISO 10241-1, 30042, 12620, 25964/SKOS)."@en ;
   dcterms:license <https://creativecommons.org/licenses/by/4.0/> ;
   dcterms:created "2025-05-14"^^xsd:date .
 
@@ -126,6 +132,22 @@ gloss:GraphicalSymbol a owl:Class ;
   rdfs:comment "An iconic or graphical symbol."@en ;
   owl:disjointWith gloss:LetterSymbol .
 
+gloss:Prefix a owl:Class ;
+  rdfs:subClassOf gloss:Designation ;
+  rdfs:label "Prefix Designation"@en ;
+  rdfs:comment "A prefix that attaches before a designation (ISO 12620)."@en ;
+  owl:disjointWith gloss:Expression ;
+  owl:disjointWith gloss:Symbol ;
+  owl:disjointWith gloss:Suffix .
+
+gloss:Suffix a owl:Class ;
+  rdfs:subClassOf gloss:Designation ;
+  rdfs:label "Suffix Designation"@en ;
+  rdfs:comment "A suffix that attaches after a designation (ISO 12620)."@en ;
+  owl:disjointWith gloss:Expression ;
+  owl:disjointWith gloss:Symbol ;
+  owl:disjointWith gloss:Prefix .
+
 # ── Supporting Classes ───────────────────────────────────────────────────
 
 gloss:Pronunciation a owl:Class ;
@@ -155,10 +177,13 @@ gloss:ConceptSource a owl:Class ;
     (identical/modified/...), and an origin citation.
   """@en .
 
-gloss:ConceptReference a owl:Class ;
-  rdfs:label "Concept Reference"@en ;
+gloss:Reference a owl:Class ;
+  rdfs:label "Reference"@en ;
   rdfs:comment """
-    A typed reference to another concept, either local or external.
+    A typed reference to an item within a collection. Used for domain
+    classification (ManagedConceptData#domains) and typed references
+    (ConceptData#references). For bibliographic citations, use gloss:Citation.
+    For concept links in relationships, use gloss:ConceptRef.
   """@en .
 
 gloss:RelatedConcept a owl:Class ;
@@ -169,7 +194,11 @@ gloss:RelatedConcept a owl:Class ;
 
 gloss:ConceptDate a owl:Class ;
   rdfs:label "Concept Date"@en ;
-  rdfs:comment "A date in the concept lifecycle (accepted, amended, retired)."@en .
+  rdfs:comment """
+    MANAGEMENT: A governance event in the concept or localization lifecycle.
+    Types include acceptance, amendment, retirement, review, and review decision.
+    Inspired by TBX <transactionGrp> (ISO 30042).
+  """@en .
 
 gloss:NonVerbalRepresentation a owl:Class ;
   rdfs:label "Non-Verbal Representation"@en ;
@@ -178,18 +207,31 @@ gloss:NonVerbalRepresentation a owl:Class ;
     (ISO 10241-1 §6.5).
   """@en .
 
-gloss:DesignationRelationship a owl:Class ;
-  rdfs:label "Designation Relationship"@en ;
-  rdfs:comment """
-    A designation-to-designation link within the same concept entry
-    (abbreviated_form_for, short_form_for).
-  """@en .
 
 gloss:Citation a owl:Class ;
   rdfs:label "Citation"@en ;
   rdfs:comment """
-    Bibliographic citation — structured (source/id/version/locality) or
-    unstructured (plain text).
+    A bibliographic citation. The ref field is always a structured CitationRef
+    hash (source + id + optional version). Never a plain string in V3.
+    Used as the origin of ConceptSource.
+    Corresponds to Citation in glossarist-ruby.
+  """@en .
+
+gloss:CitationRef a owl:Class ;
+  rdfs:label "Citation Reference"@en ;
+  rdfs:comment """
+    Inner reference of a Citation — always a structured hash with source,
+    id, and optional version. Never a plain string in V3.
+    Corresponds to Citation::Ref in glossarist-ruby.
+  """@en .
+
+gloss:ConceptRef a owl:Class ;
+  rdfs:label "Concept Reference"@en ;
+  rdfs:comment """
+    A reference to a concept in another registry or vocabulary.
+    Has source and id only — no version, locality, or link.
+    Used as the ref of RelatedConcept.
+    Corresponds to ConceptRef in glossarist-ruby.
   """@en .
 
 gloss:Locality a owl:Class ;
@@ -222,33 +264,54 @@ gloss:hasStatus a owl:ObjectProperty ;
 
 gloss:hasDomain a owl:ObjectProperty ;
   rdfs:domain gloss:Concept ;
-  rdfs:range gloss:ConceptReference ;
+  rdfs:range gloss:Reference ;
   rdfs:label "has domain"@en ;
   rdfs:comment "Links a concept to a domain (subject area) classification."@en .
 
 gloss:hasRelatedConcept a owl:ObjectProperty ;
-  rdfs:domain gloss:Concept ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:Concept gloss:LocalizedConcept gloss:Designation )
+  ] ;
   rdfs:range gloss:RelatedConcept ;
   rdfs:label "has related concept"@en ;
-  rdfs:comment "Links a concept to a related concept with a typed relationship."@en .
+  rdfs:comment "DATA: Typed semantic relationship — applicable at concept, localization, and designation levels."@en .
 
 gloss:hasDate a owl:ObjectProperty ;
-  rdfs:domain gloss:Concept ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:Concept gloss:LocalizedConcept )
+  ] ;
   rdfs:range gloss:ConceptDate ;
   rdfs:label "has date"@en ;
-  rdfs:comment "A date in the concept lifecycle."@en .
+  rdfs:comment "MANAGEMENT: Governance date/event — applicable at concept and localization levels."@en .
 
 gloss:hasSource a owl:ObjectProperty ;
-  rdfs:domain gloss:Concept ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf (
+      gloss:Concept
+      gloss:LocalizedConcept
+      gloss:Designation
+      gloss:DetailedDefinition
+      gloss:NonVerbalRepresentation
+    )
+  ] ;
   rdfs:range gloss:ConceptSource ;
   rdfs:label "has source"@en ;
-  rdfs:comment "Links a concept to a bibliographic source."@en .
+  rdfs:comment "DATA: Bibliographic source — applicable at concept, localization, designation, definition, and non-verbal representation levels."@en .
 
 gloss:identifier a owl:DatatypeProperty ;
   rdfs:domain gloss:Concept ;
   rdfs:range xsd:string ;
   rdfs:label "identifier"@en ;
   rdfs:comment "The management identifier for the concept."@en .
+
+gloss:uri a owl:DatatypeProperty ;
+  rdfs:domain gloss:Concept ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "URI"@en ;
+  rdfs:comment "Optional URI for the managed concept."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Localized concept
@@ -296,6 +359,27 @@ gloss:domain a owl:DatatypeProperty ;
   rdfs:label "domain"@en ;
   rdfs:comment "Per-language domain URI reference."@en .
 
+gloss:classification a owl:DatatypeProperty ;
+  rdfs:domain gloss:LocalizedConcept ;
+  rdfs:range xsd:string ;
+  rdfs:label "classification"@en ;
+  rdfs:comment "DATA: Classification of the localized entry (admitted, preferred)."@en .
+
+gloss:hasReference a owl:ObjectProperty ;
+  rdfs:domain gloss:LocalizedConcept ;
+  rdfs:range gloss:Reference ;
+  rdfs:label "has reference"@en ;
+  rdfs:comment "DATA: Typed concept reference at the localization level."@en .
+
+gloss:language a owl:DatatypeProperty ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:LocalizedConcept gloss:Designation gloss:Pronunciation )
+  ] ;
+  rdfs:range xsd:string ;
+  rdfs:label "language"@en ;
+  rdfs:comment "DATA: ISO 639 three-character language code. Cascades: L10n → Designation → Pronunciation."@en .
+
 gloss:release a owl:DatatypeProperty ;
   rdfs:domain gloss:LocalizedConcept ;
   rdfs:range xsd:string ;
@@ -307,6 +391,12 @@ gloss:lineageSimilarity a owl:DatatypeProperty ;
   rdfs:range xsd:integer ;
   rdfs:label "lineage similarity"@en ;
   rdfs:comment "Similarity percentage to the lineage source."@en .
+
+gloss:reviewType a owl:DatatypeProperty ;
+  rdfs:domain gloss:LocalizedConcept ;
+  rdfs:range xsd:string ;
+  rdfs:label "review type"@en ;
+  rdfs:comment "Type of review for the localized entry (editorial or substantive)."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Designation
@@ -333,11 +423,6 @@ gloss:hasTermType a owl:ObjectProperty ;
   rdfs:label "has term type"@en ;
   rdfs:comment "ISO 12620 term type classification."@en .
 
-gloss:hasDesignationRel a owl:ObjectProperty ;
-  rdfs:domain gloss:Designation ;
-  rdfs:range gloss:DesignationRelationship ;
-  rdfs:label "has designation relationship"@en ;
-  rdfs:comment "Designation-to-designation link (abbreviated_form_for, short_form_for)."@en .
 
 gloss:hasGrammarInfo a owl:ObjectProperty ;
   rdfs:domain gloss:Expression ;
@@ -361,6 +446,12 @@ gloss:isAbsent a owl:DatatypeProperty ;
   rdfs:range xsd:boolean ;
   rdfs:label "is absent"@en ;
   rdfs:comment "The designation is explicitly absent for this concept in this language."@en .
+
+gloss:register a owl:DatatypeProperty ;
+  rdfs:domain gloss:Designation ;
+  rdfs:range xsd:string ;
+  rdfs:label "register"@en ;
+  rdfs:comment "Register or usage level of the designation (ISO 12620 / TBX-Linguist: colloquial_register, neutral_register, technical_register, in_house_register, bench_level_register, slang_register, vulgar_register)."@en .
 
 # ── Expression-specific ──────────────────────────────────────────────────
 
@@ -447,7 +538,7 @@ gloss:pronunciationSystem a owl:DatatypeProperty ;
   rdfs:comment "ISO 24229 conversion system code or simple identifier (e.g. IPA)."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
-# OBJECT PROPERTIES — Relationship / Reference
+# OBJECT PROPERTIES — Relationship / Reference (unified)
 # ══════════════════════════════════════════════════════════════════════════
 
 gloss:relationshipType a owl:ObjectProperty ;
@@ -464,38 +555,56 @@ gloss:relationshipContent a owl:DatatypeProperty ;
 
 gloss:relationshipRef a owl:ObjectProperty ;
   rdfs:domain gloss:RelatedConcept ;
-  rdfs:range gloss:Citation ;
+  rdfs:range gloss:ConceptRef ;
   rdfs:label "relationship reference"@en ;
-  rdfs:comment "Citation reference for the related concept."@en .
+  rdfs:comment "Reference for the related concept (source + id)."@en .
 
-# ── Concept Reference ────────────────────────────────────────────────────
+# ── Reference (typed classification — domains, typed references) ────────
+
+gloss:source a owl:DatatypeProperty ;
+  rdfs:domain gloss:Reference ;
+  rdfs:range xsd:string ;
+  rdfs:label "source"@en ;
+  rdfs:comment "Collection identifier (document series, termbase, vocabulary)."@en .
+
+gloss:refId a owl:DatatypeProperty ;
+  rdfs:domain gloss:Reference ;
+  rdfs:range xsd:string ;
+  rdfs:label "reference identifier"@en ;
+  rdfs:comment "Item identifier within the collection (document ID, concept ID)."@en .
+
+gloss:refVersion a owl:DatatypeProperty ;
+  rdfs:domain gloss:Reference ;
+  rdfs:range xsd:string ;
+  rdfs:label "reference version"@en ;
+  rdfs:comment "Version of the item or collection."@en .
+
+gloss:refLink a owl:DatatypeProperty ;
+  rdfs:domain gloss:Reference ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "reference link"@en ;
+  rdfs:comment "URL link to the source document or concept."@en .
 
 gloss:refType a owl:DatatypeProperty ;
-  rdfs:domain gloss:ConceptReference ;
+  rdfs:domain gloss:Reference ;
   rdfs:range xsd:string ;
   rdfs:label "reference type"@en ;
-  rdfs:comment "Type of reference: local, designation, urn, domain."@en .
-
-gloss:conceptId a owl:DatatypeProperty ;
-  rdfs:domain gloss:ConceptReference ;
-  rdfs:range xsd:string ;
-  rdfs:label "concept identifier"@en ;
-  rdfs:comment "Target concept identifier."@en .
-
-gloss:sourceUri a owl:DatatypeProperty ;
-  rdfs:domain gloss:ConceptReference ;
-  rdfs:range xsd:anyURI ;
-  rdfs:label "source URI"@en ;
-  rdfs:comment "Source registry URN prefix for external references."@en .
+  rdfs:comment "Type qualifier: local, designation, urn, domain."@en .
 
 gloss:urn a owl:DatatypeProperty ;
-  rdfs:domain gloss:ConceptReference ;
+  rdfs:domain gloss:Reference ;
   rdfs:range xsd:anyURI ;
   rdfs:label "URN"@en ;
   rdfs:comment "Direct URN reference to the target concept."@en .
 
+gloss:term a owl:DatatypeProperty ;
+  rdfs:domain gloss:Reference ;
+  rdfs:range xsd:string ;
+  rdfs:label "term"@en ;
+  rdfs:comment "Term text when referencing a concept."@en .
+
 # ══════════════════════════════════════════════════════════════════════════
-# OBJECT PROPERTIES — Source / Citation
+# OBJECT PROPERTIES — Source
 # ══════════════════════════════════════════════════════════════════════════
 
 gloss:sourceType a owl:ObjectProperty ;
@@ -522,31 +631,81 @@ gloss:modification a owl:DatatypeProperty ;
   rdfs:label "modification"@en ;
   rdfs:comment "How the concept was modified from the source."@en .
 
-# ── Citation ─────────────────────────────────────────────────────────────
+# ── Citation properties ────────────────────────────────────────────────────
 
-gloss:citationText a owl:DatatypeProperty ;
+gloss:hasCitationRef a owl:ObjectProperty ;
+  rdfs:domain gloss:Citation ;
+  rdfs:range gloss:CitationRef ;
+  rdfs:label "has citation ref"@en ;
+  rdfs:comment "Structured inner reference (source + id + optional version)."@en .
+
+gloss:hasCitationLocality a owl:ObjectProperty ;
+  rdfs:domain gloss:Citation ;
+  rdfs:range gloss:Locality ;
+  rdfs:label "has citation locality"@en ;
+  rdfs:comment "Locality within the cited document."@en .
+
+gloss:citationOriginal a owl:DatatypeProperty ;
   rdfs:domain gloss:Citation ;
   rdfs:range xsd:string ;
-  rdfs:label "citation text"@en ;
-  rdfs:comment "Unstructured (plain text) reference."@en .
+  rdfs:label "citation original"@en ;
+  rdfs:comment "Pre-parsed original citation text."@en .
 
-gloss:citationSource a owl:DatatypeProperty ;
+gloss:hasCustomLocality a owl:ObjectProperty ;
   rdfs:domain gloss:Citation ;
-  rdfs:range xsd:string ;
-  rdfs:label "citation source"@en ;
-  rdfs:comment "Source document identifier (e.g., ISO, IEC)."@en .
+  rdfs:range gloss:CustomLocality ;
+  rdfs:label "has custom locality"@en ;
+  rdfs:comment "Custom name-value locality pairs."@en .
 
-gloss:citationId a owl:DatatypeProperty ;
-  rdfs:domain gloss:Citation ;
-  rdfs:range xsd:string ;
-  rdfs:label "citation identifier"@en ;
-  rdfs:comment "Document identifier in a structured reference."@en .
+# ── CitationRef properties ────────────────────────────────────────────────
 
-gloss:citationVersion a owl:DatatypeProperty ;
-  rdfs:domain gloss:Citation ;
+gloss:citationRefSource a owl:DatatypeProperty ;
+  rdfs:domain gloss:CitationRef ;
   rdfs:range xsd:string ;
-  rdfs:label "citation version"@en ;
-  rdfs:comment "Document version in a structured reference."@en .
+  rdfs:label "citation ref source"@en ;
+  rdfs:comment "Document series or termbase (e.g. ISO, IEC)."@en .
+
+gloss:citationRefId a owl:DatatypeProperty ;
+  rdfs:domain gloss:CitationRef ;
+  rdfs:range xsd:string ;
+  rdfs:label "citation ref identifier"@en ;
+  rdfs:comment "Document identifier within the series."@en .
+
+gloss:citationRefVersion a owl:DatatypeProperty ;
+  rdfs:domain gloss:CitationRef ;
+  rdfs:range xsd:string ;
+  rdfs:label "citation ref version"@en ;
+  rdfs:comment "Version of the document."@en .
+
+# ── ConceptRef properties ────────────────────────────────────────────────
+
+gloss:conceptRefSource a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptRef ;
+  rdfs:range xsd:string ;
+  rdfs:label "concept ref source"@en ;
+  rdfs:comment "Registry or vocabulary identifier (e.g. IEC, ISO)."@en .
+
+gloss:conceptRefId a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptRef ;
+  rdfs:range xsd:string ;
+  rdfs:label "concept ref identifier"@en ;
+  rdfs:comment "Concept identifier within the registry."@en .
+
+# ── CustomLocality ─────────────────────────────────────────────────────────
+
+gloss:CustomLocality a owl:Class ;
+  rdfs:label "Custom Locality"@en ;
+  rdfs:comment "A custom name-value locality pair within a citation."@en .
+
+gloss:customLocalityName a owl:DatatypeProperty ;
+  rdfs:domain gloss:CustomLocality ;
+  rdfs:range xsd:string ;
+  rdfs:label "custom locality name"@en .
+
+gloss:customLocalityValue a owl:DatatypeProperty ;
+  rdfs:domain gloss:CustomLocality ;
+  rdfs:range xsd:string ;
+  rdfs:label "custom locality value"@en .
 
 gloss:citationLink a owl:DatatypeProperty ;
   rdfs:domain gloss:Citation ;
@@ -555,7 +714,7 @@ gloss:citationLink a owl:DatatypeProperty ;
   rdfs:comment "URL link to the source document."@en .
 
 gloss:hasLocality a owl:ObjectProperty ;
-  rdfs:domain gloss:Citation ;
+  rdfs:domain gloss:Reference ;
   rdfs:range gloss:Locality ;
   rdfs:label "has locality"@en .
 
@@ -572,7 +731,13 @@ gloss:dateType a owl:ObjectProperty ;
   rdfs:domain gloss:ConceptDate ;
   rdfs:range skos:Concept ;
   rdfs:label "date type"@en ;
-  rdfs:comment "Kind of lifecycle event: accepted, amended, retired."@en .
+  rdfs:comment "MANAGEMENT: Kind of governance event: accepted, amended, retired, review, review_decision."@en .
+
+gloss:eventDescription a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptDate ;
+  rdfs:range xsd:string ;
+  rdfs:label "event description"@en ;
+  rdfs:comment "MANAGEMENT: Free-text description of the governance event (e.g., review decision narrative)."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Non-verbal representation
@@ -596,21 +761,6 @@ gloss:representationText a owl:DatatypeProperty ;
   rdfs:label "representation text"@en ;
   rdfs:comment "Alt text or description of the representation."@en .
 
-# ══════════════════════════════════════════════════════════════════════════
-# OBJECT PROPERTIES — Designation relationship
-# ══════════════════════════════════════════════════════════════════════════
-
-gloss:designationRelType a owl:DatatypeProperty ;
-  rdfs:domain gloss:DesignationRelationship ;
-  rdfs:range xsd:string ;
-  rdfs:label "designation relationship type"@en ;
-  rdfs:comment "Type: abbreviated_form_for or short_form_for."@en .
-
-gloss:designationRelTarget a owl:DatatypeProperty ;
-  rdfs:domain gloss:DesignationRelationship ;
-  rdfs:range xsd:string ;
-  rdfs:label "designation relationship target"@en ;
-  rdfs:comment "Text of the target designation being referenced."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Locality
@@ -679,6 +829,12 @@ gloss:isParticiple a owl:DatatypeProperty ;
   rdfs:domain gloss:GrammarInfo ;
   rdfs:range xsd:boolean ;
   rdfs:label "is participle"@en .
+
+gloss:partOfSpeech a owl:DatatypeProperty ;
+  rdfs:domain gloss:GrammarInfo ;
+  rdfs:range xsd:string ;
+  rdfs:label "part of speech"@en ;
+  rdfs:comment "Part of speech classification (ISO 12620 / TBX: noun, verb, adj, adverb, preposition, participle)."@en .
 
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Language / Script / System

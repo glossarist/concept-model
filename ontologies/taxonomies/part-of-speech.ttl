@@ -1,0 +1,56 @@
+# Part of Speech Taxonomy (ISO 12620 / TBX)
+#
+# SKOS ConceptScheme for part of speech classification.
+# Source: ISO 12620, TBX, glossarist config.yml part_of_speech
+#
+# 6 part of speech values.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:pos a skos:ConceptScheme ;
+  skos:prefLabel "Part of Speech"@en ;
+  skos:definition """
+    Part of speech classification for designations (ISO 12620 / TBX).
+    Grammatical category that classifies a word by its syntactic function.
+  """@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
+
+<https://www.glossarist.org/ontologies/pos/noun> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "noun"@en ;
+  skos:definition "The designation functions as a noun."@en .
+
+<https://www.glossarist.org/ontologies/pos/verb> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "verb"@en ;
+  skos:definition "The designation functions as a verb."@en .
+
+<https://www.glossarist.org/ontologies/pos/adj> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "adjective"@en ;
+  skos:definition "The designation functions as an adjective."@en .
+
+<https://www.glossarist.org/ontologies/pos/adverb> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "adverb"@en ;
+  skos:definition "The designation functions as an adverb."@en .
+
+<https://www.glossarist.org/ontologies/pos/preposition> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "preposition"@en ;
+  skos:definition "The designation functions as a preposition."@en .
+
+<https://www.glossarist.org/ontologies/pos/participle> a skos:Concept ;
+  skos:inScheme gloss:pos ;
+  skos:prefLabel "participle"@en ;
+  skos:definition "The designation functions as a participle."@en .
+
+gloss:pos skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/pos/noun> ,
+  <https://www.glossarist.org/ontologies/pos/verb> ,
+  <https://www.glossarist.org/ontologies/pos/adj> ,
+  <https://www.glossarist.org/ontologies/pos/adverb> ,
+  <https://www.glossarist.org/ontologies/pos/preposition> ,
+  <https://www.glossarist.org/ontologies/pos/participle> .

@@ -10,30 +10,30 @@
 gloss:gender a skos:ConceptScheme ;
   skos:prefLabel "Grammar Gender"@en ;
   skos:definition "Grammatical gender classification for designations."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
 
-gloss:gender/m a skos:Concept ;
+<https://www.glossarist.org/ontologies/gender/m> a skos:Concept ;
   skos:inScheme gloss:gender ;
   skos:prefLabel "masculine"@en ;
   skos:altLabel "m"@en ;
   skos:definition "Masculine grammatical gender."@en .
 
-gloss:gender/f a skos:Concept ;
+<https://www.glossarist.org/ontologies/gender/f> a skos:Concept ;
   skos:inScheme gloss:gender ;
   skos:prefLabel "feminine"@en ;
   skos:altLabel "f"@en ;
   skos:definition "Feminine grammatical gender."@en .
 
-gloss:gender/n a skos:Concept ;
+<https://www.glossarist.org/ontologies/gender/n> a skos:Concept ;
   skos:inScheme gloss:gender ;
   skos:prefLabel "neuter"@en ;
   skos:altLabel "n"@en ;
   skos:definition "Neuter grammatical gender."@en .
 
-gloss:gender/c a skos:Concept ;
+<https://www.glossarist.org/ontologies/gender/c> a skos:Concept ;
   skos:inScheme gloss:gender ;
   skos:prefLabel "common"@en ;
   skos:altLabel "c"@en ;
   skos:definition "Common grammatical gender (combined masculine/feminine)."@en .
 
-gloss:gender skos:hasTopConcept gloss:gender/m , gloss:gender/f , gloss:gender/n , gloss:gender/c .
+gloss:gender skos:hasTopConcept <https://www.glossarist.org/ontologies/gender/m> , <https://www.glossarist.org/ontologies/gender/f> , <https://www.glossarist.org/ontologies/gender/n> , <https://www.glossarist.org/ontologies/gender/c> .

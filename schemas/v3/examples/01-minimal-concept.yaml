@@ -1,0 +1,20 @@
+# 01 — Minimal Concept
+#
+# The smallest valid managed concept: an id, a localization map, and status.
+# Demonstrates identity, localization map, and lifecycle metadata.
+---
+id: 113-01-01
+data:
+  identifier: 113-01-01
+  uri: urn:iec:std:iec:60050-113-01-01
+  localized_concepts:
+    eng: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-113
+        version: '2011'
+status: valid
+date_accepted: '2011-04-01T00:00:00+00:00'

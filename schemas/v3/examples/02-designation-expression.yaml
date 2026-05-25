@@ -1,0 +1,99 @@
+# 02 — Designation: Expression
+#
+# Expression designations are words or phrases — the most common type.
+# Shows normative_status, grammar_info, usage_info, field_of_application,
+# term_type (ISO 12620), and designation-level sources.
+---
+id: b1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: color
+    normative_status: preferred
+    geographical_area: US
+    grammar_info:
+    - noun: true
+      number: singular
+    term_type: full_form
+  - type: expression
+    designation: colour
+    normative_status: admitted
+    geographical_area: GB
+    grammar_info:
+    - noun: true
+      number: singular
+    term_type: variant
+  - type: expression
+    designation: colour signal
+    normative_status: deprecated
+    usage_info: television
+    field_of_application: in analogue television
+    grammar_info:
+    - noun: true
+      number: singular
+    term_type: entry_term
+  - type: expression
+    designation: to color
+    normative_status: admitted
+    grammar_info:
+    - verb: true
+    term_type: full_form
+  - type: expression
+    designation: colorful
+    normative_status: admitted
+    grammar_info:
+    - adj: true
+      gender:
+      - m
+      - f
+      number: plural
+  - type: expression
+    designation: colorfully
+    normative_status: admitted
+    grammar_info:
+    - adverb: true
+  - type: expression
+    designation: coloring
+    normative_status: admitted
+    grammar_info:
+    - participle: true
+  - type: expression
+    designation: in color
+    normative_status: admitted
+    grammar_info:
+    - preposition: true
+  - type: expression
+    designation: color
+    normative_status: admitted
+    prefix: non-
+    usage_info: pigment chemistry
+  - type: expression
+    designation: sun
+    normative_status: admitted
+    term_type: common_name
+  - type: expression
+    designation: hue
+    normative_status: admitted
+    term_type: synonym
+  - type: expression
+    designation: chromatic
+    normative_status: admitted
+    sources:
+    - type: authoritative
+      status: identical
+      origin:
+        ref:
+          source: IEC
+          id: 60050-845
+          version: '2020'
+  definition:
+  - content: visual sensation produced by light of a specific wavelength
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-845
+        version: '2020'
+status: valid

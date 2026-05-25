@@ -18,6 +18,7 @@ diagram Designations {
   include ../models/concepts/GraphicalSymbolDesignation.lutaml
   include ../models/concepts/GrammarGender.lutaml
   include ../models/concepts/GrammarNumber.lutaml
+  include ../models/concepts/Register.lutaml
 
   association {
     owner NormativeStatus
@@ -58,6 +59,11 @@ diagram Designations {
     owner GrammarNumber
     member_type direct
     member GrammarInfo
+  }
+  association {
+    owner Register
+    member_type direct
+    member Designation
   }
   association {
     owner GlossaristTextElementType

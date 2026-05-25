@@ -1,12 +1,12 @@
 # Term Type Taxonomy (ISO 12620)
 #
 # SKOS ConceptScheme for ISO 12620 term type classification.
-# Source: ISO 12620, glossarist config.yml iso12620.term_type
+# Source: ISO 12620, ISO 30042/TBX, glossarist config.yml iso12620.term_type
 #
-# 24 term types organized by category:
-#   Orthographic / structural (9)
-#   Symbolic / formulaic (4)
-#   Usage / provenance (11)
+# 34 term types — MECE superset organized by category:
+#   Orthographic / structural (10)
+#   Symbolic / formulaic (10)
+#   Usage / provenance (14)
 
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
@@ -17,135 +17,195 @@ gloss:termtype a skos:ConceptScheme ;
   skos:definition """
     ISO 12620 term type classification for designations. A categorization
     of a term with respect to formal representations or where/how it is used.
+    MECE superset of ISO 12620, ISO 30042/TBX, and Glossarist YAML schema values.
+    34 term types in total.
   """@en ;
   dcterms:source <https://www.iso.org/standard/37780.html> .
 
 # ── Orthographic / Structural ────────────────────────────────────────────
 
-gloss:termtype/abbreviation a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/abbreviation> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "abbreviation"@en ;
   skos:definition "A shortened form of a word or phrase."@en .
 
-gloss:termtype/acronym a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/acronym> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "acronym"@en ;
   skos:definition "An abbreviation formed from initial letters, pronounced as a word."@en ;
-  skos:broader gloss:termtype/abbreviation .
+  skos:broader <https://www.glossarist.org/ontologies/termtype/abbreviation> .
 
-gloss:termtype/clipped_term a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/clipped_term> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "clipped term"@en ;
   skos:definition "A term formed by shortening a longer term."@en .
 
-gloss:termtype/full_form a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/full_form> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "full form"@en ;
   skos:definition "The complete, unabbreviated form of a term."@en .
 
-gloss:termtype/initialism a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/initialism> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "initialism"@en ;
   skos:definition "An abbreviation formed from initial letters, each pronounced separately."@en ;
-  skos:broader gloss:termtype/abbreviation .
+  skos:broader <https://www.glossarist.org/ontologies/termtype/abbreviation> .
 
-gloss:termtype/short_form a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/short_form> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "short form"@en ;
   skos:definition "A shortened form of a term."@en .
 
-gloss:termtype/transliterated_form a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/transliterated_form> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "transliterated form"@en ;
   skos:definition "A term that has been converted from one script to another."@en .
 
-gloss:termtype/transcribed_form a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/transcribed_form> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "transcribed form"@en ;
   skos:definition "A term that has been phonetically transcribed into another script."@en .
 
-gloss:termtype/variant a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/truncation> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "truncation"@en ;
+  skos:definition "An abbreviation formed by cutting off the end of a word."@en ;
+  skos:broader <https://www.glossarist.org/ontologies/termtype/abbreviation> .
+
+<https://www.glossarist.org/ontologies/termtype/variant> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "variant"@en ;
   skos:definition "An alternative spelling or form of a term."@en .
 
 # ── Symbolic / Formulaic ─────────────────────────────────────────────────
 
-gloss:termtype/equation a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/equation> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "equation"@en ;
   skos:definition "A mathematical equation used as a term."@en .
 
-gloss:termtype/formula a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/formula> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "formula"@en ;
   skos:definition "A mathematical formula used as a term."@en .
 
-gloss:termtype/logical_expression a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/logical_expression> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "logical expression"@en ;
   skos:definition "A logical expression used as a term."@en .
 
-gloss:termtype/symbol a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/mathematical_expression> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "mathematical expression"@en ;
+  skos:definition "A mathematical expression used as a term."@en .
+
+<https://www.glossarist.org/ontologies/termtype/symbol> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "symbol"@en ;
   skos:definition "A symbol used as a term."@en .
 
+<https://www.glossarist.org/ontologies/termtype/reference_symbol> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "reference symbol"@en ;
+  skos:definition "A symbol used as a reference in a terminology system."@en .
+
+<https://www.glossarist.org/ontologies/termtype/figure_symbol> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "figure symbol"@en ;
+  skos:definition "A figure or diagram used as a symbolic term."@en .
+
+<https://www.glossarist.org/ontologies/termtype/graphic_symbol> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "graphic symbol"@en ;
+  skos:definition "A graphical symbol used as a term."@en .
+
+<https://www.glossarist.org/ontologies/termtype/letter_symbol> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "letter symbol"@en ;
+  skos:definition "A single letter used as a symbol."@en .
+
+<https://www.glossarist.org/ontologies/termtype/roman_numeral> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "roman numeral"@en ;
+  skos:definition "A Roman numeral used as a symbolic term."@en .
+
 # ── Usage / Provenance ───────────────────────────────────────────────────
 
-gloss:termtype/common_name a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/code> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "code"@en ;
+  skos:definition "A code or identifier used as a term."@en .
+
+<https://www.glossarist.org/ontologies/termtype/common_name> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "common name"@en ;
   skos:definition "A non-scientific, commonly used name."@en .
 
-gloss:termtype/entry_term a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/entry_term> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "entry term"@en ;
   skos:definition "The primary term for a concept entry."@en .
 
-gloss:termtype/internationalism a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/internationalism> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "internationalism"@en ;
   skos:definition "A term that is used internationally across multiple languages."@en .
 
-gloss:termtype/international_scientific_term a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/international_scientific_term> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "international scientific term"@en ;
   skos:definition "A term established by an international scientific body."@en .
 
-gloss:termtype/part_number a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/part_number> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "part number"@en ;
   skos:definition "A part number used as a term."@en .
 
-gloss:termtype/phraseological_unit a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/phrase> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "phrase"@en ;
+  skos:definition "A phrase used as a term (TBX)."@en .
+
+<https://www.glossarist.org/ontologies/termtype/phraseological_unit> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "phraseological unit"@en ;
   skos:definition "A fixed phrase or collocation used as a term."@en .
 
-gloss:termtype/shortcut a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/scientific_name> a skos:Concept ;
+  skos:inScheme gloss:termtype ;
+  skos:prefLabel "scientific name"@en ;
+  skos:definition "A scientific (binomial or taxonomic) name used as a term."@en .
+
+<https://www.glossarist.org/ontologies/termtype/shortcut> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "shortcut"@en ;
   skos:definition "A shortcut or quick reference used as a term."@en .
 
-gloss:termtype/sku a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/sku> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "SKU"@en ;
   skos:definition "A stock keeping unit identifier used as a term."@en .
 
-gloss:termtype/standard_text a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/standard_text> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "standard text"@en ;
   skos:definition "Standardized text used as a term."@en .
 
-gloss:termtype/synonym a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/synonym> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "synonym"@en ;
   skos:definition "A synonym of the primary term."@en .
 
-gloss:termtype/synonymous_phrase a skos:Concept ;
+<https://www.glossarist.org/ontologies/termtype/synonymous_phrase> a skos:Concept ;
   skos:inScheme gloss:termtype ;
   skos:prefLabel "synonymous phrase"@en ;
   skos:definition "A phrase that is synonymous with the primary term."@en .
 
-gloss:termtype skos:hasTopConcept gloss:termtype/full_form , gloss:termtype/abbreviation , gloss:termtype/symbol , gloss:termtype/entry_term .
+gloss:termtype skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/termtype/full_form> ,
+  <https://www.glossarist.org/ontologies/termtype/abbreviation> ,
+  <https://www.glossarist.org/ontologies/termtype/symbol> ,
+  <https://www.glossarist.org/ontologies/termtype/entry_term> ,
+  <https://www.glossarist.org/ontologies/termtype/code> ,
+  <https://www.glossarist.org/ontologies/termtype/phrase> ,
+  <https://www.glossarist.org/ontologies/termtype/scientific_name> .

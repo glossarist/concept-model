@@ -1,0 +1,135 @@
+# 15 — Citation & Locality Features
+#
+# Demonstrates all V3 citation and locality features:
+# - Structured citation ref (source + id + version)
+# - Locality with single reference (clause, section, page)
+# - Locality with range (reference_from → reference_to)
+# - Custom locality (name-value pairs)
+# - Link field (URL to source document)
+# - Original field
+#
+# V3 format: origin.ref is always a hash { source, id, version? }.
+# Never a plain string — use V2 backward compat for string refs.
+
+---
+id: eeeeeeee-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+
+  terms:
+    - type: expression
+      designation: "quality management"
+      normative_status: preferred
+
+  definition:
+    - content: >-
+        coordinated activities to direct and control an organization with
+        regard to quality
+      sources:
+        # Structured citation with clause locality (single point)
+        - type: authoritative
+          status: identical
+          origin:
+            ref:
+              source: "ISO"
+              id: "9000"
+              version: "2015"
+            locality:
+              type: clause
+              reference_from: "3.3.3"
+
+    - content: >-
+        the aspect of overall management that determines and implements
+        quality policy
+      sources:
+        # Locality range: clause 3.3.3 through 3.3.5
+        - type: authoritative
+          status: modified
+          origin:
+            ref:
+              source: "ISO"
+              id: "8402"
+              version: "1994"
+            locality:
+              type: clause
+              reference_from: "3.3.3"
+              reference_to: "3.3.5"
+          modification: "updated from 1994 terminology"
+
+  notes:
+    - content: >-
+        Quality management includes quality planning, quality control,
+        quality assurance, and quality improvement.
+      sources:
+        # Citation with link field
+        - type: authoritative
+          status: identical
+          origin:
+            ref:
+              source: "ISO"
+              id: "9000"
+              version: "2015"
+            link: "https://www.iso.org/standard/45481.html"
+            locality:
+              type: section
+              reference_from: "2.2"
+
+    - content: >-
+        Quality management frameworks may use custom schema versioning.
+      sources:
+        # Citation with custom_locality
+        - type: lineage
+          status: context_added
+          origin:
+            ref:
+              source: "Internal quality manual QM-2024"
+            custom_locality:
+              - name: schema
+                value: QMS_Framework_v3
+              - name: version
+                value: "3"
+              - name: department
+                value: engineering
+
+    - content: >-
+        This definition was adapted from an earlier standard.
+      sources:
+        # Citation with original field (transitional)
+        - type: lineage
+          status: restyle
+          origin:
+            ref:
+              source: "ISO/TC 176 document N45"
+            original: "ISO 8402:1986, quality management"
+
+    - content: >-
+        Page-range reference using locality.
+      sources:
+        # Locality range: pages 42-47
+        - type: authoritative
+          status: similar
+          origin:
+            ref:
+              source: "ISO"
+              id: "9000"
+              version: "2005"
+            locality:
+              type: page
+              reference_from: "42"
+              reference_to: "47"
+
+  sources:
+    # Multiple locality types on the concept source
+    - type: authoritative
+      status: identical
+      origin:
+        ref:
+          source: "ISO"
+          id: "9001"
+          version: "2015"
+        link: "https://www.iso.org/standard/62085.html"
+        locality:
+          type: annex
+          reference_from: "A"
+
+status: valid

@@ -1,0 +1,34 @@
+# 08 — Russian localization for 121-01-01
+#
+# Russian uses Cyrl script. The conversion system (ISO 24229) can
+# specify the romanization system for transliteration.
+---
+id: 88888888-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: rus
+  script: Cyrl
+  terms:
+  - type: expression
+    designation: электромагнитное поле
+    normative_status: preferred
+    grammar_info:
+    - noun: true
+      number: singular
+      gender: "n"
+  - type: expression
+    designation: elektromagnitnoye pole
+    normative_status: admitted
+    script: Latn
+    term_type: transliterated_form
+    system: UN:rus-Cyrl:Latn:1993
+  definition:
+  - content: поле, определяемое напряженностью электрического поля и напряженностью
+      магнитного поля
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-121
+        version: '1998'
+status: valid

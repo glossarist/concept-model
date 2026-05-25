@@ -1,0 +1,345 @@
+%YAML 1.1
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema
+---
+$id: "https://github.com/glossarist/concept-model/v3/concept"
+title: YAML Schema for Concept model (v3)
+description: |
+  A metaschema for glossarist concept model V3.
+type: object
+properties:
+  id:
+    type: string
+    description: A management identifier for the concept
+    examples:
+      - '1234'
+      - 12969ded-ba28-48de-b009-1f1140236c60
+  data:
+    type: object
+    description: Data related to the concept
+    properties:
+      identifier:
+        type: string
+        description: A unique identifier for the concept
+        examples:
+          - "1234"
+          - "foobar"
+      uri:
+        type: string
+        description: Optional URI for the concept
+        examples:
+          - "https://example.org/concepts/1234"
+      localized_concepts:
+        type: object
+        description: Three digit language code followed by the `id` of the localization for that language.
+        examples:
+          - eng: '1234'
+          - ara: 39fcd2af-9ef1-4a69-71a4-2d3de569afce
+        propertyNames:
+          $ref: "#/$defs/iso639_three_char_code"
+        additionalProperties:
+          type: string
+      domains:
+        type: array
+        items:
+          $ref: "#/$defs/reference"
+        description: Domain/subject area references (replaces legacy groups field).
+      sources:
+        type: array
+        items:
+          $ref: "#/$defs/concept_source"
+        description: Zero or more bibliographical sources for the term.
+      dates:
+        type: array
+        items:
+          $ref: "#/$defs/concept_date"
+        description: Dates in the lifecycle of the management of the term.
+  related:
+    type: array
+    items:
+      $ref: "#/$defs/related_concept"
+    description: Zero or more related concepts at the concept level.
+  sources:
+    type: array
+    items:
+      $ref: "#/$defs/concept_source"
+    description: Concept-level bibliographical sources.
+  status:
+    $ref: "#/$defs/concept_status"
+  date_accepted:
+    type: string
+    format: date-time
+    description: Date and time when the concept was accepted.
+    examples:
+      - "2021-05-01T00:00:00+00:00"
+
+$defs:
+  # Concept Status enum
+  concept_status:
+    type: string
+    description: The normative status of the managed term.
+    enum:
+      - draft
+      - submitted
+      - not_valid
+      - invalid
+      - valid
+      - superseded
+      - retired
+
+  # Concept Date
+  concept_date:
+    type: object
+    description: A date relevant to the lifecycle of the managed term.
+    properties:
+      date:
+        type: string
+        format: date
+        description: The date associated with the managed term.
+      type:
+        $ref: "#/$defs/concept_date_type"
+    required:
+      - date
+      - type
+
+  # Concept Date Type enum
+  concept_date_type:
+    type: string
+    description: Kinds of governance events associated with the lifecycle of a managed term.
+    enum:
+      - accepted
+      - amended
+      - retired
+      - review
+      - review_decision
+
+  # Related Concept
+  related_concept:
+    type: object
+    description: A concept related to the current concept with a typed relationship.
+    properties:
+      type:
+        $ref: "#/$defs/related_concept_type"
+      ref:
+        $ref: "#/$defs/concept_ref"
+      content:
+        type: string
+        description: Content describing the relationship
+
+  # Related Concept Type enum
+  related_concept_type:
+    type: string
+    description: The relation of a term to the current term.
+    enum:
+      # Lifecycle
+      - deprecates
+      - supersedes
+      - superseded_by
+      # Hierarchical (SKOS)
+      - broader
+      - narrower
+      # ISO 25964 generic
+      - broader_generic
+      - narrower_generic
+      # ISO 25964 partitive
+      - broader_partitive
+      - narrower_partitive
+      # ISO 25964 instantial
+      - broader_instantial
+      - narrower_instantial
+      # Equivalence (ISO 10241-1 / ISO 25964 / SKOS)
+      - equivalent
+      - exact_match
+      # Approximate (ISO 25964 / SKOS)
+      - close_match
+      # Cross-vocabulary mapping (SKOS)
+      - broad_match
+      - narrow_match
+      - related_match
+      # Associative (ISO 10241-1 / ISO 25964 / TBX)
+      - see
+      - related_concept
+      - related_concept_broader
+      - related_concept_narrower
+      # Comparative (ISO 10241-1)
+      - compare
+      - contrast
+      # Associative — spatiotemporal (ISO 25964 / TBX)
+      - sequentially_related_concept
+      - spatially_related_concept
+      - temporally_related_concept
+      # Lexical (ISO 12620 / TBX)
+      - homograph
+      - false_friend
+      # Designation-level (ISO 10241-1)
+      - abbreviated_form_for
+      - short_form_for
+
+  # Reference (typed classification — domains, typed references)
+  reference:
+    type: object
+    description: |
+      A typed reference to an item within a collection. Used for domain
+      classification and typed references. For bibliographic citations,
+      use citation; for concept links in relationships, use concept_ref.
+    properties:
+      source:
+        type: string
+        description: Collection identifier (document series, termbase, vocabulary).
+      id:
+        type: string
+        description: Item identifier within the collection (document ID, concept ID).
+      concept_id:
+        type: string
+        description: Alias for id (backward compatibility).
+      version:
+        type: string
+        description: Version of the item or collection.
+      locality:
+        $ref: "#/$defs/locality"
+      link:
+        type: string
+        description: URL link to the source document or concept.
+      original:
+        type: string
+        description: Pre-parsed original text.
+      custom_locality:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+      ref_type:
+        type: string
+        description: Type qualifier (domain, local, urn, designation).
+      urn:
+        type: string
+        description: Direct URN reference.
+      term:
+        type: string
+        description: Term text when referencing a concept.
+
+  # Citation (bibliographic — used in ConceptSource#origin)
+  citation:
+    type: object
+    description: |
+      A bibliographic citation. The `ref` field is always a structured hash
+      (Citation::Ref) identifying the source document. This is the V3 canonical
+      format — plain string refs are supported only via V2 backward compatibility.
+    properties:
+      ref:
+        $ref: "#/$defs/citation_ref"
+      locality:
+        $ref: "#/$defs/locality"
+      link:
+        type: string
+        description: URL link to the source document.
+      original:
+        type: string
+        description: Pre-parsed original citation text.
+      custom_locality:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: string
+
+  # Citation::Ref (always a hash in V3)
+  citation_ref:
+    type: object
+    description: |
+      Inner reference of a Citation. Always a structured hash with source,
+      id, and optional version. Never a plain string in V3.
+    properties:
+      source:
+        type: string
+        description: Document series or termbase (e.g. "ISO", "IEC").
+      id:
+        type: string
+        description: Document identifier within the series (e.g. "1087-1:2000").
+      version:
+        type: string
+        description: Version of the document.
+
+  # ConceptRef (used in RelatedConcept#ref)
+  concept_ref:
+    type: object
+    description: |
+      A concept reference used in related concept entries.
+      Has source and id only — no version, locality, or link.
+    properties:
+      source:
+        type: string
+        description: Registry or vocabulary identifier (e.g. "IEC", "ISO").
+      id:
+        type: string
+        description: Concept identifier within the registry (e.g. "102-01-01").
+
+  # Concept Source
+  concept_source:
+    type: object
+    description: Bibliographic reference for a concept or designation
+    properties:
+      type:
+        $ref: "#/$defs/concept_source_type"
+      status:
+        $ref: "#/$defs/concept_source_status"
+      origin:
+        $ref: "#/$defs/citation"
+      modification:
+        type: string
+        description: How the concept was modified from the source.
+
+  # Concept Source Type enum
+  concept_source_type:
+    type: string
+    description: Type of concept source.
+    enum:
+      - authoritative
+      - lineage
+
+  # Concept Source Status enum
+  concept_source_status:
+    type: string
+    description: The status of the managed term relative to the source.
+    enum:
+      - identical
+      - similar
+      - modified
+      - restyle
+      - context_added
+      - generalisation
+      - specialisation
+      - unspecified
+      - related
+      - not_equal
+
+  # Locality
+  locality:
+    type: object
+    description: A locality within a cited document.
+    properties:
+      type:
+        type: string
+        description: Type of the locality (section, clause, page, etc.)
+      reference_from:
+        type: string
+      reference_to:
+        type: string
+
+  # Data Types
+  iso639_three_char_code:
+    type: string
+    minLength: 3
+    maxLength: 3
+    description: Three digit ISO-639 language code
+    examples:
+      - eng
+      - ara
+      - fra
+      - deu

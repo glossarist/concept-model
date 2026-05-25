@@ -1,0 +1,35 @@
+# 02 — Designation: Symbol, Letter Symbol, Graphical Symbol
+#
+# Three symbol designation types, each inheriting from Base.
+# Symbols are often international (valid across languages).
+---
+id: d1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: eng
+  terms:
+  - type: symbol
+    designation: Ω
+    normative_status: preferred
+    international: true
+  - type: letter_symbol
+    designation: R
+    text: R
+    normative_status: admitted
+    international: true
+  - type: graphical_symbol
+    designation: warning sign
+    text: general warning
+    image: "⚠"
+    normative_status: preferred
+    international: true
+  definition:
+  - content: a designation that is not a word or an abbreviation, used to represent
+      a concept in a given language
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: ISO
+        id: 10241-1
+        version: '2011'
+status: valid

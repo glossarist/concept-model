@@ -1,0 +1,27 @@
+# 05 — Domains (Classification)
+#
+# Domains classify a concept into subject areas — language-agnostic tags.
+# ManagedConcept.data.domains is a ConceptReference array with ref_type "domain".
+# LocalizedConcept.data.domain is a per-language URI string.
+---
+id: 103-01-02
+data:
+  identifier: 103-01-02
+  localized_concepts:
+    eng: 11111111-aaaa-bbbb-cccc-dddddddddddd
+  domains:
+  - concept_id: '103'
+    source: urn:iec:std:iec:60050
+    ref_type: domain
+  - concept_id: 103-01
+    source: urn:iec:std:iec:60050
+    ref_type: domain
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-103
+        version: '2009'
+status: valid
+date_accepted: '2009-12-14T00:00:00+00:00'
