@@ -1,0 +1,62 @@
+# Register Taxonomy (ISO 12620 / TBX-Linguist)
+#
+# SKOS ConceptScheme for register / usage level of designations.
+# Source: TBX-Linguist module, glossarist config.yml register
+#
+# 7 register values from ISO 12620 / TBX-Linguist.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:register a skos:ConceptScheme ;
+  skos:prefLabel "Register"@en ;
+  skos:definition """
+    Register or usage level of a designation (ISO 12620 / TBX-Linguist).
+    Classifies the formality or context of usage for a term.
+  """@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
+
+<https://www.glossarist.org/ontologies/register/colloquial_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "colloquial register"@en ;
+  skos:definition "Informal, conversational usage (TBX-Linguist colloquialRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/neutral_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "neutral register"@en ;
+  skos:definition "Neutral, standard usage appropriate for general contexts (TBX-Linguist neutralRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/technical_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "technical register"@en ;
+  skos:definition "Technical, domain-specific usage (TBX-Linguist technicalRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/in_house_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "in-house register"@en ;
+  skos:definition "Internal organizational usage (TBX-Linguist inHouseRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/bench_level_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "bench-level register"@en ;
+  skos:definition "Bench-level, operational usage (TBX-Linguist benchLevelRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/slang_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "slang register"@en ;
+  skos:definition "Slang, highly informal usage (TBX-Linguist slangRegister)."@en .
+
+<https://www.glossarist.org/ontologies/register/vulgar_register> a skos:Concept ;
+  skos:inScheme gloss:register ;
+  skos:prefLabel "vulgar register"@en ;
+  skos:definition "Vulgar or taboo usage (TBX-Linguist vulgarRegister)."@en .
+
+gloss:register skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/register/colloquial_register> ,
+  <https://www.glossarist.org/ontologies/register/neutral_register> ,
+  <https://www.glossarist.org/ontologies/register/technical_register> ,
+  <https://www.glossarist.org/ontologies/register/in_house_register> ,
+  <https://www.glossarist.org/ontologies/register/bench_level_register> ,
+  <https://www.glossarist.org/ontologies/register/slang_register> ,
+  <https://www.glossarist.org/ontologies/register/vulgar_register> .

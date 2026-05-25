@@ -1,0 +1,183 @@
+# 14 — ISO 12620 Term Types (34 Values)
+#
+# ISO 12620 / TBX term_type classification for designations. The term_type
+# attribute categorizes a designation with respect to how it is formed or
+# where/how it is used.
+#
+# Categories:
+#   Orthographic/structural (10): abbreviation, acronym, clipped_term, full_form,
+#     initialism, short_form, transliterated_form, transcribed_form, truncation,
+#     variant
+#   Symbolic/formulaic (10): equation, formula, logical_expression,
+#     mathematical_expression, symbol, reference_symbol, figure_symbol,
+#     graphic_symbol, letter_symbol, roman_numeral
+#   Usage/provenance (14): code, common_name, entry_term, internationalism,
+#     international_scientific_term, part_number, phrase, phraseological_unit,
+#     scientific_name, shortcut, sku, standard_text, synonym, synonymous_phrase
+---
+id: dddddddd-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: World Health Organization
+    normative_status: preferred
+    term_type: full_form
+  - type: abbreviation
+    designation: WHO
+    normative_status: admitted
+    acronym: true
+    term_type: abbreviation
+  - type: abbreviation
+    designation: laser
+    normative_status: admitted
+    acronym: true
+    term_type: acronym
+  - type: abbreviation
+    designation: DNA
+    normative_status: admitted
+    initialism: true
+    term_type: initialism
+  - type: expression
+    designation: phone
+    normative_status: admitted
+    term_type: clipped_term
+  - type: expression
+    designation: app
+    normative_status: admitted
+    term_type: short_form
+  - type: expression
+    designation: catalog
+    normative_status: admitted
+    geographical_area: US
+    term_type: variant
+  - type: expression
+    designation: elektromagnitnoye pole
+    normative_status: admitted
+    language: rus
+    script: Latn
+    system: UN:rus-Cyrl:Latn:1993
+    term_type: transliterated_form
+  - type: expression
+    designation: Tōkyō
+    normative_status: admitted
+    language: jpn
+    script: Latn
+    system: Var:jpn-Hrkt:Latn:Hepburn-1886
+    term_type: transcribed_form
+  - type: expression
+    designation: app
+    normative_status: admitted
+    term_type: truncation
+  - type: symbol
+    designation: Ω
+    normative_status: preferred
+    international: true
+    term_type: symbol
+  - type: expression
+    designation: H₂O
+    normative_status: admitted
+    term_type: formula
+  - type: expression
+    designation: A ∧ B
+    normative_status: admitted
+    term_type: logical_expression
+  - type: expression
+    designation: E = mc²
+    normative_status: admitted
+    term_type: equation
+  - type: expression
+    designation: "∑(n=1 to ∞) 1/n²"
+    normative_status: admitted
+    term_type: mathematical_expression
+  - type: symbol
+    designation: "§"
+    normative_status: admitted
+    international: true
+    term_type: reference_symbol
+  - type: symbol
+    designation: "△"
+    normative_status: admitted
+    international: true
+    term_type: figure_symbol
+  - type: graphical_symbol
+    designation: "♔"
+    normative_status: admitted
+    international: true
+    term_type: graphic_symbol
+  - type: letter_symbol
+    designation: C
+    normative_status: admitted
+    international: true
+    term_type: letter_symbol
+  - type: expression
+    designation: XIV
+    normative_status: admitted
+    term_type: roman_numeral
+  - type: expression
+    designation: water
+    normative_status: admitted
+    term_type: common_name
+  - type: expression
+    designation: dihydrogen monoxide
+    normative_status: admitted
+    term_type: entry_term
+  - type: expression
+    designation: computer
+    normative_status: admitted
+    term_type: internationalism
+  - type: expression
+    designation: photosynthesis
+    normative_status: admitted
+    term_type: international_scientific_term
+  - type: expression
+    designation: liquid hydrogen oxide
+    normative_status: admitted
+    term_type: synonym
+  - type: expression
+    designation: oxidane
+    normative_status: admitted
+    term_type: synonymous_phrase
+  - type: expression
+    designation: 47kΩ resistor
+    normative_status: admitted
+    term_type: part_number
+  - type: expression
+    designation: standard atmospheric pressure
+    normative_status: admitted
+    term_type: phraseological_unit
+  - type: expression
+    designation: spec
+    normative_status: admitted
+    term_type: shortcut
+  - type: expression
+    designation: SKU-2024-BLK-M
+    normative_status: admitted
+    term_type: sku
+  - type: expression
+    designation: Not applicable
+    normative_status: admitted
+    term_type: standard_text
+  - type: expression
+    designation: ISO-8601
+    normative_status: admitted
+    term_type: code
+  - type: expression
+    designation: subject to change without notice
+    normative_status: admitted
+    term_type: phrase
+  - type: expression
+    designation: Homo sapiens
+    normative_status: admitted
+    term_type: scientific_name
+  definition:
+  - content: comprehensive example demonstrating all ISO 12620 term type classifications
+      across orthographic, symbolic, and usage categories
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: ISO
+        id: '12620'
+        version: '2019'
+status: valid

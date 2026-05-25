@@ -10,26 +10,26 @@
 gloss:entstatus a skos:ConceptScheme ;
   skos:prefLabel "Entry Status"@en ;
   skos:definition "Lifecycle status of a localized concept entry within a glossary."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
 
-gloss:entstatus/valid a skos:Concept ;
+<https://www.glossarist.org/ontologies/entstatus/valid> a skos:Concept ;
   skos:inScheme gloss:entstatus ;
   skos:prefLabel "valid"@en ;
   skos:definition "The localized entry is valid and current."@en .
 
-gloss:entstatus/not_valid a skos:Concept ;
+<https://www.glossarist.org/ontologies/entstatus/not_valid> a skos:Concept ;
   skos:inScheme gloss:entstatus ;
   skos:prefLabel "not valid"@en ;
   skos:definition "The localized entry is not valid."@en .
 
-gloss:entstatus/superseded a skos:Concept ;
+<https://www.glossarist.org/ontologies/entstatus/superseded> a skos:Concept ;
   skos:inScheme gloss:entstatus ;
   skos:prefLabel "superseded"@en ;
   skos:definition "The localized entry has been superseded by a newer version."@en .
 
-gloss:entstatus/retired a skos:Concept ;
+<https://www.glossarist.org/ontologies/entstatus/retired> a skos:Concept ;
   skos:inScheme gloss:entstatus ;
   skos:prefLabel "retired"@en ;
   skos:definition "The localized entry has been retired from active use."@en .
 
-gloss:entstatus skos:hasTopConcept gloss:entstatus/valid , gloss:entstatus/retired .
+gloss:entstatus skos:hasTopConcept <https://www.glossarist.org/ontologies/entstatus/valid> , <https://www.glossarist.org/ontologies/entstatus/retired> .

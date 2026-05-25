@@ -11,41 +11,41 @@
 gloss:status a skos:ConceptScheme ;
   skos:prefLabel "Concept Status"@en ;
   skos:definition "Lifecycle status of a managed terminology concept."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
 
-gloss:status/draft a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/draft> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "draft"@en ;
   skos:definition "The concept is in draft form and has not yet been submitted."@en .
 
-gloss:status/submitted a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/submitted> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "submitted"@en ;
   skos:definition "The concept has been submitted for review."@en .
 
-gloss:status/not_valid a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/not_valid> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "not valid"@en ;
   skos:definition "The concept has been reviewed and is not valid."@en .
 
-gloss:status/invalid a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/invalid> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "invalid"@en ;
   skos:definition "The concept is invalid."@en .
 
-gloss:status/valid a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/valid> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "valid"@en ;
   skos:definition "The concept has been reviewed and is valid."@en .
 
-gloss:status/superseded a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/superseded> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "superseded"@en ;
   skos:definition "The concept has been superseded by a newer version."@en .
 
-gloss:status/retired a skos:Concept ;
+<https://www.glossarist.org/ontologies/status/retired> a skos:Concept ;
   skos:inScheme gloss:status ;
   skos:prefLabel "retired"@en ;
   skos:definition "The concept has been retired from active use."@en .
 
-gloss:status skos:hasTopConcept gloss:status/draft , gloss:status/valid , gloss:status/retired .
+gloss:status skos:hasTopConcept <https://www.glossarist.org/ontologies/status/draft> , <https://www.glossarist.org/ontologies/status/valid> , <https://www.glossarist.org/ontologies/status/retired> .

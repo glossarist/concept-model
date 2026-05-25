@@ -1,0 +1,30 @@
+# 06 — Related Concepts (Language-Specific)
+#
+# LocalizedConcept.data.related holds relationships that only exist in
+# one language variant. For example, French "mesure" has a false_friend
+# relationship that English "measurement" does not.
+---
+id: 22222222-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: system
+    normative_status: preferred
+  definition:
+  - content: set of interrelated elements considered in a defined context as a whole
+      and separated from their environment
+  related:
+  - type: see
+    content: open system
+    ref:
+      source: IEC
+      id: 102-03-05
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-102
+        version: '2007'
+status: valid

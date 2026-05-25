@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:iso25964="http://iso25964.org/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcmi="http://purl.org/dc/dcmitype/" xmlns:xml="http://www.w3.org/XML/1998/namespace" targetNamespace="http://iso25964.org/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="http://dublincore.org/schemas/xmls/qdc/2008/02/11/dc.xsd"/>
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+	<xsd:annotation>
+		<xsd:documentation source="ISO 25964-1 2011-08-06" xml:lang="en">ISO 25964-1 schema version 1.4 dated 2011-09-26</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>Each XML instance is necessarily a full thesaurus specification, occasionally filtered for a language, concept group, …. An XML instance is never an update/change specification. Whether we have a full or a filtered version should be documented in the “current” VersionHistory.
+         A formal value is set in the @scope attribute on the root element.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation source="DC usage remark - date" xml:lang="en">The date created and date modified are strongly recommended but formally optional attributes of several elements (classes). They should be given in YYYY-MM-DD format, in line with ISO 8601. In the case of Thesaurus, another option is to use the simple attribute "date", in which case the value will be interpreted as applying to the date when the version to which it is attached was issued. The same format should be used.</xsd:documentation>
+	</xsd:annotation>
+	<xsd:element name="ISO25964Interchange">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Thesaurus" type="iso25964:ThesaurusStruct" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">There should not be more than 1 (one) "created" date. See also VersionHistory
+
+The optional attribute @dc:source of Thesaurus and ThesaurusTerm, which can be used to note the reference work or individual who contributed the term in question.
+
+@language should be given as an alpha-2 code selected from ISO 639-1 if present in that list, or an alpha-3 code from ISO 639-2 if not. These codes may be extended where necessary with the additional codes described in RFC 4646[45] and listed in the IANA subtag registry[35] (see 12.4.5).</xsd:documentation>
+					</xsd:annotation>
+					<xsd:unique name="uc_ThesaurusConcept_id">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">All ThesaurusConcept-s must have a unique thesaurus concept identifier.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:selector xpath="iso25964:ThesaurusConcept"/>
+						<xsd:field xpath="iso25964:identifier"/>
+					</xsd:unique>
+					<xsd:unique name="uc_ThesaurusArray_id">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">All ThesaurusArray-s must have a unique thesaurus array identifier.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:selector xpath="iso25964:ThesaurusArray"/>
+						<xsd:field xpath="iso25964:identifier"/>
+					</xsd:unique>
+					<xsd:unique name="uc_ConceptGroup">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">All ConceptGroup-s must have a unique concept group identifier.</xsd:documentation>
+						</xsd:annotation>
+						<xsd:selector xpath="iso25964:ConceptGroup"/>
+						<xsd:field xpath="iso25964:identifier"/>
+					</xsd:unique>
+				</xsd:element>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:element name="GroupRelationship" type="iso25964:GroupRelationship"/>
+					<xsd:element name="TopLevelRelationship" type="iso25964:TopLevelRelationship"/>
+					<xsd:element name="AssociativeRelationship" type="iso25964:AssociativeRelationship"/>
+					<xsd:element name="HierarchicalRelationship" type="iso25964:HierarchicalRelationship"/>
+					<xsd:element name="CompoundEquivalence" type="iso25964:CompoundEquivalence">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">The classes SplitNonPreferredTerm and CompoundEquivalence enable representation of complex concepts by a combination of terms, as described in 8.5.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="SplitNonPreferredTerm">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">The classes SplitNonPreferredTerm and CompoundEquivalence enable representation of complex concepts by a combination of terms, as described in 8.5.
+
+@source notes the reference work or individual who contributed the term in question</xsd:documentation>
+						</xsd:annotation>
+						<xsd:complexType>
+							<xsd:complexContent>
+								<xsd:extension base="iso25964:ThesaurusTerm"/>
+							</xsd:complexContent>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="scope" default="full">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="full">
+							<xsd:annotation>
+								<xsd:documentation xml:lang="en">The full thesaurus is being provided in the exchange document.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="update-only">
+							<xsd:annotation>
+								<xsd:documentation xml:lang="en">Only the updated parts of a complete thesaurus (compared to its previous version) are provided.
+
+Note: The schema is not fully ready to support this value yet.</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+						<xsd:enumeration value="custom-selection">
+							<xsd:annotation>
+								<xsd:documentation xml:lang="en">A complete custom selection has been provided of the thesaurus.
+Details are specified in the VersionHistory whit thisVersion = true
+
+Examples:
+- certain subset of the thesaurs languages
+- only specific concept groups are available</xsd:documentation>
+							</xsd:annotation>
+						</xsd:enumeration>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:attribute>
+		</xsd:complexType>
+		<xsd:unique name="uc_ThesaurusTerm">
+			<xsd:annotation>
+				<xsd:documentation xml:lang="en">All ThesaurusTerm-s (PreferredTerm, SimpleNonPreferredTerm and SplitNonPreferredTerm) have a unique thesaurus term identifier.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:selector xpath="iso25964:SplitNonPreferredTerm | iso25964:Thesaurus/iso25964:ThesaurusConcept/iso25964:PreferredTerm | iso25964:Thesaurus/iso25964:ThesaurusConcept/iso25964:SimpleNonPreferredTerm"/>
+			<xsd:field xpath="iso25964:identifier"/>
+		</xsd:unique>
+	</xsd:element>
+	<xsd:group name="ThesaurusMetadataGroup">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation xml:lang="en">Metadata sheet</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="identifier" type="iso25964:Identifier" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Identifier for the thesaurus as a whole</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:contributor" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Person or organization who contributed to the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:coverage" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Spatial or temporal coverage of the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:creator" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Person or organization primarily responsible for making</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="iso25964:date" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Any date associated with the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="iso25964:created" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The date the thesaurus was created</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="iso25964:modified" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A date when this version was modified</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:description" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">An account of the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:format" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The file format or physical medium of the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:language" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Codes showing languages supported by the thesaurus
+
+It should be given as an alpha-2 code selected from ISO 639-1 if present in that list, or an alpha-3 code from ISO 639-2 if not. These codes may be extended where necessary with the additional codes described in RFC 4646 and listed in the IANA subtag registry (see section 12.4.5 of the standard).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:publisher" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Entity responsible for publication</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:relation" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A related publication</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:rights" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Copyright or other rights information</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:source" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Resource from which the thesaurus was derived
+
+Used by a thesaurus variant to refer the URI of the original thesaurus for which it is a variant.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:subject" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Index terms indicating the subject content</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:title" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Title of the thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element ref="dc:type" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The genre of the vocabulary, e.g. "thesaurus"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:group>
+	<xsd:complexType name="ThesaurusStruct">
+		<xsd:sequence>
+			<xsd:group ref="iso25964:ThesaurusMetadataGroup"/>
+			<xsd:element name="ThesaurusConcept" type="iso25964:ThesaurusConceptStruct" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Each concept in the thesaurus is represented by one preferred term per language, and by any number of nonpreferred terms. The notation, scope note and broader/narrower/related term relationships apply to the concept as a whole, rather than to its preferred term. A unique identifier may be assigned to each concept. In some systems, the concept is identified only by its preferred term or by the identifier of its preferred term, but this has disadvantages if the spelling of the term changes.
+
+This schema requires the identifier on the concept.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:unique name="uc_lang_of_preferred_term">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">There shall not be 2 preferred term with the same xml:lang attribute value.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:selector xpath="iso25964:PreferredTerm/iso25964:lexicalValue"/>
+					<xsd:field xpath="@xml:lang"/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="ThesaurusArray" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="iso25964:ThesaurusArrayStruct"/>
+					</xsd:complexContent>
+				</xsd:complexType>
+				<xsd:unique name="uc_memberConcept">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">A Thesaurus array cannot contain the same member concept twice.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:selector xpath="iso25964:hasMemberConcept"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+				<xsd:unique name="uc_memberArray">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">A Thesaurus array cannot contain the same member array twice.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:selector xpath="iso25964:hasMemberArray"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="ConceptGroup" type="iso25964:ConceptGroupStruct" minOccurs="0" maxOccurs="unbounded">
+				<xsd:unique name="uc_groupMember">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">A concept group cannot containe a member concept twice.</xsd:documentation>
+					</xsd:annotation>
+					<xsd:selector xpath="iso25964:Member"/>
+					<xsd:field xpath="."/>
+				</xsd:unique>
+			</xsd:element>
+			<xsd:element name="Version" type="iso25964:VersionHistory" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The VersionHistory optionally allows any copy of a thesaurus to carry a record of versions or editions that have been created.
+
+Although the class is optional and might not be needed when only one version exists, adoption is highly recommended as soon as there is more than one. Each version should be identified by an identifier or a date or both.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ThesaurusConceptStruct">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">When a concept has an array of narrower concepts, the relationship to this array is not given here. To avoid redundancy, the relationship is given in one direction only, from ThesaurusArray using the child element hasSuperOrdinateConcept.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="iso25964:created" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:modified" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This is an optional attribute of ThesaurusConcept and ThesaurusTerm, which records whether they are, for example, approved, candidates, superseded or deprecated (see 13.6.2).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="notation" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This is an optional attribute of ThesaurusConcept, ThesaurusArray and ConceptGroup (see 12.1.3 and 12.2.5.2).
+If the thesaurus uses an expressive notation, then applying it to node labels will allow them to be shown in the correct place in hierarchical displays.
+If there is no expressive notation, some other means should be found of outputting the node labels correctly in the display, such as a sort code attribute that is not displayed to users. In this event, the same attribute will be required at the display level for preferred terms.
+The system of notation used for ConceptGroup may be quite distinct from that used for ThesaurusConcept, and one of these systems may be present without the other.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="topConcept" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A true/false label indicating whether the concept is at the top of a hierarchy, i.e. has no broader concepts</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PreferredTerm" type="iso25964:PreferredTerm" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The term used as a label for this concept. There should be one preferred term per language.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SimpleNonPreferredTerm" type="iso25964:SimpleNonPreferredTerm" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Alternative terms by which this concept could be sought
+
+The co-occurrence of the SimpleNonPreferredTerm and the PreferredTerm under the same ThesaurusConcept implies the existence of an Equivalence relation where that SimpleNonPreferredTerm has an identical language specification as the PreferredTerm.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ScopeNote" type="iso25964:ScopeNote" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note defining or clarifying the scope of the concept within this thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HistoryNote" type="iso25964:HistoryNote" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note recording changes to this concept within this thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CustomNote" type="iso25964:CustomNote" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note of any other kind relating to this concept</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CustomConceptAttribute" type="iso25964:CustomConceptAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">An additional attribute of a concept</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ThesaurusTerm" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">The wording of the term.
+
+The identifier and date attributes of ThesaurusTerm are essential for the provision of a good updating service because if the spelling of a term changes, a constant Term identifier facilitates continuity during successive updates. The use of a concept identifier is strongly recommended to promote interoperability among networked search applications.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="iso25964:created" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:modified" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="dc:source" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Notes the reference work or individual who contributed the term in question</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This is an optional attribute of ThesaurusConcept and ThesaurusTerm, which records whether they are, for example, approved, candidates, superseded or deprecated (see 13.6.2).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Definition" type="iso25964:Definition" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note giving definitions of a term, not necessarily limited to the scope of the concept labelled by the term in this thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HistoryNote" type="iso25964:HistoryNote" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note recording changes to this term within this thesaurus</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EditorialNote" type="iso25964:EditorialNote" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A note for use by the thesaurus editors during the editing process</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CustomTermAttribute" type="iso25964:CustomTermAttribute" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The model includes classes CustomConceptAttribute and CustomTermAttribute for custom attributes of concepts and terms. These enable recording of custom information about concepts and terms.
+These are included as separate classes rather than as normal attributes so that the administrator of the thesaurus management system can specify the values of custom attributes that can be assigned. The classes have an attribute customAttributeType, allowing the administrator to specify which type of attribute is being used. Values of customAttributeType should normally be taken from a controlled list.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PreferredTerm">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:ThesaurusTerm"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SimpleNonPreferredTerm">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:ThesaurusTerm">
+				<xsd:sequence>
+					<xsd:element name="hidden" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">A yes/no flag to show whether the term may be excluded from some forms of output, e.g. for misspellings of a term.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="role" type="xsd:string" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">Specification of a kind of equivalence relationship. This will normally be USE, linking the source SimpleNonPreferredTerm to the target PreferredTerm</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SplitNonPreferredTerm">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:ThesaurusTerm"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CompoundEquivalence">
+		<xsd:sequence>
+			<xsd:element name="UFPlus" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Identifier of the SplitNonPreferredTerm.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="USEPlus" type="iso25964:Identifier" minOccurs="2" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">Identifier of (one of ) the preferred term(s).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CustomTermAttribute">
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue"/>
+			<xsd:element name="customAttributeType" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AssociativeRelationship">
+		<xsd:sequence>
+			<xsd:element name="role" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The typical (and implied) associative relationship role is: RT
+
+Associative Relationship role types should form a controlled vocabulary.
+If subtypes of RT are defined, hierarchical levels should be separated by a solidus (forward slash): /</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hasRelatedConcept" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of the related thesaurus concept of the associative relationship.
+
+Example: "sport event" RT "sport manifestation"
+- ./role = RT
+- ./isRelatedConcept = identifier of the concept with Preferred Term "sport event"
+- ./hasRelatedConcept = identifier of the concept with Preferred Term "sport manifestation"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="isRelatedConcept" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of the thesaurus concept for which the associative relation is specified.
+
+Example: "sport event" RT "sport manifestation"
+- ./role = RT
+- ./isRelatedConcept = identifier of the concept with Preferred Term "sport event"
+- ./hasRelatedConcept = identifier of the concept with Preferred Term "sport manifestation"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HierarchicalRelationship">
+		<xsd:sequence>
+			<xsd:element name="role" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">For custom relationship types, the text given in the "role" attribute should be composed of (a) the name of the parent relationship type, followed by (b) the symbol forward slash "/", and finally (c) the name of the custom relationship type. If necessary, custom relationship types can be subdivided further in the same way.
+
+The text in the 'role' attribute of HierarchicalRelationship may be one of the following, where NTX indicates some further subdivision of NTI:
+NT
+NT/NTP
+NT/NTI
+NT/NTG
+NT/NTI/NTX
+BT
+BT/BTP
+BT/BTI
+BT/BTG
+BT/BTI/BTX</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hasHierRelConcept" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a thesaurus concept identifed by a hierarchical relationship.
+
+Example: in the relationship "cow milk" BT "milk":
+- ./role = BT
+- ./isHierRelConcept = identifier of concept with Preferred Term "cow milk"
+- ./hasHierRelConcept = identifier of concept with Preferred Term "milk"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="isHierRelConcept" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a thesaurus concept for which the hierarchical relationship is defined.
+
+Example: in the relationship "cow milk" BT "milk":
+- ./role = BT
+- ./isHierRelConcept = identifier of concept with Preferred Term "cow milk"
+- ./hasHierRelConcept = identifier of concept with Preferred Term "milk"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CustomConceptAttribute">
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue"/>
+			<xsd:element name="customAttributeType" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TopLevelRelationship">
+		<xsd:sequence>
+			<xsd:element name="hasTopConcept" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a top level concept.
+This concept is the top level concept of the related concept (see ../isTopConceptOf) according to a hierarchical relationship of the thesaurus.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="isTopConceptOf" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a thesaurus concept.
+The related top level concept is identified by ../hasTopConcept.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Note" abstract="true">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">@language should be given as an alpha-2 code selected from ISO 639-1 if present in that list, or an alpha-3 code from ISO 639-2 if not. These codes may be extended where necessary with the additional codes described in RFC 4646[45] and listed in the IANA subtag registry[35] (see 12.4.5).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="iso25964:created" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:modified" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The date when the note was last modified</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="refersTo" type="iso25964:Identifier" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The association between Note and ThesaurusConcept enables any note for one concept to refer to any other concept in the thesaurus. This capability is particularly useful for scope notes (see 5.3).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ScopeNote">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:Note"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Definition">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:Note">
+				<xsd:sequence>
+					<xsd:element ref="dc:source" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">The person(s) or document(s) from which the definition was taken</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="HistoryNote">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:Note"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="EditorialNote">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:Note"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="CustomNote">
+		<xsd:complexContent>
+			<xsd:extension base="iso25964:Note">
+				<xsd:sequence>
+					<xsd:element name="noteType" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ThesaurusArrayStruct">
+		<xsd:sequence>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="ordered" type="xsd:boolean">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The value 'true' indicates that the concepts and sub-arrays of the array are ordered.  This imposed order is reflected by the XML document order of the XML document instance.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="notation" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This is an optional attribute of ThesaurusConcept, ThesaurusArray and ConceptGroup (see 12.1.3 and 12.2.5.2).
+If the thesaurus uses an expressive notation, then applying it to node labels will allow them to be shown in the correct place in hierarchical displays.
+If there is no expressive notation, some other means should be found of outputting the node labels correctly in the display, such as a sort code attribute that is not displayed to users. In this event, the same attribute will be required at the display level for preferred terms.
+The system of notation used for ConceptGroup may be quite distinct from that used for ThesaurusConcept, and one of these systems may be present without the other.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NodeLabel" type="iso25964:NodeLabel" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">@language should be given as an alpha-2 code selected from ISO 639-1 if present in that list, or an alpha-3 code from ISO 639-2 if not. These codes may be extended where necessary with the additional codes described in RFC 4646[45] and listed in the IANA subtag registry[35] (see 12.4.5).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="hasSuperOrdinateConcept" type="iso25964:Identifier">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">The identifier of the thesaurus concept under which this array appears.
+(case that this array is not a sub-array)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="hasSuperOrdinateArray" type="iso25964:Identifier">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">The identifier of the thesaurus array under which this thesaurus sub-array appears.
+(case that this array is a sub-array)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+			<xsd:choice maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">If the thesaurus array is ordered the member identifiers are listed in the order required for the array.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:element name="hasMemberConcept" type="iso25964:Identifier">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">The identifier of a member concept of this thesaurus array.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="hasMemberArray" type="iso25964:Identifier">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="en">The identifier of a sub-array of this Thesaurus Array.</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NodeLabel">
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="iso25964:created" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:modified" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConceptGroupStruct">
+		<xsd:sequence>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="conceptGroupType" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A label identifying the type of group, e.g. "microthesaurus", "theme", or "subject category"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="notation" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This is an optional attribute of ThesaurusConcept, ThesaurusArray and ConceptGroup (see 12.1.3 and 12.2.5.2).
+If the thesaurus uses an expressive notation, then applying it to node labels will allow them to be shown in the correct place in hierarchical displays.
+If there is no expressive notation, some other means should be found of outputting the node labels correctly in the display, such as a sort code attribute that is not displayed to users. In this event, the same attribute will be required at the display level for preferred terms.
+The system of notation used for ConceptGroup may be quite distinct from that used for ThesaurusConcept, and one of these systems may be present without the other.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Member" type="iso25964:Identifier" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of the concepts belonging to the concept group.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ConceptGroupLabel" type="iso25964:ConceptGroupLabel" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">A label providing a verbal description of the group. A group should have one label per language.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConceptGroupLabel">
+		<xsd:sequence>
+			<xsd:element ref="iso25964:lexicalValue" minOccurs="1" maxOccurs="1"/>
+			<xsd:element ref="iso25964:created" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:modified" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GroupRelationship">
+		<xsd:sequence>
+			<xsd:element name="hasSubGroup" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a ConceptGroup that is a sub-group of ../hasSuperGroup.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="hasSuperGroup" type="iso25964:Identifier">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">The identifier of a ConceptGroup that is a super-group of ../hasSubGroup.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VersionHistory">
+		<xsd:sequence>
+			<xsd:element name="identifier" type="iso25964:Identifier" minOccurs="0" maxOccurs="1"/>
+			<xsd:element ref="iso25964:date" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="versionNote" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">versionNote can be used to explain the nature of the version, e.g. whether it is an updated version, an extract or a translation, or to explain its relationship to other versions.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="currentVersion" type="xsd:boolean" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">currentVersion is a Boolean (true/false) flag to indicate for each version whether it is still current or whether it has been superseded or withdrawn. More than one version can be current simultaneously.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="thisVersion" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">thisVersion is a Boolean flag to indicate which of the versions listed is the one to which this history is attached.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="lexicalValue">
+		<xsd:complexType>
+			<xsd:simpleContent>
+				<xsd:extension base="xsd:string">
+					<xsd:attribute ref="xml:lang">
+						<xsd:annotation>
+							<xsd:documentation xml:lang="en">Should be given as an alpha-2 code selected from ISO 639-1 if present in that list, or an alpha-3 code from ISO 639-2 if not. These codes may be extended where necessary with the additional codes described in RFC 4646[45] and listed in the IANA subtag registry[35] (see 12.4.5).</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:simpleContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="date" type="iso25964:date"/>
+	<xsd:element name="created" type="iso25964:date"/>
+	<xsd:element name="modified" type="iso25964:date"/>
+	<xsd:simpleType name="Identifier">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="dc">The identifier simple type is specified and and used instead of the DC identifier because dc:identifier does not have a simple type.  As such the dc:identifier does not allow to specify uniqueness constraints as needed on all elements except Thesaurus.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="date">
+		<xsd:union memberTypes="xsd:date xsd:dateTime"/>
+	</xsd:simpleType>
+</xsd:schema>

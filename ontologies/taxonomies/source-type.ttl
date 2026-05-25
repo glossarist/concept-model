@@ -10,16 +10,16 @@
 gloss:srctype a skos:ConceptScheme ;
   skos:prefLabel "Source Type"@en ;
   skos:definition "Type of bibliographic source for a concept or designation."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
 
-gloss:srctype/authoritative a skos:Concept ;
+<https://www.glossarist.org/ontologies/srctype/authoritative> a skos:Concept ;
   skos:inScheme gloss:srctype ;
   skos:prefLabel "authoritative"@en ;
   skos:definition "The concept is directly sourced from an authoritative standard or document."@en .
 
-gloss:srctype/lineage a skos:Concept ;
+<https://www.glossarist.org/ontologies/srctype/lineage> a skos:Concept ;
   skos:inScheme gloss:srctype ;
   skos:prefLabel "lineage"@en ;
   skos:definition "The concept's lineage or historical reference."@en .
 
-gloss:srctype skos:hasTopConcept gloss:srctype/authoritative , gloss:srctype/lineage .
+gloss:srctype skos:hasTopConcept <https://www.glossarist.org/ontologies/srctype/authoritative> , <https://www.glossarist.org/ontologies/srctype/lineage> .

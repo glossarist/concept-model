@@ -1,0 +1,44 @@
+# Abbreviation Type Taxonomy
+#
+# SKOS ConceptScheme for abbreviation formation types.
+# Source: ISO 12620, glossarist config.yml abbreviation.type
+#
+# 4 abbreviation type values.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:abbrtype a skos:ConceptScheme ;
+  skos:prefLabel "Abbreviation Type"@en ;
+  skos:definition """
+    Classification of abbreviations by how they are formed.
+    ISO 12620 / TBX abbreviation type categories.
+  """@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
+
+<https://www.glossarist.org/ontologies/abbrtype/truncation> a skos:Concept ;
+  skos:inScheme gloss:abbrtype ;
+  skos:prefLabel "truncation"@en ;
+  skos:definition "An abbreviation formed by cutting off the end of a word."@en .
+
+<https://www.glossarist.org/ontologies/abbrtype/acronym> a skos:Concept ;
+  skos:inScheme gloss:abbrtype ;
+  skos:prefLabel "acronym"@en ;
+  skos:definition "An abbreviation formed from initial letters, pronounced as a word."@en .
+
+<https://www.glossarist.org/ontologies/abbrtype/initialism> a skos:Concept ;
+  skos:inScheme gloss:abbrtype ;
+  skos:prefLabel "initialism"@en ;
+  skos:definition "An abbreviation formed from initial letters, each pronounced separately."@en .
+
+<https://www.glossarist.org/ontologies/abbrtype/other> a skos:Concept ;
+  skos:inScheme gloss:abbrtype ;
+  skos:prefLabel "other"@en ;
+  skos:definition "An abbreviation that does not fit the standard categories."@en .
+
+gloss:abbrtype skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/abbrtype/truncation> ,
+  <https://www.glossarist.org/ontologies/abbrtype/acronym> ,
+  <https://www.glossarist.org/ontologies/abbrtype/initialism> ,
+  <https://www.glossarist.org/ontologies/abbrtype/other> .

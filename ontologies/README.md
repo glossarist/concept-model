@@ -1,6 +1,6 @@
 # Glossarist Ontology Suite
 
-A comprehensive OWL ontology for the [Glossarist concept model](https://github.com/glossarist/concept-model) implementing ISO 10241-1 terminology management.
+A comprehensive OWL ontology for the [Glossarist concept model](https://github.com/glossarist/concept-model). Glossarist builds on and extends multiple ISO standards for terminology management: ISO 10241-1 (terminology entries), ISO 30042/TBX (data exchange), ISO 12620 (data category registry), ISO 25964/SKOS (thesaurus interoperability), and ISO 639/15924/24229 (language/script/system identifiers).
 
 ## Namespace
 
@@ -30,11 +30,15 @@ ontologies/
 │   ├── normative-status.ttl      # Designation normative status
 │   ├── source-type.ttl           # Source type (authoritative/lineage)
 │   ├── source-status.ttl         # Source status (identical/modified/...)
-│   ├── relationship-type.ttl     # Glossarist-specific relationship types
-│   ├── designation-type.ttl      # Designation types (expression/abbreviation/symbol/...)
-│   ├── term-type.ttl             # ISO 12620 term types (24 values)
+│   ├── relationship-type.ttl     # 32 relationship types (ISO 10241-1, 25964, 12620/TBX)
+│   ├── designation-type.ttl      # Designation types (expression/abbreviation/symbol/prefix/suffix)
+│   ├── term-type.ttl             # ISO 12620 term types (34 values)
+│   ├── abbreviation-type.ttl     # Abbreviation formation types (truncation/acronym/initialism/other)
+│   ├── date-type.ttl             # Date/event types for lifecycle governance (accepted/amended/retired/review/review_decision)
 │   ├── grammar-gender.ttl        # Grammatical gender
-│   └── grammar-number.ttl        # Grammatical number
+│   ├── grammar-number.ttl        # Grammatical number (5 values: singular/dual/plural/mass/other_number)
+│   ├── register.ttl              # TBX-Linguist register (7 values)
+│   └── part-of-speech.ttl        # Part of speech (6 values)
 └── shapes/
     └── glossarist.shacl.ttl      # SHACL validation shapes
 ```
@@ -50,6 +54,46 @@ ontologies/
 4. **SKOS taxonomies for enums** — All enumeration values are `skos:Concept` individuals in `skos:ConceptScheme` collections, not OWL named individuals.
 
 5. **No blank nodes** — All instances are identifiable with proper IRIs.
+
+6. **DATA vs MANAGEMENT separation** — Terminological content (definitions, designations, sources, relationships) is distinct from register governance (status, lifecycle dates, review events, release). Inspired by TBX (ISO 30042) which separates `<langSec>`/`<termSec>` from `<transactionGrp>`/`<adminNote>`.
+
+7. **Union domains for cross-cutting DATA** — Properties like `gloss:hasSource`, `gloss:hasRelatedConcept`, `gloss:hasDate`, and `gloss:language` use `owl:unionOf` domains because the same semantic property legitimately applies at multiple levels of the model.
+
+## DATA vs MANAGEMENT Architecture
+
+The ontology separates two orthogonal concerns:
+
+### DATA — terminological content (what the concept IS)
+
+| Concern | Levels | Property |
+|---------|--------|----------|
+| Sources | Concept, L10n, Designation, Def, NVR | `gloss:hasSource` (5-level union) |
+| Relationships | Concept, L10n, Designation | `gloss:hasRelatedConcept` (3-level union) |
+| Language/script/system | L10n, Designation, Pronunciation | `gloss:language`, `gloss:script`, `gloss:conversionSystem` |
+| Definitions/notes/examples | L10n | `gloss:hasDefinition` / `gloss:hasNote` / `gloss:hasExample` |
+| Designations | L10n | `skosxl:prefLabel` / `skosxl:altLabel` / `skosxl:hiddenLabel` |
+| Normative status | Designation | `gloss:normativeStatus` |
+| Term type | Designation | `gloss:hasTermType` |
+| Register (usage level) | Designation | `gloss:register` |
+| Grammar | Expression | `gloss:hasGrammarInfo` |
+| Pronunciation | Designation | `gloss:hasPronunciation` |
+| NVR | L10n | `gloss:hasNonVerbalRep` |
+| Classification | L10n | `gloss:classification` |
+| Domains | Concept | `gloss:hasDomain` |
+
+### MANAGEMENT — register governance (how the concept is MANAGED)
+
+| Concern | Level | Property |
+|---------|-------|----------|
+| Concept status | Concept | `gloss:hasStatus` |
+| Entry status | L10n | `gloss:hasEntryStatus` |
+| Lifecycle events | Concept, L10n | `gloss:hasDate` (2-level union) → `gloss:ConceptDate` |
+| Review type | L10n | `gloss:reviewType` |
+| Release version | L10n | `gloss:release` |
+| Lineage similarity | L10n | `gloss:lineageSimilarity` |
+| Identifier | Concept | `gloss:identifier` |
+
+`gloss:ConceptDate` is a MANAGEMENT event with a `gloss:dateType` (accepted, amended, retired, review, review_decision) and optional `gloss:eventDescription`. Review dates are represented as `ConceptDate(type: "review")`, review decisions as `ConceptDate(type: "review_decision", eventDescription: "...")` — not as standalone fields.
 
 ## Core Classes
 
@@ -67,14 +111,28 @@ ontologies/
 gloss:Designation (skosxl:Label)
 ├── gloss:Expression
 │   └── gloss:Abbreviation
-└── gloss:Symbol
-    ├── gloss:LetterSymbol
-    └── gloss:GraphicalSymbol
+├── gloss:Symbol
+│   ├── gloss:LetterSymbol
+│   └── gloss:GraphicalSymbol
+├── gloss:Prefix
+└── gloss:Suffix
 ```
 
 ### Supporting Classes
 
-`Pronunciation`, `GrammarInfo`, `DetailedDefinition`, `ConceptSource`, `ConceptReference`, `RelatedConcept`, `ConceptDate`, `NonVerbalRepresentation`, `DesignationRelationship`, `Citation`, `Locality`.
+`Pronunciation`, `GrammarInfo`, `DetailedDefinition`, `ConceptSource`, `Citation`, `CitationRef`, `ConceptRef`, `Reference`, `RelatedConcept`, `ConceptDate`, `NonVerbalRepresentation`, `Locality`, `CustomLocality`.
+
+### Citation Architecture (Three MECE Classes)
+
+| Class | Used in | YAML ref shape | Has locality? | Has version? |
+|-------|---------|---------------|---------------|--------------|
+| `gloss:Citation` | `ConceptSource#origin` | `ref: { source:, id:, version: }` | Yes | Yes (in CitationRef) |
+| `gloss:ConceptRef` | `RelatedConcept#ref` | `ref: { source:, id: }` | No | No |
+| `gloss:Reference` | domains, references | flat keys | Yes | Yes |
+
+- **Citation** — bibliographic citation with structured `CitationRef` (source + id + version), locality, link, original text, and custom_locality.
+- **ConceptRef** — concept link with source + id only. No version, locality, or link.
+- **Reference** — typed classification reference for domains and typed references.
 
 ## Relationship Property Mapping
 
@@ -86,14 +144,15 @@ Standard relationships are reused directly:
 | broader_generic | `iso-thes:broaderGeneric` |
 | broader_partitive | `iso-thes:broaderPartitive` |
 | broader_instantial | `iso-thes:broaderInstantial` |
-| equivalent | `skos:exactMatch` |
+| equivalent | `gloss:equivalent` (Glossarist-specific, distinct from exact_match) |
+| exact_match | `skos:exactMatch` |
 | close_match | `skos:closeMatch` |
 | broad_match | `skos:broadMatch` |
-| see / related | `skos:related` |
+| see / related_concept | `skos:related` |
 
 Glossarist-specific relationships are defined as `gloss:` properties:
 
-`gloss:deprecates`, `gloss:supersedes`, `gloss:compares`, `gloss:contrasts`, `gloss:sequentiallyRelated`, `gloss:spatiallyRelated`, `gloss:temporallyRelated`, `gloss:hasHomograph`, `gloss:hasFalseFriend`, `gloss:abbreviatedFormFor`, `gloss:shortFormFor`.
+`gloss:deprecates`, `gloss:supersedes`, `gloss:supersededBy`, `gloss:compares`, `gloss:contrasts`, `gloss:sequentiallyRelated`, `gloss:spatiallyRelated`, `gloss:temporallyRelated`, `gloss:hasHomograph`, `gloss:hasFalseFriend`, `gloss:relatedConceptBroader`, `gloss:relatedConceptNarrower`, `gloss:abbreviatedFormFor`, `gloss:shortFormFor`.
 
 ## Usage Example
 
@@ -111,7 +170,7 @@ Glossarist-specific relationships are defined as `gloss:` properties:
 
 <urn:glossarist:l10n:103-01-01-eng> a gloss:LocalizedConcept, skos:Concept ;
   gloss:isLocalizationOf <urn:glossarist:concept:103-01-01> ;
-  dcterms:language "eng" ;
+  gloss:language "eng" ;
   skosxl:prefLabel <urn:glossarist:label:103-01-01-eng-pref> ;
   gloss:hasDefinition [
     rdf:value "a concept within a defined scope..."@eng

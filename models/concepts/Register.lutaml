@@ -1,0 +1,40 @@
+enum Register {
+  definition {
+    Register or usage level of a designation (ISO 12620 / TBX-Linguist).
+  }
+  colloquial_register {
+    definition {
+      Used in everyday informal speech.
+    }
+  }
+  neutral_register {
+    definition {
+      Neither formal nor informal; standard usage.
+    }
+  }
+  technical_register {
+    definition {
+      Used in technical or specialist contexts.
+    }
+  }
+  in_house_register {
+    definition {
+      Used within an organization but not publicly.
+    }
+  }
+  bench_level_register {
+    definition {
+      Used in legal or judicial contexts.
+    }
+  }
+  slang_register {
+    definition {
+      Very informal, non-standard usage.
+    }
+  }
+  vulgar_register {
+    definition {
+      Coarse or taboo language.
+    }
+  }
+}

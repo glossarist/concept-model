@@ -1,0 +1,40 @@
+# 02 — Designation: Abbreviation
+#
+# Abbreviation designations extend Expression with type booleans:
+# acronym, initialism, truncation. Also supports designation-level relationships.
+---
+id: c1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: Light Emitting Diode
+    normative_status: preferred
+  - type: abbreviation
+    designation: LED
+    normative_status: admitted
+    acronym: true
+    related:
+    - type: abbreviated_form_for
+      target: Light Emitting Diode
+  - type: abbreviation
+    designation: HTML
+    normative_status: admitted
+    initialism: true
+  - type: abbreviation
+    designation: app
+    normative_status: admitted
+    truncation: true
+    related:
+    - type: short_form_for
+      target: application
+  definition:
+  - content: a semiconductor device that emits light when current flows through it
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-521
+        version: '2002'
+status: valid

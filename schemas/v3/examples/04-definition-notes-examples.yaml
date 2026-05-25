@@ -1,0 +1,47 @@
+# 04 — Definition, Notes, and Examples
+#
+# Definitions, notes, and examples all use DetailedDefinition —
+# text content with optional per-item sources.
+---
+id: f1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: resistance
+    normative_status: preferred
+    grammar_info:
+    - noun: true
+  - type: symbol
+    designation: R
+    normative_status: admitted
+    international: true
+  definition:
+  - content: quotient of the voltage and the current in a conductor at a given temperature
+    sources:
+    - type: authoritative
+      origin:
+        ref:
+          source: IEC
+          id: 60050-131
+          version: '2002'
+  notes:
+  - content: Resistance is a property of a conductor and depends on its dimensions,
+      material, and temperature.
+  - content: The SI unit of resistance is the ohm (Ω).
+    sources:
+    - type: lineage
+      origin:
+        ref:
+          source: SI Brochure, 9th edition
+  examples:
+  - content: A copper wire 1 m long with a cross-section of 1 mm² has a resistance
+      of approximately 0.017 Ω at 20 °C.
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-131
+        version: '2002'
+status: valid

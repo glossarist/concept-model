@@ -10,56 +10,56 @@
 gloss:srcstatus a skos:ConceptScheme ;
   skos:prefLabel "Source Status"@en ;
   skos:definition "Status of the concept relative to the bibliographic source."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
 
-gloss:srcstatus/identical a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/identical> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "identical"@en ;
   skos:definition "The concept is identical to the source."@en .
 
-gloss:srcstatus/similar a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/similar> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "similar"@en ;
   skos:definition "The concept is similar to the source."@en .
 
-gloss:srcstatus/modified a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/modified> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "modified"@en ;
   skos:definition "The concept has been modified from the source."@en .
 
-gloss:srcstatus/restyle a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/restyle> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "restyle"@en ;
   skos:definition "The concept has been restyled from the source (editorial changes only)."@en .
 
-gloss:srcstatus/context_added a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/context_added> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "context added"@en ;
   skos:definition "Context has been added to the concept beyond the source."@en .
 
-gloss:srcstatus/generalisation a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/generalisation> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "generalisation"@en ;
   skos:definition "The concept is a generalisation of the source concept."@en .
 
-gloss:srcstatus/specialisation a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/specialisation> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "specialisation"@en ;
   skos:definition "The concept is a specialisation of the source concept."@en .
 
-gloss:srcstatus/unspecified a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/unspecified> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "unspecified"@en ;
   skos:definition "The relationship to the source is unspecified."@en .
 
-gloss:srcstatus/related a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/related> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "related"@en ;
   skos:definition "The concept is related to the source."@en .
 
-gloss:srcstatus/not_equal a skos:Concept ;
+<https://www.glossarist.org/ontologies/srcstatus/not_equal> a skos:Concept ;
   skos:inScheme gloss:srcstatus ;
   skos:prefLabel "not equal"@en ;
   skos:definition "The concept is not equal to the source."@en .
 
-gloss:srcstatus skos:hasTopConcept gloss:srcstatus/identical , gloss:srcstatus/modified , gloss:srcstatus/unspecified .
+gloss:srcstatus skos:hasTopConcept <https://www.glossarist.org/ontologies/srcstatus/identical> , <https://www.glossarist.org/ontologies/srcstatus/modified> , <https://www.glossarist.org/ontologies/srcstatus/unspecified> .

@@ -1,0 +1,40 @@
+# 03 — Pronunciation & Per-Designation Language Overrides
+#
+# Pronunciations attach to individual designations. Each pronunciation entry
+# can specify its own language, script, country, and transcription system.
+# Designations can also override the concept-level language/script/system.
+---
+id: e1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: jpn
+  script: Hani
+  terms:
+  - type: expression
+    designation: 東京
+    normative_status: preferred
+    pronunciation:
+    - content: Tōkyō
+      language: jpn
+      script: Latn
+      system: Var:jpn-Hrkt:Latn:Hepburn-1886
+    - content: toːkjoː
+      language: jpn
+      script: Latn
+      system: IPA
+  - type: expression
+    designation: とうきょう
+    normative_status: admitted
+    script: Hrkt
+    pronunciation:
+    - content: Tōkyō
+      language: jpn
+      script: Latn
+      system: Var:jpn-Hrkt:Latn:Hepburn-1886
+  definition:
+  - content: capital city of Japan
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: Example pronunciation data
+status: valid

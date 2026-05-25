@@ -1,48 +1,61 @@
 # Designation Type Taxonomy
 #
 # SKOS ConceptScheme for designation types.
-# Source: glossarist config.yml, schemas/v2/localized-concept designation discriminator
+# Source: glossarist config.yml, schemas/v3/localized-concept designation discriminator
 
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 gloss:desig a skos:ConceptScheme ;
   skos:prefLabel "Designation Type"@en ;
   skos:definition "Type of designation (term, symbol, abbreviation) for a concept."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
 
-gloss:desig/expression a skos:Concept ;
+<https://www.glossarist.org/ontologies/desig/expression> a skos:Concept ;
   skos:inScheme gloss:desig ;
   skos:prefLabel "expression"@en ;
   skos:definition "A word or phrase used as a designation."@en ;
   rdfs:seeAlso gloss:Expression .
 
-gloss:desig/abbreviation a skos:Concept ;
+<https://www.glossarist.org/ontologies/desig/abbreviation> a skos:Concept ;
   skos:inScheme gloss:desig ;
   skos:prefLabel "abbreviation"@en ;
   skos:definition "A shortened form of a word or phrase (acronym, initialism, or truncation)."@en ;
-  skos:broader gloss:desig/expression ;
+  skos:broader <https://www.glossarist.org/ontologies/desig/expression> ;
   rdfs:seeAlso gloss:Abbreviation .
 
-gloss:desig/symbol a skos:Concept ;
+<https://www.glossarist.org/ontologies/desig/symbol> a skos:Concept ;
   skos:inScheme gloss:desig ;
   skos:prefLabel "symbol"@en ;
   skos:definition "A non-letter symbol representing a concept."@en ;
   rdfs:seeAlso gloss:Symbol .
 
-gloss:desig/letter_symbol a skos:Concept ;
+<https://www.glossarist.org/ontologies/desig/letter_symbol> a skos:Concept ;
   skos:inScheme gloss:desig ;
   skos:prefLabel "letter symbol"@en ;
   skos:definition "A single letter used as a symbol."@en ;
-  skos:broader gloss:desig/symbol ;
+  skos:broader <https://www.glossarist.org/ontologies/desig/symbol> ;
   rdfs:seeAlso gloss:LetterSymbol .
 
-gloss:desig/graphical_symbol a skos:Concept ;
+<https://www.glossarist.org/ontologies/desig/graphical_symbol> a skos:Concept ;
   skos:inScheme gloss:desig ;
   skos:prefLabel "graphical symbol"@en ;
   skos:definition "An iconic or graphical symbol."@en ;
-  skos:broader gloss:desig/symbol ;
+  skos:broader <https://www.glossarist.org/ontologies/desig/symbol> ;
   rdfs:seeAlso gloss:GraphicalSymbol .
 
-gloss:desig skos:hasTopConcept gloss:desig/expression , gloss:desig/symbol .
+<https://www.glossarist.org/ontologies/desig/prefix> a skos:Concept ;
+  skos:inScheme gloss:desig ;
+  skos:prefLabel "prefix"@en ;
+  skos:definition "A prefix that attaches before a designation."@en ;
+  rdfs:seeAlso gloss:Prefix .
+
+<https://www.glossarist.org/ontologies/desig/suffix> a skos:Concept ;
+  skos:inScheme gloss:desig ;
+  skos:prefLabel "suffix"@en ;
+  skos:definition "A suffix that attaches after a designation."@en ;
+  rdfs:seeAlso gloss:Suffix .
+
+gloss:desig skos:hasTopConcept <https://www.glossarist.org/ontologies/desig/expression> , <https://www.glossarist.org/ontologies/desig/symbol> , <https://www.glossarist.org/ontologies/desig/prefix> , <https://www.glossarist.org/ontologies/desig/suffix> .

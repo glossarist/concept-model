@@ -1,7 +1,10 @@
 enum RelatedConceptType {
   definition {
-    The relation of a term to the current term.
+    The relation of a term to the current term, covering ISO 10241-1,
+    ISO 25964/SKOS, ISO 12620/TBX, and designation-level relationships.
   }
+
+  // ── Lifecycle (ISO 10241-1) ───────────────────────────────────────
   deprecates {
     definition {
       The current term deprecates the related term.
@@ -12,21 +15,95 @@ enum RelatedConceptType {
       The current term supersedes the related term.
     }
   }
-  narrower {
+  superseded_by {
+    definition {
+      The current term has been superseded by the related term.
+    }
+  }
+
+  // ── Hierarchical (ISO 10241-1 / ISO 25964) ───────────────────────
+  broader {
     definition {
       The current term is narrower in denotation than the related term.
     }
   }
-  broader {
+  narrower {
     definition {
       The current term is broader in denotation than the related term.
     }
   }
-  equivalent {
+
+  // ── Generic Hierarchy (ISO 25964 BTG/NTG) ────────────────────────
+  broader_generic {
     definition {
-      The current term is equivalent in denotation than the related term.
+      The current term is a kind of the related term (generic/specific).
     }
   }
+  narrower_generic {
+    definition {
+      The related term is a kind of the current term.
+    }
+  }
+
+  // ── Partitive Hierarchy (ISO 25964 BTP/NTP) ──────────────────────
+  broader_partitive {
+    definition {
+      The current term is a part of the related term (whole/part).
+    }
+  }
+  narrower_partitive {
+    definition {
+      The related term is a part of the current term.
+    }
+  }
+
+  // ── Instantial Hierarchy (ISO 25964 BTI/NTI) ─────────────────────
+  broader_instantial {
+    definition {
+      The current term is an instance of the related term (class/instance).
+    }
+  }
+  narrower_instantial {
+    definition {
+      The related term is an instance of the current term.
+    }
+  }
+
+  // ── Equivalence (ISO 10241-1 / ISO 25964 / SKOS) ────────────────
+  equivalent {
+    definition {
+      The current term is equivalent in denotation to the related term.
+    }
+  }
+  exact_match {
+    definition {
+      The current term is an exact cross-vocabulary match (SKOS skos:exactMatch).
+    }
+  }
+
+  // ── SKOS Mapping Properties ──────────────────────────────────────
+  close_match {
+    definition {
+      The current term is approximately equivalent to the related term.
+    }
+  }
+  broad_match {
+    definition {
+      The current term has a broader match in another vocabulary.
+    }
+  }
+  narrow_match {
+    definition {
+      The current term has a narrower match in another vocabulary.
+    }
+  }
+  related_match {
+    definition {
+      The current term has a related match in another vocabulary.
+    }
+  }
+
+  // ── Comparative (ISO 10241-1) ────────────────────────────────────
   compare {
     definition {
       The current term may be compared to the related term.
@@ -37,14 +114,67 @@ enum RelatedConceptType {
       The current term is understood in contrast to the related term.
     }
   }
+
+  // ── Associative (ISO 10241-1 / ISO 25964) ───────────────────────
   see {
     definition {
       Refer to the related term for the definition of the current term.
     }
   }
-  see-also {
+  related_concept {
     definition {
-      For a better understanding of the current term, one should also see the related term.
+      The related term is associated with the current term.
+    }
+  }
+  related_concept_broader {
+    definition {
+      The related term is associated in a broader sense.
+    }
+  }
+  related_concept_narrower {
+    definition {
+      The related term is associated in a narrower sense.
+    }
+  }
+
+  // ── Spatiotemporal (ISO 25964 / TBX) ─────────────────────────────
+  sequentially_related_concept {
+    definition {
+      The related term is sequentially related to the current term.
+    }
+  }
+  spatially_related_concept {
+    definition {
+      The related term is spatially related to the current term.
+    }
+  }
+  temporally_related_concept {
+    definition {
+      The related term is temporally related to the current term.
+    }
+  }
+
+  // ── Lexical (ISO 12620 / TBX) ───────────────────────────────────
+  homograph {
+    definition {
+      The related term has the same spelling but a different meaning.
+    }
+  }
+  false_friend {
+    definition {
+      The related term looks or sounds similar in another language but has a different meaning.
+    }
+  }
+
+  // ── Designation-level (ISO 10241-1) ─────────────────────────────
+  abbreviated_form_for {
+    definition {
+      The current designation is an abbreviated form of the related designation.
+    }
+  }
+  short_form_for {
+    definition {
+      The current designation is a short form of the related designation.
     }
   }
 }

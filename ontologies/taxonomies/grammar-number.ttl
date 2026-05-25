@@ -1,7 +1,9 @@
 # Grammar Number Taxonomy
 #
 # SKOS ConceptScheme for grammatical number values.
-# Source: ISO 12620, glossarist config.yml grammar_info.number
+# Source: ISO 12620, TBX-Linguist, glossarist config.yml grammar_info.number
+#
+# 5 values: singular, dual, plural, mass, other_number
 
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
@@ -9,22 +11,37 @@
 
 gloss:number a skos:ConceptScheme ;
   skos:prefLabel "Grammar Number"@en ;
-  skos:definition "Grammatical number classification for designations."@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/localized-concept> .
+  skos:definition "Grammatical number classification for designations (ISO 12620 / TBX-Linguist)."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/localized-concept> .
 
-gloss:number/singular a skos:Concept ;
+<https://www.glossarist.org/ontologies/number/singular> a skos:Concept ;
   skos:inScheme gloss:number ;
   skos:prefLabel "singular"@en ;
   skos:definition "Singular grammatical number (one item)."@en .
 
-gloss:number/dual a skos:Concept ;
+<https://www.glossarist.org/ontologies/number/dual> a skos:Concept ;
   skos:inScheme gloss:number ;
   skos:prefLabel "dual"@en ;
   skos:definition "Dual grammatical number (two items)."@en .
 
-gloss:number/plural a skos:Concept ;
+<https://www.glossarist.org/ontologies/number/plural> a skos:Concept ;
   skos:inScheme gloss:number ;
   skos:prefLabel "plural"@en ;
   skos:definition "Plural grammatical number (more than one item)."@en .
 
-gloss:number skos:hasTopConcept gloss:number/singular , gloss:number/dual , gloss:number/plural .
+<https://www.glossarist.org/ontologies/number/mass> a skos:Concept ;
+  skos:inScheme gloss:number ;
+  skos:prefLabel "mass"@en ;
+  skos:definition "Mass grammatical number (uncountable nouns, TBX-Linguist)."@en .
+
+<https://www.glossarist.org/ontologies/number/other_number> a skos:Concept ;
+  skos:inScheme gloss:number ;
+  skos:prefLabel "other number"@en ;
+  skos:definition "Other grammatical number not covered by standard categories (TBX-Linguist)."@en .
+
+gloss:number skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/number/singular> ,
+  <https://www.glossarist.org/ontologies/number/dual> ,
+  <https://www.glossarist.org/ontologies/number/plural> ,
+  <https://www.glossarist.org/ontologies/number/mass> ,
+  <https://www.glossarist.org/ontologies/number/other_number> .

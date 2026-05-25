@@ -1,11 +1,20 @@
-= Glossarist Concept/Term Models (ISO 10241-1)
+= Glossarist Concept/Term Models
 
 == General
 
 Glossarist `Concept` and `Designation` models are used in glossarist-supported
 sites for RDF and JSON-LD generation.
 
-These models align with ISO 10241-1 and the concept systems described in ISO 704.
+These models align with multiple ISO standards for terminology management:
+
+* **ISO 10241-1** — Terminology entries in standardized terminology
+* **ISO 704** — Terminology work: principles and methods (concept systems)
+* **ISO 30042 / TBX** — Terminology markup framework (data exchange)
+* **ISO 12620** — Data category registry (term types, register, grammar)
+* **ISO 25964 / SKOS** — Thesaurus interoperability (hierarchical and mapping relationships)
+* **ISO 639** — Language codes
+* **ISO 15924** — Script codes
+* **ISO 24229** — Conversion system codes
 
 These models are meant to be fully compatible with the data in the IEC Electropedia.
 
@@ -38,6 +47,56 @@ The following features are supported:
 
 * Can be a symbol or abbreviation
 * A DefinitionCollection is represented as a single clause
+
+
+== Designation Types (7)
+
+Designations form a MECE (Mutually Exclusive, Collectively Exhaustive) hierarchy:
+
+| Type | Extends | Description |
+|------|---------|-------------|
+| `expression` | Base | A word or phrase used as a designation |
+| `abbreviation` | Expression | A shortened form (acronym, initialism, or truncation) |
+| `symbol` | Base | A non-letter symbol representing a concept |
+| `letter_symbol` | Symbol | A single letter used as a symbol |
+| `graphical_symbol` | Symbol | An iconic or graphical symbol |
+| `prefix` | Base | A prefix that attaches before a designation |
+| `suffix` | Base | A suffix that attaches after a designation |
+
+All types inherit from Base: `designation`, `normative_status`, `geographical_area`,
+`language` (ISO 639), `script` (ISO 15924), `system` (ISO 24229), `international`,
+`absent`, `pronunciation`, `sources`, `term_type`, `related`, `register`.
+
+
+== Relationship Types (32)
+
+Typed semantic links between concepts, spanning four standards:
+
+| Category | Standard | Types |
+|----------|----------|-------|
+| Lifecycle | ISO 10241-1 | `deprecates`, `supersedes`, `superseded_by` |
+| Hierarchical | ISO 10241-1 / ISO 25964 | `broader`, `narrower` |
+| Generic hierarchy | ISO 25964 (BTG/NTG) | `broader_generic`, `narrower_generic` |
+| Partitive hierarchy | ISO 25964 (BTP/NTP) | `broader_partitive`, `narrower_partitive` |
+| Instantial hierarchy | ISO 25964 (BTI/NTI) | `broader_instantial`, `narrower_instantial` |
+| Equivalence | ISO 10241-1 / ISO 25964 / SKOS | `equivalent`, `exact_match` |
+| SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
+| Comparative | ISO 10241-1 | `compare`, `contrast` |
+| Associative | ISO 10241-1 / ISO 25964 | `see`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related_concept`, `spatially_related_concept`, `temporally_related_concept` |
+| Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
+| Designation-level | ISO 10241-1 | `abbreviated_form_for`, `short_form_for` |
+
+
+== Term Types (34)
+
+ISO 12620 / TBX `term_type` classification for designations:
+
+| Category | Types |
+|----------|-------|
+| Orthographic/structural | `full_form`, `abbreviation`, `acronym`, `initialism`, `clipped_term`, `short_form`, `transliterated_form`, `transcribed_form`, `truncation`, `variant` |
+| Symbolic/formulaic | `symbol`, `formula`, `equation`, `logical_expression`, `mathematical_expression`, `reference_symbol`, `figure_symbol`, `graphic_symbol`, `letter_symbol`, `roman_numeral` |
+| Usage/provenance | `code`, `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phrase`, `phraseological_unit`, `scientific_name`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
 
 
 == Authoritative source

@@ -1,0 +1,21 @@
+# 01 — Minimal Localized Concept
+#
+# The smallest valid localized concept: id, language, term, definition, source.
+---
+id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: length
+    normative_status: preferred
+  definition:
+  - content: distance between two points
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: IEC
+        id: 60050-113
+        version: '2011'
+status: valid

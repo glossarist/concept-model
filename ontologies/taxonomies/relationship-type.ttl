@@ -1,18 +1,21 @@
 # Relationship Type Taxonomy
 #
-# SKOS ConceptScheme for glossarist-specific concept relationship types.
-# Only includes types that have NO standard SKOS or iso-thes equivalent.
+# SKOS ConceptScheme for all 32 concept relationship types in Glossarist.
+# Includes types that map to standard SKOS/iso-thes properties AND
+# glossarist-specific types that have no standard equivalent.
 #
-# Types NOT included here (reused directly from standards):
-#   skos:broader / skos:narrower
-#   skos:exactMatch / skos:closeMatch
-#   skos:broadMatch / skos:narrowMatch / skos:relatedMatch
-#   skos:related
-#   iso-thes:broaderGeneric / iso-thes:narrowerGeneric
-#   iso-thes:broaderPartitive / iso-thes:narrowerPartitive
-#   iso-thes:broaderInstantial / iso-thes:narrowerInstantial
+# Standard mappings (used in RDF serialization):
+#   broader/narrower            → skos:broader / skos:narrower
+#   broader_generic/narrower_generic       → iso-thes:broaderGeneric / iso-thes:narrowerGeneric
+#   broader_partitive/narrower_partitive   → iso-thes:broaderPartitive / iso-thes:narrowerPartitive
+#   broader_instantial/narrower_instantial → iso-thes:broaderInstantial / iso-thes:narrowerInstantial
+#   equivalent                  → skos:exactMatch
+#   exact_match                 → skos:exactMatch (distinct semantic from 'equivalent')
+#   close_match                 → skos:closeMatch
+#   broad_match/narrow_match/related_match → skos:broadMatch / skos:narrowMatch / skos:relatedMatch
+#   see / related_concept       → skos:related
 #
-# Source: ISO 10241-1, ISO 12620/TBX, glossarist config.yml related_concept.type
+# Source: ISO 10241-1, ISO 25964, ISO 12620/TBX, glossarist config.yml related_concept.type
 
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
@@ -21,92 +24,201 @@
 gloss:rel a skos:ConceptScheme ;
   skos:prefLabel "Relationship Type"@en ;
   skos:definition """
-    Typed relationships between concepts that have no standard SKOS or
-    ISO 25964 equivalent. Standard relationship types (broader, narrower,
-    exactMatch, etc.) are reused directly from SKOS and iso-thes vocabularies.
+    Typed relationships between concepts — the complete MECE superset
+    covering ISO 10241-1 (lifecycle, comparative), ISO 25964/SKOS
+    (hierarchical, equivalence, mapping), ISO 25964/TBX (associative,
+    spatiotemporal), and ISO 12620/TBX (lexical) relationship types.
+    32 relationship types in total.
   """@en ;
-  dcterms:source <https://www.glossarist.org/schemas/v2/concept> .
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
 
-# ── Lifecycle ────────────────────────────────────────────────────────────
+# ── Lifecycle (ISO 10241-1) ─────────────────────────────────────────────
 
-gloss:rel/deprecates a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/deprecates> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "deprecates"@en ;
   skos:definition "This concept deprecates another concept."@en .
 
-gloss:rel/supersedes a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/supersedes> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "supersedes"@en ;
   skos:definition "This concept supersedes another concept."@en .
 
-gloss:rel/superseded_by a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/superseded_by> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "superseded by"@en ;
   skos:definition "This concept has been superseded by another concept."@en .
 
-# ── Comparative ──────────────────────────────────────────────────────────
+# ── Hierarchical — generic (ISO 10241-1 / ISO 25964) ────────────────────
 
-gloss:rel/compare a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/broader> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "broader"@en ;
+  skos:definition "Generic hierarchical: this concept is narrower than the target (ISO 10241-1 / SKOS)."@en .
+
+<https://www.glossarist.org/ontologies/rel/narrower> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "narrower"@en ;
+  skos:definition "Generic hierarchical: this concept is broader than the target (ISO 10241-1 / SKOS)."@en .
+
+# ── Hierarchical — generic sub-type (ISO 25964 BTG/NTG) ─────────────────
+
+<https://www.glossarist.org/ontologies/rel/broader_generic> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "broader generic"@en ;
+  skos:definition "Generic hierarchy: this concept is a kind of the target (ISO 25964 BTG)."@en .
+
+<https://www.glossarist.org/ontologies/rel/narrower_generic> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "narrower generic"@en ;
+  skos:definition "Generic hierarchy: the target is a kind of this concept (ISO 25964 NTG)."@en .
+
+# ── Hierarchical — partitive sub-type (ISO 25964 BTP/NTP) ───────────────
+
+<https://www.glossarist.org/ontologies/rel/broader_partitive> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "broader partitive"@en ;
+  skos:definition "Partitive hierarchy: this concept is a part of the target (ISO 25964 BTP)."@en .
+
+<https://www.glossarist.org/ontologies/rel/narrower_partitive> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "narrower partitive"@en ;
+  skos:definition "Partitive hierarchy: the target is a part of this concept (ISO 25964 NTP)."@en .
+
+# ── Hierarchical — instantial sub-type (ISO 25964 BTI/NTI) ──────────────
+
+<https://www.glossarist.org/ontologies/rel/broader_instantial> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "broader instantial"@en ;
+  skos:definition "Instantial hierarchy: this concept is an instance of the target (ISO 25964 BTI)."@en .
+
+<https://www.glossarist.org/ontologies/rel/narrower_instantial> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "narrower instantial"@en ;
+  skos:definition "Instantial hierarchy: the target is an instance of this concept (ISO 25964 NTI)."@en .
+
+# ── Equivalence (ISO 10241-1 / ISO 25964 / SKOS) ────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/equivalent> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "equivalent"@en ;
+  skos:definition "This concept is equivalent to another concept (ISO 10241-1)."@en .
+
+<https://www.glossarist.org/ontologies/rel/exact_match> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "exact match"@en ;
+  skos:definition "Cross-vocabulary exact equivalence (SKOS skos:exactMatch)."@en .
+
+# ── Approximate (ISO 25964 / SKOS) ──────────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/close_match> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "close match"@en ;
+  skos:definition "Approximate equivalence between concepts (SKOS skos:closeMatch)."@en .
+
+# ── Cross-vocabulary mapping (SKOS) ─────────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/broad_match> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "broad match"@en ;
+  skos:definition "Cross-vocabulary mapping: broader concept in another vocabulary (SKOS skos:broadMatch)."@en .
+
+<https://www.glossarist.org/ontologies/rel/narrow_match> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "narrow match"@en ;
+  skos:definition "Cross-vocabulary mapping: narrower concept in another vocabulary (SKOS skos:narrowMatch)."@en .
+
+<https://www.glossarist.org/ontologies/rel/related_match> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "related match"@en ;
+  skos:definition "Cross-vocabulary mapping: related concept in another vocabulary (SKOS skos:relatedMatch)."@en .
+
+# ── Comparative (ISO 10241-1) ───────────────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/compare> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "compare"@en ;
   skos:definition "This concept is compared to another concept (ISO 10241-1)."@en .
 
-gloss:rel/contrast a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/contrast> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "contrast"@en ;
   skos:definition "This concept contrasts with another concept (ISO 10241-1)."@en .
 
-# ── Associative (glossarist-specific sub-types) ──────────────────────────
+# ── Associative (ISO 10241-1 / ISO 25964 / TBX) ─────────────────────────
 
-gloss:rel/related_concept_broader a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/see> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "see"@en ;
+  skos:definition "General associative reference to another concept (ISO 10241-1)."@en .
+
+<https://www.glossarist.org/ontologies/rel/related_concept> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "related concept"@en ;
+  skos:definition "Associative relationship to another concept (ISO 25964 / TBX)."@en .
+
+<https://www.glossarist.org/ontologies/rel/related_concept_broader> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "related concept (broader)"@en ;
   skos:definition "Associative relationship to a concept with broader scope (ISO 25964 / TBX)."@en .
 
-gloss:rel/related_concept_narrower a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/related_concept_narrower> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "related concept (narrower)"@en ;
   skos:definition "Associative relationship to a concept with narrower scope (ISO 25964 / TBX)."@en .
 
-# ── Spatiotemporal ───────────────────────────────────────────────────────
+# ── Associative — spatiotemporal (ISO 25964 / TBX) ──────────────────────
 
-gloss:rel/sequentially_related a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/sequentially_related_concept> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "sequentially related"@en ;
-  skos:definition "Sequential spatiotemporal relationship (ISO 25964 / TBX)."@en .
+  skos:prefLabel "sequentially related concept"@en ;
+  skos:definition "Sequential spatiotemporal associative relationship (ISO 25964 / TBX)."@en .
 
-gloss:rel/spatially_related a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/spatially_related_concept> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "spatially related"@en ;
-  skos:definition "Spatial relationship (ISO 25964 / TBX)."@en .
+  skos:prefLabel "spatially related concept"@en ;
+  skos:definition "Spatial associative relationship (ISO 25964 / TBX)."@en .
 
-gloss:rel/temporally_related a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/temporally_related_concept> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "temporally related"@en ;
-  skos:definition "Temporal relationship (ISO 25964 / TBX)."@en .
+  skos:prefLabel "temporally related concept"@en ;
+  skos:definition "Temporal associative relationship (ISO 25964 / TBX)."@en .
 
-# ── Lexical ──────────────────────────────────────────────────────────────
+# ── Lexical (ISO 12620 / TBX) ───────────────────────────────────────────
 
-gloss:rel/homograph a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/homograph> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "homograph"@en ;
   skos:definition "This concept has a homograph in another entry (ISO 12620 / TBX)."@en .
 
-gloss:rel/false_friend a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/false_friend> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "false friend"@en ;
   skos:definition "This concept has a false friend in another language (ISO 12620 / TBX)."@en .
 
-# ── Designation-level ────────────────────────────────────────────────────
+# ── Designation-level (ISO 10241-1) ─────────────────────────────────────
 
-gloss:rel/abbreviated_form_for a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/abbreviated_form_for> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "abbreviated form for"@en ;
   skos:definition "This designation is an abbreviated form of another designation."@en .
 
-gloss:rel/short_form_for a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/short_form_for> a skos:Concept ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "short form for"@en ;
   skos:definition "This designation is a short form of another designation."@en .
 
-gloss:rel skos:hasTopConcept gloss:rel/deprecates , gloss:rel/compare , gloss:rel/sequentially_related , gloss:rel/homograph , gloss:rel/abbreviated_form_for .
+gloss:rel skos:hasTopConcept
+  <https://www.glossarist.org/ontologies/rel/deprecates> ,
+  <https://www.glossarist.org/ontologies/rel/broader> ,
+  <https://www.glossarist.org/ontologies/rel/broader_generic> ,
+  <https://www.glossarist.org/ontologies/rel/broader_partitive> ,
+  <https://www.glossarist.org/ontologies/rel/broader_instantial> ,
+  <https://www.glossarist.org/ontologies/rel/equivalent> ,
+  <https://www.glossarist.org/ontologies/rel/close_match> ,
+  <https://www.glossarist.org/ontologies/rel/compare> ,
+  <https://www.glossarist.org/ontologies/rel/see> ,
+  <https://www.glossarist.org/ontologies/rel/related_concept> ,
+  <https://www.glossarist.org/ontologies/rel/sequentially_related_concept> ,
+  <https://www.glossarist.org/ontologies/rel/homograph> ,
+  <https://www.glossarist.org/ontologies/rel/abbreviated_form_for> .
