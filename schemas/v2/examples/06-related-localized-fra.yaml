@@ -1,0 +1,38 @@
+# 06 — Related Concepts (French — false_friend)
+#
+# The French variant has a `false_friend` relationship (ISO 12620/TBX)
+# that the English variant does not. This demonstrates language-specific
+# relationships.
+
+---
+id: 33333333-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: fra
+
+  terms:
+    - type: expression
+      designation: "mesure"
+      normative_status: preferred
+      grammar_info:
+        - gender: f
+          number: singular
+
+  definition:
+    - content: >-
+        ensemble d'opérations ayant pour but de déterminer la valeur d'une
+        grandeur
+
+  # Language-specific: false_friend only exists in French
+  related:
+    - type: false_friend
+      content: "measure (English, musical sense)"
+      ref:
+        text: "measure"
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-112"
+        version: "2010"
+status: valid
