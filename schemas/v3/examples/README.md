@@ -211,7 +211,7 @@ organized by category:
 | Symbolic/formulaic | `symbol`, `formula`, `equation`, `logical_expression`, `mathematical_expression`, `reference_symbol`, `figure_symbol`, `graphic_symbol`, `letter_symbol`, `roman_numeral` |
 | Usage/provenance | `code`, `common_name`, `entry_term`, `internationalism`, `international_scientific_term`, `part_number`, `phrase`, `phraseological_unit`, `scientific_name`, `shortcut`, `sku`, `standard_text`, `synonym`, `synonymous_phrase` |
 
-- **`14-term-types.yaml`**: All 24 term_type values demonstrated with contextual
+- **`14-term-types.yaml`**: All 34 term_type values demonstrated with contextual
   designations.
 
 ## 15 — Citation & Locality Features
