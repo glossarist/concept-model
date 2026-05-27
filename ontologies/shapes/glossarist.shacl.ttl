@@ -520,6 +520,25 @@ gloss:CustomLocalityShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
+gloss:RelatedConceptShape a sh:NodeShape ;
+  sh:targetClass gloss:RelatedConcept ;
+  sh:property [
+    sh:path gloss:relationshipType ;
+    sh:class skos:Concept ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:relationshipRef ;
+    sh:class gloss:ConceptRef ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:relationshipContent ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
 gloss:GrammarInfoShape a sh:NodeShape ;
   sh:targetClass gloss:GrammarInfo ;
   sh:property [
