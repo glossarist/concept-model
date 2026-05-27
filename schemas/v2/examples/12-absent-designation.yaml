@@ -1,0 +1,19 @@
+# 12 — Absent Designation & International Symbols
+#
+# The `absent` flag indicates no equivalent designation exists in this language.
+# The `international` flag indicates a symbol valid across all languages.
+
+---
+id: "112-02-01"
+data:
+  identifier: "112-02-01"
+  localized_concepts:
+    eng: cccccccc-aaaa-bbbb-cccc-dddddddddddd
+    jpn: dddddddd-aaaa-bbbb-cccc-dddddddddddd
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-112"
+        version: "2010"
+status: valid

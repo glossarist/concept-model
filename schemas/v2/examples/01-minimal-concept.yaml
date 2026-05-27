@@ -1,0 +1,36 @@
+# 01 — Minimal Concept
+#
+# The smallest valid managed concept: an id, a localization map, and status.
+# Demonstrates identity, localization map, and lifecycle metadata.
+
+---
+id: "113-01-01"
+data:
+  identifier: "113-01-01"
+
+  # Optional URI reference for the concept (external representation)
+  uri: "urn:iec:std:iec:60050-113-01-01"
+
+  # Maps ISO 639 language codes to localized concept UUIDs.
+  # The actual localized concept data lives in separate files.
+  localized_concepts:
+    eng: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-113"
+        version: "2011"
+
+status: valid
+
+# Simplified date — internally mapped to ConceptDate(type: accepted)
+date_accepted: "2011-04-01T00:00:00+00:00"
+
+# Structured dates are also supported:
+# dates:
+#   - date: "2011-04-01T00:00:00+00:00"
+#     type: accepted
+#   - date: "2019-03-01T00:00:00+00:00"
+#     type: amended

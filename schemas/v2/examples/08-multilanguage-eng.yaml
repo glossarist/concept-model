@@ -1,0 +1,29 @@
+# 08 — English localization for 121-01-01
+
+---
+id: 55555555-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+  script: Latn
+
+  terms:
+    - type: expression
+      designation: "electromagnetic field"
+      normative_status: preferred
+    - type: abbreviation
+      designation: "EMF"
+      normative_status: admitted
+      acronym: true
+
+  definition:
+    - content: >-
+        field determined by the electric field strength and the magnetic
+        field strength
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "IEC"
+        id: "60050-121"
+        version: "1998"
+status: valid

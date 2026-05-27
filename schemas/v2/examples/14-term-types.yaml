@@ -1,0 +1,193 @@
+# 14 — ISO 12620 Term Types
+#
+# ISO 12620 / TBX term_type classification for designations. The term_type
+# attribute categorizes a designation with respect to how it is formed or
+# where/how it is used.
+#
+# Categories:
+#   Orthographic/structural: abbreviation, acronym, clipped_term, full_form,
+#     initialism, short_form, transliterated_form, transcribed_form, variant
+#   Symbolic/formulaic: equation, formula, logical_expression, symbol
+#   Usage/provenance: common_name, entry_term, internationalism,
+#     international_scientific_term, part_number, phraseological_unit,
+#     shortcut, sku, standard_text, synonym, synonymous_phrase
+
+---
+id: dddddddd-aaaa-bbbb-cccc-dddddddddddd
+data:
+  language_code: eng
+
+  terms:
+    # ── Orthographic / Structural ────────────────────────────────────────
+
+    # full_form — the complete, unabbreviated form (default for expressions)
+    - type: expression
+      designation: "World Health Organization"
+      normative_status: preferred
+      term_type: full_form
+
+    # abbreviation — generic shortened form
+    - type: abbreviation
+      designation: "WHO"
+      normative_status: admitted
+      acronym: true
+      term_type: abbreviation
+
+    # acronym — pronounced as a word
+    - type: abbreviation
+      designation: "laser"
+      normative_status: admitted
+      acronym: true
+      term_type: acronym
+
+    # initialism — each letter pronounced separately
+    - type: abbreviation
+      designation: "DNA"
+      normative_status: admitted
+      initialism: true
+      term_type: initialism
+
+    # clipped_term — shortened by removing part of the word
+    - type: expression
+      designation: "phone"
+      normative_status: admitted
+      term_type: clipped_term
+
+    # short_form — any recognized short form
+    - type: expression
+      designation: "app"
+      normative_status: admitted
+      term_type: short_form
+
+    # variant — regional or stylistic variant
+    - type: expression
+      designation: "catalog"
+      normative_status: admitted
+      geographical_area: US
+      term_type: variant
+
+    # transliterated_form — converted from one script to another, letter by letter
+    - type: expression
+      designation: "elektromagnitnoye pole"
+      normative_status: admitted
+      language: rus
+      script: Latn
+      system: "UN:rus-Cyrl:Latn:1993"
+      term_type: transliterated_form
+
+    # transcribed_form — converted from one script to another, phonetically
+    - type: expression
+      designation: "Tōkyō"
+      normative_status: admitted
+      language: jpn
+      script: Latn
+      system: "Var:jpn-Hrkt:Latn:Hepburn-1886"
+      term_type: transcribed_form
+
+    # ── Symbolic / Formulaic ─────────────────────────────────────────────
+
+    # symbol — a non-letter symbol designation
+    - type: symbol
+      designation: "Ω"
+      normative_status: preferred
+      international: true
+      term_type: symbol
+
+    # formula — a mathematical or chemical formula
+    - type: expression
+      designation: "H₂O"
+      normative_status: admitted
+      term_type: formula
+
+    # logical_expression
+    - type: expression
+      designation: "A ∧ B"
+      normative_status: admitted
+      term_type: logical_expression
+
+    # equation — a mathematical equation as a designation
+    - type: expression
+      designation: "E = mc²"
+      normative_status: admitted
+      term_type: equation
+
+    # ── Usage / Provenance ───────────────────────────────────────────────
+
+    # common_name — everyday name for a scientific concept
+    - type: expression
+      designation: "water"
+      normative_status: admitted
+      term_type: common_name
+
+    # entry_term — the term as it appears in a specific entry/listing
+    - type: expression
+      designation: "dihydrogen monoxide"
+      normative_status: admitted
+      term_type: entry_term
+
+    # internationalism — word shared across many languages
+    - type: expression
+      designation: "computer"
+      normative_status: admitted
+      term_type: internationalism
+
+    # international_scientific_term — internationally recognized scientific term
+    - type: expression
+      designation: "photosynthesis"
+      normative_status: admitted
+      term_type: international_scientific_term
+
+    # synonym — a true synonym of the preferred term
+    - type: expression
+      designation: "liquid hydrogen oxide"
+      normative_status: admitted
+      term_type: synonym
+
+    # synonymous_phrase — a phrasal synonym
+    - type: expression
+      designation: "oxidane"
+      normative_status: admitted
+      term_type: synonymous_phrase
+
+    # part_number — a part or component identifier
+    - type: expression
+      designation: "47kΩ resistor"
+      normative_status: admitted
+      term_type: part_number
+
+    # phraseological_unit — a fixed expression or collocation
+    - type: expression
+      designation: "standard atmospheric pressure"
+      normative_status: admitted
+      term_type: phraseological_unit
+
+    # shortcut — a commonly used shortcut reference
+    - type: expression
+      designation: "spec"
+      normative_status: admitted
+      term_type: shortcut
+
+    # sku — stock keeping unit identifier
+    - type: expression
+      designation: "SKU-2024-BLK-M"
+      normative_status: admitted
+      term_type: sku
+
+    # standard_text — boilerplate or standardized text
+    - type: expression
+      designation: "Not applicable"
+      normative_status: admitted
+      term_type: standard_text
+
+  definition:
+    - content: >-
+        comprehensive example demonstrating all ISO 12620 term type
+        classifications across orthographic, symbolic, and usage categories
+
+  sources:
+    - type: authoritative
+      origin:
+        source: "ISO"
+        id: "12620"
+        version: "2019"
+status: valid
