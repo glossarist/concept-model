@@ -148,6 +148,19 @@ gloss:LocalizedConceptShape a sh:NodeShape ;
     sh:in ( "editorial" "substantive" ) ;
   ] .
 
+gloss:ConceptCollectionShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptCollection ;
+  sh:class skos:Collection ;
+  sh:property [
+    sh:path skos:member ;
+    sh:class gloss:Concept ;
+  ] ;
+  sh:property [
+    sh:path dcterms:title ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
 # ══════════════════════════════════════════════════════════════════════════
 # Designation shapes
 # ══════════════════════════════════════════════════════════════════════════
