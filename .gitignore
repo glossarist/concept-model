@@ -3,3 +3,4 @@
 Gemfile.lock
 html_documentation/
 reference-docs/*.owl
+concept-model/

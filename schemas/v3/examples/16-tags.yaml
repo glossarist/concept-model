@@ -1,0 +1,26 @@
+# 16 — Tags (Organizational Metadata)
+#
+# Tags are plain strings for grouping and filtering concepts.
+# Unlike domains (ConceptReference objects for terminological classification),
+# tags serve as organizational metadata for document structure and retrieval.
+# Example: "general", "time-scale-units", "expressions-and-representations"
+---
+id: 3.6.1
+data:
+  identifier: 3.6.1
+  localized_concepts:
+    eng: 11111111-aaaa-bbbb-cccc-dddddddddddd
+  domains:
+  - concept_id: '103'
+    source: urn:iec:std:iec:60050
+    ref_type: domain
+  tags:
+  - general
+  - time-scale-units
+  sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: ISO
+        id: '34000'
+status: valid

@@ -80,6 +80,7 @@ The ontology separates two orthogonal concerns:
 | NVR | L10n | `gloss:hasNonVerbalRep` |
 | Classification | L10n | `gloss:classification` |
 | Domains | Concept | `gloss:hasDomain` |
+| Tags | Concept | `gloss:tag` |
 
 ### MANAGEMENT — register governance (how the concept is MANAGED)
 

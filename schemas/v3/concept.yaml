@@ -43,6 +43,11 @@ properties:
         items:
           $ref: "#/$defs/reference"
         description: Domain/subject area references (replaces legacy groups field).
+      tags:
+        type: array
+        items:
+          type: string
+        description: Organizational tags for grouping and filtering concepts (not rendered as terminological domains).
       sources:
         type: array
         items:

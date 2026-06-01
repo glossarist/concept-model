@@ -268,6 +268,12 @@ gloss:hasDomain a owl:ObjectProperty ;
   rdfs:label "has domain"@en ;
   rdfs:comment "Links a concept to a domain (subject area) classification."@en .
 
+gloss:tag a owl:DatatypeProperty ;
+  rdfs:domain gloss:Concept ;
+  rdfs:range xsd:string ;
+  rdfs:label "tag"@en ;
+  rdfs:comment "Organizational tag for grouping and filtering concepts (not rendered as a terminological domain)."@en .
+
 gloss:hasRelatedConcept a owl:ObjectProperty ;
   rdfs:domain [
     a owl:Class ;

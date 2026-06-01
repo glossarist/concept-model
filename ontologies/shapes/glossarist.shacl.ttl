@@ -57,6 +57,10 @@ gloss:ConceptShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:hasDomain ;
     sh:class gloss:Reference ;
+  ] ;
+  sh:property [
+    sh:path gloss:tag ;
+    sh:datatype xsd:string ;
   ] .
 
 gloss:LocalizedConceptShape a sh:NodeShape ;

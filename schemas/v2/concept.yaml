@@ -43,6 +43,11 @@ properties:
         items:
           $ref: "#/$defs/concept_source"
         description: Zero or more bibliographical sources for the term.
+      tags:
+        type: array
+        items:
+          type: string
+        description: Organizational tags for grouping and filtering concepts (not rendered as terminological domains).
       dates:
         type: array
         items:

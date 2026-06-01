@@ -36,7 +36,9 @@ In particular, the following features are supported.
 * Multiple admitted terms
 * Multiple deprecated terms
 * Multiple examples
-* Single domain
+* Single domain (per localized concept)
+* Multiple domains (concept-level `ConceptReference` collection)
+* Multiple tags (concept-level organizational labels, not rendered as domains)
 * Multiple sources
 
 Paragraph/TextElement may contain a formula.

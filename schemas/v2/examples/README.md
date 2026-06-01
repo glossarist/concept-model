@@ -27,6 +27,7 @@ localizations.
 | 13 | Superseded & deprecated lifecycle | `13-superseded-deprecated.yaml` | `13-superseded-deprecated-localized.yaml` |
 | 14 | ISO 12620 term types (24 values) | — | `14-term-types.yaml` |
 | 15 | Citation & locality features | — | `15-citation-features.yaml` |
+| 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
 
 ---
 
@@ -224,6 +225,19 @@ All citation and locality features in one example:
 
 - **`15-citation-features.yaml`**: All citation features with contextual examples.
 
+## 16 — Tags (Organizational Metadata)
+
+Tags are plain strings used for grouping and filtering concepts. They are NOT
+rendered as terminological domains — that is the role of `domains`.
+
+- **domains**: `ConceptReference` objects — terminological classification (rendered in output)
+- **tags**: plain strings — organizational metadata (used for filtering, not rendered)
+
+Example: A concept may belong to domain "103" (IEC 60050-103) and have tags
+`["general", "time-scale-units"]` for document organization.
+
+- **`16-tags.yaml`**: Concept with both domains and tags, showing the semantic distinction.
+
 ## Schema-to-Example Mapping
 
 The tables below map each schema feature to the example(s) that demonstrate it.
@@ -236,6 +250,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | `data.uri` | 01 (urn:iec:std:iec:60050-113-01-01) |
 | `data.localized_concepts` | 01, 05, 06, 08, 10, 11, 13 |
 | `data.domains` | 05, 10 |
+| `data.tags` | 16 |
 | `data.sources` | 01, 05, 06, 07, 08, 10, 11 |
 | `data.related` | (localized-level only) |
 | `data.dates` | 11, 13 |
