@@ -1,0 +1,34 @@
+enum ConceptReferenceType {
+  definition {
+    The type of reference from a concept to another concept or group,
+    distinguishing thematic from structural classification.
+  }
+
+  domain {
+    definition {
+      A thematic or subject-area classification. The referenced concept
+      represents a terminological domain (e.g. "mathematics", "physics").
+    }
+  }
+
+  section {
+    definition {
+      A structural section membership within the dataset's organizational
+      hierarchy. The referenced concept represents a section defined in
+      the dataset's register.yaml (e.g. "Section 3: General concepts").
+    }
+  }
+
+  local {
+    definition {
+      An internal reference within the same glossary, without an external
+      source URN.
+    }
+  }
+
+  designation {
+    definition {
+      A reference to a specific designation within the same concept entry.
+    }
+  }
+}

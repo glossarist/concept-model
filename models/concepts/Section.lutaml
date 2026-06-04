@@ -1,0 +1,36 @@
+class Section {
+  definition {
+    A structural division within a dataset, providing organizational
+    grouping for concepts. Sections can be hierarchical: a section
+    may contain child sections (e.g. Part > Section > Subsection).
+    Sections are defined in the dataset's register.yaml.
+  }
+
+  +id: String [1] {
+    definition {
+      Section identifier, used in concept references and URL routing.
+      Examples: "0", "1", "3", "103-01", "A".
+    }
+  }
+
+  +names: LocalizedStringMap [0..1] {
+    definition {
+      Localized section titles, keyed by ISO 639-2 language code.
+      Example: { eng: "Basic terms", fra: "Termes fondamentaux" }.
+    }
+  }
+
+  +ordering: OrderingMethod [0..1] {
+    definition {
+      Per-section ordering override. If absent, inherits from the
+      dataset's default ordering.
+    }
+  }
+
+  +children: Section [0..*] {
+    definition {
+      Child sections forming a hierarchical tree. For example,
+      area "103" contains sections "103-01", "103-02", etc.
+    }
+  }
+}
