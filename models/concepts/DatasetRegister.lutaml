@@ -1,0 +1,144 @@
+class DatasetRegister {
+  definition {
+    Self-describing dataset metadata. Each dataset directory contains a
+    register.yaml that carries identity, structure, and relationship
+    metadata. Concepts are discovered from the concepts/ directory,
+    not enumerated in the register.
+  }
+
+  // ── Identity ────────────────────────────────────────────────────
+  +schema_type: String [1] {
+    definition {
+      Always "glossarist". Identifies this file as a Glossarist register.
+    }
+  }
+
+  +schema_version: String [1] {
+    definition {
+      Schema version. Currently "3".
+    }
+  }
+
+  +id: String [1] {
+    definition {
+      Dataset identifier, unique within the deployment.
+      Examples: "viml-2022", "vim-2012", "iev".
+    }
+  }
+
+  +ref: String [0..1] {
+    definition {
+      Publication reference string.
+      Examples: "OIML V 1:2022", "IEC 60050:2011".
+    }
+  }
+
+  +year: Integer [0..1] {
+    definition {
+      Publication year.
+    }
+  }
+
+  // ── URN and resolution ─────────────────────────────────────────
+  +urn: String [1] {
+    definition {
+      Primary URN for the dataset. Used for cross-dataset resolution.
+      Example: "urn:oiml:pub:v:1:2022".
+    }
+  }
+
+  +urnAliases: String [0..*] {
+    definition {
+      Additional URN patterns for resolution. Wildcard suffix (*) matches
+      any concept within the dataset.
+    }
+  }
+
+  +refAliases: String [0..*] {
+    definition {
+      Alternative publication references.
+    }
+  }
+
+  // ── Status ─────────────────────────────────────────────────────
+  +status: String [0..1] {
+    definition {
+      Dataset lifecycle status: "current", "superseded", "retired".
+    }
+  }
+
+  +supersedes: String [0..1] {
+    definition {
+      ID of the dataset edition that this one supersedes.
+      This is a dataset-level relationship, distinct from concept-level
+      supersedes in related[].
+    }
+  }
+
+  // ── Provenance ─────────────────────────────────────────────────
+  +owner: String [0..1] {
+    definition {
+      Organization that owns the dataset.
+      Examples: "OIML", "IEC", "ISO".
+    }
+  }
+
+  +sourceRepo: String [0..1] {
+    definition {
+      URL of the source repository.
+    }
+  }
+
+  +tags: String [0..*] {
+    definition {
+      Organizational tags for the dataset.
+    }
+  }
+
+  // ── Languages ──────────────────────────────────────────────────
+  +languages: String [1..*] {
+    definition {
+      ISO 639-2 language codes available in this dataset.
+    }
+  }
+
+  +languageOrder: String [0..*] {
+    definition {
+      Preferred display order for languages.
+    }
+  }
+
+  // ── Structure ──────────────────────────────────────────────────
+  +ordering: OrderingMethod [0..1] {
+    definition {
+      Default concept ordering method for the entire dataset.
+      Individual sections may override this.
+    }
+  }
+
+  +sections: Section [0..*] {
+    definition {
+      Hierarchical section tree. Sections provide structural organization
+      and are referenced by concepts via domains[] with ref_type "section".
+    }
+  }
+
+  // ── Per-dataset metadata ───────────────────────────────────────
+  +description: LocalizedStringMap [0..1] {
+    definition {
+      Localized dataset description, keyed by language code.
+    }
+  }
+
+  +about: LocalizedStringMap [0..1] {
+    definition {
+      Localized paths to about-page documents, keyed by language code.
+    }
+  }
+
+  +logo: String [0..1] {
+    definition {
+      Relative path to the dataset logo image.
+    }
+  }
+}

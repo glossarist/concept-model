@@ -1,0 +1,28 @@
+enum OrderingMethod {
+  definition {
+    The method used to order concepts within a dataset or section,
+    following ISO 10241-1 conventions.
+  }
+
+  systematic {
+    definition {
+      Tree hierarchy, top-down left-to-right. Broader concepts before
+      narrower. Uses dot-separated identifiers (e.g. 3.6, 3.6.1) and
+      explicit broader/narrower edges.
+    }
+  }
+
+  mixed {
+    definition {
+      Pedagogical sequence: fundamental concepts first, then specific.
+      No strict tree hierarchy.
+    }
+  }
+
+  alphabetical {
+    definition {
+      Sorted by preferred designation. Derived at render time from
+      localized concept data.
+    }
+  }
+}

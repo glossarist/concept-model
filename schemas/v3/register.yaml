@@ -1,0 +1,168 @@
+%YAML 1.1
+# yaml-language-server: $schema=http://json-schema.org/draft-07/schema
+---
+$id: "https://github.com/glossarist/concept-model/v3/register"
+title: YAML Schema for Dataset Register model (v3)
+description: |
+  Schema for register.yaml — the self-describing dataset metadata file.
+  Each dataset directory contains this file with identity, structure,
+  relationships, and organizational metadata.
+type: object
+required:
+  - schema_type
+  - schema_version
+  - id
+  - urn
+properties:
+  schema_type:
+    type: string
+    const: glossarist
+    description: Always "glossarist".
+
+  schema_version:
+    type: string
+    description: Schema version.
+    examples:
+      - "3"
+
+  id:
+    type: string
+    description: Dataset identifier, unique within deployment.
+    examples:
+      - viml-2022
+      - vim-2012
+      - iev
+
+  ref:
+    type: string
+    description: Publication reference string.
+    examples:
+      - "OIML V 1:2022"
+      - "IEC 60050:2011"
+
+  year:
+    type: integer
+    description: Publication year.
+    examples:
+      - 2022
+      - 2012
+
+  urn:
+    type: string
+    description: Primary URN for the dataset.
+    examples:
+      - "urn:oiml:pub:v:1:2022"
+      - "urn:iec:std:iec:60050"
+
+  urnAliases:
+    type: array
+    items:
+      type: string
+    description: Additional URN patterns for resolution.
+
+  refAliases:
+    type: array
+    items:
+      type: string
+    description: Alternative publication references.
+
+  status:
+    type: string
+    enum:
+      - current
+      - superseded
+      - retired
+    description: Dataset lifecycle status.
+
+  supersedes:
+    type: string
+    description: ID of the dataset edition that this one supersedes.
+
+  owner:
+    type: string
+    description: Owning organization.
+    examples:
+      - OIML
+      - IEC
+      - ISO
+
+  sourceRepo:
+    type: string
+    description: URL of the source repository.
+
+  tags:
+    type: array
+    items:
+      type: string
+    description: Organizational tags.
+
+  languages:
+    type: array
+    items:
+      type: string
+      minLength: 3
+      maxLength: 3
+    description: ISO 639-2 language codes available.
+
+  languageOrder:
+    type: array
+    items:
+      type: string
+    description: Preferred display order for languages.
+
+  ordering:
+    type: string
+    enum:
+      - systematic
+      - mixed
+      - alphabetical
+    description: Default concept ordering method.
+
+  sections:
+    type: array
+    items:
+      $ref: "#/$defs/section"
+    description: Hierarchical section tree.
+
+  description:
+    type: object
+    description: Localized dataset descriptions keyed by language code.
+    additionalProperties:
+      type: string
+
+  about:
+    type: object
+    description: Localized about-page paths keyed by language code.
+    additionalProperties:
+      type: string
+
+  logo:
+    type: string
+    description: Relative path to dataset logo.
+
+$defs:
+  section:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: string
+        description: Section identifier.
+      names:
+        type: object
+        description: Localized section titles keyed by language code.
+        additionalProperties:
+          type: string
+      ordering:
+        type: string
+        enum:
+          - systematic
+          - mixed
+          - alphabetical
+        description: Per-section ordering override.
+      children:
+        type: array
+        items:
+          $ref: "#/$defs/section"
+        description: Child sections.
