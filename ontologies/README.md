@@ -30,7 +30,7 @@ ontologies/
 │   ├── normative-status.ttl      # Designation normative status
 │   ├── source-type.ttl           # Source type (authoritative/lineage)
 │   ├── source-status.ttl         # Source status (identical/modified/...)
-│   ├── relationship-type.ttl     # 32 relationship types (ISO 10241-1, 25964, 12620/TBX)
+│   ├── relationship-type.ttl     # 52 relationship types (ISO 10241-1, 19135, 25964, 12620/TBX)
 │   ├── designation-type.ttl      # Designation types (expression/abbreviation/symbol/prefix/suffix)
 │   ├── term-type.ttl             # ISO 12620 term types (34 values)
 │   ├── abbreviation-type.ttl     # Abbreviation formation types (truncation/acronym/initialism/other)
@@ -57,7 +57,7 @@ ontologies/
 
 6. **DATA vs MANAGEMENT separation** — Terminological content (definitions, designations, sources, relationships) is distinct from register governance (status, lifecycle dates, review events, release). Inspired by TBX (ISO 30042) which separates `<langSec>`/`<termSec>` from `<transactionGrp>`/`<adminNote>`.
 
-7. **Union domains for cross-cutting DATA** — Properties like `gloss:hasSource`, `gloss:hasRelatedConcept`, `gloss:hasDate`, and `gloss:language` use `owl:unionOf` domains because the same semantic property legitimately applies at multiple levels of the model.
+7. **Union domains for cross-cutting DATA** — Properties like `gloss:hasSource`, `gloss:hasRelatedConcept`, `gloss:hasDate`, and `gloss:language` use `owl:unionOf` domains because the same semantic property legitimately applies at multiple levels of the model. Designation-level relationships use a dedicated `gloss:hasDesignationRelationship` property (MECE separation from concept-level `gloss:hasRelatedConcept`).
 
 ## DATA vs MANAGEMENT Architecture
 
@@ -68,9 +68,10 @@ The ontology separates two orthogonal concerns:
 | Concern | Levels | Property |
 |---------|--------|----------|
 | Sources | Concept, L10n, Designation, Def, NVR | `gloss:hasSource` (5-level union) |
-| Relationships | Concept, L10n, Designation | `gloss:hasRelatedConcept` (3-level union) |
+| Relationships | Concept, L10n | `gloss:hasRelatedConcept` (2-level union) |
+| Designation relationships | Designation | `gloss:hasDesignationRelationship` → `gloss:DesignationRelationship` |
 | Language/script/system | L10n, Designation, Pronunciation | `gloss:language`, `gloss:script`, `gloss:conversionSystem` |
-| Definitions/notes/examples | L10n | `gloss:hasDefinition` / `gloss:hasNote` / `gloss:hasExample` |
+| Definitions/notes/examples/annotations | L10n | `gloss:hasDefinition` / `gloss:hasNote` / `gloss:hasExample` / `gloss:hasAnnotation` |
 | Designations | L10n | `skosxl:prefLabel` / `skosxl:altLabel` / `skosxl:hiddenLabel` |
 | Normative status | Designation | `gloss:normativeStatus` |
 | Term type | Designation | `gloss:hasTermType` |
@@ -121,7 +122,7 @@ gloss:Designation (skosxl:Label)
 
 ### Supporting Classes
 
-`Pronunciation`, `GrammarInfo`, `DetailedDefinition`, `ConceptSource`, `Citation`, `CitationRef`, `ConceptRef`, `Reference`, `RelatedConcept`, `ConceptDate`, `NonVerbalRepresentation`, `Locality`, `CustomLocality`.
+`Pronunciation`, `GrammarInfo`, `DetailedDefinition`, `ConceptSource`, `Citation`, `CitationRef`, `ConceptRef`, `Reference`, `RelatedConcept`, `DesignationRelationship`, `ConceptDate`, `NonVerbalRepresentation`, `Locality`, `CustomLocality`.
 
 ### Citation Architecture (Three MECE Classes)
 
@@ -132,7 +133,7 @@ gloss:Designation (skosxl:Label)
 | `gloss:Reference` | domains, references | flat keys | Yes | Yes |
 
 - **Citation** — bibliographic citation with structured `CitationRef` (source + id + version), locality, link, original text, and custom_locality.
-- **ConceptRef** — concept link with source + id only. No version, locality, or link.
+- **ConceptRef** — concept link with source + id + optional text. No version, locality, or link.
 - **Reference** — typed classification reference for domains and typed references.
 
 ## Relationship Property Mapping

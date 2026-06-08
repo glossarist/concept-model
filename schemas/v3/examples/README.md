@@ -17,7 +17,7 @@ localizations.
 | 03 | Pronunciation | — | `03-pronunciation.yaml` |
 | 04 | Definition, notes, examples | — | `04-definition-notes-examples.yaml` |
 | 05 | Domains (classification) | `05-domains.yaml` | `05-domains-localized.yaml` |
-| 06 | Related concepts (all 32 types) | `06-related-relationships.yaml` | `06-related-localized.yaml`, `06-related-localized-fra.yaml` |
+| 06 | Related concepts (all 52 types) | `06-related-relationships.yaml` | `06-related-localized.yaml`, `06-related-localized-fra.yaml` |
 | 07 | Sources & citations (all features) | `07-sources.yaml` | `07-sources-localized.yaml` |
 | 08 | Multi-language / multi-script | `08-multilanguage.yaml` | `08-multilanguage-eng.yaml`, `-ara.yaml`, `-jpn.yaml`, `-rus.yaml` |
 | 09 | Non-verbal representations | — | `09-nonverbal.yaml` |
@@ -28,6 +28,7 @@ localizations.
 | 14 | ISO 12620 term types (34 values) | — | `14-term-types.yaml` |
 | 15 | Citation & locality features | — | `15-citation-features.yaml` |
 | 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
+| 17 | Dataset register (URN resolution) | `17-register-dataset.yaml` | — |
 
 ---
 
@@ -90,28 +91,27 @@ subject areas — this is not semantic hierarchy.
 - **`05-domains-localized.yaml`**: Per-language `domain` URI string (relative,
   URN, or URL forms).
 
-## 06 — Related Concepts (All 32 Typed Semantic Relationships)
+## 06 — Related Concepts (All 52 Typed Semantic Relationships)
 
-Typed semantic links between concepts. The full type enum covers four standards:
+Typed semantic links between concepts. The full type enum covers five standards:
 
 | Category | Standard | Types |
 |----------|----------|-------|
-| Lifecycle | ISO 10241-1 | `deprecates`, `supersedes`, `superseded_by` |
-| Hierarchical | ISO 10241-1 / ISO 25964 | `broader`, `narrower` |
-| Generic hierarchy | ISO 25964 (BTG/NTG) | `broader_generic`, `narrower_generic` |
-| Partitive hierarchy | ISO 25964 (BTP/NTP) | `broader_partitive`, `narrower_partitive` |
-| Instantial hierarchy | ISO 25964 (BTI/NTI) | `broader_instantial`, `narrower_instantial` |
-| Equivalence | ISO 10241-1 / ISO 25964 / SKOS | `equivalent`, `exact_match` |
-| Approximate mapping | ISO 25964 / SKOS | `close_match` |
-| Cross-vocabulary mapping | SKOS | `broad_match`, `narrow_match`, `related_match` |
+| Lifecycle | ISO 10241-1 / ISO 19135 | `deprecates`, `deprecated_by`, `supersedes`, `superseded_by`, `replaces`, `replaced_by`, `invalidates`, `invalidated_by`, `retires`, `retired_by` |
+| Hierarchical — generic | ISO 10241-1 / ISO 25964 | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
+| Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` |
+| Hierarchical — instantial | ISO 25964 / ISO 19135 | `broader_instantial`, `narrower_instantial`, `instance_of`, `has_instance` |
+| Equivalence | ISO 10241-1 / SKOS | `equivalent`, `exact_match` |
+| SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
 | Comparative | ISO 10241-1 | `compare`, `contrast` |
-| Associative | ISO 10241-1 / ISO 25964 | `see` |
-| Associative subtypes | ISO 25964 / TBX | `related_concept`, `related_concept_broader`, `related_concept_narrower` |
-| Spatiotemporal | ISO 25964 / TBX | `sequentially_related_concept`, `spatially_related_concept`, `temporally_related_concept` |
+| Associative | ISO 10241-1 / ISO 25964 | `see`, `references`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related`, `spatially_related`, `temporally_related` |
 | Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
+| Register management | ISO 19135 | `has_concept`, `is_concept_of`, `has_definition`, `definition_of`, `inherits`, `inherited_by` |
+| Versioning | ISO 19135 | `has_version`, `version_of`, `current_version`, `current_version_of` |
 | Designation-level | ISO 10241-1 | `abbreviated_form_for`, `short_form_for` |
 
-- **`06-related-relationships.yaml`**: All 27 relationship types at the managed
+- **`06-related-relationships.yaml`**: All 52 relationship types at the managed
   concept level, organized by category.
 - **`06-related-localized.yaml`**: English `see` relationship at the localization level.
 - **`06-related-localized-fra.yaml`**: French `false_friend` (ISO 12620/TBX) —
@@ -243,6 +243,21 @@ Example: A concept may belong to domain "103" (IEC 60050-103) and have tags
 
 - **`16-tags.yaml`**: Concept with both domains and tags, showing the semantic distinction.
 
+## 17 — Dataset Register (URN Resolution & Cross-Dataset Supersession)
+
+The `register.yaml` file defines a dataset's identity, URN, and metadata for
+cross-dataset relationship resolution.
+
+**Features:** URN-based identification, `supersedes`/`superseded_by` between
+editions, `urnAliases` for glob-style matching, multi-language descriptions,
+sections, and cross-dataset relationship examples showing how `ref.source`
+URNs resolve to target datasets.
+
+- **`17-register-dataset.yaml`**: Current and superseded edition registers,
+  with inline comments showing how cross-dataset `supersedes`, `see`, and
+  `compare` relationships use URN-based `ref.source` to target concepts in
+  other datasets.
+
 ## Cross-Cutting DATA Concerns
 
 The ontology uses union domains for properties that legitimately appear at multiple levels:
@@ -272,7 +287,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | `data.dates` | 11, 13 |
 | `status` (7 values) | 01 (valid), 11 (valid), 13 (superseded) |
 | `date_accepted` | 01, 06, 11 |
-| `related` (32 types) | 06 (all 32), 11 (supersedes), 13 (superseded_by, deprecates) |
+| `related` (52 types) | 06 (all 52), 11 (supersedes), 13 (superseded_by, deprecates) |
 | `sources` (concept-level) | 01, 05, 06, 07, 08, 10, 11 |
 
 ### Localized concept features (`localized-concept.yaml`)
@@ -343,16 +358,27 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | Category | Type | Example |
 |----------|------|---------|
 | Lifecycle | `deprecates` | 06, 13 |
+| Lifecycle | `deprecated_by` | 06 |
 | Lifecycle | `supersedes` | 06, 11 |
 | Lifecycle | `superseded_by` | 06, 13 |
+| Lifecycle | `replaces` | 06 |
+| Lifecycle | `replaced_by` | 06 |
+| Lifecycle | `invalidates` | 06 |
+| Lifecycle | `invalidated_by` | 06 |
+| Lifecycle | `retires` | 06 |
+| Lifecycle | `retired_by` | 06 |
 | Hierarchical | `broader` | 06 |
 | Hierarchical | `narrower` | 06 |
 | Generic | `broader_generic` | 06 |
 | Generic | `narrower_generic` | 06 |
 | Partitive | `broader_partitive` | 06 |
 | Partitive | `narrower_partitive` | 06 |
+| Partitive | `has_part` | 06 |
+| Partitive | `is_part_of` | 06 |
 | Instantial | `broader_instantial` | 06 |
 | Instantial | `narrower_instantial` | 06 |
+| Instantial | `instance_of` | 06 |
+| Instantial | `has_instance` | 06 |
 | Equivalence | `equivalent` | 06 |
 | Equivalence | `exact_match` | 06 |
 | Mapping | `close_match` | 06 |
@@ -362,13 +388,24 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | Comparative | `compare` | 06 |
 | Comparative | `contrast` | 06 |
 | Associative | `see` | 06, 06-localized |
+| Associative | `references` | 06 |
 | Associative | `related_concept` | 06 |
 | Associative | `related_concept_broader` | 06 |
 | Associative | `related_concept_narrower` | 06 |
-| Spatiotemporal | `sequentially_related_concept` | 06 |
-| Spatiotemporal | `spatially_related_concept` | 06 |
-| Spatiotemporal | `temporally_related_concept` | 06 |
+| Spatiotemporal | `sequentially_related` | 06 |
+| Spatiotemporal | `spatially_related` | 06 |
+| Spatiotemporal | `temporally_related` | 06 |
 | Lexical | `homograph` | 06 |
 | Lexical | `false_friend` | 06-localized-fra |
+| Register | `has_concept` | 06 |
+| Register | `is_concept_of` | 06 |
+| Register | `has_definition` | 06 |
+| Register | `definition_of` | 06 |
+| Register | `inherits` | 06 |
+| Register | `inherited_by` | 06 |
+| Versioning | `has_version` | 06 |
+| Versioning | `version_of` | 06 |
+| Versioning | `current_version` | 06 |
+| Versioning | `current_version_of` | 06 |
 | Designation | `abbreviated_form_for` | 02-abbreviation |
 | Designation | `short_form_for` | 02-abbreviation |

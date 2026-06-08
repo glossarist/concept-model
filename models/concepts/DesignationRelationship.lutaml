@@ -1,0 +1,24 @@
+class DesignationRelationship {
+  definition {
+    A designation-level relationship between two designations of the
+    same concept (ISO 10241-1 §5.4.2). Distinct from concept-level
+    RelatedConcept — designation relationships reference designation
+    text, not concept identifiers.
+  }
+  +type: RelatedConceptType {
+    definition {
+      The type of designation relationship (e.g. abbreviated_form_for,
+      short_form_for).
+    }
+  }
+  +content: String [0..1] {
+    definition {
+      Text describing the designation relationship.
+    }
+  }
+  +target: String [0..1] {
+    definition {
+      The target designation text that this designation relates to.
+    }
+  }
+}

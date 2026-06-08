@@ -1,0 +1,28 @@
+# 16 — Annotations
+#
+# Annotations are editorial commentary about the definition itself —
+# how to interpret it, term substitutions, corrections. They are
+# distinct from notes, which supplement the concept. Both use
+# DetailedDefinition (content + optional sources).
+---
+id: a1b2c3d4-e5f6-7890-abcd-ef1234567891
+data:
+  language_code: eng
+  terms:
+  - type: expression
+    designation: reference measurement procedure
+    normative_status: preferred
+  definition:
+  - content: >-
+      measurement procedure accepted as providing measurement results
+      fit for their intended use in assessing measurement trueness
+  annotations:
+  - content: >-
+      The definition systematically uses preferred terms and so is long
+      and complex. A shorter definition might be sufficient.
+  notes:
+  - content: >-
+      Reference measurement procedures are often used in calibration
+      and in assigning values to reference materials.
+  examples: []
+status: valid

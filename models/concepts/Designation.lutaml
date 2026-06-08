@@ -43,4 +43,10 @@ class Designation {
       The register or usage level of the designation (ISO 12620 / TBX-Linguist).
     }
   }
+  +related: DesignationRelationship [0..*] {
+    definition {
+      Designation-level relationships to other designations of the
+      same concept (e.g. abbreviated_form_for, short_form_for).
+    }
+  }
 }

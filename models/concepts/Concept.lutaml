@@ -42,6 +42,14 @@ class Concept {
       Zero or more examples of how the term is to be used.
     }
   }
+  +annotations: DetailedDefinition [0..*] {
+    definition {
+      Editorial annotations about the definition or entry itself.
+      Distinct from notes — annotations comment on how to interpret
+      the definition (e.g. term substitutions, clarifications),
+      while notes supplement the concept.
+    }
+  }
   +sources: ConceptSource [0..*] {
     definition {
       Zero or more bibliographical sources for the term. 

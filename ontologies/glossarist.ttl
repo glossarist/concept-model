@@ -192,6 +192,16 @@ gloss:RelatedConcept a owl:Class ;
     A concept with a typed relationship (deprecates, broader, equivalent, etc.).
   """@en .
 
+gloss:DesignationRelationship a owl:Class ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:label "Designation Relationship"@en ;
+  rdfs:comment """
+    A designation-level relationship between two designations of the same concept
+    (ISO 10241-1). Unlike RelatedConcept (which links concepts by identifier),
+    DesignationRelationship links designations by their text. Types include
+    abbreviated_form_for and short_form_for.
+  """@en .
+
 gloss:ConceptDate a owl:Class ;
   rdfs:label "Concept Date"@en ;
   rdfs:comment """
@@ -229,7 +239,7 @@ gloss:ConceptRef a owl:Class ;
   rdfs:label "Concept Reference"@en ;
   rdfs:comment """
     A reference to a concept in another registry or vocabulary.
-    Has source and id only — no version, locality, or link.
+    Has source, id, and optional text. No version, locality, or link.
     Used as the ref of RelatedConcept.
     Corresponds to ConceptRef in glossarist-ruby.
   """@en .
@@ -277,11 +287,11 @@ gloss:tag a owl:DatatypeProperty ;
 gloss:hasRelatedConcept a owl:ObjectProperty ;
   rdfs:domain [
     a owl:Class ;
-    owl:unionOf ( gloss:Concept gloss:LocalizedConcept gloss:Designation )
+    owl:unionOf ( gloss:Concept gloss:LocalizedConcept )
   ] ;
   rdfs:range gloss:RelatedConcept ;
   rdfs:label "has related concept"@en ;
-  rdfs:comment "DATA: Typed semantic relationship — applicable at concept, localization, and designation levels."@en .
+  rdfs:comment "DATA: Typed semantic relationship — applicable at concept and localization levels."@en .
 
 gloss:hasDate a owl:ObjectProperty ;
   rdfs:domain [
@@ -352,6 +362,12 @@ gloss:hasExample a owl:ObjectProperty ;
   rdfs:range gloss:DetailedDefinition ;
   rdfs:label "has example"@en ;
   rdfs:comment "Links a localized concept to an illustrative example."@en .
+
+gloss:hasAnnotation a owl:ObjectProperty ;
+  rdfs:domain gloss:LocalizedConcept ;
+  rdfs:range gloss:DetailedDefinition ;
+  rdfs:label "has annotation"@en ;
+  rdfs:comment "Editorial annotations about the definition or entry — distinct from notes, which supplement the concept."@en .
 
 gloss:hasNonVerbalRep a owl:ObjectProperty ;
   rdfs:domain gloss:LocalizedConcept ;
@@ -458,6 +474,30 @@ gloss:register a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "register"@en ;
   rdfs:comment "Register or usage level of the designation (ISO 12620 / TBX-Linguist: colloquial_register, neutral_register, technical_register, in_house_register, bench_level_register, slang_register, vulgar_register)."@en .
+
+gloss:hasDesignationRelationship a owl:ObjectProperty ;
+  rdfs:domain gloss:Designation ;
+  rdfs:range gloss:DesignationRelationship ;
+  rdfs:label "has designation relationship"@en ;
+  rdfs:comment "Links a designation to a designation-level relationship (e.g. abbreviated_form_for, short_form_for)."@en .
+
+gloss:designationRelationshipType a owl:ObjectProperty ;
+  rdfs:domain gloss:DesignationRelationship ;
+  rdfs:range skos:Concept ;
+  rdfs:label "designation relationship type"@en ;
+  rdfs:comment "The type of designation relationship."@en .
+
+gloss:designationRelationshipContent a owl:DatatypeProperty ;
+  rdfs:domain gloss:DesignationRelationship ;
+  rdfs:range xsd:string ;
+  rdfs:label "designation relationship content"@en ;
+  rdfs:comment "Free-text description of the designation relationship."@en .
+
+gloss:relationshipTarget a owl:DatatypeProperty ;
+  rdfs:domain gloss:DesignationRelationship ;
+  rdfs:range xsd:string ;
+  rdfs:label "relationship target"@en ;
+  rdfs:comment "The target designation text that this designation relates to."@en .
 
 # ── Expression-specific ──────────────────────────────────────────────────
 
@@ -696,6 +736,12 @@ gloss:conceptRefId a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "concept ref identifier"@en ;
   rdfs:comment "Concept identifier within the registry."@en .
+
+gloss:conceptRefText a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptRef ;
+  rdfs:range xsd:string ;
+  rdfs:label "concept ref text"@en ;
+  rdfs:comment "Target designation text for lexical relationships (e.g. close_match, abbreviated_form_for)."@en .
 
 # ── CustomLocality ─────────────────────────────────────────────────────────
 

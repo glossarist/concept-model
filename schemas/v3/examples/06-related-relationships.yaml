@@ -1,16 +1,22 @@
-# 06 — Related Concepts (All 32 Typed Semantic Relationships)
+# 06 — Related Concepts (All 52 Typed Semantic Relationships)
 #
 # Relationships are typed semantic links between concepts, spanning:
-# - ISO 10241-1: lifecycle (deprecates, supersedes, superseded_by),
+# - ISO 10241-1: lifecycle (deprecates, deprecated_by, supersedes, superseded_by,
+#   replaces, replaced_by, invalidates, invalidated_by, retires, retired_by),
 #   comparative (compare, contrast), associative (see)
 # - ISO 25964 / SKOS: hierarchical (broader, narrower) with generic/
 #   partitive/instantial subtypes, equivalence (equivalent, exact_match),
 #   approximate mapping (close_match, broad_match, narrow_match,
 #   related_match)
 # - ISO 12620 / TBX: associative subtypes (related_concept,
-#   related_concept_broader, related_concept_narrower),
-#   spatiotemporal (sequentially_related_concept, spatially_related_concept,
-#   temporally_related_concept), lexical (homograph, false_friend)
+#   related_concept_broader, related_concept_narrower, references),
+#   spatiotemporal (sequentially_related, spatially_related,
+#   temporally_related), lexical (homograph, false_friend)
+# - ISO 19135: register management (has_concept, is_concept_of,
+#   has_definition, definition_of, inherits, inherited_by),
+#   versioning (has_version, version_of, current_version,
+#   current_version_of), partitive (has_part, is_part_of),
+#   instantial (instance_of, has_instance)
 #
 # false_friend and language-specific relationships are demonstrated
 # in the localized companion files.
@@ -160,19 +166,19 @@ related:
       id: "102-04-03"
 
   # ── Spatiotemporal (ISO 25964 / TBX) ──────────────────────────────────
-  - type: sequentially_related_concept
+  - type: sequentially_related
     content: "next process step"
     ref:
       source: "IEC"
       id: "102-07-01"
 
-  - type: spatially_related_concept
+  - type: spatially_related
     content: "adjacent region"
     ref:
       source: "IEC"
       id: "102-07-02"
 
-  - type: temporally_related_concept
+  - type: temporally_related
     content: "preceding state"
     ref:
       source: "IEC"
@@ -203,6 +209,153 @@ related:
     ref:
       source: "IEC"
       id: "102-08-01"
+
+  # ── Lifecycle — inverse (ISO 10241-1) ──────────────────────────────────
+  - type: deprecated_by
+    content: "concept that deprecated this one"
+    ref:
+      source: "IEC"
+      id: "102-03-12"
+
+  - type: replaces
+    content: "concept replaced by this one"
+    ref:
+      source: "IEC"
+      id: "102-03-13"
+
+  - type: replaced_by
+    content: "concept that replaced this one"
+    ref:
+      source: "IEC"
+      id: "102-03-14"
+
+  - type: invalidates
+    content: "concept invalidated by this one (substantial error)"
+    ref:
+      source: "IEC"
+      id: "102-03-15"
+
+  - type: invalidated_by
+    content: "concept that invalidated this one"
+    ref:
+      source: "IEC"
+      id: "102-03-16"
+
+  - type: retires
+    content: "concept retired by this one"
+    ref:
+      source: "IEC"
+      id: "102-03-17"
+
+  - type: retired_by
+    content: "concept that retired this one"
+    ref:
+      source: "IEC"
+      id: "102-03-18"
+
+  # ── Partitive (ISO 19135) ──────────────────────────────────────────────
+  - type: has_part
+    content: "component that is part of this concept"
+    ref:
+      source: "IEC"
+      id: "102-09-01"
+
+  - type: is_part_of
+    content: "whole that this concept is part of"
+    ref:
+      source: "IEC"
+      id: "102-09-02"
+
+  # ── Instantial (ISO 19135) ─────────────────────────────────────────────
+  - type: instance_of
+    content: "class that this concept is an instance of"
+    ref:
+      source: "IEC"
+      id: "102-09-03"
+
+  - type: has_instance
+    content: "instance of this concept"
+    ref:
+      source: "IEC"
+      id: "102-09-04"
+
+  # ── Register Management (ISO 19135) ────────────────────────────────────
+  - type: has_concept
+    content: "concept specialisation in a register"
+    ref:
+      source: "IEC"
+      id: "102-10-01"
+
+  - type: is_concept_of
+    content: "parent concept this specialises"
+    ref:
+      source: "IEC"
+      id: "102-10-02"
+
+  - type: has_definition
+    content: "concept used as the definition"
+    ref:
+      source: "IEC"
+      id: "102-10-03"
+
+  - type: definition_of
+    content: "concept whose definition this is"
+    ref:
+      source: "IEC"
+      id: "102-10-04"
+
+  - type: inherits
+    content: "concept whose properties are inherited"
+    ref:
+      source: "IEC"
+      id: "102-10-05"
+
+  - type: inherited_by
+    content: "concept that inherits from this one"
+    ref:
+      source: "IEC"
+      id: "102-10-06"
+
+  # ── Versioning (ISO 19135) ─────────────────────────────────────────────
+  - type: has_version
+    content: "version of this concept"
+    ref:
+      source: "IEC"
+      id: "102-11-01"
+
+  - type: version_of
+    content: "concept this is a version of"
+    ref:
+      source: "IEC"
+      id: "102-11-02"
+
+  - type: current_version
+    content: "current version of this concept"
+    ref:
+      source: "IEC"
+      id: "102-11-03"
+
+  - type: current_version_of
+    content: "concept whose current version this is"
+    ref:
+      source: "IEC"
+      id: "102-11-04"
+
+  # ── Associative — references (ISO 12620 / TBX) ─────────────────────────
+  - type: references
+    content: "concept referenced by this one"
+    ref:
+      source: "IEC"
+      id: "102-12-01"
+
+  # ── Designation-level (ISO 10241-1) ────────────────────────────────────
+  - type: abbreviated_form_for
+    ref:
+      text: "full form designation"
+
+  - type: short_form_for
+    ref:
+      text: "full form designation"
 
 status: valid
 date_accepted: "2007-08-01T00:00:00+00:00"

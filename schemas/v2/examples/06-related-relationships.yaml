@@ -154,19 +154,19 @@ related:
       id: "102-04-03"
 
   # ── Spatiotemporal (ISO 25964 / TBX) ──────────────────────────────────
-  - type: sequentially_related_concept
+  - type: sequentially_related
     content: "next process step"
     ref:
       source: "IEC"
       id: "102-07-01"
 
-  - type: spatially_related_concept
+  - type: spatially_related
     content: "adjacent region"
     ref:
       source: "IEC"
       id: "102-07-02"
 
-  - type: temporally_related_concept
+  - type: temporally_related
     content: "preceding state"
     ref:
       source: "IEC"

@@ -1,6 +1,6 @@
 # Relationship Type Taxonomy
 #
-# SKOS ConceptScheme for all 32 concept relationship types in Glossarist.
+# SKOS ConceptScheme for all 51 concept relationship types in Glossarist.
 # Includes types that map to standard SKOS/iso-thes properties AND
 # glossarist-specific types that have no standard equivalent.
 #
@@ -15,7 +15,7 @@
 #   broad_match/narrow_match/related_match → skos:broadMatch / skos:narrowMatch / skos:relatedMatch
 #   see / related_concept       → skos:related
 #
-# Source: ISO 10241-1, ISO 25964, ISO 12620/TBX, glossarist config.yml related_concept.type
+# Source: ISO 10241-1, ISO 19135, ISO 25964, ISO 12620/TBX, glossarist config.yml related_concept.type
 
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
@@ -28,7 +28,7 @@ gloss:rel a skos:ConceptScheme ;
     covering ISO 10241-1 (lifecycle, comparative), ISO 25964/SKOS
     (hierarchical, equivalence, mapping), ISO 25964/TBX (associative,
     spatiotemporal), and ISO 12620/TBX (lexical) relationship types.
-    32 relationship types in total.
+    52 relationship types in total.
   """@en ;
   dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
 
@@ -48,6 +48,41 @@ gloss:rel a skos:ConceptScheme ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "superseded by"@en ;
   skos:definition "This concept has been superseded by another concept."@en .
+
+<https://www.glossarist.org/ontologies/rel/deprecated_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "deprecated by"@en ;
+  skos:definition "This concept has been deprecated by another concept (ISO 10241-1)."@en .
+
+<https://www.glossarist.org/ontologies/rel/replaces> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "replaces"@en ;
+  skos:definition "This concept replaces another concept (ISO 10241-1)."@en .
+
+<https://www.glossarist.org/ontologies/rel/replaced_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "replaced by"@en ;
+  skos:definition "This concept has been replaced by another concept (ISO 10241-1)."@en .
+
+<https://www.glossarist.org/ontologies/rel/invalidates> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "invalidates"@en ;
+  skos:definition "This concept invalidates another concept, indicating it contains a substantial error and should not be used (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/invalidated_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "invalidated by"@en ;
+  skos:definition "This concept has been invalidated by another concept due to a substantial error (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/retires> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "retires"@en ;
+  skos:definition "This concept retires another concept, indicating it is no longer recommended for use (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/retired_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "retired by"@en ;
+  skos:definition "This concept has been retired by another concept (ISO 19135)."@en .
 
 # ── Hierarchical — generic (ISO 10241-1 / ISO 25964) ────────────────────
 
@@ -96,6 +131,30 @@ gloss:rel a skos:ConceptScheme ;
   skos:inScheme gloss:rel ;
   skos:prefLabel "narrower instantial"@en ;
   skos:definition "Instantial hierarchy: the target is an instance of this concept (ISO 25964 NTI)."@en .
+
+# ── Hierarchical — partitive (ISO 19135) ────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/has_part> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "has part"@en ;
+  skos:definition "This concept has the nominated concept as a part of its composition (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/is_part_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "is part of"@en ;
+  skos:definition "This concept is a part of the source concept (ISO 19135)."@en .
+
+# ── Hierarchical — instantial (ISO 19135) ───────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/instance_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "instance of"@en ;
+  skos:definition "This concept is an instance of the nominated concept (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/has_instance> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "has instance"@en ;
+  skos:definition "This concept has the nominated concept as an instance (ISO 19135)."@en .
 
 # ── Equivalence (ISO 10241-1 / ISO 25964 / SKOS) ────────────────────────
 
@@ -167,22 +226,81 @@ gloss:rel a skos:ConceptScheme ;
   skos:prefLabel "related concept (narrower)"@en ;
   skos:definition "Associative relationship to a concept with narrower scope (ISO 25964 / TBX)."@en .
 
+<https://www.glossarist.org/ontologies/rel/references> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "references"@en ;
+  skos:definition "This concept references another concept."@en .
+
 # ── Associative — spatiotemporal (ISO 25964 / TBX) ──────────────────────
 
-<https://www.glossarist.org/ontologies/rel/sequentially_related_concept> a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/sequentially_related> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "sequentially related concept"@en ;
+  skos:prefLabel "sequentially related"@en ;
   skos:definition "Sequential spatiotemporal associative relationship (ISO 25964 / TBX)."@en .
 
-<https://www.glossarist.org/ontologies/rel/spatially_related_concept> a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/spatially_related> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "spatially related concept"@en ;
+  skos:prefLabel "spatially related"@en ;
   skos:definition "Spatial associative relationship (ISO 25964 / TBX)."@en .
 
-<https://www.glossarist.org/ontologies/rel/temporally_related_concept> a skos:Concept ;
+<https://www.glossarist.org/ontologies/rel/temporally_related> a skos:Concept ;
   skos:inScheme gloss:rel ;
-  skos:prefLabel "temporally related concept"@en ;
+  skos:prefLabel "temporally related"@en ;
   skos:definition "Temporal associative relationship (ISO 25964 / TBX)."@en .
+
+# ── ISO 19135 Register Management ────────────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/has_concept> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "has concept"@en ;
+  skos:definition "This concept has the nominated concept as a specialisation of its definition (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/is_concept_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "is concept of"@en ;
+  skos:definition "This concept is a specialisation of the source concept (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/has_definition> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "has definition"@en ;
+  skos:definition "This concept has the nominated concept as its definition (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/definition_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "definition of"@en ;
+  skos:definition "This concept is the definition of the source concept (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/inherits> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "inherits"@en ;
+  skos:definition "This concept inherits and extends properties from the nominated concept (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/inherited_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "inherited by"@en ;
+  skos:definition "This concept is inherited by the source concept (ISO 19135)."@en .
+
+# ── Versioning (ISO 19135) ──────────────────────────────────────────────
+
+<https://www.glossarist.org/ontologies/rel/has_version> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "has version"@en ;
+  skos:definition "This concept has the nominated concept as a version (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/version_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "version of"@en ;
+  skos:definition "This concept is a version of the source concept (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/current_version> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "current version"@en ;
+  skos:definition "This concept has the nominated concept as its current version (ISO 19135)."@en .
+
+<https://www.glossarist.org/ontologies/rel/current_version_of> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "current version of"@en ;
+  skos:definition "This concept is the current version of the source concept (ISO 19135)."@en .
 
 # ── Lexical (ISO 12620 / TBX) ───────────────────────────────────────────
 
@@ -210,15 +328,26 @@ gloss:rel a skos:ConceptScheme ;
 
 gloss:rel skos:hasTopConcept
   <https://www.glossarist.org/ontologies/rel/deprecates> ,
+  <https://www.glossarist.org/ontologies/rel/replaces> ,
+  <https://www.glossarist.org/ontologies/rel/invalidates> ,
+  <https://www.glossarist.org/ontologies/rel/retires> ,
   <https://www.glossarist.org/ontologies/rel/broader> ,
   <https://www.glossarist.org/ontologies/rel/broader_generic> ,
   <https://www.glossarist.org/ontologies/rel/broader_partitive> ,
   <https://www.glossarist.org/ontologies/rel/broader_instantial> ,
+  <https://www.glossarist.org/ontologies/rel/has_part> ,
+  <https://www.glossarist.org/ontologies/rel/instance_of> ,
+  <https://www.glossarist.org/ontologies/rel/has_concept> ,
+  <https://www.glossarist.org/ontologies/rel/has_definition> ,
+  <https://www.glossarist.org/ontologies/rel/inherits> ,
+  <https://www.glossarist.org/ontologies/rel/has_version> ,
+  <https://www.glossarist.org/ontologies/rel/current_version> ,
   <https://www.glossarist.org/ontologies/rel/equivalent> ,
   <https://www.glossarist.org/ontologies/rel/close_match> ,
   <https://www.glossarist.org/ontologies/rel/compare> ,
   <https://www.glossarist.org/ontologies/rel/see> ,
   <https://www.glossarist.org/ontologies/rel/related_concept> ,
-  <https://www.glossarist.org/ontologies/rel/sequentially_related_concept> ,
+  <https://www.glossarist.org/ontologies/rel/references> ,
+  <https://www.glossarist.org/ontologies/rel/sequentially_related> ,
   <https://www.glossarist.org/ontologies/rel/homograph> ,
   <https://www.glossarist.org/ontologies/rel/abbreviated_form_for> .
