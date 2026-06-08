@@ -94,6 +94,10 @@ gloss:LocalizedConceptShape a sh:NodeShape ;
     sh:class gloss:DetailedDefinition ;
   ] ;
   sh:property [
+    sh:path gloss:hasAnnotation ;
+    sh:class gloss:DetailedDefinition ;
+  ] ;
+  sh:property [
     sh:path gloss:hasEntryStatus ;
     sh:class skos:Concept ;
     sh:valuesFrom <https://www.glossarist.org/ontologies/entstatus> ;
@@ -190,8 +194,8 @@ gloss:DesignationShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hasRelatedConcept ;
-    sh:class gloss:RelatedConcept ;
+    sh:path gloss:hasDesignationRelationship ;
+    sh:class gloss:DesignationRelationship ;
   ] ;
   sh:property [
     sh:path gloss:hasSource ;
@@ -286,6 +290,25 @@ gloss:PrefixShape a sh:NodeShape ;
 
 gloss:SuffixShape a sh:NodeShape ;
   sh:targetClass gloss:Suffix .
+
+gloss:DesignationRelationshipShape a sh:NodeShape ;
+  sh:targetClass gloss:DesignationRelationship ;
+  sh:property [
+    sh:path gloss:designationRelationshipType ;
+    sh:class skos:Concept ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:designationRelationshipContent ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:relationshipTarget ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
 
 # ══════════════════════════════════════════════════════════════════════════
 # Supporting class shapes
@@ -518,6 +541,11 @@ gloss:ConceptRefShape a sh:NodeShape ;
   ] ;
   sh:property [
     sh:path gloss:conceptRefId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:conceptRefText ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .

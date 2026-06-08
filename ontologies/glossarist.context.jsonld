@@ -34,6 +34,7 @@
     "ConceptRef":          "gloss:ConceptRef",
     "Reference":           "gloss:Reference",
     "RelatedConcept":      "gloss:RelatedConcept",
+    "DesignationRelationship": "gloss:DesignationRelationship",
     "ConceptDate":         "gloss:ConceptDate",
     "NonVerbalRepresentation": "gloss:NonVerbalRepresentation",
     "CustomLocality":      "gloss:CustomLocality",
@@ -54,6 +55,7 @@
     "hasDefinition":       { "@id": "gloss:hasDefinition", "@type": "@id" },
     "hasNote":             { "@id": "gloss:hasNote",       "@type": "@id" },
     "hasExample":          { "@id": "gloss:hasExample",    "@type": "@id" },
+    "hasAnnotation":       { "@id": "gloss:hasAnnotation", "@type": "@id" },
     "hasNonVerbalRep":     { "@id": "gloss:hasNonVerbalRep", "@type": "@id" },
     "domain":              { "@id": "gloss:domain",        "@type": "xsd:anyURI" },
     "release":             { "@id": "gloss:release",       "@type": "xsd:string" },
@@ -115,6 +117,7 @@
 
     "conceptRefSource":    { "@id": "gloss:conceptRefSource", "@type": "xsd:string" },
     "conceptRefId":        { "@id": "gloss:conceptRefId", "@type": "xsd:string" },
+    "conceptRefText":      { "@id": "gloss:conceptRefText", "@type": "xsd:string" },
 
     "customLocalityName":  { "@id": "gloss:customLocalityName", "@type": "xsd:string" },
     "customLocalityValue": { "@id": "gloss:customLocalityValue", "@type": "xsd:string" },
@@ -160,6 +163,11 @@
     "hasFalseFriend":      { "@id": "gloss:hasFalseFriend", "@type": "@id" },
     "abbreviatedFormFor":  { "@id": "gloss:abbreviatedFormFor", "@type": "@id" },
     "shortFormFor":        { "@id": "gloss:shortFormFor",  "@type": "@id" },
+
+    "hasDesignationRelationship": { "@id": "gloss:hasDesignationRelationship", "@type": "@id" },
+    "designationRelationshipType": { "@id": "gloss:designationRelationshipType", "@type": "@id" },
+    "designationRelationshipContent": { "@id": "gloss:designationRelationshipContent", "@type": "xsd:string" },
+    "relationshipTarget": { "@id": "gloss:relationshipTarget", "@type": "xsd:string" },
 
     "prefLabel":           "skos:prefLabel",
     "altLabel":            "skos:altLabel",

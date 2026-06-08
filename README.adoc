@@ -12,6 +12,7 @@ These models align with multiple ISO standards for terminology management:
 * **ISO 30042 / TBX** — Terminology markup framework (data exchange)
 * **ISO 12620** — Data category registry (term types, register, grammar)
 * **ISO 25964 / SKOS** — Thesaurus interoperability (hierarchical and mapping relationships)
+* **ISO 19135** — Geographic information — Procedures for item registration (register management, versioning)
 * **ISO 639** — Language codes
 * **ISO 15924** — Script codes
 * **ISO 24229** — Conversion system codes
@@ -70,24 +71,60 @@ All types inherit from Base: `designation`, `normative_status`, `geographical_ar
 `absent`, `pronunciation`, `sources`, `term_type`, `related`, `register`.
 
 
-== Relationship Types (32)
+== Relationship Types (52)
 
-Typed semantic links between concepts, spanning four standards:
+Typed semantic links between concepts, spanning five standards:
 
 | Category | Standard | Types |
 |----------|----------|-------|
-| Lifecycle | ISO 10241-1 | `deprecates`, `supersedes`, `superseded_by` |
-| Hierarchical | ISO 10241-1 / ISO 25964 | `broader`, `narrower` |
-| Generic hierarchy | ISO 25964 (BTG/NTG) | `broader_generic`, `narrower_generic` |
-| Partitive hierarchy | ISO 25964 (BTP/NTP) | `broader_partitive`, `narrower_partitive` |
-| Instantial hierarchy | ISO 25964 (BTI/NTI) | `broader_instantial`, `narrower_instantial` |
-| Equivalence | ISO 10241-1 / ISO 25964 / SKOS | `equivalent`, `exact_match` |
+| Lifecycle | ISO 10241-1 / ISO 19135 | `deprecates`, `deprecated_by`, `supersedes`, `superseded_by`, `replaces`, `replaced_by`, `invalidates`, `invalidated_by`, `retires`, `retired_by` |
+| Hierarchical — generic | ISO 25964 / SKOS | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
+| Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` |
+| Hierarchical — instantial | ISO 25964 / ISO 19135 | `broader_instantial`, `narrower_instantial`, `instance_of`, `has_instance` |
+| Equivalence | ISO 10241-1 / SKOS | `equivalent`, `exact_match` |
 | SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
 | Comparative | ISO 10241-1 | `compare`, `contrast` |
-| Associative | ISO 10241-1 / ISO 25964 | `see`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
-| Spatiotemporal | ISO 25964 / TBX | `sequentially_related_concept`, `spatially_related_concept`, `temporally_related_concept` |
+| Associative | ISO 10241-1 / ISO 25964 | `see`, `references`, `related_concept`, `related_concept_broader`, `related_concept_narrower` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related`, `spatially_related`, `temporally_related` |
 | Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
+| Register management | ISO 19135 | `has_concept`, `is_concept_of`, `has_definition`, `definition_of`, `inherits`, `inherited_by` |
+| Versioning / definitional | ISO 19135 | `has_version`, `version_of`, `current_version`, `current_version_of` |
 | Designation-level | ISO 10241-1 | `abbreviated_form_for`, `short_form_for` |
+
+=== Cross-dataset navigation
+
+Relationships can link concepts across datasets using URN-based references.
+Each dataset declares a `urn` (e.g., `urn:oiml:pub:v:1:2022` for VIML 2022)
+in its `register.yaml`. Cross-dataset relationships reference the target by
+URN and concept identifier:
+
+[source,yaml]
+----
+related:
+  - type: supersedes
+    ref:
+      source: urn:oiml:pub:v:1:2013
+      id: '4.04'
+  - type: see
+    ref:
+      source: urn:oiml:pub:v:2:1993
+      id: '4.1'
+----
+
+=== Supersession chains
+
+The `supersedes` relationship forms forward-pointing chains across edition
+boundaries. Inverse relationships (`superseded_by`) are derived at render
+time from the supersedes graph, not authored directly:
+
+[source]
+----
+VIM 2012 2.13 --supersedes--> VIM 2007 2.13 --supersedes--> VIM 1993 2.13
+                      <--superseded_by--             <--superseded_by--
+----
+
+Only the forward direction (`supersedes`) is authored in concept YAML.
+The concept-browser derives inverse edges automatically.
 
 
 == Term Types (34)

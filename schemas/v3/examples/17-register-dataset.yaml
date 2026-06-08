@@ -1,0 +1,113 @@
+# 17 — Dataset Register (URN Resolution & Cross-Dataset Supersession)
+#
+# The register.yaml file defines a dataset's identity, URN, and metadata.
+# Cross-dataset relationships use URN-based references:
+#   - ref.source URN resolves to the target dataset's register ID
+#   - supersedes/see/compare etc. point to concepts in other datasets
+#
+# This example shows three registers: a current edition, a superseded edition,
+# and a separate vocabulary that cross-links to both.
+#
+# ── Register A: Current edition ──────────────────────────────────────────
+
+---
+schema_type: glossarist
+schema_version: '3'
+
+id: vocab-2024
+ref: "Example Vocabulary:2024"
+year: 2024
+urn: "urn:example:vocab:2024"
+status: current
+supersedes: vocab-2018
+
+owner: ExampleOrg
+sourceRepo: https://github.com/example/vocab
+tags:
+  - metrology
+  - vocabulary
+
+languages:
+  - eng
+  - fra
+languageOrder:
+  - eng
+  - fra
+
+ordering: systematic
+
+description:
+  eng: "Current edition with 120 terms across 5 sections."
+  fra: "Édition actuelle comprenant 120 termes répartis en 5 sections."
+
+about:
+  eng: about-eng.md
+  fra: about-fra.md
+
+sections:
+  - id: "1"
+    names:
+      eng: "General terms"
+      fra: "Termes généraux"
+  - id: "2"
+    names:
+      eng: "Measurements"
+      fra: "Mesurages"
+  - id: "3"
+    names:
+      eng: "Instruments"
+      fra: "Instruments"
+
+# ── Register B: Superseded edition ──────────────────────────────────────
+# (would be in a separate register.yaml at datasets/vocab-2018/)
+
+# ---
+# schema_type: glossarist
+# schema_version: '3'
+#
+# id: vocab-2018
+# ref: "Example Vocabulary:2018"
+# year: 2018
+# urn: "urn:example:vocab:2018"
+# status: superseded
+# superseded_by: vocab-2024
+#
+# languages:
+#   - eng
+#   - fra
+
+# ── How cross-dataset relationships work ─────────────────────────────────
+#
+# In concept YAML, relationships reference other datasets by URN:
+#
+#   related:
+#     - type: supersedes              # forward direction only
+#       ref:
+#         source: urn:example:vocab:2018   # URN resolves to vocab-2018
+#         id: '2.13'                       # concept ID in target dataset
+#
+#     - type: see                      # associative cross-link
+#       ref:
+#         source: urn:example:other-vocab
+#         id: '4.01'
+#
+#     - type: compare                  # comparative cross-link
+#       ref:
+#         source: urn:example:vocab:2018
+#         id: '3.05'
+#
+# The concept-browser resolves URN → dataset via urnMap in DatasetAdapter.ts.
+# Only the forward direction (supersedes) is authored; superseded_by is
+# derived at render time from the incoming supersedes graph edges.
+#
+# ── URN alias matching ──────────────────────────────────────────────────
+#
+# urnAliases allows glob-style matching for URNs that may include fragment
+# identifiers or edition suffixes. This is useful when external references
+# use slightly different URN forms:
+#
+#   urnAliases:
+#     - "urn:example:vocab:2024*"
+#
+# A ref.source of "urn:example:vocab:2024-fr" or "urn:example:vocab:2024#sec2"
+# would then resolve to this dataset.

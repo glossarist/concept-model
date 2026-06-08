@@ -63,6 +63,16 @@ properties:
           $ref: "#/$defs/detailed_definition"
         description: List of notes for current localization
 
+      annotations:
+        type: array
+        items:
+          $ref: "#/$defs/detailed_definition"
+        description: >-
+          Editorial annotations about the definition or entry itself.
+          Distinct from notes — annotations comment on how to interpret
+          the definition (e.g. term substitutions, clarifications),
+          while notes supplement the concept.
+
       examples:
         type: array
         items:
@@ -167,7 +177,7 @@ $defs:
       related:
         type: array
         items:
-          $ref: "#/$defs/related_concept"
+          $ref: "#/$defs/designation_relationship"
         description: Designation-level relationships (e.g. abbreviated_form_for, short_form_for).
       register:
         $ref: "#/$defs/register"
@@ -656,7 +666,7 @@ $defs:
     type: object
     description: |
       A concept reference used in related concept entries.
-      Has source and id only — no version, locality, or link.
+      Has source, id, and optional text. No version, locality, or link.
     properties:
       source:
         type: string
@@ -664,6 +674,9 @@ $defs:
       id:
         type: string
         description: Concept identifier within the registry.
+      text:
+        type: string
+        description: Target designation text for lexical relationships.
 
   locality:
     type: object
@@ -692,7 +705,7 @@ $defs:
 
   related_concept:
     type: object
-    description: A concept related to the current concept or designation.
+    description: A concept related to the current concept or localization.
     properties:
       type:
         type: string
@@ -702,6 +715,25 @@ $defs:
       content:
         type: string
         description: Text describing the relationship.
+
+  designation_relationship:
+    type: object
+    description: A designation-level relationship between designations of the same concept.
+    properties:
+      type:
+        type: string
+        description: The type of designation relationship.
+        enum:
+          - abbreviated_form_for
+          - short_form_for
+      content:
+        type: string
+        description: Text describing the designation relationship.
+      target:
+        type: string
+        description: The target designation text that this designation relates to.
+    required:
+      - type
 
   # Data Types
   iso639_three_char_code:

@@ -104,7 +104,7 @@ Typed semantic links between concepts. The full type enum covers four standards:
 | Comparative | ISO 10241-1 | `compare`, `contrast` |
 | Associative | ISO 10241-1 / ISO 25964 | `see` |
 | Associative subtypes | ISO 25964 / TBX | `related_concept`, `related_concept_broader`, `related_concept_narrower` |
-| Spatiotemporal | ISO 25964 / TBX | `sequentially_related_concept`, `spatially_related_concept`, `temporally_related_concept` |
+| Spatiotemporal | ISO 25964 / TBX | `sequentially_related`, `spatially_related`, `temporally_related` |
 | Lifecycle | ISO 10241-1 | `deprecates`, `supersedes`, `superseded_by` |
 | Lexical | ISO 12620 / TBX | `homograph`, `false_friend` |
 
@@ -346,9 +346,9 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | Associative | `related_concept` | 06 |
 | Associative | `related_concept_broader` | 06 |
 | Associative | `related_concept_narrower` | 06 |
-| Spatiotemporal | `sequentially_related_concept` | 06 |
-| Spatiotemporal | `spatially_related_concept` | 06 |
-| Spatiotemporal | `temporally_related_concept` | 06 |
+| Spatiotemporal | `sequentially_related` | 06 |
+| Spatiotemporal | `spatially_related` | 06 |
+| Spatiotemporal | `temporally_related` | 06 |
 | Lifecycle | `deprecates` | 06, 13 |
 | Lifecycle | `supersedes` | 06, 11 |
 | Lifecycle | `superseded_by` | 06, 13 |

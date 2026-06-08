@@ -1,13 +1,19 @@
 enum RelatedConceptType {
   definition {
     The relation of a term to the current term, covering ISO 10241-1,
-    ISO 25964/SKOS, ISO 12620/TBX, and designation-level relationships.
+    ISO 25964/SKOS, ISO 12620/TBX, ISO 19135, and designation-level
+    relationships. 52 relationship types in total.
   }
 
-  // ── Lifecycle (ISO 10241-1) ───────────────────────────────────────
+  // ── Lifecycle (ISO 10241-1 / ISO 19135) ───────────────────────────
   deprecates {
     definition {
       The current term deprecates the related term.
+    }
+  }
+  deprecated_by {
+    definition {
+      The current term has been deprecated by another concept.
     }
   }
   supersedes {
@@ -20,8 +26,38 @@ enum RelatedConceptType {
       The current term has been superseded by the related term.
     }
   }
+  replaces {
+    definition {
+      The current term replaces the related term in a register (ISO 19135).
+    }
+  }
+  replaced_by {
+    definition {
+      The current term has been replaced by the related term in a register.
+    }
+  }
+  invalidates {
+    definition {
+      The current term invalidates the related term (ISO 19135).
+    }
+  }
+  invalidated_by {
+    definition {
+      The current term has been invalidated by the related term.
+    }
+  }
+  retires {
+    definition {
+      The current term retires the related term from a register (ISO 19135).
+    }
+  }
+  retired_by {
+    definition {
+      The current term has been retired by the related term.
+    }
+  }
 
-  // ── Hierarchical (ISO 10241-1 / ISO 25964) ───────────────────────
+  // ── Hierarchical — Generic (ISO 25964 BTG/NTG) ───────────────────
   broader {
     definition {
       The current term is narrower in denotation than the related term.
@@ -32,8 +68,6 @@ enum RelatedConceptType {
       The current term is broader in denotation than the related term.
     }
   }
-
-  // ── Generic Hierarchy (ISO 25964 BTG/NTG) ────────────────────────
   broader_generic {
     definition {
       The current term is a kind of the related term (generic/specific).
@@ -45,7 +79,7 @@ enum RelatedConceptType {
     }
   }
 
-  // ── Partitive Hierarchy (ISO 25964 BTP/NTP) ──────────────────────
+  // ── Hierarchical — Partitive (ISO 25964 / ISO 19135) ─────────────
   broader_partitive {
     definition {
       The current term is a part of the related term (whole/part).
@@ -56,8 +90,18 @@ enum RelatedConceptType {
       The related term is a part of the current term.
     }
   }
+  has_part {
+    definition {
+      The current concept has the related concept as a part (ISO 19135).
+    }
+  }
+  is_part_of {
+    definition {
+      The current concept is a part of the related concept.
+    }
+  }
 
-  // ── Instantial Hierarchy (ISO 25964 BTI/NTI) ─────────────────────
+  // ── Hierarchical — Instantial (ISO 25964 / ISO 19135) ────────────
   broader_instantial {
     definition {
       The current term is an instance of the related term (class/instance).
@@ -66,6 +110,16 @@ enum RelatedConceptType {
   narrower_instantial {
     definition {
       The related term is an instance of the current term.
+    }
+  }
+  instance_of {
+    definition {
+      The current concept is an instance of the related concept (ISO 19135).
+    }
+  }
+  has_instance {
+    definition {
+      The current concept has the related concept as an instance.
     }
   }
 
@@ -121,6 +175,11 @@ enum RelatedConceptType {
       Refer to the related term for the definition of the current term.
     }
   }
+  references {
+    definition {
+      The current concept references the related concept.
+    }
+  }
   related_concept {
     definition {
       The related term is associated with the current term.
@@ -138,17 +197,17 @@ enum RelatedConceptType {
   }
 
   // ── Spatiotemporal (ISO 25964 / TBX) ─────────────────────────────
-  sequentially_related_concept {
+  sequentially_related {
     definition {
       The related term is sequentially related to the current term.
     }
   }
-  spatially_related_concept {
+  spatially_related {
     definition {
       The related term is spatially related to the current term.
     }
   }
-  temporally_related_concept {
+  temporally_related {
     definition {
       The related term is temporally related to the current term.
     }
@@ -163,6 +222,60 @@ enum RelatedConceptType {
   false_friend {
     definition {
       The related term looks or sounds similar in another language but has a different meaning.
+    }
+  }
+
+  // ── Register Management (ISO 19135) ─────────────────────────────
+  has_concept {
+    definition {
+      The current register item has the related item as a concept (ISO 19135).
+    }
+  }
+  is_concept_of {
+    definition {
+      The current item is a concept of the related register item.
+    }
+  }
+  has_definition {
+    definition {
+      The current concept has the related item as a definition (ISO 19135).
+    }
+  }
+  definition_of {
+    definition {
+      The current item is a definition of the related concept.
+    }
+  }
+  inherits {
+    definition {
+      The current concept inherits from the related concept (ISO 19135).
+    }
+  }
+  inherited_by {
+    definition {
+      The current concept is inherited by the related concept.
+    }
+  }
+
+  // ── Versioning / Definitional (ISO 19135) ───────────────────────
+  has_version {
+    definition {
+      The current concept has the related concept as a version (ISO 19135).
+    }
+  }
+  version_of {
+    definition {
+      The current concept is a version of the related concept.
+    }
+  }
+  current_version {
+    definition {
+      The current concept has the related concept as its current version.
+    }
+  }
+  current_version_of {
+    definition {
+      The current concept is the current version of the related concept.
     }
   }
 
