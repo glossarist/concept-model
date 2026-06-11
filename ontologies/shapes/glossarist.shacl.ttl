@@ -358,6 +358,11 @@ gloss:DetailedDefinitionShape a sh:NodeShape ;
 gloss:ConceptSourceShape a sh:NodeShape ;
   sh:targetClass gloss:ConceptSource ;
   sh:property [
+    sh:path gloss:sourceId ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
     sh:path gloss:sourceType ;
     sh:class skos:Concept ;
     sh:valuesFrom <https://www.glossarist.org/ontologies/srctype> ;
