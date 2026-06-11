@@ -653,6 +653,16 @@ gloss:term a owl:DatatypeProperty ;
 # OBJECT PROPERTIES — Source
 # ══════════════════════════════════════════════════════════════════════════
 
+gloss:sourceId a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptSource ;
+  rdfs:range xsd:string ;
+  rdfs:label "source id"@en ;
+  rdfs:comment """
+    Optional stable identifier for the source, used by inline
+    `{{cite:<id>}}` references. Local to the concept; must be
+    unique within the concept's sources list.
+  """@en .
+
 gloss:sourceType a owl:ObjectProperty ;
   rdfs:domain gloss:ConceptSource ;
   rdfs:range skos:Concept ;
@@ -676,6 +686,28 @@ gloss:modification a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "modification"@en ;
   rdfs:comment "How the concept was modified from the source."@en .
+
+# ── Citation resolution ────────────────────────────────────────────────────
+#
+# An inline `{{cite:<id>}}` mention in a concept's text
+# resolves to a Citation (ConceptSource#origin) in the same
+# concept's sources list. The resolution is deployment-
+# dependent:
+#
+#   1. Self-contained: the inline Citation is rendered as a
+#      flat citation (the source's origin.ref, locality, link).
+#   2. Co-deployed: if the deployment has a bibliographic
+#      dataset registered under the same `Citation::Ref.source`
+#      (e.g. 'bibliography:ISO'), the citation is resolved to
+#      the rich bibliographic record. The inline locality
+#      (if any) is shown as the specific point of reference.
+#   3. External: a URI form (e.g. `urn:iso:std:iso:7301:2024`)
+#      with no co-deployed match renders as the URI as a link.
+#
+# The Reference data structure (extracted by glossarist-js or
+# glossarist-ruby) carries the URI/lookupKey/cite-key;
+# resolution against the deployment's bibliography registry
+# happens at render time.
 
 # ── Citation properties ────────────────────────────────────────────────────
 

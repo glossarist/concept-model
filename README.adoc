@@ -40,7 +40,9 @@ In particular, the following features are supported.
 * Single domain (per localized concept)
 * Multiple domains (concept-level `ConceptReference` collection)
 * Multiple tags (concept-level organizational labels, not rendered as domains)
-* Multiple sources
+* Multiple sources (with optional `id` for inline `{{cite:<id>}}` references)
+* Annotations (editorial comments distinct from notes)
+* Designation-level relationships (`abbreviated_form_for`, `short_form_for`)
 
 Paragraph/TextElement may contain a formula.
 
@@ -222,8 +224,97 @@ The TC 204 Geolexica site is an example of this: the entire glossary represents
 ISO 14812 terminology, so the authoritative source for every entry is the
 glossary itself.
 
+=== Inline citation references (`{{cite:<id>}}`)
+
+Each `ConceptSource` may carry an optional `id` — a stable, locally-unique key
+that can be referenced by inline `{{cite:<id>}}` mentions in the concept's text
+(definitions, notes, examples). The `id` must be unique within the concept's
+entire sources list (across concept-level, localization-level, and
+designation-level sources).
+
+When a source has an `id`, inline mentions of the form `{{cite:<id>}}` resolve
+to that source's `origin` citation. Resolution is deployment-dependent:
+
+Self-contained::
+The inline citation renders as a flat reference (origin.ref, locality, link).
+
+Co-deployed::
+If the deployment has a bibliographic dataset registered under the same
+`Citation::Ref.source` (e.g. `bibliography:ISO`), the citation resolves to the
+rich bibliographic record. The inline locality (if any) is shown as the
+specific point of reference.
+
+External::
+A URI form (e.g. `urn:iso:std:iso:7301:2024`) with no co-deployed match renders
+as the URI as a link.
+
+A source without an `id` is not referenceable by inline mentions; it is rendered
+only as the concept's "sourced from" relationship.
+
+Example:
+
+[source,yaml]
+----
+sources:
+  - id: iso7301
+    type: authoritative
+    origin:
+      ref:
+        source: ISO
+        id: "7301:2024"
+  - type: lineage
+    origin:
+      ref:
+        source: ISO
+        id: "7301:1995"
+----
+
+The concept's definition text can then reference the source inline:
+
+....
+Rice grains are classified according to `{{cite:iso7301}}`.
+....
+
 NOTE: The `ConceptSource` model is shown in the <<ConceptSource>> UML diagram
 below.
+
+
+== Designation relationships
+
+The `DesignationRelationship` model captures designation-level relationships
+between two designations of the same concept (ISO 10241-1 §5.4.2). Unlike
+concept-level relationships (`RelatedConcept`), which link concepts by
+identifier, designation relationships link designations by their text.
+
+Each relationship has:
+
+`type`:: The relationship type (`abbreviated_form_for`, `short_form_for`).
+`content`:: Optional free-text describing the relationship.
+`target`:: The target designation text that this designation relates to.
+
+Example:
+
+[source,yaml]
+----
+designations:
+  - type: expression
+    designation: International System of Units
+  - type: abbreviation
+    designation: SI
+    related:
+      - type: abbreviated_form_for
+        target: "International System of Units"
+----
+
+
+== Annotations
+
+Annotations are editorial comments about the definition or entry itself,
+distinct from notes. Notes supplement the concept; annotations comment on how
+to interpret the definition (e.g. term substitutions, clarifications).
+
+Annotations use the same `DetailedDefinition` structure as definitions, notes,
+and examples, with `content` and optional per-item `sources`.
 
 
 == UML Models
