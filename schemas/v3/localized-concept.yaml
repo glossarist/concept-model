@@ -561,13 +561,13 @@ $defs:
     description: |
       Bibliographic reference for a concept or designation.
       May carry an optional `id` for inline reference via
-      `{{cite:<id>}}` mentions in the concept's text.
+      `{{cite:id}}` mentions in the concept's text.
     properties:
       id:
         type: string
         description: |
           Optional stable identifier for the source, used by
-          inline `{{cite:<id>}}` references in the concept's
+          inline `{{cite:id}}` references in the concept's
           text.
       status:
         $ref: "#/$defs/concept_source_statuses"

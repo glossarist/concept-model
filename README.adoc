@@ -40,7 +40,7 @@ In particular, the following features are supported.
 * Single domain (per localized concept)
 * Multiple domains (concept-level `ConceptReference` collection)
 * Multiple tags (concept-level organizational labels, not rendered as domains)
-* Multiple sources (with optional `id` for inline `{{cite:<id>}}` references)
+* Multiple sources (with optional `id` for inline `{{cite:id}}` references)
 * Annotations (editorial comments distinct from notes)
 * Designation-level relationships (`abbreviated_form_for`, `short_form_for`)
 
@@ -224,16 +224,20 @@ The TC 204 Geolexica site is an example of this: the entire glossary represents
 ISO 14812 terminology, so the authoritative source for every entry is the
 glossary itself.
 
-=== Inline citation references (`{{cite:<id>}}`)
+=== Inline citation references (`{{cite:id}}`)
 
 Each `ConceptSource` may carry an optional `id` — a stable, locally-unique key
-that can be referenced by inline `{{cite:<id>}}` mentions in the concept's text
+that can be referenced by inline `{{cite:id}}` mentions in the concept's text
 (definitions, notes, examples). The `id` must be unique within the concept's
 entire sources list (across concept-level, localization-level, and
 designation-level sources).
 
-When a source has an `id`, inline mentions of the form `{{cite:<id>}}` resolve
-to that source's `origin` citation. Resolution is deployment-dependent:
+The inline mention syntax is `{{cite:id}}` (without render term) or
+`{{cite:id,render term}}` (with render term). The id always comes first;
+the render term, if present, always comes last.
+
+When a source has an `id`, inline mentions resolve to that source's `origin`
+citation. Resolution is deployment-dependent:
 
 Self-contained::
 The inline citation renders as a flat reference (origin.ref, locality, link).
@@ -272,7 +276,8 @@ sources:
 The concept's definition text can then reference the source inline:
 
 ....
-Rice grains are classified according to `{{cite:iso7301}}`.
+Rice grains are classified according to {{cite:iso7301}}.
+Rice grains are classified according to {{cite:iso7301,ISO 7301:2024}}.
 ....
 
 NOTE: The `ConceptSource` model is shown in the <<ConceptSource>> UML diagram

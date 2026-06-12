@@ -659,7 +659,7 @@ gloss:sourceId a owl:DatatypeProperty ;
   rdfs:label "source id"@en ;
   rdfs:comment """
     Optional stable identifier for the source, used by inline
-    `{{cite:<id>}}` references. Local to the concept; must be
+    `{{cite:id}}` references. Local to the concept; must be
     unique within the concept's sources list.
   """@en .
 
@@ -689,7 +689,7 @@ gloss:modification a owl:DatatypeProperty ;
 
 # ── Citation resolution ────────────────────────────────────────────────────
 #
-# An inline `{{cite:<id>}}` mention in a concept's text
+# An inline `{{cite:id}}` mention in a concept's text
 # resolves to a Citation (ConceptSource#origin) in the same
 # concept's sources list. The resolution is deployment-
 # dependent:
