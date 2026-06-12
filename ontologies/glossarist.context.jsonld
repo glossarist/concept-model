@@ -103,6 +103,7 @@
 
     "sourceType":          { "@id": "gloss:sourceType",    "@type": "@id" },
     "sourceStatus":        { "@id": "gloss:sourceStatus",  "@type": "@id" },
+    "sourceId":            { "@id": "gloss:sourceId",      "@type": "xsd:string" },
     "sourceOrigin":        { "@id": "gloss:sourceOrigin",  "@type": "@id" },
     "modification":        { "@id": "gloss:modification",  "@type": "xsd:string" },
 

@@ -1,6 +1,25 @@
 class ConceptSource {
   definition {
-    Bibliographic source for a managed term.
+    Bibliographic source for a managed term. May carry an
+    optional `id` for inline reference via {{cite:id}}
+    mentions in the concept's text.
+  }
+  +id: String [0..1] {
+    definition {
+      Optional stable identifier for the source, used by
+      inline `{{cite:id}}` references in the concept's text.
+      The id is local to the concept; it must be unique within
+      the concept's sources list (across concept-level,
+      localization-level, and designation-level sources).
+
+      A source with an id can be referenced by inline mentions
+      using the `{{cite:id}}` form. The mention resolves to
+      this source's Citation (origin.ref + locality + link).
+
+      A source without an id is not referenceable by inline
+      mentions; it is rendered only as the concept's "sourced
+      from" relationship.
+    }
   }
   +status: ConceptSourceStatus {
     definition {
