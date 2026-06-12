@@ -40,7 +40,7 @@ In particular, the following features are supported.
 * Single domain (per localized concept)
 * Multiple domains (concept-level `ConceptReference` collection)
 * Multiple tags (concept-level organizational labels, not rendered as domains)
-* Multiple sources (with optional `id` for inline `{{cite:id}}` references)
+* Multiple sources (with optional `id` for inline `{{cite:id,render term}}` mentions)
 * Annotations (editorial comments distinct from notes)
 * Designation-level relationships (`abbreviated_form_for`, `short_form_for`)
 
@@ -224,20 +224,44 @@ The TC 204 Geolexica site is an example of this: the entire glossary represents
 ISO 14812 terminology, so the authoritative source for every entry is the
 glossary itself.
 
-=== Inline citation references (`{{cite:id}}`)
+=== Inline concept mentions (`{{...}}`)
 
-Each `ConceptSource` may carry an optional `id` — a stable, locally-unique key
-that can be referenced by inline `{{cite:id}}` mentions in the concept's text
-(definitions, notes, examples). The `id` must be unique within the concept's
-entire sources list (across concept-level, localization-level, and
-designation-level sources).
+Inline `{{...}}` mentions in concept text (definitions, notes, examples)
+reference other concepts or sources. Every mention follows one rule:
+**identifier first, render term last.**
 
-The inline mention syntax is `{{cite:id}}` (without render term) or
-`{{cite:id,render term}}` (with render term). The id always comes first;
-the render term, if present, always comes last.
+`{{identifier}}`:: Mention by identifier, no render term.
+`{{identifier,render term}}`:: Mention with explicit render term (how the mention should display).
 
-When a source has an `id`, inline mentions resolve to that source's `origin`
-citation. Resolution is deployment-dependent:
+There are four identifier kinds:
+
+Cite key::
+`{{cite:id}}` or `{{cite:id,render term}}` — references a `ConceptSource`
+in the same concept's sources list by its `id` field. The render term is the
+designation text of the concept being cited.
++
+Example: `{{cite:iso7301}}` or `{{cite:iso7301,rice}}`
+
+URN::
+`{{urn:...}}` or `{{urn:...,render term}}` — references a concept by
+URN in an external dataset.
++
+Example: `{{urn:iso:std:iso:7301:2024}}` or `{{urn:iso:std:iso:7301:2024,rice}}`
+
+Designation matching::
+`{{designation}}` or `{{designation,render term}}` — references
+a concept by matching its designation text.
++
+Example: `{{measuring instrument}}` or `{{measuring instrument,sensor}}`
+
+Local concept ID::
+`{{numeric_id}}` or `{{numeric_id,render term}}` — references
+a concept by its numeric identifier within the local dataset.
++
+Example: `{{0.10}}` or `{{0.10,measuring instrument}}`
+
+When a `ConceptSource` carries an `id`, inline `{{cite:id}}` mentions resolve
+to that source's `origin` citation. Resolution is deployment-dependent:
 
 Self-contained::
 The inline citation renders as a flat reference (origin.ref, locality, link).
@@ -266,18 +290,13 @@ sources:
       ref:
         source: ISO
         id: "7301:2024"
-  - type: lineage
-    origin:
-      ref:
-        source: ISO
-        id: "7301:1995"
 ----
 
 The concept's definition text can then reference the source inline:
 
 ....
 Rice grains are classified according to {{cite:iso7301}}.
-Rice grains are classified according to {{cite:iso7301,ISO 7301:2024}}.
+Rice grains are classified according to {{cite:iso7301,rice}}.
 ....
 
 NOTE: The `ConceptSource` model is shown in the <<ConceptSource>> UML diagram
