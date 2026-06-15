@@ -1177,11 +1177,26 @@ gloss:sectionName a owl:DatatypeProperty ;
   rdfs:label "section name"@en ;
   rdfs:comment "Localized section title."@en .
 
-gloss:hasChildSection a owl:ObjectProperty ;
+gloss:hasChildSection a owl:TransitiveProperty ;
+  owl:inverseOf gloss:hasParentSection ;
   rdfs:domain gloss:Section ;
   rdfs:range gloss:Section ;
   rdfs:label "has child section"@en ;
-  rdfs:comment "Hierarchical containment — parent section contains child sections."@en .
+  rdfs:comment """
+    Hierarchical containment — parent section contains child sections.
+    Transitive: selecting a parent section includes all descendants.
+    This enables cascading membership at any depth (Part > Section > Subsection).
+  """@en .
+
+gloss:hasParentSection a owl:TransitiveProperty ;
+  owl:inverseOf gloss:hasChildSection ;
+  rdfs:domain gloss:Section ;
+  rdfs:range gloss:Section ;
+  rdfs:label "has parent section"@en ;
+  rdfs:comment """
+    Inverse of hasChildSection. Transitive: a section inherits membership
+    from all its ancestors. Used for upward traversal in SPARQL queries.
+  """@en .
 
 gloss:sectionOrdering a owl:ObjectProperty ;
   rdfs:domain gloss:Section ;

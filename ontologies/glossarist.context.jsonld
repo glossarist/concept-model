@@ -238,6 +238,7 @@
     "sectionId":           { "@id": "gloss:sectionId",        "@type": "xsd:string" },
     "sectionName":         { "@id": "gloss:sectionName",      "@type": "xsd:string" },
     "hasChildSection":     { "@id": "gloss:hasChildSection",  "@type": "@id" },
+    "hasParentSection":    { "@id": "gloss:hasParentSection", "@type": "@id" },
     "sectionOrdering":     { "@id": "gloss:sectionOrdering",  "@type": "@id" }
   }
 }
