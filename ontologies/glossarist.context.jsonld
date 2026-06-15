@@ -39,6 +39,8 @@
     "NonVerbalRepresentation": "gloss:NonVerbalRepresentation",
     "CustomLocality":      "gloss:CustomLocality",
     "Locality":            "gloss:Locality",
+    "DatasetRegister":     "gloss:DatasetRegister",
+    "Section":             "gloss:Section",
 
     "identifier":          { "@id": "gloss:identifier",    "@type": "xsd:string" },
     "uri":                 { "@id": "gloss:uri",           "@type": "xsd:anyURI" },
@@ -213,6 +215,29 @@
 
     "type":                { "@id": "@type", "@container": "@set" },
     "id":                  "@id",
-    "value":               "rdf:value"
+    "value":               "rdf:value",
+
+    "datasetId":           { "@id": "gloss:datasetId",        "@type": "xsd:string" },
+    "datasetRef":          { "@id": "gloss:datasetRef",       "@type": "xsd:string" },
+    "datasetYear":         { "@id": "gloss:datasetYear",      "@type": "xsd:integer" },
+    "datasetUrn":          { "@id": "gloss:datasetUrn",       "@type": "xsd:anyURI" },
+    "datasetUrnAlias":     { "@id": "gloss:datasetUrnAlias",  "@type": "xsd:anyURI" },
+    "datasetRefAlias":     { "@id": "gloss:datasetRefAlias",  "@type": "xsd:string" },
+    "datasetStatus":       { "@id": "gloss:datasetStatus",    "@type": "xsd:string" },
+    "supersedesDataset":   { "@id": "gloss:supersedesDataset","@type": "xsd:string" },
+    "owner":               { "@id": "gloss:owner",            "@type": "xsd:string" },
+    "sourceRepo":          { "@id": "gloss:sourceRepo",       "@type": "xsd:anyURI" },
+    "datasetLanguage":     { "@id": "gloss:datasetLanguage",  "@type": "xsd:string" },
+    "languageOrder":       { "@id": "gloss:languageOrder",    "@type": "xsd:string" },
+    "hasSection":          { "@id": "gloss:hasSection",       "@type": "@id" },
+    "hasDefaultOrdering":  { "@id": "gloss:hasDefaultOrdering", "@type": "@id" },
+    "datasetDescription":  { "@id": "gloss:datasetDescription", "@type": "xsd:string" },
+    "aboutPath":           { "@id": "gloss:aboutPath",        "@type": "xsd:string" },
+    "logo":                { "@id": "gloss:logo",             "@type": "xsd:anyURI" },
+
+    "sectionId":           { "@id": "gloss:sectionId",        "@type": "xsd:string" },
+    "sectionName":         { "@id": "gloss:sectionName",      "@type": "xsd:string" },
+    "hasChildSection":     { "@id": "gloss:hasChildSection",  "@type": "@id" },
+    "sectionOrdering":     { "@id": "gloss:sectionOrdering",  "@type": "@id" }
   }
 }

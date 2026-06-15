@@ -248,6 +248,24 @@ gloss:Locality a owl:Class ;
   rdfs:label "Locality"@en ;
   rdfs:comment "A locality within a cited document (section, clause, page, etc.)."@en .
 
+# ── Dataset Register Layer ────────────────────────────────────────────────
+
+gloss:DatasetRegister a owl:Class ;
+  rdfs:label "Dataset Register"@en ;
+  rdfs:comment """
+    Self-describing dataset metadata (register.yaml). Each dataset directory
+    contains a register.yaml that carries identity, structure, and relationship
+    metadata. Corresponds to DatasetRegister in the Lutaml model.
+  """@en .
+
+gloss:Section a owl:Class ;
+  rdfs:label "Section"@en ;
+  rdfs:comment """
+    A structural division within a dataset. Sections can be hierarchical:
+    a section may contain child sections (e.g. Part > Section > Subsection)
+    via gloss:hasChildSection.
+  """@en .
+
 # ══════════════════════════════════════════════════════════════════════════
 # OBJECT PROPERTIES — Concept-level
 # ══════════════════════════════════════════════════════════════════════════
@@ -1036,3 +1054,137 @@ gloss:shortFormFor a owl:ObjectProperty ;
   rdfs:range gloss:Designation ;
   rdfs:label "short form for"@en ;
   rdfs:comment "This designation is a short form of the target designation."@en .
+
+# ══════════════════════════════════════════════════════════════════════════
+# DATAPROPERTIES — Dataset Register
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:datasetId a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset id"@en ;
+  rdfs:comment "Dataset identifier, unique within the deployment."@en .
+
+gloss:datasetRef a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset ref"@en ;
+  rdfs:comment "Publication reference string (e.g. OIML V 1:2022)."@en .
+
+gloss:datasetYear a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:integer ;
+  rdfs:label "dataset year"@en ;
+  rdfs:comment "Publication year."@en .
+
+gloss:datasetUrn a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "dataset URN"@en ;
+  rdfs:comment "Primary URN for the dataset."@en .
+
+gloss:datasetUrnAlias a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "dataset URN alias"@en ;
+  rdfs:comment "Additional URN patterns for resolution."@en .
+
+gloss:datasetRefAlias a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset ref alias"@en ;
+  rdfs:comment "Alternative publication references."@en .
+
+gloss:datasetStatus a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset status"@en ;
+  rdfs:comment "Dataset lifecycle status: current, superseded, or retired."@en .
+
+gloss:supersedesDataset a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "supersedes dataset"@en ;
+  rdfs:comment "ID of the dataset edition that this one supersedes."@en .
+
+gloss:owner a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "owner"@en ;
+  rdfs:comment "Owning organization (e.g. ISO, IEC, OIML)."@en .
+
+gloss:sourceRepo a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "source repository"@en ;
+  rdfs:comment "URL of the source repository."@en .
+
+gloss:datasetLanguage a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset language"@en ;
+  rdfs:comment "ISO 639-2 language code available in this dataset."@en .
+
+gloss:languageOrder a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "language order"@en ;
+  rdfs:comment "Preferred display order for languages."@en .
+
+gloss:hasSection a owl:ObjectProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range gloss:Section ;
+  rdfs:label "has section"@en ;
+  rdfs:comment "Top-level section in the dataset's hierarchical section tree."@en .
+
+gloss:hasDefaultOrdering a owl:ObjectProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range skos:Concept ;
+  rdfs:label "default ordering"@en ;
+  rdfs:comment "Default concept ordering method for the dataset."@en .
+
+gloss:datasetDescription a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "dataset description"@en ;
+  rdfs:comment "Localized dataset description."@en .
+
+gloss:aboutPath a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:string ;
+  rdfs:label "about path"@en ;
+  rdfs:comment "Localized path to about-page document."@en .
+
+gloss:logo a owl:DatatypeProperty ;
+  rdfs:domain gloss:DatasetRegister ;
+  rdfs:range xsd:anyURI ;
+  rdfs:label "logo"@en ;
+  rdfs:comment "Relative path to the dataset logo image."@en .
+
+# ══════════════════════════════════════════════════════════════════════════
+# DATAPROPERTIES — Section
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:sectionId a owl:DatatypeProperty ;
+  rdfs:domain gloss:Section ;
+  rdfs:range xsd:string ;
+  rdfs:label "section id"@en ;
+  rdfs:comment "Section identifier used in concept references and URL routing."@en .
+
+gloss:sectionName a owl:DatatypeProperty ;
+  rdfs:domain gloss:Section ;
+  rdfs:range xsd:string ;
+  rdfs:label "section name"@en ;
+  rdfs:comment "Localized section title."@en .
+
+gloss:hasChildSection a owl:ObjectProperty ;
+  rdfs:domain gloss:Section ;
+  rdfs:range gloss:Section ;
+  rdfs:label "has child section"@en ;
+  rdfs:comment "Hierarchical containment — parent section contains child sections."@en .
+
+gloss:sectionOrdering a owl:ObjectProperty ;
+  rdfs:domain gloss:Section ;
+  rdfs:range skos:Concept ;
+  rdfs:label "section ordering"@en ;
+  rdfs:comment "Per-section ordering override; if absent, inherits dataset default."@en .

@@ -38,7 +38,9 @@ ontologies/
 │   ├── grammar-gender.ttl        # Grammatical gender
 │   ├── grammar-number.ttl        # Grammatical number (5 values: singular/dual/plural/mass/other_number)
 │   ├── register.ttl              # TBX-Linguist register (7 values)
-│   └── part-of-speech.ttl        # Part of speech (6 values)
+│   ├── part-of-speech.ttl        # Part of speech (6 values)
+│   ├── ordering-method.ttl       # Ordering methods (systematic/mixed/alphabetical)
+│   └── concept-reference-type.ttl # Reference types (domain/section/local/designation)
 └── shapes/
     └── glossarist.shacl.ttl      # SHACL validation shapes
 ```

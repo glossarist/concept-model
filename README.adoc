@@ -341,6 +341,81 @@ Annotations use the same `DetailedDefinition` structure as definitions, notes,
 and examples, with `content` and optional per-item `sources`.
 
 
+== Dataset register
+
+Each dataset directory contains a `register.yaml` — the self-describing metadata
+file. It carries identity (URN, ref, year), structure (ordering, hierarchical
+sections), provenance (owner, sourceRepo), and relationships (supersedes other
+datasets). See the full schema in `schemas/v3/register.yaml`.
+
+=== Hierarchical sections
+
+Sections provide structural organization for concepts within a dataset. A
+section may contain child sections, forming a tree:
+
+[source,yaml]
+----
+sections:
+  - id: "1"
+    names: { eng: "General terms" }
+  - id: "3"
+    names: { eng: "Geometric concepts" }
+    children:
+      - id: "3.1"
+        names: { eng: "Points and lines" }
+      - id: "3.2"
+        names: { eng: "Surfaces" }
+        ordering: alphabetical
+----
+
+Concepts reference sections via `domains[]` with `ref_type: section`:
+
+[source,yaml]
+----
+data:
+  domains:
+    - source: urn:iso:std:iso:19107
+      id: "3.1"
+      ref_type: section
+----
+
+When a parent section is selected, all descendant sections' concepts are
+included in the filter. This enables the hierarchical section groups in the
+concept-browser.
+
+=== Ordering methods
+
+A dataset or section declares how its concepts should be ordered:
+
+[cols="1,3",options="header"]
+|===
+|Method |Description
+
+|`systematic`
+|Tree hierarchy, top-down left-to-right. Broader concepts before narrower.
+Uses dot-separated identifiers (e.g. 3.6, 3.6.1) and explicit broader/narrower
+edges.
+
+|`mixed`
+|Pedagogical sequence — fundamental concepts first, then specific. No strict
+tree hierarchy.
+
+|`alphabetical`
+|Sorted by preferred designation. Derived at render time from localized concept
+data.
+|===
+
+Ordering can be set at the dataset level (`ordering`) or overridden per-section
+(`section.ordering`).
+
+=== Dataset identity and resolution
+
+The dataset's `urn` is the primary identifier for cross-dataset resolution. When
+a concept in one dataset references a concept in another, the target is
+identified by URN + concept ID. The `urnAliases` field provides additional URN
+patterns for matching.
+
+
 == UML Models
 
 === Concept

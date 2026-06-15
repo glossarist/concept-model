@@ -1,0 +1,18 @@
+# 18 — Concept referencing a hierarchical section
+#
+# Demonstrates a concept that belongs to section "3.1" via domains[].
+# The concept-browser resolves the parent chain (3 → 3.1) so that
+# selecting section "3" also includes this concept.
+---
+id: ex-3.1.1
+data:
+  identifier: "3.1.1"
+  domains:
+    - source: "urn:example:std:ex:1000:2026"
+      id: "3.1"
+      ref_type: section
+  tags: [geometry, points]
+  localized_concepts:
+    eng: ex-3.1.1-eng
+status: valid
+date_accepted: "2026-01-01T00:00:00+00:00"
