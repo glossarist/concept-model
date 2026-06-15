@@ -29,6 +29,7 @@ localizations.
 | 15 | Citation & locality features | — | `15-citation-features.yaml` |
 | 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
 | 17 | Dataset register (URN resolution) | `17-register-dataset.yaml` | — |
+| 18 | Hierarchical sections | `18-hierarchical-sections-concept.yaml` | — (companion: `18-hierarchical-sections-register.yaml`) |
 
 ---
 

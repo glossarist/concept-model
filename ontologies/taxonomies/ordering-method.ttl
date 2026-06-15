@@ -1,0 +1,30 @@
+# Ordering Method Taxonomy
+#
+# SKOS ConceptScheme for concept ordering methods within a dataset or section.
+# Source: ISO 10241-1, Glossarist register.yaml
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:orderingmethod a skos:ConceptScheme ;
+  skos:prefLabel "Ordering Method"@en ;
+  skos:definition "How concepts are ordered within a dataset or section (ISO 10241-1)."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/register> .
+
+<https://www.glossarist.org/ontologies/orderingmethod/systematic> a skos:Concept ;
+  skos:inScheme gloss:orderingmethod ;
+  skos:prefLabel "systematic"@en ;
+  skos:definition "Tree hierarchy, top-down left-to-right. Broader concepts before narrower. Uses dot-separated identifiers and explicit broader/narrower edges."@en .
+
+<https://www.glossarist.org/ontologies/orderingmethod/mixed> a skos:Concept ;
+  skos:inScheme gloss:orderingmethod ;
+  skos:prefLabel "mixed"@en ;
+  skos:definition "Pedagogical sequence — fundamental concepts first, then specific. No strict tree hierarchy."@en .
+
+<https://www.glossarist.org/ontologies/orderingmethod/alphabetical> a skos:Concept ;
+  skos:inScheme gloss:orderingmethod ;
+  skos:prefLabel "alphabetical"@en ;
+  skos:definition "Sorted by preferred designation. Derived at render time from localized concept data."@en .
+
+gloss:orderingmethod skos:hasTopConcept <https://www.glossarist.org/ontologies/orderingmethod/systematic> , <https://www.glossarist.org/ontologies/orderingmethod/mixed> , <https://www.glossarist.org/ontologies/orderingmethod/alphabetical> .

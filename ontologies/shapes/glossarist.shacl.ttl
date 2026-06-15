@@ -606,3 +606,95 @@ gloss:GrammarInfoShape a sh:NodeShape ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
   ] .
+
+# ══════════════════════════════════════════════════════════════════════════
+# Dataset Register shapes
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:DatasetRegisterShape a sh:NodeShape ;
+  sh:targetClass gloss:DatasetRegister ;
+  sh:property [
+    sh:path gloss:datasetId ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:datasetUrn ;
+    sh:datatype xsd:anyURI ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:datasetRef ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:datasetYear ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:datasetStatus ;
+    sh:datatype xsd:string ;
+    sh:in ( "current" "superseded" "retired" ) ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:supersedesDataset ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:owner ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sourceRepo ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:datasetLanguage ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasSection ;
+    sh:class gloss:Section ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasDefaultOrdering ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/orderingmethod> ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:logo ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:SectionShape a sh:NodeShape ;
+  sh:targetClass gloss:Section ;
+  sh:property [
+    sh:path gloss:sectionId ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sectionName ;
+    sh:datatype xsd:string ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasChildSection ;
+    sh:class gloss:Section ;
+  ] ;
+  sh:property [
+    sh:path gloss:sectionOrdering ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/orderingmethod> ;
+    sh:maxCount 1 ;
+  ] .

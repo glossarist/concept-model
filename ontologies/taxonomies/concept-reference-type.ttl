@@ -1,0 +1,36 @@
+# Concept Reference Type Taxonomy
+#
+# SKOS ConceptScheme for the ref_type field on domains[] and references[].
+# Distinguishes thematic domains from structural sections and local references.
+# Source: Glossarist ConceptReferenceType
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:conceptreferencetype a skos:ConceptScheme ;
+  skos:prefLabel "Concept Reference Type"@en ;
+  skos:definition "The type of reference from a concept to another concept or structural group, distinguishing thematic from structural classification."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/conceptreferencetype/domain> a skos:Concept ;
+  skos:inScheme gloss:conceptreferencetype ;
+  skos:prefLabel "domain"@en ;
+  skos:definition "A thematic or subject-area classification. The referenced concept represents a terminological domain (e.g. mathematics, physics)."@en .
+
+<https://www.glossarist.org/ontologies/conceptreferencetype/section> a skos:Concept ;
+  skos:inScheme gloss:conceptreferencetype ;
+  skos:prefLabel "section"@en ;
+  skos:definition "A structural section membership within the dataset's organizational hierarchy (defined in register.yaml)."@en .
+
+<https://www.glossarist.org/ontologies/conceptreferencetype/local> a skos:Concept ;
+  skos:inScheme gloss:conceptreferencetype ;
+  skos:prefLabel "local"@en ;
+  skos:definition "An internal reference within the same glossary, without an external source URN."@en .
+
+<https://www.glossarist.org/ontologies/conceptreferencetype/designation> a skos:Concept ;
+  skos:inScheme gloss:conceptreferencetype ;
+  skos:prefLabel "designation"@en ;
+  skos:definition "A reference to a specific designation within the same concept entry."@en .
+
+gloss:conceptreferencetype skos:hasTopConcept <https://www.glossarist.org/ontologies/conceptreferencetype/domain> , <https://www.glossarist.org/ontologies/conceptreferencetype/section> , <https://www.glossarist.org/ontologies/conceptreferencetype/local> , <https://www.glossarist.org/ontologies/conceptreferencetype/designation> .
