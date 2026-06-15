@@ -383,6 +383,28 @@ When a parent section is selected, all descendant sections' concepts are
 included in the filter. This enables the hierarchical section groups in the
 concept-browser.
 
+==== Cascading membership semantics
+
+Section membership is **transitive**: if section `3` contains section `3.1`,
+which contains section `3.1.1`, then a concept in section `3.1.1` is also a
+member of `3.1` and `3` for the purposes of filtering and display. In the
+ontology, `gloss:hasChildSection` and its inverse `gloss:hasParentSection` are
+declared `owl:TransitiveProperty` so this closure holds at any depth.
+
+==== Term-ID-prefix derivation convention
+
+When a concept has no explicit `domains[]` entry with `ref_type: section`,
+consumers MAY derive section membership from the concept's identifier using a
+dot- or dash-prefix convention:
+
+* `103-01-01` → section `103`
+* `3.1.1` → section `3`
+* `103-01` → section `103`
+
+The longest registered section prefix wins. This convention is a fallback for
+legacy datasets and is NOT authoritative — explicit `domains[]` entries always
+take precedence.
+
 === Ordering methods
 
 A dataset or section declares how its concepts should be ordered:
