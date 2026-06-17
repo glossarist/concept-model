@@ -1,0 +1,25 @@
+class Figure extends NonVerbalEntity {
+  definition {
+    A dataset-level figure entity (ISO 10241-1 §6.5 non-verbal representation).
+    Authored once at datasets/{ds}/figures/{fig-id}.yaml and referenced by
+    any number of concepts via stable ID.
+
+    A Figure may carry multiple image variants (SVG + PNG + dark/light) for
+    responsive rendering and accessibility. Composite figures use recursive
+    subfigures.
+  }
+
+  +images: FigureImage [1..*] {
+    definition {
+      Image variants. At least one required. Multiple enable responsive
+      <picture> with format/role-based selection.
+    }
+  }
+
+  +subfigures: Figure [0..*] {
+    definition {
+      Child figures forming a recursive composite. For example,
+      a "dispersion prism" figure with "input" and "output" subfigures.
+    }
+  }
+}

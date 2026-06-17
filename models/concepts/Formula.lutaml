@@ -1,0 +1,20 @@
+class Formula extends NonVerbalEntity {
+  definition {
+    A dataset-level formula entity (ISO 10241-1 §6.5 non-verbal representation).
+    Authored at datasets/{ds}/formulas/{formula-id}.yaml and shared across
+    concepts. The mathematical expression is stored in a notation format.
+  }
+
+  +expression: LocalizedStringMap [0..1] {
+    definition {
+      The mathematical expression, localized. Different languages may use
+      different notation conventions.
+    }
+  }
+
+  +notation: String [0..1] {
+    definition {
+      Expression notation: latex, mathml, asciimath.
+    }
+  }
+}

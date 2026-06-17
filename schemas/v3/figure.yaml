@@ -1,0 +1,92 @@
+# Figure Schema (ISO 10241-1 §6.5 non-verbal representation)
+#
+# Dataset-level figure entities authored at datasets/{ds}/figures/{fig-id}.yaml.
+# Referenced by concepts via figures: [id] or {{fig:id}} mentions.
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Figure
+description: A dataset-level figure entity with localized caption/alt and multiple image variants.
+
+type: object
+required:
+  - id
+  - images
+  - alt
+additionalProperties: false
+
+properties:
+  id:
+    type: string
+    description: Stable identifier, dataset-unique. kebab-case recommended.
+
+  identifier:
+    type: string
+    description: Display form (e.g. "Figure 7c"). Optional.
+
+  caption:
+    type: object
+    description: Localized title/caption, keyed by ISO 639-2 language code.
+    additionalProperties:
+      type: string
+
+  description:
+    type: object
+    description: Localized long description (aria-describedby).
+    additionalProperties:
+      type: string
+
+  alt:
+    type: object
+    description: Localized short alt text for screen readers.
+    additionalProperties:
+      type: string
+
+  images:
+    type: array
+    description: Image variants. At least one required.
+    minItems: 1
+    items:
+      type: object
+      required: [src, format]
+      additionalProperties: false
+      properties:
+        src:
+          type: string
+          description: Filename in images/ directory.
+        format:
+          type: string
+          enum: [svg, png, jpg, webp, avif, gif]
+        role:
+          type: string
+          enum: [vector, raster, dark, light, print]
+        width:
+          type: integer
+        height:
+          type: integer
+        scale:
+          type: integer
+
+  sources:
+    type: array
+    description: Bibliographic sources (provenance).
+    items:
+      $ref: "#/$defs/concept_source"
+
+  subfigures:
+    type: array
+    description: Recursive composite subfigures.
+    items:
+      $ref: "#/$defs/figure"
+
+$defs:
+  concept_source:
+    type: object
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+      type:
+        type: string
+        enum: [authoritative, lineage]
+      origin:
+        type: object
