@@ -1203,3 +1203,84 @@ gloss:sectionOrdering a owl:ObjectProperty ;
   rdfs:range skos:Concept ;
   rdfs:label "section ordering"@en ;
   rdfs:comment "Per-section ordering override; if absent, inherits dataset default."@en .
+
+# ── Non-Verbal Entities (ISO 10241-1 §6.5) ──────────────────────────────
+
+gloss:NonVerbalEntity a owl:Class ;
+  rdfs:label "Non-Verbal Entity"@en ;
+  rdfs:comment """
+    Abstract base for dataset-level non-verbal representation entities
+    (ISO 10241-1 §6.5). Figures, Tables, and Formulas inherit common
+    metadata: id, identifier, caption, description, alt, sources.
+    Authored once and shared across concepts.
+  """@en .
+
+gloss:Figure a owl:Class ;
+  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:label "Figure"@en ;
+  rdfs:comment """
+    A dataset-level figure entity with localized caption/alt and
+    multiple image variants. May contain recursive subfigures.
+  """@en .
+
+gloss:Table a owl:Class ;
+  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:label "Table"@en ;
+  rdfs:comment "A dataset-level table entity with localized content."@en .
+
+gloss:Formula a owl:Class ;
+  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:label "Formula"@en ;
+  rdfs:comment "A dataset-level formula entity with localized expression."@en .
+
+gloss:FigureImage a owl:Class ;
+  rdfs:label "Figure Image"@en ;
+  rdfs:comment "One image variant within a Figure (format, role, dimensions)."@en .
+
+gloss:caption a owl:DatatypeProperty ;
+  rdfs:domain gloss:NonVerbalEntity ;
+  rdfs:range rdf:langString ;
+  rdfs:label "caption"@en ;
+  rdfs:comment "Localized title/caption."@en .
+
+gloss:altText a owl:DatatypeProperty ;
+  rdfs:domain gloss:NonVerbalEntity ;
+  rdfs:range rdf:langString ;
+  rdfs:label "alt text"@en ;
+  rdfs:comment "Localized short alt text for screen readers."@en .
+
+gloss:description a owl:DatatypeProperty ;
+  rdfs:domain gloss:NonVerbalEntity ;
+  rdfs:range rdf:langString ;
+  rdfs:label "description"@en ;
+  rdfs:comment "Localized long description (aria-describedby)."@en .
+
+gloss:image a owl:ObjectProperty ;
+  rdfs:domain gloss:Figure ;
+  rdfs:range gloss:FigureImage ;
+  rdfs:label "image"@en ;
+  rdfs:comment "An image variant of a Figure."@en .
+
+gloss:hasSubfigure a owl:ObjectProperty ;
+  rdfs:domain gloss:Figure ;
+  rdfs:range gloss:Figure ;
+  rdfs:label "has subfigure"@en ;
+  rdfs:comment "Recursive composite subfigure."@en .
+
+gloss:src a owl:DatatypeProperty ;
+  rdfs:domain gloss:FigureImage ;
+  rdfs:range xsd:string ;
+  rdfs:label "src"@en ;
+  rdfs:comment "Image filename relative to images/ directory."@en .
+
+gloss:format a owl:DatatypeProperty ;
+  rdfs:domain gloss:FigureImage ;
+  rdfs:range xsd:string ;
+  rdfs:label "format"@en ;
+  rdfs:comment "Image format (svg, png, jpg, webp, avif, gif)."@en .
+
+gloss:role a owl:DatatypeProperty ;
+  rdfs:domain gloss:FigureImage ;
+  rdfs:range xsd:string ;
+  rdfs:label "role"@en ;
+  rdfs:comment "Variant role (vector, raster, dark, light, print)."@en .

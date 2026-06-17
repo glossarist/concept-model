@@ -1,0 +1,45 @@
+class FigureImage {
+  definition {
+    One image variant within a Figure. Multiple variants enable
+    responsive images, format fallbacks, and accessibility
+    (dark/light, language-specific, print-optimized).
+  }
+
+  +src: String [1] {
+    definition {
+      Filename in the dataset's images/ directory.
+      No path traversal (../ forbidden at build).
+    }
+  }
+
+  +format: String [1] {
+    definition {
+      Image format: svg, png, jpg, webp, avif, gif.
+    }
+  }
+
+  +role: String [0..1] {
+    definition {
+      Variant role: vector, raster, dark, light, print.
+      Drives consumer-side <picture> element ordering.
+    }
+  }
+
+  +width: Integer [0..1] {
+    definition {
+      Intrinsic width in pixels. Required for raster to prevent layout shift.
+    }
+  }
+
+  +height: Integer [0..1] {
+    definition {
+      Intrinsic height in pixels. Required for raster to prevent layout shift.
+    }
+  }
+
+  +scale: Integer [0..1] {
+    definition {
+      Resolution multiplier (e.g. 2 for retina displays). Used in srcset.
+    }
+  }
+}

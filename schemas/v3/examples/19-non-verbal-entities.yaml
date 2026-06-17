@@ -1,0 +1,91 @@
+# 19 — Non-Verbal Entities (Figure, Table, Formula)
+#
+# Demonstrates dataset-level non-verbal representation entities.
+# Each entity is authored once and referenced by concepts via stable ID.
+
+# --- Figure with multiple variants + localized caption/alt ---
+id: mixed-reflection
+identifier: "Figure 7c"
+caption:
+  eng: "Mixed reflection geometry"
+  fra: "Géométrie de réflexion mixte"
+alt:
+  eng: "Diagram showing simultaneous specular and diffuse reflection from a surface."
+  fra: "Diagramme montrant la réflexion simultanée spéculaire et diffuse."
+description:
+  eng: "An incident ray hits a surface at angle θ. Two reflected rays leave: one at θ (specular) and several scattered (diffuse)."
+images:
+  - src: mixed-reflection.svg
+    format: svg
+    role: vector
+  - src: mixed-reflection.png
+    format: png
+    role: raster
+    width: 1600
+    height: 1200
+sources:
+  - type: authoritative
+    origin:
+      ref:
+        source: CIE
+        id: "17-21-035"
+    modification: "Adapted with translated labels."
+subfigures: []
+
+# --- Composite figure with subfigures ---
+---
+id: dispersion-prism
+identifier: "Figure 3"
+caption:
+  eng: "Dispersion by a prism"
+subfigures:
+  - id: dispersion-prism-input
+    identifier: "Figure 3a"
+    caption: { eng: "Input beam" }
+    alt: { eng: "White light beam entering a prism." }
+    images:
+      - src: dispersion-input.svg
+        format: svg
+        role: vector
+  - id: dispersion-prism-output
+    identifier: "Figure 3b"
+    caption: { eng: "Output spectrum" }
+    alt: { eng: "Spectrum of colors exiting the prism." }
+    images:
+      - src: dispersion-output.svg
+        format: svg
+        role: vector
+
+# --- Table entity ---
+---
+id: si-base-units
+identifier: "Table 1"
+caption:
+  eng: "SI base units"
+alt:
+  eng: "Seven SI base units with names, symbols, and dimensions."
+content:
+  headers: [Quantity, Name, Symbol, Dimension]
+  rows:
+    - [length, metre, m, L]
+    - [mass, kilogram, kg, M]
+    - [time, second, s, T]
+    - [electric current, ampere, A, I]
+    - [temperature, kelvin, K, Θ]
+    - [amount, mole, mol, N]
+    - [luminous intensity, candela, cd, J]
+format: structured
+
+# --- Formula entity ---
+---
+id: wave-equation
+identifier: "Equation 1"
+caption:
+  eng: "Electromagnetic wave equation"
+alt:
+  eng: "Second-order partial differential equation for the electric field."
+description:
+  eng: "Describes wave propagation in free space."
+expression:
+  eng: "\\nabla^2 \\mathbf{E} = \\mu_0 \\epsilon_0 \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2}"
+notation: latex

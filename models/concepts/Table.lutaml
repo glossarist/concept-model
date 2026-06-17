@@ -1,0 +1,21 @@
+class Table extends NonVerbalEntity {
+  definition {
+    A dataset-level table entity (ISO 10241-1 §6.5 non-verbal representation).
+    Authored at datasets/{ds}/tables/{table-id}.yaml and shared across
+    concepts. Content is stored as structured data or markup.
+  }
+
+  +content: LocalizedStringMap [0..1] {
+    definition {
+      Table content. For structured format: { headers: [...], rows: [...] }.
+      For markup format: the markup string keyed by language.
+    }
+  }
+
+  +format: String [0..1] {
+    definition {
+      Content format: structured, html, markdown, asciidoc.
+      Defaults to structured if absent.
+    }
+  }
+}

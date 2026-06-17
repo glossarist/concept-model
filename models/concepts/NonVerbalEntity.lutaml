@@ -1,0 +1,48 @@
+class NonVerbalEntity {
+  definition {
+    Abstract base for dataset-level non-verbal representation entities
+    (ISO 10241-1 §6.5). Figures, Tables, and Formulas inherit common
+    metadata: stable identity, localized caption/description (accessibility),
+    and provenance sources. Each is authored once at the dataset level and
+    referenced by any number of concepts.
+  }
+
+  +id: String [1] {
+    definition {
+      Stable identifier, dataset-unique. Used in inline mentions
+      ({{fig:id}}, {{table:id}}, {{formula:id}}) and structural
+      references (figures: [], tables: [], formulas: []).
+    }
+  }
+
+  +identifier: String [0..1] {
+    definition {
+      Display form ("Figure 7c", "Table 2", "Equation 1").
+      Optional; consumers may auto-derive.
+    }
+  }
+
+  +caption: LocalizedStringMap [0..1] {
+    definition {
+      Localized title/caption, keyed by ISO 639-2 language code.
+    }
+  }
+
+  +description: LocalizedStringMap [0..1] {
+    definition {
+      Localized long description for accessibility (aria-describedby).
+    }
+  }
+
+  +alt: LocalizedStringMap [0..1] {
+    definition {
+      Localized short alt text for screen readers.
+    }
+  }
+
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic sources (provenance), parallel to concept sources.
+    }
+  }
+}
