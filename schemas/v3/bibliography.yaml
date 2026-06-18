@@ -1,0 +1,40 @@
+# Bibliography Schema (V3 glossarist dataset syntax)
+#
+# Dataset-level bibliography, authored at datasets/{ds}/bibliography.yaml.
+# A single-key mapping: { bibliography: [ BibliographyEntry, ... ] }.
+# The collection is an array of typed entries under one wrapper key — not a
+# keyed map and not a stray top-level array.
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Bibliography
+description: A dataset's bibliography — a single-key mapping whose value is an array of typed bibliographic entries.
+
+type: object
+required: [bibliography]
+additionalProperties: false
+
+properties:
+  bibliography:
+    type: array
+    description: Ordered list of bibliographic references.
+    items:
+      type: object
+      required: [id, reference]
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          description: Entry identifier, dataset-unique. Cited from concept sources and inline {{cite:...}} mentions.
+        reference:
+          type: string
+          description: Publication reference string (e.g. "ISO 704").
+        title:
+          type: string
+          description: Title of the referenced document.
+        link:
+          type: string
+          format: uri
+          description: URL to the referenced document.
+        type:
+          type: string
+          description: Document type (e.g. "standard").
