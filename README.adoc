@@ -463,9 +463,82 @@ bibliography:
   reference: ISO 15704
 ----
 
-The same single-key convention applies to every dataset collection file
-(`images.yaml`, and any future equivalent): the collection is an array of typed
-items grouped under one wrapper key.
+The same single-key convention applies to every dataset-wide collection
+file: the collection is an array of typed items grouped under one wrapper
+key. (Per-entity files such as `concepts/{id}.yaml` and `figures/{id}.yaml`
+are single-object mappings, not collection files, and do not use a wrapper
+key.)
+
+
+== Non-verbal entities
+
+Non-verbal representations (ISO 10241-1 §6.5) — images, tables, formulas —
+exist in two coexistence levels, both sharing the same accessibility +
+provenance payload via `NonVerbalEntity`:
+
+`NonVerbRep`::
+The **concept-local inline** form, attached to a concept's `non_verb_rep`
+collection. Has no dataset-wide identity — its position in the collection
+is its identity. Discriminated by `type: image | table | formula`. When
+`type: image`, carries a `images[]` collection of `FigureImage` variants.
+
+`Figure` / `Table` / `Formula`::
+The **dataset-shared** form, authored at `figures/{id}.yaml`,
+`tables/{id}.yaml`, `formulas/{id}.yaml`. Each has a stable `id` (matches
+the filename, used for cross-references) and an optional human-readable
+`identifier` (used for display and AsciiDoc xref targets). Figure carries
+`images[]` (image variants) and recursive `subfigures[]`.
+
+The shared `NonVerbalEntity` payload:
+
+caption:: Localized short title (`LocalizedStringMap`).
+description:: Localized long description (a11y screen readers).
+alt:: Localized alternative text (a11y short label).
+sources:: Bibliographic `ConceptSource` collection.
+
+The dataset-shared variant (`SharedNonVerbalEntity`) adds `id` and
+`identifier`. The two-level hierarchy is the single source of truth for
+"where does this field belong": a11y + provenance live on the base;
+dataset identity lives on the shared variant; content-specific fields
+(`images`, `subfigures`, table cells, formula notation) live on the
+leaves.
+
+`FigureImage` carries one image variant within a Figure or image-type
+NonVerbRep: `src` (URI/path), `format`, `role` (vector/raster/dark/light/
+print), and optional `width`, `height`, `scale`. Multiple variants enable
+responsive rendering and accessibility fallbacks.
+
+[source,yaml]
+----
+# datasets/{ds}/figures/fig_A.23.yaml
+id: fig_A.23
+identifier: A.23
+images:
+- src: images/fig_A.23.png
+  format: png
+  role: raster
+caption:
+  eng: Sensor topology
+alt:
+  eng: Diagram of sensor network topology
+sources:
+- type: authoritative
+  status: identical
+----
+
+A concept-local NonVerbRep on a concept YAML:
+
+[source,yaml]
+----
+non_verb_rep:
+- type: image
+  images:
+  - src: assets/concept-diagram.svg
+    format: svg
+    role: vector
+  alt:
+    eng: Diagram of the concept
+----
 
 
 == UML Models

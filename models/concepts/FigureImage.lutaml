@@ -1,45 +1,33 @@
 class FigureImage {
   definition {
-    One image variant within a Figure. Multiple variants enable
-    responsive images, format fallbacks, and accessibility
-    (dark/light, language-specific, print-optimized).
+    One image variant within a Figure or NonVerbRep. Multiple variants enable
+    responsive images, format fallbacks, and accessibility (dark/light,
+    language-specific, print). The role field drives consumer-side selection.
   }
-
   +src: String [1] {
     definition {
-      Filename in the dataset's images/ directory.
-      No path traversal (../ forbidden at build).
+      URI reference to the image asset: a relative path within the dataset
+      (e.g. "images/fig_A.23.png"), a URN, or an absolute URL.
     }
   }
-
-  +format: String [1] {
+  +format: String [0..1] {
     definition {
-      Image format: svg, png, jpg, webp, avif, gif.
+      File format hint, e.g. "svg", "png", "jpg". Used together with role to
+      pick an appropriate variant.
     }
   }
-
   +role: String [0..1] {
     definition {
-      Variant role: vector, raster, dark, light, print.
-      Drives consumer-side <picture> element ordering.
+      Selection role. Common values: "vector" (SVG, resolution-independent),
+      "raster" (PNG/JPG, photos), "dark" (dark backgrounds), "light"
+      (light backgrounds), "print" (high-resolution for print output).
     }
   }
-
-  +width: Integer [0..1] {
-    definition {
-      Intrinsic width in pixels. Required for raster to prevent layout shift.
-    }
-  }
-
-  +height: Integer [0..1] {
-    definition {
-      Intrinsic height in pixels. Required for raster to prevent layout shift.
-    }
-  }
-
+  +width: Integer [0..1]
+  +height: Integer [0..1]
   +scale: Integer [0..1] {
     definition {
-      Resolution multiplier (e.g. 2 for retina displays). Used in srcset.
+      Optional scale percentage relative to the asset's native dimensions.
     }
   }
 }

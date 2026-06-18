@@ -1,25 +1,23 @@
-class Figure extends NonVerbalEntity {
+class Figure < SharedNonVerbalEntity {
   definition {
-    A dataset-level figure entity (ISO 10241-1 §6.5 non-verbal representation).
-    Authored once at datasets/{ds}/figures/{fig-id}.yaml and referenced by
-    any number of concepts via stable ID.
-
-    A Figure may carry multiple image variants (SVG + PNG + dark/light) for
-    responsive rendering and accessibility. Composite figures use recursive
-    subfigures.
+    A dataset-level figure entity (ISO 10241-1 §6.5 — non-verbal
+    representation). Authored once at datasets/{ds}/figures/{fig-id}.yaml
+    and referenced by any number of concepts via stable id — the same
+    sharing pattern as bibliography entries. A Figure may carry multiple
+    image variants (SVG + PNG + dark/light) for responsive rendering and
+    accessibility. Composite figures use recursive subfigures.
   }
-
-  +images: FigureImage [1..*] {
+  +images: FigureImage [0..*] {
     definition {
-      Image variants. At least one required. Multiple enable responsive
-      <picture> with format/role-based selection.
+      Image variants. The same logical figure may be rendered as SVG for
+      digital, PNG for fallback, dark-mode-tuned, etc.
     }
   }
-
   +subfigures: Figure [0..*] {
     definition {
-      Child figures forming a recursive composite. For example,
-      a "dispersion prism" figure with "input" and "output" subfigures.
+      Optional recursive composite. A figure with subfigures is the union
+      of its own images and its subfigures. Subfigure ids must be unique
+      within the parent figure.
     }
   }
 }
