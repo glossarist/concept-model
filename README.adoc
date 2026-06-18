@@ -438,6 +438,36 @@ identified by URN + concept ID. The `urnAliases` field provides additional URN
 patterns for matching.
 
 
+== Bibliography
+
+A dataset directory may contain a `bibliography.yaml` — the dataset's
+bibliography: an ordered collection of the bibliographic references cited by its
+concepts. It is the *V3 glossarist dataset syntax* for a collection file — a
+YAML mapping with a single key, `bibliography`, whose value is an array of typed
+`BibliographyEntry` items. The collection is grouped under one wrapper key (no
+stray top-level array) and is not keyed by reference string: each entry is a
+typed item carrying its own `id`. See the full schema in
+`schemas/v3/bibliography.yaml`.
+
+[source,yaml]
+----
+bibliography:
+- id: ref_1
+  reference: ISO 704
+  title: Terminology work — Principles and methods
+- id: ref_23
+  reference: UNECE TRANS/WP29/1045
+  title: Common definitions of vehicle categories, masses and dimensions
+  link: https://www.unece.org/fileadmin/DAM/trans/doc/2005/wp29/TRANS-WP29-1045e.pdf
+- id: iso_std_iso_15704_en
+  reference: ISO 15704
+----
+
+The same single-key convention applies to every dataset collection file
+(`images.yaml`, and any future equivalent): the collection is an array of typed
+items grouped under one wrapper key.
+
+
 == UML Models
 
 === Concept

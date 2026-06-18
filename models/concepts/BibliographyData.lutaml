@@ -1,0 +1,20 @@
+class BibliographyData {
+  definition {
+    The bibliography of a dataset, persisted as bibliography.yaml. A YAML
+    mapping with a single key, "bibliography", whose value is an ordered array
+    of BibliographyEntry items — the V3 glossarist dataset syntax for a
+    collection file. Authored once per dataset and referenced by concepts via
+    their sources and inline cite mentions.
+
+    The document root is a mapping, not a stray top-level array, and the
+    collection is not keyed by reference string: each entry is a typed item
+    carrying its own +id+.
+  }
+
+  +bibliography: BibliographyEntry [0..*] {
+    definition {
+      The dataset's bibliographic references, as an ordered array under the
+      single "bibliography" wrapper key.
+    }
+  }
+}

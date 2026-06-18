@@ -1,0 +1,39 @@
+class BibliographyEntry {
+  definition {
+    A single bibliographic reference in a dataset's bibliography
+    (bibliography.yaml). A bibliography is an ordered collection of these
+    entries; each carries its own identifier as the +id+ field, rather than
+    being indexed by an out-of-band hash key.
+  }
+
+  +id: String [1] {
+    definition {
+      Entry identifier, dataset-unique. Cited from concept sources and inline
+      {{cite:...}} mentions.
+    }
+  }
+
+  +reference: String [1] {
+    definition {
+      Publication reference string, e.g. "ISO 704", "IEC 60050".
+    }
+  }
+
+  +title: String [0..1] {
+    definition {
+      Title of the referenced document.
+    }
+  }
+
+  +link: String [0..1] {
+    definition {
+      URL to the referenced document.
+    }
+  }
+
+  +type: String [0..1] {
+    definition {
+      Document type, e.g. "standard".
+    }
+  }
+}
