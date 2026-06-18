@@ -1,0 +1,9 @@
+enum NonVerbalType {
+  definition {
+    Discriminator for the kind of non-verbal representation attached to a
+    concept. Used by NonVerbRep#type.
+  }
+  image
+  table
+  formula
+}

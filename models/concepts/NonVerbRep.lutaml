@@ -1,20 +1,36 @@
 class NonVerbRep {
   definition {
-    A non-verbal representation of the term, used to help define it.
+    A non-verbal representation attached to a concept, used to help define it
+    (ISO 10241-1 §6.5). The concept-local inline form; the dataset-shared
+    form is Figure, Table, or Formula. NonVerbRep has no dataset-wide
+    identity — it lives at a positional slot inside the parent concept's
+    non_verb_rep collection.
   }
-  +image: <<BasicDocument>> Image [0..1] {
+  +type: NonVerbalType [1] {
     definition {
-      An image used to help define a term.
+      Discriminates the kind of non-verbal content: image, table, or formula.
     }
   }
-  +table: <<BasicDocument>> Table [0..1] {
+  +images: FigureImage [0..*] {
     definition {
-      A table used to help define a term.
+      Image variants (responsive, format fallbacks, dark/light, language-specific).
+      Each variant carries src, format, role, and optional dimensions. Used when
+      type is "image"; empty otherwise.
     }
   }
-  +formula: <<BasicDocument>> FormulaBlock [0..1] {
+  +caption: LocalizedStringMap [0..1] {
     definition {
-      A formula used to help define a term.
+      Localized short title for the representation, keyed by ISO 639 code.
+    }
+  }
+  +description: LocalizedStringMap [0..1] {
+    definition {
+      Localized long description, used by screen readers and long-desc links.
+    }
+  }
+  +alt: LocalizedStringMap [0..1] {
+    definition {
+      Localized alternative text — short label for screen readers (a11y).
     }
   }
   +sources: ConceptSource [0..*] {

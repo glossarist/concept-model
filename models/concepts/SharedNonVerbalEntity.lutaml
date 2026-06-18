@@ -1,0 +1,20 @@
+class SharedNonVerbalEntity < NonVerbalEntity {
+  definition {
+    A non-verbal entity that has stable dataset-wide identity. Figure, Table,
+    and Formula inherit from this; NonVerbRep (concept-local, positional)
+    inherits from NonVerbalEntity directly.
+  }
+  +id: String [1] {
+    definition {
+      Stable identifier used for cross-referencing. Matches the filename
+      (e.g. "fig_A.23" -> figures/fig_A.23.yaml). Authors cite this id via
+      inline {{fig:id}} mentions or structural figures[] entries.
+    }
+  }
+  +identifier: String [0..1] {
+    definition {
+      Human-readable label (e.g. "A.23") used for display and AsciiDoc
+      xref targets like <<fig_A.23>>.
+    }
+  }
+}
