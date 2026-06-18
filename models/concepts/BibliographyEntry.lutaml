@@ -9,7 +9,7 @@ class BibliographyEntry {
   +id: String [1] {
     definition {
       Entry identifier, dataset-unique. Cited from concept sources and inline
-      {{cite:...}} mentions.
+      cite:... mentions.
     }
   }
 

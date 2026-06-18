@@ -8,7 +8,7 @@ class SharedNonVerbalEntity < NonVerbalEntity {
     definition {
       Stable identifier used for cross-referencing. Matches the filename
       (e.g. "fig_A.23" -> figures/fig_A.23.yaml). Authors cite this id via
-      inline {{fig:id}} mentions or structural figures[] entries.
+      inline fig:id mentions or structural figures[] entries.
     }
   }
   +identifier: String [0..1] {
