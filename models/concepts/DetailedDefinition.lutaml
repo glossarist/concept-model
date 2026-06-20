@@ -1,6 +1,7 @@
 class DetailedDefinition {
   definition {
-    A definition of the managed term.
+    A definition of the managed term. Reused as the shape for
+    concept-level definition, notes, examples, and annotations.
   }
   +content: ParagraphBlock [1..*] {
     definition {
@@ -10,6 +11,15 @@ class DetailedDefinition {
   +sources: ConceptSource [0..*] {
     definition {
       Bibliographic references for this particular definition of the managed term.
+    }
+  }
+  +examples: DetailedDefinition [0..*] {
+    definition {
+      Examples scoped to this entry — e.g. an EXAMPLE nested inside
+      a NOTE (VIM 1993 style) or inside a definition. Empty when
+      the example is concept-level, in which case it lives on
+      Concept#examples directly. Recursive but typically one level
+      deep in source data.
     }
   }
 }

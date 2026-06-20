@@ -80,8 +80,14 @@ ConceptData defaults → Designation overrides → Pronunciation overrides.
 
 All three use `DetailedDefinition` — text content with optional per-item sources.
 
+A `DetailedDefinition` may carry its own scoped `examples` collection (VIM 1993
+style: EXAMPLE entries nested inside a NOTE). Concept-level examples — the ones
+not scoped to a specific note or definition — live on `Concept#examples`
+directly.
+
 - **`04-definition-notes-examples.yaml`**: definition with authoritative source,
-  two notes (one with lineage source), and an example.
+  two notes (one with lineage source and two scoped examples), and a concept-level
+  example.
 
 ## 05 — Domains (Classification)
 
