@@ -34,6 +34,9 @@ data:
       origin:
         ref:
           source: SI Brochure, 9th edition
+    examples:
+    - content: At 20 °C, annealed copper has a resistivity of about 1.68 × 10⁻⁸ Ω·m.
+    - content: For a 1 m length of copper wire with cross-section 1 mm², R ≈ 0.017 Ω.
   examples:
   - content: A copper wire 1 m long with a cross-section of 1 mm² has a resistance
       of approximately 0.017 Ω at 20 °C.

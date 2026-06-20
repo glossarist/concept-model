@@ -43,6 +43,15 @@ data:
         - type: lineage
           origin:
             text: "SI Brochure, 9th edition"
+      # Examples scoped to this note — VIM 1993 style nesting.
+      # Concept-level examples (below) are not scoped to a note.
+      examples:
+        - content: >-
+            At 20 °C, annealed copper has a resistivity of about
+            1.68 × 10⁻⁸ Ω·m.
+        - content: >-
+            For a 1 m length of copper wire with cross-section 1 mm²,
+            R ≈ 0.017 Ω.
 
   # Illustrative examples — also DetailedDefinition
   examples:
