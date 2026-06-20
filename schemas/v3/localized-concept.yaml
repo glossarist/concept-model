@@ -711,6 +711,15 @@ $defs:
         items:
           $ref: "#/$defs/concept_source"
         description: Bibliographic references for this content.
+      examples:
+        type: array
+        items:
+          $ref: "#/$defs/detailed_definition"
+        description: >-
+          Examples scoped to this entry (VIM 1993 style: EXAMPLE entries
+          nested inside a NOTE or definition). Empty when the example is
+          concept-level, in which case it lives on the concept's
+          top-level examples collection directly.
 
   related_concept:
     type: object
