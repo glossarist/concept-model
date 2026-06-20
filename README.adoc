@@ -341,6 +341,28 @@ Annotations use the same `DetailedDefinition` structure as definitions, notes,
 and examples, with `content` and optional per-item `sources`.
 
 
+== Scoped examples (VIM 1993 style)
+
+A `DetailedDefinition` may carry its own `examples` collection — EXAMPLE entries
+nested inside a NOTE or definition. This follows the VIM 1993 convention where
+examples are scoped to the note or definition they illustrate, rather than
+living at the concept level.
+
+* **Concept-level examples** live on the concept's `examples` collection
+  directly and use `gloss:hasExample`.
+* **Scoped examples** live on a `DetailedDefinition`'s `examples` collection
+  and use `gloss:hasScopedExample` (MECE separation from concept-level).
+
+[source,yaml]
+----
+notes:
+  - content: Resistivity depends on temperature.
+    examples:
+      - content: At 20 °C, annealed copper has a resistivity of 1.68 × 10⁻⁸ Ω·m.
+      - content: For a 1 m copper wire with 1 mm² cross-section, R ≈ 0.017 Ω.
+----
+
+
 == Dataset register
 
 Each dataset directory contains a `register.yaml` — the self-describing metadata

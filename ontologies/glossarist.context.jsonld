@@ -57,6 +57,7 @@
     "hasDefinition":       { "@id": "gloss:hasDefinition", "@type": "@id" },
     "hasNote":             { "@id": "gloss:hasNote",       "@type": "@id" },
     "hasExample":          { "@id": "gloss:hasExample",    "@type": "@id" },
+    "hasScopedExample":    { "@id": "gloss:hasScopedExample", "@type": "@id" },
     "hasAnnotation":       { "@id": "gloss:hasAnnotation", "@type": "@id" },
     "hasNonVerbalRep":     { "@id": "gloss:hasNonVerbalRep", "@type": "@id" },
     "domain":              { "@id": "gloss:domain",        "@type": "xsd:anyURI" },

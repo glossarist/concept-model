@@ -353,6 +353,10 @@ gloss:DetailedDefinitionShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:hasSource ;
     sh:class gloss:ConceptSource ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasScopedExample ;
+    sh:class gloss:DetailedDefinition ;
   ] .
 
 gloss:ConceptSourceShape a sh:NodeShape ;

@@ -379,7 +379,19 @@ gloss:hasExample a owl:ObjectProperty ;
   rdfs:domain gloss:LocalizedConcept ;
   rdfs:range gloss:DetailedDefinition ;
   rdfs:label "has example"@en ;
-  rdfs:comment "Links a localized concept to an illustrative example."@en .
+  rdfs:comment "Links a localized concept to a concept-level illustrative example."@en .
+
+gloss:hasScopedExample a owl:ObjectProperty ;
+  rdfs:domain gloss:DetailedDefinition ;
+  rdfs:range gloss:DetailedDefinition ;
+  rdfs:label "has scoped example"@en ;
+  rdfs:comment """
+    Links a definition, note, or annotation to a scoped example nested
+    inside it (VIM 1993 style). Distinct from gloss:hasExample, which
+    links a LocalizedConcept to a concept-level example. MECE: concept-
+    level examples use hasExample; definition/note-scoped examples use
+    hasScopedExample.
+  """@en .
 
 gloss:hasAnnotation a owl:ObjectProperty ;
   rdfs:domain gloss:LocalizedConcept ;
