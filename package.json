@@ -1,0 +1,53 @@
+{
+  "name": "@glossarist/concept-model",
+  "version": "0.1.0",
+  "description": "Canonical SSOT for the Glossarist concept model: OWL ontology, JSON-LD context, SHACL shapes, YAML schemas, and generated predicate constants for TypeScript and Ruby consumers.",
+  "type": "module",
+  "main": "dist/js/predicates.js",
+  "types": "dist/js/predicates.d.ts",
+  "files": [
+    "dist/js",
+    "dist/ruby",
+    "ontologies",
+    "schemas",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/js/predicates.d.ts",
+      "import": "./dist/js/predicates.js"
+    },
+    "./predicates": {
+      "types": "./dist/js/predicates.d.ts",
+      "import": "./dist/js/predicates.js"
+    },
+    "./ontologies/glossarist.ttl": "./ontologies/glossarist.ttl",
+    "./ontologies/glossarist.context.jsonld": "./ontologies/glossarist.context.jsonld",
+    "./ontologies/shapes/glossarist.shacl.ttl": "./ontologies/shapes/glossarist.shacl.ttl",
+    "./ontologies/prefixes.ttl": "./ontologies/prefixes.ttl",
+    "./schemas/*": "./schemas/*"
+  },
+  "scripts": {
+    "build": "node scripts/gen-predicates.mjs",
+    "test": "node --test scripts/__tests__/*.test.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "glossarist",
+    "terminology",
+    "rdf",
+    "owl",
+    "skos",
+    "skosxl",
+    "shacl",
+    "terminology"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

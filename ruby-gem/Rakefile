@@ -1,0 +1,47 @@
+# frozen_string_literal: true
+
+require "bundler/gem_tasks"
+require "fileutils"
+require "open3"
+
+task default: :build
+
+ROOT = File.expand_path("..", __dir__)
+DEST = __dir__
+
+desc "Run TypeScript codegen and sync output into ruby-gem/lib/"
+task :gen do
+  dist_predicates = File.join(ROOT, "dist", "ruby", "lib", "glossarist", "concept_model", "predicates.rb")
+  dest_predicates = File.join(DEST, "lib", "glossarist", "concept_model", "predicates.rb")
+
+  unless File.exist?(dist_predicates)
+    stdout, status = Open3.capture2e("node", File.join(ROOT, "scripts", "gen-predicates.mjs"))
+    warn stdout unless stdout.empty?
+    raise "codegen failed" unless status.success?
+  end
+
+  raise "codegen did not produce #{dist_predicates}" unless File.exist?(dist_predicates)
+  FileUtils.mkdir_p(File.dirname(dest_predicates))
+  FileUtils.cp(dist_predicates, dest_predicates)
+  puts "Synced #{dest_predicates}"
+
+  # Stage canonical artifacts so the gem is self-contained at build time.
+  stage_subtree("ontologies", "ontologies")
+  stage_subtree("schemas", "schemas")
+end
+
+desc "Build the gem (runs codegen first)"
+task build: :gen do
+  sh "gem build glossarist-concept-model.gemspec"
+end
+
+# Copy a subtree from the repo root into ruby-gem/, preserving structure.
+def stage_subtree(src_rel, dest_rel)
+  src_root = File.join(ROOT, src_rel)
+  dest_root = File.join(DEST, dest_rel)
+  return unless File.directory?(src_root)
+
+  FileUtils.rm_rf(dest_root)
+  FileUtils.cp_r(src_root, dest_root)
+  puts "Staged #{dest_rel}/"
+end
