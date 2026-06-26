@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Canonical SSOT for the Glossarist concept model: OWL ontology, JSON-LD context, SHACL shapes, YAML schemas, and generated predicate constants for TypeScript and Ruby consumers.",
   "type": "module",
+  "private": true,
   "main": "dist/js/predicates.js",
   "types": "dist/js/predicates.d.ts",
   "files": [
@@ -43,10 +44,6 @@
     "terminology"
   ],
   "license": "MIT",
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
   "engines": {
     "node": ">=18"
   }
