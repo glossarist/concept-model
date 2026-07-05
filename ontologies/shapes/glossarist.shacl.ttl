@@ -13,6 +13,10 @@
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix prov:   <http://www.w3.org/ns/prov#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
 
 # ══════════════════════════════════════════════════════════════════════════
 # Concept shapes
@@ -430,6 +434,132 @@ gloss:NonVerbalRepresentationShape a sh:NodeShape ;
     sh:class gloss:ConceptSource ;
   ] .
 
+# === K1: Non-verbal entity class hierarchy ===
+
+gloss:NonVerbalEntity a owl:Class ;
+  rdfs:label "Non-verbal entity"@en ;
+  rdfs:subClassOf skos:Concept .
+
+gloss:Figure a owl:Class ;
+  rdfs:label "Figure"@en ;
+  rdfs:subClassOf gloss:NonVerbalEntity .
+
+gloss:Table a owl:Class ;
+  rdfs:label "Table"@en ;
+  rdfs:subClassOf gloss:NonVerbalEntity .
+
+gloss:Formula a owl:Class ;
+  rdfs:label "Formula"@en ;
+  rdfs:subClassOf gloss:NonVerbalEntity .
+
+gloss:FigureShape a sh:NodeShape ;
+  sh:targetClass gloss:Figure ;
+  sh:property [
+    sh:path gloss:image ;
+    sh:datatype xsd:anyURI ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:caption ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:TableShape a sh:NodeShape ;
+  sh:targetClass gloss:Table ;
+  sh:property [
+    sh:path gloss:content ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:caption ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:title ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:FormulaShape a sh:NodeShape ;
+  sh:targetClass gloss:Formula ;
+  sh:property [
+    sh:path gloss:expression ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:latexForm ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:description ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] .
+
+# === K2: Image binary references ===
+
+gloss:ImageShape a sh:NodeShape ;
+  sh:targetClass foaf:Image ;
+  sh:property [
+    sh:path dcterms:format ;
+    sh:datatype xsd:string ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:language ;
+    sh:datatype xsd:string ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcat:byteSize ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+  ] .
+
+# === K4: NonVerbalRep (concept-level, distinct from dataset-level NVR) ===
+
+gloss:NonVerbalRepShape a sh:NodeShape ;
+  sh:targetClass gloss:NonVerbalRep ;
+  sh:property [
+    sh:path skosxl:prefLabel ;
+    sh:minCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:image ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path dcterms:description ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path prov:wasDerivedFrom ;
+    sh:class prov:Entity ;
+    sh:maxCount 1 ;
+  ] .
+
+# === B5: Section cascading — owl:TransitiveProperty ===
+
+gloss:hasChildSection a owl:TransitiveProperty, owl:ObjectProperty ;
+  rdfs:label "has child section"@en ;
+  rdfs:domain gloss:Section ;
+  rdfs:range gloss:Section .
+
+gloss:hasParentSection a owl:TransitiveProperty, owl:ObjectProperty ;
+  rdfs:label "has parent section"@en ;
+  rdfs:domain gloss:Section ;
+  rdfs:range gloss:Section .
+
 gloss:ReferenceShape a sh:NodeShape ;
   sh:targetClass gloss:Reference ;
   sh:or (
@@ -695,6 +825,11 @@ gloss:SectionShape a sh:NodeShape ;
   sh:property [
     sh:path gloss:hasChildSection ;
     sh:class gloss:Section ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasParentSection ;
+    sh:class gloss:Section ;
+    sh:maxCount 1 ;
   ] ;
   sh:property [
     sh:path gloss:sectionOrdering ;
