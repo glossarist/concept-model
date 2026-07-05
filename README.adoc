@@ -363,6 +363,70 @@ notes:
 ----
 
 
+== Non-verbal entities
+
+Non-verbal representations (images, tables, formulas) follow a two-track model
+(ISO 10241-1 §6.5):
+
+[cols="1,3,2",options="header"]
+|===
+|Track |Class |Scope
+
+|Dataset-level (shared)
+|`Figure`, `Table`, `Formula` (all inherit from `SharedNonVerbalEntity` →
+`NonVerbalEntity`)
+|Authored once in `figures/`, `tables/`, `formulas/` with stable IDs;
+referenced by many concepts.
+
+|Concept-level (inline)
+|`NonVerbalRepresentation` (the Lutaml `NonVerbRep` model, inherits from
+`NonVerbalEntity`)
+|Lives at a positional slot inside a concept's `non_verb_rep` collection.
+No dataset-wide identity.
+|===
+
+=== Shared payload (NonVerbalEntity)
+
+Both tracks carry the same accessibility + provenance fields:
+
+`caption`:: Localized short title.
+`description`:: Localized long description (screen readers, long-desc links).
+`altText`:: Localized short alt text for screen readers.
+`sources`:: Bibliographic references.
+
+=== SharedNonVerbalEntity additions
+
+Dataset-level entities (`Figure`, `Table`, `Formula`) add:
+
+`id`:: Stable identifier for cross-referencing (matches filename).
+`identifier`:: Human-readable label for display.
+
+Figure also links to one or more `FigureImage` variants (format, role,
+dimensions) and may contain recursive subfigures.
+
+=== Citing non-verbal entities inline
+
+Authors cite a dataset-level entity by ID using `{{fig:id}}` (see
+<<Inline concept mentions>>).
+
+[source,yaml]
+----
+figures:
+  - id: fig_A.23
+    caption: { eng: "Resistance vs temperature" }
+    images:
+      - src: fig_A.23.svg
+        format: svg
+        role: vector
+----
+
+Inline reference in definition text:
+
+....
+{{fig:fig_A.23,resistance vs temperature}}
+....
+
+
 == Dataset register
 
 Each dataset directory contains a `register.yaml` — the self-describing metadata

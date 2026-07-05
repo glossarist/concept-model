@@ -434,23 +434,9 @@ gloss:NonVerbalRepresentationShape a sh:NodeShape ;
     sh:class gloss:ConceptSource ;
   ] .
 
-# === K1: Non-verbal entity class hierarchy ===
-
-gloss:NonVerbalEntity a owl:Class ;
-  rdfs:label "Non-verbal entity"@en ;
-  rdfs:subClassOf skos:Concept .
-
-gloss:Figure a owl:Class ;
-  rdfs:label "Figure"@en ;
-  rdfs:subClassOf gloss:NonVerbalEntity .
-
-gloss:Table a owl:Class ;
-  rdfs:label "Table"@en ;
-  rdfs:subClassOf gloss:NonVerbalEntity .
-
-gloss:Formula a owl:Class ;
-  rdfs:label "Formula"@en ;
-  rdfs:subClassOf gloss:NonVerbalEntity .
+# === K1: Non-verbal entity shapes ===
+# Class declarations (NonVerbalEntity, Figure, Table, Formula, SharedNonVerbalEntity)
+# live in glossarist.ttl — this file contains validation shapes only.
 
 gloss:FigureShape a sh:NodeShape ;
   sh:targetClass gloss:Figure ;
@@ -474,6 +460,7 @@ gloss:TableShape a sh:NodeShape ;
   sh:targetClass gloss:Table ;
   sh:property [
     sh:path gloss:content ;
+    sh:datatype xsd:string ;
     sh:minCount 1 ;
   ] ;
   sh:property [
@@ -525,10 +512,11 @@ gloss:ImageShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
-# === K4: NonVerbalRep (concept-level, distinct from dataset-level NVR) ===
+# === K4: NonVerbalRepresentation (concept-level NVR) ===
+# Class declaration lives in glossarist.ttl as gloss:NonVerbalRepresentation.
 
-gloss:NonVerbalRepShape a sh:NodeShape ;
-  sh:targetClass gloss:NonVerbalRep ;
+gloss:NonVerbalRepresentationShape a sh:NodeShape ;
+  sh:targetClass gloss:NonVerbalRepresentation ;
   sh:property [
     sh:path skosxl:prefLabel ;
     sh:minCount 1 ;
@@ -547,18 +535,6 @@ gloss:NonVerbalRepShape a sh:NodeShape ;
     sh:class prov:Entity ;
     sh:maxCount 1 ;
   ] .
-
-# === B5: Section cascading — owl:TransitiveProperty ===
-
-gloss:hasChildSection a owl:TransitiveProperty, owl:ObjectProperty ;
-  rdfs:label "has child section"@en ;
-  rdfs:domain gloss:Section ;
-  rdfs:range gloss:Section .
-
-gloss:hasParentSection a owl:TransitiveProperty, owl:ObjectProperty ;
-  rdfs:label "has parent section"@en ;
-  rdfs:domain gloss:Section ;
-  rdfs:range gloss:Section .
 
 gloss:ReferenceShape a sh:NodeShape ;
   sh:targetClass gloss:Reference ;

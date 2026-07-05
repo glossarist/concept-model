@@ -1224,14 +1224,22 @@ gloss:sectionOrdering a owl:ObjectProperty ;
 gloss:NonVerbalEntity a owl:Class ;
   rdfs:label "Non-Verbal Entity"@en ;
   rdfs:comment """
-    Abstract base for dataset-level non-verbal representation entities
-    (ISO 10241-1 §6.5). Figures, Tables, and Formulas inherit common
-    metadata: id, identifier, caption, description, alt, sources.
-    Authored once and shared across concepts.
+    Abstract base for all non-verbal representation entities
+    (ISO 10241-1 §6.5). Carries the shared accessibility + provenance
+    payload: caption, description, alt, sources.
+  """@en .
+
+gloss:SharedNonVerbalEntity a owl:Class ;
+  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:label "Shared Non-Verbal Entity"@en ;
+  rdfs:comment """
+    A non-verbal entity that has stable dataset-wide identity. Figure,
+    Table, and Formula inherit from this. Distinct from NonVerbRep,
+    which is concept-local and positional.
   """@en .
 
 gloss:Figure a owl:Class ;
-  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
   rdfs:label "Figure"@en ;
   rdfs:comment """
     A dataset-level figure entity with localized caption/alt and
@@ -1239,12 +1247,12 @@ gloss:Figure a owl:Class ;
   """@en .
 
 gloss:Table a owl:Class ;
-  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
   rdfs:label "Table"@en ;
   rdfs:comment "A dataset-level table entity with localized content."@en .
 
 gloss:Formula a owl:Class ;
-  rdfs:subClassOf gloss:NonVerbalEntity ;
+  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
   rdfs:label "Formula"@en ;
   rdfs:comment "A dataset-level formula entity with localized expression."@en .
 
@@ -1299,3 +1307,21 @@ gloss:role a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "role"@en ;
   rdfs:comment "Variant role (vector, raster, dark, light, print)."@en .
+
+gloss:content a owl:DatatypeProperty ;
+  rdfs:domain gloss:Table ;
+  rdfs:range xsd:string ;
+  rdfs:label "content"@en ;
+  rdfs:comment "Serialized table content (HTML, AsciiDoc, or similar markup)."@en .
+
+gloss:expression a owl:DatatypeProperty ;
+  rdfs:domain gloss:Formula ;
+  rdfs:range xsd:string ;
+  rdfs:label "expression"@en ;
+  rdfs:comment "The formula expression in its source notation (AsciiDoc stem, MathML, etc.)."@en .
+
+gloss:latexForm a owl:DatatypeProperty ;
+  rdfs:domain gloss:Formula ;
+  rdfs:range xsd:string ;
+  rdfs:label "LaTeX form"@en ;
+  rdfs:comment "LaTeX rendering of the formula expression for downstream typesetting."@en .
