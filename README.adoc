@@ -20,6 +20,32 @@ These models align with multiple ISO standards for terminology management:
 These models are meant to be fully compatible with the data in the IEC Electropedia.
 
 
+== Versioning and releases
+
+This repo follows semantic versioning. Consumers (glossarist-ruby,
+glossarist-js, concept-browser) vendor the ontology and schema artifacts
+and pin to tags.
+
+[cols="1,3",options="header"]
+|===
+|Bump |When
+
+|MAJOR (vN+1.0.0)
+|Removed or renamed shape, class, property, prefix binding, or enum value
+
+|MINOR (vN.N+1.0)
+|New shapes, classes, properties, enum values; backward-compatible additive
+
+|PATCH (vN.N.N+1)
+|Shape bug fixes, doc/comment-only changes, example updates
+|===
+
+A prefix spelling change (e.g. `xl:` → `skosxl:`) is MINOR if the IRI
+binding is unchanged. See xref:RELEASE_PROCESS.md[RELEASE_PROCESS.md] for
+the full release checklist and xref:CHANGELOG.md[CHANGELOG.md] for the
+release history.
+
+
 == Concept-Term interaction cycle
 
 image::concept-term-cycle.png[]
