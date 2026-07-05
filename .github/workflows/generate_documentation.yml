@@ -26,10 +26,15 @@ jobs:
         run: mkdir -p html_documentation/v3 html_documentation/v2
 
       - name: Generate V3 documentation
-        run: generate-schema-doc schemas/v3 html_documentation/v3
+        run: |
+          generate-schema-doc schemas/v3/concept.yaml html_documentation/v3/concept.html
+          generate-schema-doc schemas/v3/localized-concept.yaml html_documentation/v3/localized-concept.html
+          generate-schema-doc schemas/v3/register.yaml html_documentation/v3/register.html
 
       - name: Generate V2 documentation
-        run: generate-schema-doc schemas/v2 html_documentation/v2
+        run: |
+          generate-schema-doc schemas/v2/concept.yaml html_documentation/v2/concept.html
+          generate-schema-doc schemas/v2/localized-concept.yaml html_documentation/v2/localized-concept.html
 
       - name: Upload HTML documentation as artifact
         uses: actions/upload-artifact@v4
