@@ -17,6 +17,7 @@ A comprehensive OWL ontology for the [Glossarist concept model](https://github.c
 
 ```
 ontologies/
+├── prefixes.ttl                  # Canonical prefix declarations (SSOT for all serializers)
 ├── glossarist.ttl                # Core OWL ontology — classes and properties
 ├── glossarist.context.jsonld     # JSON-LD @context for the namespace
 ├── README.md                     # This file
@@ -46,6 +47,8 @@ ontologies/
 ```
 
 ## Design Principles
+
+0. **Canonical prefixes** — `prefixes.ttl` is the single source of truth for prefix bindings. Every serializer (glossarist-ruby, glossarist-js, concept-browser) references this file verbatim. The canonical SKOS-XL prefix is `skosxl:` (per W3C convention); `xl:` is intentionally absent. Do not introduce alternative prefix spellings in downstream consumers.
 
 1. **SKOS alignment** — `gloss:Concept` is a `skos:Concept`. Designations use `skosxl:Label`. Instant interoperability with SKOS tooling.
 
