@@ -455,13 +455,13 @@ $defs:
         type: array
         items:
           $ref: "#/$defs/concept_source"
+        description: Bibliographic references for this particular definition of the concept.
       examples:
         type: array
         items:
           $ref: "#/$defs/detailed_definition"
         description: >-
           Examples scoped to this entry (VIM 1993 style nesting).
-        description: Bibliographic references for this particular definition of the concept.
 
   # Data Types
   iso639_three_char_code:
