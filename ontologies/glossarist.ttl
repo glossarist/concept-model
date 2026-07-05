@@ -14,13 +14,16 @@
 #
 # Every class and property here has a direct correspondence to a field in the
 # Glossarist YAML schema (schemas/v3/concept.yaml, localized-concept.yaml).
+#
+# Prefix bindings: see prefixes.ttl for the canonical SSOT. The declarations
+# below must stay in sync with that file.
 
 @prefix gloss:    <https://www.glossarist.org/ontologies/> .
 @prefix owl:      <http://www.w3.org/2002/07/owl#> .
 @prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
-@prefix xl:       <http://www.w3.org/2008/05/skos-xl#> .
+@prefix skosxl:    <http://www.w3.org/2008/05/skos-xl#> .
 @prefix iso-thes: <http://purl.org/iso25964/skos-thes#> .
 @prefix dcterms:  <http://purl.org/dc/terms/> .
 @prefix prov:     <http://www.w3.org/ns/prov#> .
@@ -93,11 +96,11 @@ gloss:LocalizedConcept a owl:Class ;
 # ── Designation Hierarchy (MECE) ─────────────────────────────────────────
 
 gloss:Designation a owl:Class ;
-  rdfs:subClassOf xl:Label ;
+  rdfs:subClassOf skosxl:Label ;
   rdfs:label "Designation"@en ;
   rdfs:comment """
     Abstract base for all designation types. A designation is both a
-    gloss:Designation and a skosxl:Label. The xl:literalForm carries the
+    gloss:Designation and a skosxl:Label. The skosxl:literalForm carries the
     designation text.
     Corresponds to Designation::Base in glossarist-ruby.
   """@en .

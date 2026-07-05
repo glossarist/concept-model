@@ -8,7 +8,7 @@
 @prefix gloss:  <https://www.glossarist.org/ontologies/> .
 @prefix sh:     <http://www.w3.org/ns/shacl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
-@prefix xl:     <http://www.w3.org/2008/05/skos-xl#> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -175,9 +175,9 @@ gloss:ConceptCollectionShape a sh:NodeShape ;
 
 gloss:DesignationShape a sh:NodeShape ;
   sh:targetClass gloss:Designation ;
-  sh:class xl:Label ;
+  sh:class skosxl:Label ;
   sh:property [
-    sh:path xl:literalForm ;
+    sh:path skosxl:literalForm ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
   ] ;
