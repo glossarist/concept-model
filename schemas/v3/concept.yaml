@@ -336,6 +336,21 @@ $defs:
       modification:
         type: string
         description: How the concept was modified from the source.
+      sourced_from:
+        type: array
+        description: |
+          Citations to the documents that this source was itself sourced
+          from. Only valid on sources of type `lineage`; authoritative
+          sources are terminal. When present, `status` and `modification`
+          describe how `origin` relates to these upstream sources.
+          Each citation MUST include a `locality` so the reader can
+          locate the definition in the upstream document.
+        items:
+          allOf:
+            - $ref: "#/$defs/citation"
+          required:
+            - ref
+            - locality
 
   # Concept Source Type enum
   concept_source_type:

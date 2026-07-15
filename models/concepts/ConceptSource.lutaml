@@ -30,14 +30,33 @@ class ConceptSource {
       The type of the managed term in the present context.
     }
   }
-  +origin: <<Bibliography>> Citation {
+  +origin: <<Bibliography>> Citation [1..1] {
     definition {
-      The bibliographic citation for the managed term.
+      The bibliographic citation for the managed term, including
+      the source document reference (ref) and the locality within
+      that document (clause, section, page, etc.) where the term
+      is defined.
     }
   }
   +modification: <<BasicDocument>> ParagraphBlock [0..1] {
     definition {
       A description of the modification to the cited definition of the term, if any, as it is to be applied in the present context.
+    }
+  }
+  +sourced_from: <<Bibliography>> Citation [0..*] {
+    definition {
+      Citations to the upstream documents that `origin` was itself
+      sourced from, forming a provenance chain. Each entry is a
+      full Citation including both `ref` (the document identifier)
+      and `locality` (the clause/section within that document where
+      the term appears) — a sourced_from entry without a locality
+      is incomplete because the reader cannot locate the definition
+      in the upstream document.
+
+      Only valid on sources of type `lineage`; authoritative sources
+      are terminal (no sourced_from). When present, `status` and
+      `modification` describe how `origin` relates to these upstream
+      sources.
     }
   }
 }

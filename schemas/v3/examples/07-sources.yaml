@@ -4,6 +4,12 @@
 # definition/note/example level, and designation level.
 # Each source has a type (authoritative/lineage), status, and origin citation.
 # V3 format: origin.ref is always a hash { source, id, version? }.
+#
+# Provenance chains: a lineage source may carry `sourced_from` — an
+# array of Citations pointing to upstream documents it was sourced from.
+# The authoritative source is terminal (no sourced_from). When
+# sourced_from is present, `status` and `modification` describe how
+# `origin` relates to the upstream sources.
 
 ---
 id: "151-01-01"
@@ -12,23 +18,50 @@ data:
   localized_concepts:
     eng: 44444444-aaaa-bbbb-cccc-dddddddddddd
 
-  # Managed concept level sources
+  # Managed concept level sources — provenance chain.
+  # The term originates in OIML V 1:2000 (authoritative, terminal),
+  # was reproduced in OIML B 3:2003 (lineage), and again in
+  # OIML G 18:2010 (lineage, the document being authored).
   sources:
-    # Authoritative source — the concept is directly from this standard
     - type: authoritative
       origin:
         ref:
-          source: "ISO"
-          id: "10241-1"
-          version: "2011"
+          source: "OIML"
+          id: "V 1"
+          version: "2000"
         locality:
           type: clause
           reference_from: "3.1"
-    # Lineage source — historical/provenance reference
     - type: lineage
+      status: identical
       origin:
         ref:
-          source: "ISO/IEC Guide 2:2004"
+          source: "OIML"
+          id: "B 3"
+          version: "2003"
+      sourced_from:
+        - ref:
+            source: "OIML"
+            id: "V 1"
+            version: "2000"
+          locality:
+            type: clause
+            reference_from: "3.1"
+    - type: lineage
+      status: identical
+      origin:
+        ref:
+          source: "OIML"
+          id: "G 18"
+          version: "2010"
+      sourced_from:
+        - ref:
+            source: "OIML"
+            id: "B 3"
+            version: "2003"
+          locality:
+            type: clause
+            reference_from: "2.7"
 
   related:
     - type: supersedes
