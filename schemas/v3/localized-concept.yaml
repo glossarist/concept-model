@@ -578,6 +578,15 @@ $defs:
       modification:
         type: string
         description: Modification of the concept source
+      sourced_from:
+        type: array
+        description: |
+          Citations to the documents that this source was itself sourced
+          from. Only valid on sources of type `lineage`; authoritative
+          sources are terminal. When present, `status` and `modification`
+          describe how `origin` relates to these upstream sources.
+        items:
+          $ref: "#/$defs/citation"
 
   # Reference (typed classification — domains, typed references)
   reference:

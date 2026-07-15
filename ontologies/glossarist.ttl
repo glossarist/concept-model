@@ -720,6 +720,17 @@ gloss:modification a owl:DatatypeProperty ;
   rdfs:label "modification"@en ;
   rdfs:comment "How the concept was modified from the source."@en .
 
+gloss:sourcedFrom a owl:ObjectProperty ;
+  rdfs:domain gloss:ConceptSource ;
+  rdfs:range gloss:Citation ;
+  rdfs:label "sourced from"@en ;
+  rdfs:comment """
+    Citations to the documents that this source was itself sourced
+    from. Only valid on lineage sources; authoritative sources are
+    terminal. When present, status and modification describe how
+    origin relates to these upstream sources.
+  """@en .
+
 # ── Citation resolution ────────────────────────────────────────────────────
 #
 # An inline `{{cite:id}}` mention in a concept's text

@@ -125,6 +125,7 @@
     "sourceId":            { "@id": "gloss:sourceId",      "@type": "xsd:string" },
     "sourceOrigin":        { "@id": "gloss:sourceOrigin",  "@type": "@id" },
     "modification":        { "@id": "gloss:modification",  "@type": "xsd:string" },
+    "sourcedFrom":         { "@id": "gloss:sourcedFrom",   "@type": "@id" },
 
     "hasCitationRef":      { "@id": "gloss:hasCitationRef", "@type": "@id" },
     "hasCitationLocality": { "@id": "gloss:hasCitationLocality", "@type": "@id" },

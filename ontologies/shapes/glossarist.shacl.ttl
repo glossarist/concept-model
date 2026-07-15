@@ -391,6 +391,24 @@ gloss:ConceptSourceShape a sh:NodeShape ;
     sh:path gloss:modification ;
     sh:datatype xsd:string ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sourcedFrom ;
+    sh:class gloss:Citation ;
+  ] ;
+  sh:sparql [
+    sh:message "sourced_from is only allowed on sources of type lineage"@en ;
+    sh:select """
+      PREFIX gloss: <https://www.glossarist.org/ontologies/>
+      PREFIX srctype: <https://www.glossarist.org/ontologies/srctype/>
+      SELECT $this
+      WHERE {
+        $this gloss:sourcedFrom ?target .
+        FILTER NOT EXISTS {
+          $this gloss:sourceType srctype:lineage .
+        }
+      }
+    """ ;
   ] .
 
 gloss:ConceptDateShape a sh:NodeShape ;

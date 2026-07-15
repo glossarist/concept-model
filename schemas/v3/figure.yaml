@@ -90,3 +90,10 @@ $defs:
         enum: [authoritative, lineage]
       origin:
         type: object
+      sourced_from:
+        type: array
+        description: |
+          Citations to documents that this source was sourced from.
+          Only valid on lineage sources; authoritative sources are terminal.
+        items:
+          type: object
