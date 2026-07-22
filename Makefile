@@ -34,4 +34,42 @@ images:
 clean:
 	-$(RM) images/*.png
 
-.PHONY: clean
+# ── Validation targets ──────────────────────────────────────────────────
+# Run all schema/model/ontology drift checks. Mirrors what CI runs in
+# .github/workflows/validate-schemas.yml. All validators are pure Ruby
+# (lib/glossarist/concept_model/) invoked through the exe/ shims.
+
+BUNDLE := bundle exec
+
+validate: validate-ontologies validate-examples validate-negative-examples \
+          check-enum-drift check-jsonld-context check-shacl-coverage \
+          check-lutaml-references
+	@echo "All validation checks passed."
+
+validate-ontologies:
+	$(BUNDLE) exe/validate-ontologies
+
+validate-examples:
+	$(BUNDLE) exe/validate-examples
+
+validate-negative-examples:
+	$(BUNDLE) exe/validate-negative-examples
+
+check-enum-drift:
+	$(BUNDLE) exe/check-enum-drift
+
+check-jsonld-context:
+	$(BUNDLE) exe/check-jsonld-context
+
+check-shacl-coverage:
+	$(BUNDLE) exe/check-shacl-coverage
+
+check-lutaml-references:
+	$(BUNDLE) exe/check-lutaml-references
+
+validate-scripts:
+	$(BUNDLE) rspec spec/ --format documentation
+
+.PHONY: clean validate validate-ontologies validate-examples \
+        validate-negative-examples check-enum-drift check-jsonld-context \
+        check-shacl-coverage check-lutaml-references validate-scripts

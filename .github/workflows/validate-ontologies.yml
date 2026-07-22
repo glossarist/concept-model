@@ -5,30 +5,30 @@ on:
     branches: [ main ]
     paths:
       - 'ontologies/**'
-      - 'schemas/**'
-      - 'scripts/validate-ontologies.py'
+      - 'lib/**'
+      - 'exe/validate-ontologies'
+      - '.github/workflows/validate-ontologies.yml'
   pull_request:
     paths:
       - 'ontologies/**'
-      - 'schemas/**'
-      - 'scripts/validate-ontologies.py'
+      - 'lib/**'
+      - 'exe/validate-ontologies'
+      - '.github/workflows/validate-ontologies.yml'
 
 jobs:
   validate:
-    name: Validate ontology files
+    name: Validate ontology files (Turtle parse + cross-refs)
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          python-version: '3.12'
-
-      - name: Install rdflib
-        run: pip install rdflib
+          ruby-version: '3.4'
+          bundler-cache: true
 
       - name: Validate Turtle files
-        run: python scripts/validate-ontologies.py
+        run: bundle exec exe/validate-ontologies
