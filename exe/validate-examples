@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "glossarist/concept_model"
+exit Glossarist::ConceptModel::Validators::ValidateExamples.call
