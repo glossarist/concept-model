@@ -144,15 +144,17 @@ $defs:
       ref:
         $ref: "#/$defs/concept_ref"
       content:
-        type: string
+        type: object
+        additionalProperties:
+          type: string
         description: |
-          Free-text description of the relationship.
+          Free-form localized text describing the relationship, keyed
+          by ISO 639 language code: `{ "eng": "...", "fra": "..." }`.
 
-          Note: the LUTAML model declares RelatedConcept#content as
-          LocalizedString. The schema currently accepts a plain
-          string for backward compatibility; a future schema
-          version may require the structured `{language: text}`
-          form. See docs/design/partitive-hyperedge.md.
+          All free-form text fields in Glossarist are localized —
+          the project is multi-language by domain. Plain strings are
+          NOT accepted; wrap single-language text as
+          `{ "eng": "..." }`.
 
   # Related Concept Type enum
     additionalProperties: false
@@ -394,14 +396,17 @@ $defs:
           $ref: "#/$defs/plurality_marker"
         uniqueItems: true
       content:
-        type: string
+        type: object
+        additionalProperties:
+          type: string
         description: |
-          Optional human-readable label or note.
+          Optional localized label or note, keyed by ISO 639 language
+          code: `{ "eng": "...", "fra": "..." }`.
 
-          Note: the LUTAML model declares PartitiveHyperedge#content
-          as LocalizedString. The schema currently accepts a plain
-          string for backward compatibility; a future schema version
-          may require the structured `{language: text}` form.
+          All free-form text fields in Glossarist are localized —
+          the project is multi-language by domain. Plain strings are
+          NOT accepted; wrap single-language text as
+          `{ "eng": "..." }`.
     required:
       - comprehensive
       - parts

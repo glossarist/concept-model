@@ -33,10 +33,11 @@ partitive_hyperedges:
       - source: "VIM"
         id: "112-01-22"
     enumeration: open
-    content: |
-      A system of quantities includes the listed quantities among its
-      parts; other quantities belonging to the system are not
-      enumerated here.
+    content:
+      eng: |
+        A system of quantities includes the listed quantities among its
+        parts; other quantities belonging to the system are not
+        enumerated here.
 
 status: valid
 date_accepted: "2012-01-01T00:00:00+00:00"

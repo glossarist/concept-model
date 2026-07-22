@@ -23,13 +23,13 @@ data:
 # This concept is superseded — replaced by a newer entry
 related:
   - type: superseded_by
-    content: "replaced by updated definition"
+    content: { eng: "replaced by updated definition" }
     ref:
       source: "IEC"
       id: "112-01-03"
 
   - type: deprecates
-    content: "deprecated older entry"
+    content: { eng: "deprecated older entry" }
     ref:
       source: "IEC"
       id: "112-01-01"
