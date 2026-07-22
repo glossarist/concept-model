@@ -1,5 +1,4 @@
 %YAML 1.1
-# yaml-language-server: $schema=http://json-schema.org/draft-07/schema
 ---
 $id: "https://github.com/glossarist/concept-model/v3/concept"
 title: YAML Schema for Concept model (v3)
@@ -30,7 +29,8 @@ properties:
           - "https://example.org/concepts/1234"
       localized_concepts:
         type: object
-        description: Three digit language code followed by the `id` of the localization for that language.
+        description: Three digit language code followed by the `id` of the 
+          localization for that language.
         examples:
           - eng: '1234'
           - ara: 39fcd2af-9ef1-4a69-71a4-2d3de569afce
@@ -42,12 +42,14 @@ properties:
         type: array
         items:
           $ref: "#/$defs/reference"
-        description: Domain/subject area references (replaces legacy groups field).
+        description: Domain/subject area references (replaces legacy groups 
+          field).
       tags:
         type: array
         items:
           type: string
-        description: Organizational tags for grouping and filtering concepts (not rendered as terminological domains).
+        description: Organizational tags for grouping and filtering concepts 
+          (not rendered as terminological domains).
       sources:
         type: array
         items:
@@ -62,7 +64,19 @@ properties:
     type: array
     items:
       $ref: "#/$defs/related_concept"
-    description: Zero or more related concepts at the concept level.
+    description: Zero or more binary related concepts at the concept level.
+  partitive_hyperedges:
+    type: array
+    items:
+      $ref: "#/$defs/partitive_hyperedge"
+    description: |
+      Zero or more one-to-many partitive decompositions. Each entry
+      asserts that this concept (as comprehensive) is decomposed into
+      a significant set of parts, optionally qualified by plurality
+      markers and enumeration completeness (open vs closed).
+
+      Independent of `related` (which is binary). A concept may have
+      both.
   sources:
     type: array
     items:
@@ -107,9 +121,11 @@ $defs:
       - type
 
   # Concept Date Type enum
+    additionalProperties: false
   concept_date_type:
     type: string
-    description: Kinds of governance events associated with the lifecycle of a managed term.
+    description: Kinds of governance events associated with the lifecycle of a 
+      managed term.
     enum:
       - accepted
       - amended
@@ -120,7 +136,8 @@ $defs:
   # Related Concept
   related_concept:
     type: object
-    description: A concept related to the current concept with a typed relationship.
+    description: A concept related to the current concept with a typed 
+      relationship.
     properties:
       type:
         $ref: "#/$defs/related_concept_type"
@@ -128,9 +145,17 @@ $defs:
         $ref: "#/$defs/concept_ref"
       content:
         type: string
-        description: Content describing the relationship
+        description: |
+          Free-text description of the relationship.
+
+          Note: the LUTAML model declares RelatedConcept#content as
+          LocalizedString. The schema currently accepts a plain
+          string for backward compatibility; a future schema
+          version may require the structured `{language: text}`
+          form. See docs/design/partitive-hyperedge.md.
 
   # Related Concept Type enum
+    additionalProperties: false
   related_concept_type:
     type: string
     description: The relation of a term to the current term.
@@ -211,10 +236,12 @@ $defs:
     properties:
       source:
         type: string
-        description: Collection identifier (document series, termbase, vocabulary).
+        description: Collection identifier (document series, termbase, 
+          vocabulary).
       id:
         type: string
-        description: Item identifier within the collection (document ID, concept ID).
+        description: Item identifier within the collection (document ID, concept
+          ID).
       concept_id:
         type: string
         description: Alias for id (backward compatibility).
@@ -249,6 +276,7 @@ $defs:
         description: Term text when referencing a concept.
 
   # Citation (bibliographic — used in ConceptSource#origin)
+    additionalProperties: false
   citation:
     type: object
     description: |
@@ -293,12 +321,14 @@ $defs:
         type: string
         description: Version of the document.
 
-  # ConceptRef (used in RelatedConcept#ref)
+  # ConceptRef (used in RelatedConcept#ref and PartitiveHyperedge)
+    additionalProperties: false
   concept_ref:
     type: object
     description: |
-      A concept reference used in related concept entries.
-      Has source, id, and optional text. No version, locality, or link.
+      A concept reference used in related concept entries and
+      partitive hyperedge endpoints. Has source, id, and optional
+      text. No version, locality, or link.
     properties:
       source:
         type: string
@@ -309,6 +339,73 @@ $defs:
       text:
         type: string
         description: Target designation text for lexical relationships.
+
+  # Partitive Enumeration enum
+    additionalProperties: false
+  partitive_enumeration:
+    type: string
+    description: |
+      Whether the parts array of a PartitiveHyperedge constitutes the
+      COMPLETE decomposition of the comprehensive concept (closed) or
+      only a PARTIAL one (open).
+    enum:
+      - closed
+      - open
+
+  # Plurality Marker enum
+  plurality_marker:
+    type: string
+    description: |
+      Diagram notation flags originating from VIM concept-relationship
+      diagrams. Orthogonal to enumeration; both may be set on the same
+      hyperedge.
+    enum:
+      - double
+      - dashed
+
+  # Partitive Hyperedge
+  partitive_hyperedge:
+    type: object
+    description: |
+      A hyperedge relating one comprehensive (whole) concept to one or
+      more partitive concepts as a SINGLE relationship. Used when the
+      source diagram depicts a partitive decomposition whose
+      membership or notation is jointly significant and cannot be
+      faithfully decomposed into binary edges.
+    properties:
+      comprehensive:
+        $ref: "#/$defs/concept_ref"
+      parts:
+        type: array
+        minItems: 1
+        items:
+          $ref: "#/$defs/concept_ref"
+      enumeration:
+        $ref: "#/$defs/partitive_enumeration"
+        default: closed
+        description: |
+          Completeness of the parts list. `closed` (default) asserts
+          that the encoded parts are ALL parts of the comprehensive.
+          `open` asserts that the encoded parts are SOME of the parts;
+          others may exist but are not encoded.
+      markers:
+        type: array
+        items:
+          $ref: "#/$defs/plurality_marker"
+        uniqueItems: true
+      content:
+        type: string
+        description: |
+          Optional human-readable label or note.
+
+          Note: the LUTAML model declares PartitiveHyperedge#content
+          as LocalizedString. The schema currently accepts a plain
+          string for backward compatibility; a future schema version
+          may require the structured `{language: text}` form.
+    required:
+      - comprehensive
+      - parts
+    additionalProperties: false
 
   # Concept Source
   concept_source:
@@ -353,6 +450,7 @@ $defs:
             - locality
 
   # Concept Source Type enum
+    additionalProperties: false
   concept_source_type:
     type: string
     description: Type of concept source.
@@ -390,6 +488,7 @@ $defs:
         type: string
 
   # Data Types
+    additionalProperties: false
   iso639_three_char_code:
     type: string
     minLength: 3

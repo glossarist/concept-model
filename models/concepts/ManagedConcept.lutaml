@@ -4,7 +4,21 @@ class ManagedConcept {
   }
   +related: RelatedConcept [0..*] {
     definition {
-      Terms related to the term.
+      Binary terms related to the term. Each entry asserts a single
+      typed link to one other concept (ISO 10241-1 / SKOS / ISO 25964
+      standard semantics).
+    }
+  }
+  +partitive_hyperedges: PartitiveHyperedge [0..*] {
+    definition {
+      One-to-many partitive decompositions. Each entry asserts that
+      the current concept (as comprehensive) is decomposed into a
+      significant set of parts, optionally qualified by plurality
+      markers and enumeration completeness.
+
+      Independent of `related`. A concept may have both. Hyperedges
+      are used when the source diagram depicts a rake whose
+      membership or notation is jointly significant.
     }
   }
   +status: ConceptStatus {
@@ -19,7 +33,7 @@ class ManagedConcept {
   }
   +sources: ConceptSource [0..*] {
     definition {
-      Zero or more bibliographical sources for the term. 
+      Zero or more bibliographical sources for the term.
     }
   }
   +localizedConcepts: LocalizedConcept [0..1] {

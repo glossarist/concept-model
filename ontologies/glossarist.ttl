@@ -193,6 +193,44 @@ gloss:RelatedConcept a owl:Class ;
   rdfs:label "Related Concept"@en ;
   rdfs:comment """
     A concept with a typed relationship (deprecates, broader, equivalent, etc.).
+    Binary: one source concept, one target concept via a ConceptRef.
+    For one-to-many partitive decompositions with plurality markers or
+    open/closed enumeration, use gloss:PartitiveHyperedge.
+  """@en .
+
+gloss:PartitiveHyperedge a owl:Class ;
+  rdfs:label "Partitive Hyperedge"@en ;
+  rdfs:comment """
+    A one-to-many partitive decomposition: one comprehensive (whole)
+    concept related to one or more parts as a SINGLE relationship.
+
+    Used when the source diagram depicts a partitive rake whose
+    membership or notation is jointly significant — i.e. the
+    decomposition cannot be faithfully split into binary
+    RelatedConcept edges without losing invariants (which
+    comprehensive a part belongs to, the plurality of the rake,
+    the completeness of the enumeration).
+
+    Independent of gloss:hasRelatedConcept. A concept may have both
+    binary related entries and partitive hyperedges.
+  """@en .
+
+gloss:PartitiveEnumeration a owl:Class ;
+  rdfs:label "Partitive Enumeration"@en ;
+  rdfs:comment """
+    Whether the parts array of a PartitiveHyperedge constitutes the
+    COMPLETE decomposition of the comprehensive (closed) or only a
+    PARTIAL one (open). Orthogonal to PluralityMarker.
+  """@en .
+
+gloss:PluralityMarker a owl:Class ;
+  rdfs:label "Plurality Marker"@en ;
+  rdfs:comment """
+    Diagram notation flags that travel with a PartitiveHyperedge so
+    the rendering layer can reproduce the source diagram's notation
+    (close-set double line, dashed line). Originates from VIM
+    (International Vocabulary of Metrology) concept-relationship
+    diagrams. Orthogonal to PartitiveEnumeration.
   """@en .
 
 gloss:DesignationRelationship a owl:Class ;
@@ -312,7 +350,37 @@ gloss:hasRelatedConcept a owl:ObjectProperty ;
   ] ;
   rdfs:range gloss:RelatedConcept ;
   rdfs:label "has related concept"@en ;
-  rdfs:comment "DATA: Typed semantic relationship — applicable at concept and localization levels."@en .
+  rdfs:comment "DATA: Typed binary semantic relationship — applicable at concept and localization levels."@en .
+
+gloss:hasPartitiveHyperedge a owl:ObjectProperty ;
+  rdfs:domain gloss:Concept ;
+  rdfs:range gloss:PartitiveHyperedge ;
+  rdfs:label "has partitive hyperedge"@en ;
+  rdfs:comment "DATA: One-to-many partitive decomposition on a managed concept. Concept-level only — hyperedges are not localized."@en .
+
+gloss:comprehensive a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:range gloss:ConceptRef ;
+  rdfs:label "comprehensive"@en ;
+  rdfs:comment "The whole concept that owns the parts in a partitive hyperedge. Exactly one per hyperedge."@en .
+
+gloss:hasPart a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:range gloss:ConceptRef ;
+  rdfs:label "has part"@en ;
+  rdfs:comment "A partitive member of a hyperedge. A hyperedge has one or more parts."@en .
+
+gloss:enumeration a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:range gloss:PartitiveEnumeration ;
+  rdfs:label "enumeration"@en ;
+  rdfs:comment "Whether the encoded parts constitute a complete (closed) or partial (open) decomposition."@en .
+
+gloss:hasPluralityMarker a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:range gloss:PluralityMarker ;
+  rdfs:label "has plurality marker"@en ;
+  rdfs:comment "Diagram notation flag on a hyperedge (double for close-set double line, dashed for uncertainty)."@en .
 
 gloss:hasDate a owl:ObjectProperty ;
   rdfs:domain [
@@ -631,6 +699,12 @@ gloss:relationshipContent a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "relationship content"@en ;
   rdfs:comment "Free-text description of the relationship."@en .
+
+gloss:hyperedgeContent a owl:DatatypeProperty ;
+  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:range xsd:string ;
+  rdfs:label "hyperedge content"@en ;
+  rdfs:comment "Free-form text associated with a PartitiveHyperedge, e.g. a diagram caption or label."@en .
 
 gloss:relationshipRef a owl:ObjectProperty ;
   rdfs:domain gloss:RelatedConcept ;

@@ -30,6 +30,9 @@ localizations.
 | 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
 | 17 | Dataset register (URN resolution) | `17-register-dataset.yaml` | — |
 | 18 | Hierarchical sections | `18-hierarchical-sections-concept.yaml` | — (companion: `18-hierarchical-sections-register.yaml`) |
+| 20 | Partitive hyperedge (closed, with plurality marker) | `20-partitive-hyperedge-closed.yaml` | — |
+| 21 | Partitive hyperedge (open enumeration) | `21-partitive-hyperedge-open.yaml` | — |
+| 22 | Partitive hyperedge (uncertain plurality, both markers) | `22-partitive-hyperedge-marked.yaml` | — |
 
 ---
 
@@ -295,6 +298,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | `status` (7 values) | 01 (valid), 11 (valid), 13 (superseded) |
 | `date_accepted` | 01, 06, 11 |
 | `related` (52 types) | 06 (all 52), 11 (supersedes), 13 (superseded_by, deprecates) |
+| `partitive_hyperedges` (closed, open, marked) | 20 (closed + double), 21 (open), 22 (open + double + dashed) |
 | `sources` (concept-level) | 01, 05, 06, 07, 08, 10, 11 |
 
 ### Localized concept features (`localized-concept.yaml`)
@@ -416,3 +420,12 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | Versioning | `current_version_of` | 06 |
 | Designation | `abbreviated_form_for` | 02-abbreviation |
 | Designation | `short_form_for` | 02-abbreviation |
+
+### Partitive hyperedge coverage
+
+| Enumeration | Markers | Example |
+|-------------|---------|---------|
+| closed      | (none)  | 23 |
+| closed      | double  | 20 |
+| open        | (none)  | 21 |
+| open        | double, dashed | 22 |

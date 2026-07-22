@@ -1,0 +1,16 @@
+# 06 — Duplicate markers (violates uniqueItems: true).
+id: "900-06-01"
+data:
+  identifier: "900-06-01"
+partitive_hyperedges:
+  - comprehensive:
+      source: "X"
+      id: "900-06-01"
+    parts:
+      - source: "X"
+        id: "900-06-02"
+    enumeration: closed
+    markers:
+      - double
+      - double
+status: valid
