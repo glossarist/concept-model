@@ -1,0 +1,55 @@
+name: validate-schemas
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'schemas/**'
+      - 'models/**'
+      - 'ontologies/**'
+      - 'lib/**'
+      - 'exe/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'glossarist-concept-model.gemspec'
+      - '.github/workflows/validate-schemas.yml'
+  pull_request:
+    paths:
+      - 'schemas/**'
+      - 'models/**'
+      - 'ontologies/**'
+      - 'lib/**'
+      - 'exe/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'glossarist-concept-model.gemspec'
+      - '.github/workflows/validate-schemas.yml'
+
+jobs:
+  validate:
+    name: Ruby validators (schema/SHACL/taxonomy/LUTAML drift)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      - run: bundle exec exe/validate-ontologies
+      - run: bundle exec exe/validate-examples
+      - run: bundle exec exe/validate-negative-examples
+      - run: bundle exec exe/check-enum-drift
+      - run: bundle exec exe/check-jsonld-context
+      - run: bundle exec exe/check-shacl-coverage
+      - run: bundle exec exe/check-lutaml-references
+
+  rspec:
+    name: RSpec test suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      - run: bundle exec rspec spec/ --format documentation

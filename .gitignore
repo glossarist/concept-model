@@ -4,3 +4,9 @@ Gemfile.lock
 html_documentation/
 reference-docs/*.owl
 concept-model/
+
+# Local TODO scratch directories (untracked planning in progress)
+TODO.hyperedge/
+TODO.hyperedges/
+TODO.clean/
+TODO.source/
