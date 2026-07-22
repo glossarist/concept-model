@@ -37,13 +37,13 @@ data:
 related:
   # ── Hierarchical (ISO 10241-1 / ISO 25964 BT/NT) ──────────────────────
   - type: broader
-    content: "complex system"
+    content: { eng: "complex system" }
     ref:
       source: "IEC"
       id: "102-03-02"
 
   - type: narrower
-    content: "subsystem"
+    content: { eng: "subsystem" }
     ref:
       source: "IEC"
       id: "102-03-03"
@@ -51,13 +51,13 @@ related:
   # ── ISO 25964 Generic Hierarchy (BTG/NTG) ─────────────────────────────
   # "is a kind of" — generic/specific relationship
   - type: broader_generic
-    content: "physical system"
+    content: { eng: "physical system" }
     ref:
       source: "IEC"
       id: "102-01-01"
 
   - type: narrower_generic
-    content: "closed system"
+    content: { eng: "closed system" }
     ref:
       source: "IEC"
       id: "102-03-04"
@@ -65,13 +65,13 @@ related:
   # ── ISO 25964 Partitive Hierarchy (BTP/NTP) ───────────────────────────
   # "is a part of" — whole/part relationship (transitive)
   - type: broader_partitive
-    content: "larger assembly"
+    content: { eng: "larger assembly" }
     ref:
       source: "IEC"
       id: "102-05-01"
 
   - type: narrower_partitive
-    content: "system component"
+    content: { eng: "system component" }
     ref:
       source: "IEC"
       id: "102-05-02"
@@ -79,26 +79,26 @@ related:
   # ── ISO 25964 Instantial Hierarchy (BTI/NTI) ───────────────────────────
   # "is an instance of" — class/instance relationship
   - type: broader_instantial
-    content: "thermodynamic system (class)"
+    content: { eng: "thermodynamic system (class)" }
     ref:
       source: "IEC"
       id: "102-06-01"
 
   - type: narrower_instantial
-    content: "specific Carnot engine"
+    content: { eng: "specific Carnot engine" }
     ref:
       source: "IEC"
       id: "102-06-02"
 
   # ── Equivalence (ISO 10241-1 / ISO 25964 / SKOS) ───────────────────────
   - type: equivalent
-    content: "system (general systems theory)"
+    content: { eng: "system (general systems theory)" }
     ref:
       source: "ISO"
       id: "10241-1"
 
   - type: exact_match
-    content: "exact cross-vocabulary match (SKOS skos:exactMatch)"
+    content: { eng: "exact cross-vocabulary match (SKOS skos:exactMatch)" }
     ref:
       source: "VIM"
       id: "JCGM-200"
@@ -109,77 +109,77 @@ related:
       text: "system (general systems theory)"
 
   - type: broad_match
-    content: "related broader concept in another vocabulary"
+    content: { eng: "related broader concept in another vocabulary" }
     ref:
       source: "ISO"
       id: "1087-1"
 
   - type: narrow_match
-    content: "related narrower concept in another vocabulary"
+    content: { eng: "related narrower concept in another vocabulary" }
     ref:
       source: "ISO"
       id: "1087-2"
 
   - type: related_match
-    content: "related concept in another vocabulary"
+    content: { eng: "related concept in another vocabulary" }
     ref:
       source: "IEC"
       id: "60050-151"
 
   # ── Comparative (ISO 10241-1) ─────────────────────────────────────────
   - type: compare
-    content: "closed system"
+    content: { eng: "closed system" }
     ref:
       source: "IEC"
       id: "102-03-04"
 
   - type: contrast
-    content: "environment"
+    content: { eng: "environment" }
     ref:
       source: "IEC"
       id: "102-03-06"
 
   # ── Associative (ISO 10241-1 / ISO 25964 RT) ─────────────────────────
   - type: see
-    content: "open system"
+    content: { eng: "open system" }
     ref:
       source: "IEC"
       id: "102-03-05"
 
   # ── Associative Subtypes (ISO 25964 / TBX) ────────────────────────────
   - type: related_concept
-    content: "boundary of a system"
+    content: { eng: "boundary of a system" }
     ref:
       source: "IEC"
       id: "102-04-01"
 
   - type: related_concept_broader
-    content: "system boundary (broader sense)"
+    content: { eng: "system boundary (broader sense)" }
     ref:
       source: "IEC"
       id: "102-04-02"
 
   - type: related_concept_narrower
-    content: "permeable boundary (narrower sense)"
+    content: { eng: "permeable boundary (narrower sense)" }
     ref:
       source: "IEC"
       id: "102-04-03"
 
   # ── Spatiotemporal (ISO 25964 / TBX) ──────────────────────────────────
   - type: sequentially_related
-    content: "next process step"
+    content: { eng: "next process step" }
     ref:
       source: "IEC"
       id: "102-07-01"
 
   - type: spatially_related
-    content: "adjacent region"
+    content: { eng: "adjacent region" }
     ref:
       source: "IEC"
       id: "102-07-02"
 
   - type: temporally_related
-    content: "preceding state"
+    content: { eng: "preceding state" }
     ref:
       source: "IEC"
       id: "102-07-03"
@@ -191,13 +191,13 @@ related:
       id: "102-03-00"
 
   - type: superseded_by
-    content: "replaced by newer concept"
+    content: { eng: "replaced by newer concept" }
     ref:
       source: "IEC"
       id: "102-03-10"
 
   - type: deprecates
-    content: "old deprecated term"
+    content: { eng: "old deprecated term" }
     ref:
       source: "IEC"
       id: "102-03-11"
@@ -205,145 +205,145 @@ related:
   # ── Lexical (ISO 12620 / TBX) ─────────────────────────────────────────
   # false_friend is language-specific — see 06-related-localized-fra.yaml
   - type: homograph
-    content: "same spelling, different meaning"
+    content: { eng: "same spelling, different meaning" }
     ref:
       source: "IEC"
       id: "102-08-01"
 
   # ── Lifecycle — inverse (ISO 10241-1) ──────────────────────────────────
   - type: deprecated_by
-    content: "concept that deprecated this one"
+    content: { eng: "concept that deprecated this one" }
     ref:
       source: "IEC"
       id: "102-03-12"
 
   - type: replaces
-    content: "concept replaced by this one"
+    content: { eng: "concept replaced by this one" }
     ref:
       source: "IEC"
       id: "102-03-13"
 
   - type: replaced_by
-    content: "concept that replaced this one"
+    content: { eng: "concept that replaced this one" }
     ref:
       source: "IEC"
       id: "102-03-14"
 
   - type: invalidates
-    content: "concept invalidated by this one (substantial error)"
+    content: { eng: "concept invalidated by this one (substantial error)" }
     ref:
       source: "IEC"
       id: "102-03-15"
 
   - type: invalidated_by
-    content: "concept that invalidated this one"
+    content: { eng: "concept that invalidated this one" }
     ref:
       source: "IEC"
       id: "102-03-16"
 
   - type: retires
-    content: "concept retired by this one"
+    content: { eng: "concept retired by this one" }
     ref:
       source: "IEC"
       id: "102-03-17"
 
   - type: retired_by
-    content: "concept that retired this one"
+    content: { eng: "concept that retired this one" }
     ref:
       source: "IEC"
       id: "102-03-18"
 
   # ── Partitive (ISO 19135) ──────────────────────────────────────────────
   - type: has_part
-    content: "component that is part of this concept"
+    content: { eng: "component that is part of this concept" }
     ref:
       source: "IEC"
       id: "102-09-01"
 
   - type: is_part_of
-    content: "whole that this concept is part of"
+    content: { eng: "whole that this concept is part of" }
     ref:
       source: "IEC"
       id: "102-09-02"
 
   # ── Instantial (ISO 19135) ─────────────────────────────────────────────
   - type: instance_of
-    content: "class that this concept is an instance of"
+    content: { eng: "class that this concept is an instance of" }
     ref:
       source: "IEC"
       id: "102-09-03"
 
   - type: has_instance
-    content: "instance of this concept"
+    content: { eng: "instance of this concept" }
     ref:
       source: "IEC"
       id: "102-09-04"
 
   # ── Register Management (ISO 19135) ────────────────────────────────────
   - type: has_concept
-    content: "concept specialisation in a register"
+    content: { eng: "concept specialisation in a register" }
     ref:
       source: "IEC"
       id: "102-10-01"
 
   - type: is_concept_of
-    content: "parent concept this specialises"
+    content: { eng: "parent concept this specialises" }
     ref:
       source: "IEC"
       id: "102-10-02"
 
   - type: has_definition
-    content: "concept used as the definition"
+    content: { eng: "concept used as the definition" }
     ref:
       source: "IEC"
       id: "102-10-03"
 
   - type: definition_of
-    content: "concept whose definition this is"
+    content: { eng: "concept whose definition this is" }
     ref:
       source: "IEC"
       id: "102-10-04"
 
   - type: inherits
-    content: "concept whose properties are inherited"
+    content: { eng: "concept whose properties are inherited" }
     ref:
       source: "IEC"
       id: "102-10-05"
 
   - type: inherited_by
-    content: "concept that inherits from this one"
+    content: { eng: "concept that inherits from this one" }
     ref:
       source: "IEC"
       id: "102-10-06"
 
   # ── Versioning (ISO 19135) ─────────────────────────────────────────────
   - type: has_version
-    content: "version of this concept"
+    content: { eng: "version of this concept" }
     ref:
       source: "IEC"
       id: "102-11-01"
 
   - type: version_of
-    content: "concept this is a version of"
+    content: { eng: "concept this is a version of" }
     ref:
       source: "IEC"
       id: "102-11-02"
 
   - type: current_version
-    content: "current version of this concept"
+    content: { eng: "current version of this concept" }
     ref:
       source: "IEC"
       id: "102-11-03"
 
   - type: current_version_of
-    content: "concept whose current version this is"
+    content: { eng: "concept whose current version this is" }
     ref:
       source: "IEC"
       id: "102-11-04"
 
   # ── Associative — references (ISO 12620 / TBX) ─────────────────────────
   - type: references
-    content: "concept referenced by this one"
+    content: { eng: "concept referenced by this one" }
     ref:
       source: "IEC"
       id: "102-12-01"

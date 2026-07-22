@@ -18,7 +18,7 @@ data:
   - content: ensemble d'opérations ayant pour but de déterminer la valeur d'une grandeur
   related:
   - type: false_friend
-    content: measure (English, musical sense)
+    content: { eng: measure (English, musical sense) }
     ref:
       text: measure
   sources:

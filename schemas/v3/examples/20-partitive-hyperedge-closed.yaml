@@ -33,10 +33,11 @@ partitive_hyperedges:
         id: "112-03-26"
     enumeration: closed
     markers: [double]
-    content: |
-      A measurement result is composed of a measured quantity value
-      and a measurement uncertainty. No other components are part of
-      the result.
+    content:
+      eng: |
+        A measurement result is composed of a measured quantity value
+        and a measurement uncertainty. No other components are part of
+        the result.
 
 status: valid
 date_accepted: "2012-01-01T00:00:00+00:00"
