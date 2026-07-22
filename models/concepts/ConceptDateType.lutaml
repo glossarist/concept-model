@@ -17,4 +17,15 @@ enum ConceptDateType {
       An event of the term being retired by an authority.
     }
   }
+  review {
+    definition {
+      A scheduled review event for the term.
+    }
+  }
+  review_decision {
+    definition {
+      A decision event following a review, with an optional
+      event_description capturing the decision outcome.
+    }
+  }
 }

@@ -12,12 +12,12 @@ enum ConceptSourceStatus {
       The managed term in the present context has been modified from the term as found in the bibliographic source.
     }
   }
-  restyled {
+  restyle {
     definition {
       The managed term in the present context has been restyled from the term as found in the bibliographic source.
     }
   }
-  context-added {
+  context_added {
     definition {
       The managed term in the present context has had context added to it, relative to the term as found in the bibliographic source.
     }
@@ -30,6 +30,21 @@ enum ConceptSourceStatus {
   specialisation {
     definition {
       The managed term in the present context is a specialisation of the term as found in the bibliographic source.
+    }
+  }
+  similar {
+    definition {
+      The managed term in the present context is similar to the term as found in the bibliographic source, but the relationship is not one of the more specific categories.
+    }
+  }
+  related {
+    definition {
+      The managed term in the present context is related to the term as found in the bibliographic source, without a more specific claim.
+    }
+  }
+  not_equal {
+    definition {
+      The managed term in the present context is explicitly not equal to the term as found in the bibliographic source.
     }
   }
   unspecified {

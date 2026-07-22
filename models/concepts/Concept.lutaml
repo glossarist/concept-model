@@ -14,12 +14,29 @@ class Concept {
   }
   +domain: <<BasicDocument>> LocalizedString [0..1]  {
     definition {
-      An optional semantic domain for the term being defined, in case the term is ambiguous between several semantic domains.
+      An optional semantic domain for the term being defined, in
+      case the term is ambiguous between several semantic domains
+      (e.g. "domain: physics" vs "domain: linguistics").
+
+      Distinct from `+subject`: domain names the broad subject area
+      the term belongs to; subject names the specific topic of this
+      particular term within that area. A term may have a domain
+      without a subject (the domain is enough context) but a subject
+      without a domain is unusual.
+
+      For the wire-format classification rendered in output, prefer
+      the structured `ConceptReference` array on `ManagedConcept`
+      (data.domains). This field is a free-text complement for human
+      reading and disambiguation.
     }
   }
   +subject: <<BasicDocument>> LocalizedString [0..1] {
     definition {
-      Subject of the term.
+      Subject of the term — the specific topic or matter the term
+      addresses, when distinct from its broader domain.
+
+      Reserved for editorial metadata; not currently emitted in the
+      v3 wire format. See `+domain` for the distinction.
     }
   }
   +definition: DetailedDefinition [0..*] {
