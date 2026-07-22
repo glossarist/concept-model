@@ -1,0 +1,13 @@
+# 03 — Invalid enumeration value (not in {closed, open}).
+id: "900-03-01"
+data:
+  identifier: "900-03-01"
+partitive_hyperedges:
+  - comprehensive:
+      source: "X"
+      id: "900-03-01"
+    parts:
+      - source: "X"
+        id: "900-03-02"
+    enumeration: partial
+status: valid

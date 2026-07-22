@@ -1,0 +1,10 @@
+# 01 — Missing required `comprehensive` field on a hyperedge.
+id: "900-01-01"
+data:
+  identifier: "900-01-01"
+partitive_hyperedges:
+  - parts:
+      - source: "X"
+        id: "900-01-02"
+    enumeration: closed
+status: valid

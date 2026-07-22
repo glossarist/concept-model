@@ -1,6 +1,27 @@
 class RelatedConcept {
   definition {
-    A term related to the current term.
+    A typed relationship from the current concept (or designation)
+    to another concept.
+
+    Lives at one of two levels:
+
+    1. **Concept-level** — `ManagedConcept#related`. Use for semantic
+       relationships between concepts as a whole (deprecates,
+       supersedes, broader, narrower, equivalent, etc.). Wire
+       field: top-level `related:` array.
+
+    2. **Designation-level** — `Designation#related`. Use for
+       relationships between specific designations of a concept
+       (abbreviated_form_for, short_form_for). Wire field:
+       `designations[].related` array.
+
+    Both levels use the same `RelatedConceptType` enum, but the
+    applicable types differ. Designation-level relationships are
+    restricted to the designation-level subset (ISO 10241-1 §5.4.2).
+
+    For one-to-many partitive decompositions with diagram notation,
+    use `PartitiveHyperedge` instead — see
+    models/concepts/PartitiveHyperedge.lutaml.
   }
   +type: RelatedConceptType {
     definition {

@@ -1,0 +1,14 @@
+# 07 — Unknown field on hyperedge (rejected by additionalProperties: false).
+id: "900-07-01"
+data:
+  identifier: "900-07-01"
+partitive_hyperedges:
+  - comprehensive:
+      source: "X"
+      id: "900-07-01"
+    parts:
+      - source: "X"
+        id: "900-07-02"
+    enumeration: closed
+    bogus_field: true
+status: valid

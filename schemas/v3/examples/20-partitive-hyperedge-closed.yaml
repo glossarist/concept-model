@@ -1,0 +1,55 @@
+# 20 — Partitive Hyperedge (closed enumeration, plurality marker)
+#
+# A closed partitive decomposition: the comprehensive concept is
+# composed of EXACTLY the listed parts, with plurality notation
+# (close-set double line on the source diagram).
+#
+# Source analogue in VIM 2012 (OIML V 2:2012) Fig. A.6:
+#   measurement result (2.9) is composed of measured quantity value
+#   (2.10) and measurement uncertainty (2.26) — and these are the
+#   only parts.
+
+---
+id: "112-02-09"
+data:
+  identifier: "112-02-09"
+  localized_concepts:
+    eng: 22222222-aaaa-bbbb-cccc-000000000009
+  domains:
+    - concept_id: section-2
+      source: "VIM"
+      ref_type: section
+
+related: []
+
+partitive_hyperedges:
+  - comprehensive:
+      source: "VIM"
+      id: "112-02-09"
+    parts:
+      - source: "VIM"
+        id: "112-02-10"
+      - source: "VIM"
+        id: "112-03-26"
+    enumeration: closed
+    markers: [double]
+    content: |
+      A measurement result is composed of a measured quantity value
+      and a measurement uncertainty. No other components are part of
+      the result.
+
+status: valid
+date_accepted: "2012-01-01T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2012-01-01"
+      type: accepted
+  definition:
+    - content: "result of a measurement"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "measurement result"
+  language_code: eng
+  entry_status: valid

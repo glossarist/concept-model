@@ -10,6 +10,24 @@ and [RELEASE_PROCESS.md](RELEASE_PROCESS.md) for the release checklist.
 
 ## [Unreleased]
 
+### Added
+- `PartitiveHyperedge` model: one-to-many partitive decomposition with
+  `PartitiveEnumeration` (closed/open) and `PluralityMarker`
+  (double/dashed) diagram-notation metadata. See
+  `docs/design/partitive-hyperedge.md`.
+- New SKOS taxonomies: `partitive-enumeration`, `plurality-marker`
+  with `skos:hasTopConcept` for scheme completeness.
+- SHACL shapes for the new model (using `skos:Concept` + `sh:valuesFrom`
+  pattern matching existing enums).
+- Ontology property `gloss:hyperedgeContent` (mirrors `gloss:relationshipContent`).
+
+### Changed
+- `RelatedConcept` and `PartitiveHyperedge` are documented to coexist;
+  no automatic consolidation between binary `broader_partitive`
+  edges and hyperedges.
+- `schemas/v3/concept.yaml#partitive_hyperedge.enumeration` now carries
+  an explicit `default: closed`.
+
 ## [v3.1.0] — 2026-07-05
 
 ### Added

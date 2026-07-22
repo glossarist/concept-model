@@ -1,0 +1,20 @@
+class Citation {
+  definition {
+    A bibliographic citation. The `ref` field is always a structured
+    hash (CitationRef in the JSON schema: source + id + optional
+    version) identifying the source document. This is the V3
+    canonical format — plain string refs are supported only via V2
+    backward compatibility.
+
+    Carries optional locality (where in the source), link (URL),
+    original (pre-parsed text), and custom_locality (name-value
+    pairs for non-standard locality dimensions).
+
+    The Locality, CitationRef, and CustomLocality inner shapes are
+    declared inline in the JSON schema (`schemas/v3/concept.yaml`
+    under `$defs/`). LUTAML model files for those inner shapes are
+    not yet factored out — they live as anonymous `$defs` in the
+    schema. This file exists to give `ConceptSource#origin` a
+    named target.
+  }
+}

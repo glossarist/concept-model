@@ -1,0 +1,28 @@
+# Partitive Enumeration Taxonomy
+#
+# SKOS ConceptScheme for the enumeration completeness of a
+# PartitiveHyperedge. Two values: closed (complete decomposition)
+# and open (partial decomposition; other parts may exist).
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:partitiveEnumeration a skos:ConceptScheme ;
+  skos:prefLabel "Partitive Enumeration"@en ;
+  skos:definition "Whether the parts array of a PartitiveHyperedge constitutes the complete (closed) or partial (open) decomposition of the comprehensive concept."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/partitiveEnumeration/closed> a skos:Concept ;
+  skos:inScheme gloss:partitiveEnumeration ;
+  skos:prefLabel "closed"@en ;
+  skos:definition "The encoded parts are ALL the parts of the comprehensive concept. The relationship asserts an exact decomposition."@en .
+
+<https://www.glossarist.org/ontologies/partitiveEnumeration/open> a skos:Concept ;
+  skos:inScheme gloss:partitiveEnumeration ;
+  skos:prefLabel "open"@en ;
+  skos:definition "The encoded parts are SOME of the parts of the comprehensive concept. Other parts may exist but are not encoded."@en .
+
+gloss:partitiveEnumeration skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/partitiveEnumeration/closed> ,
+    <https://www.glossarist.org/ontologies/partitiveEnumeration/open> .

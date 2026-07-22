@@ -80,6 +80,13 @@ enum RelatedConceptType {
   }
 
   // ── Hierarchical — Partitive (ISO 25964 / ISO 19135) ─────────────
+  //
+  // These are BINARY partitive edges. For one-to-many decompositions
+  // where membership is jointly significant (a "rake"), or where
+  // diagram notation (double / dashed) or open/closed completeness
+  // applies, use PartitiveHyperedge instead — see
+  // models/concepts/PartitiveHyperedge.lutaml. Both forms coexist;
+  // choose deliberately per relationship.
   broader_partitive {
     definition {
       The current term is a part of the related term (whole/part).
