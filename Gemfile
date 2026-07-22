@@ -2,5 +2,7 @@
 # See https://github.com/metanorma/cimas
 source "https://rubygems.org"
 
+gemspec
+
 gem "lutaml"
 gem "lutaml-uml"
