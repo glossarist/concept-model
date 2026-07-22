@@ -7,9 +7,19 @@ enum ConceptStatus {
       The term is under development, and is not yet valid.
     }
   }
-  notValid {
+  submitted {
     definition {
-      The term is not valid.
+      The term has been submitted for review and is awaiting a decision.
+    }
+  }
+  not_valid {
+    definition {
+      The term has been reviewed and is not valid.
+    }
+  }
+  invalid {
+    definition {
+      The term is invalid.
     }
   }
   valid {
