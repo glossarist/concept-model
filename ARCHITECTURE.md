@@ -72,14 +72,16 @@ Concept-to-concept relationships live at three levels, each MECE:
    (`abbreviated_form_for`, `short_form_for`). Same `RelatedConceptType`
    enum but only the designation-level subset applies.
 
-3. **Partitive hyperedges** (`partitive_hyperedges: [{comprehensive,
-   parts, enumeration, markers, content}]`) — for one-to-many
-   partitive decompositions where membership is jointly significant
-   or diagram notation applies.
+3. **Partitive relations** (`partitive_relations: [{comprehensive,
+   partitives, completeness, plurality, criterion}]`) — ISO 704
+   n-ary rake decompositions where membership, completeness, or
+   type-shared plurality is jointly significant. Each partitive is
+   a `PartitiveMember` carrying a `ref` and optional per-member
+   `certainty`.
 
 The three coexist; an author chooses per relationship based on
 cardinality and notation needs. See
-`docs/design/partitive-hyperedge.md` for the design rationale.
+`docs/design/partitive-relation.md` for the design rationale.
 
 ## Adding a new model element
 

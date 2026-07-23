@@ -107,7 +107,7 @@ Typed semantic links between concepts, spanning five standards:
 |----------|----------|-------|
 | Lifecycle | ISO 10241-1 / ISO 19135 | `deprecates`, `deprecated_by`, `supersedes`, `superseded_by`, `replaces`, `replaced_by`, `invalidates`, `invalidated_by`, `retires`, `retired_by` |
 | Hierarchical — generic | ISO 25964 / SKOS | `broader`, `narrower`, `broader_generic`, `narrower_generic` |
-| Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` (binary); `PartitiveHyperedge` (n-ary, see <<partitive-hyperedges>>) |
+| Hierarchical — partitive | ISO 25964 / ISO 19135 | `broader_partitive`, `narrower_partitive`, `has_part`, `is_part_of` (binary); `PartitiveRelation` (n-ary, see <<partitive-relations>>) |
 | Hierarchical — instantial | ISO 25964 / ISO 19135 | `broader_instantial`, `narrower_instantial`, `instance_of`, `has_instance` |
 | Equivalence | ISO 10241-1 / SKOS | `equivalent`, `exact_match` |
 | SKOS mapping | SKOS | `close_match`, `broad_match`, `narrow_match`, `related_match` |
@@ -119,44 +119,52 @@ Typed semantic links between concepts, spanning five standards:
 | Versioning / definitional | ISO 19135 | `has_version`, `version_of`, `current_version`, `current_version_of` |
 | Designation-level | ISO 10241-1 | `abbreviated_form_for`, `short_form_for` |
 
-[[partitive-hyperedges]]
-=== Partitive hyperedges (n-ary)
+[[partitive-relations]]
+=== Partitive relations (n-ary)
 
 In addition to the pairwise binary `broader_partitive` and
 `narrower_partitive` relations above, glossarist's `[Unreleased]` work
-introduces `PartitiveHyperedge` for *one-to-many* partitive decompositions where
-the membership and diagram-notation metadata matter as a single
-invariant. Each hyperedge carries:
+introduces `PartitiveRelation` for *one-to-many* partitive decompositions
+(ISO 704 rake notation) where the membership, completeness, and type-shared
+plurality matter as a single invariant. Each relation carries:
 
-- `comprehensive` — the whole concept being decomposed
-- `parts` — one or more part concepts
-- `enumeration` — `closed` (default; the encoded parts are ALL parts)
-  or `open` (the encoded parts are SOME parts; others may exist)
-- `markers` — diagram notation flags (`double`, `dashed`) from VIM
-  concept-relationship diagrams
-- `content` — optional localized label or note
+- `comprehensive` — the superordinate concept partitive (the whole)
+- `partitives` — two or more subordinate concepts partitive (the parts),
+  each a `PartitiveMember` carrying a `ref` (ConceptRef) and optional
+  `certainty` (confirmed/possible)
+- `completeness` — `complete` (default; the encoded partitives fitted
+  together constitute the comprehensive) or `partial` (other partitives
+  exist beyond those encoded)
+- `plurality` — optional type-shared plurality block encoding ISO 704's
+  close-set double line (`is_shared`) and broken line (`is_uncertain`),
+  plus optional `shared_type` (Glossarist extension)
+- `criterion` — optional multilingual subdivision criterion (ISO 12620
+  coordinate-concept coherence)
 
 [source,yaml]
 ----
-partitive_hyperedges:
+partitive_relations:
   - comprehensive:
       source: VIM
       id: '112-02-09'
-    parts:
-      - { source: VIM, id: '112-02-10' }
-      - { source: VIM, id: '112-03-26' }
-    enumeration: closed
-    markers:
-      - double
+    partitives:
+      - ref: { source: VIM, id: '112-02-10' }
+      - ref: { source: VIM, id: '112-03-26' }
+    completeness: complete
+    plurality:
+      is_shared: true
+    criterion:
+      eng: measurement result composition
 ----
 
-See link:docs/design/partitive-hyperedge.md[] for the design rationale,
-and `schemas/v3/examples/20-partitive-hyperedge-closed.yaml`,
-`21-partitive-hyperedge-open.yaml`, `22-partitive-hyperedge-marked.yaml`,
-and `23-partitive-hyperedge-plain.yaml` for example payloads.
+See link:docs/design/partitive-relation.md[] for the design rationale,
+and `schemas/v3/examples/20-partitive-relation-closed.yaml` through
+`29-partitive-relation-plurality-uncertain.yaml` for example payloads.
 
-Binary `broader_partitive` edges and `PartitiveHyperedge` coexist;
-no automatic consolidation is performed.
+Binary `broader_partitive` edges and `PartitiveRelation` coexist;
+no automatic consolidation is performed. The
+`check-binary-has-part-redundancy` validator warns when binary `has_part`
+edges duplicate PartitiveRelation assertions.
 
 === Cross-dataset navigation
 
