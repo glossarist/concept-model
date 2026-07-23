@@ -15,7 +15,7 @@ module Glossarist
       #
       # Pairing convention: camelCase ConceptScheme local name maps
       # to snake_case schema $def name (e.g. `partitiveEnumeration`
-      # ↔ `partitive_enumeration`).
+      # ↔ `completeness`).
       class CheckEnumDrift < Glossarist::ConceptModel::Validator
         ENUM_RE           = /^\s*enum\s+([A-Za-z_][A-Za-z0-9_]*)\s*\{(.*?)^\}/m.freeze
         MEMBER_RE         = /^[ \t]*([a-z][a-zA-Z0-9_-]*)\s*\{/.freeze
