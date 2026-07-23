@@ -20,6 +20,7 @@
 @prefix gloss:   <https://www.glossarist.org/ontologies/> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
 
 gloss:rel a skos:ConceptScheme ;
   skos:prefLabel "Relationship Type"@en ;
@@ -350,4 +351,21 @@ gloss:rel skos:hasTopConcept
   <https://www.glossarist.org/ontologies/rel/references> ,
   <https://www.glossarist.org/ontologies/rel/sequentially_related> ,
   <https://www.glossarist.org/ontologies/rel/homograph> ,
-  <https://www.glossarist.org/ontologies/rel/abbreviated_form_for> .
+  <https://www.glossarist.org/ontologies/rel/abbreviated_form_for> ,
+  <https://www.glossarist.org/ontologies/rel/provides> ,
+  <https://www.glossarist.org/ontologies/rel/provided_by> .
+
+# ExternalConcept resolution pair (Glossarist extension)
+
+<https://www.glossarist.org/ontologies/rel/provides> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "provides"@en ;
+  skos:definition "The current concept provides the substance for an external concept. Established at the collection level."@en .
+
+<https://www.glossarist.org/ontologies/rel/provided_by> a skos:Concept ;
+  skos:inScheme gloss:rel ;
+  skos:prefLabel "provided by"@en ;
+  skos:definition "The current external concept is provided by another concept (its real definition)."@en .
+
+<https://www.glossarist.org/ontologies/rel/provides>
+  owl:inverseOf <https://www.glossarist.org/ontologies/rel/provided_by> .

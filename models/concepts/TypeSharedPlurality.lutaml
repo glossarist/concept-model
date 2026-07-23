@@ -1,0 +1,45 @@
+class TypeSharedPlurality {
+  definition {
+    Semantic claims encoded by ISO 704's close-set double line and
+    broken line notation. Promoted from rendering flags to data so
+    tools can reason about plurality directly.
+
+    A PartitiveRelation has at most one TypeSharedPlurality block.
+    Absent means: no type-shared plurality claim is being made.
+
+    Distinct from cardinality alone: three partitives of different
+    types do not satisfy is_shared; three partitives of the same
+    type do.
+  }
+  +is_shared: Boolean [1..1] {
+    definition {
+      ISO 704 close-set double line. True when several partitive
+      concepts of a given type are involved in the relation.
+
+      The "of a given type" qualifier is significant: this is a
+      type-shared plurality claim, not just a cardinality claim.
+    }
+  }
+  +is_uncertain: Boolean [0..1] {
+    definition {
+      ISO 704 broken line. True when the type-shared plurality is
+      uncertain — the relation asserts the plurality exists but its
+      boundaries (how many partitives, which ones) are not firmly
+      established.
+
+      Defaults to false when omitted. Requires is_shared = true to
+      be semantically coherent (the broken line qualifies the
+      close-set double line plurality claim).
+    }
+  }
+  +shared_type: <<StandardDocument>> ReferenceToTermbase [0..1] {
+    definition {
+      Glossarist extension. The type the partitives share, when
+      known. ISO notation does not encode this; it is left for the
+      reader to infer.
+
+      Optional even when is_shared is true — we may know the
+      partitives share a type without knowing which.
+    }
+  }
+}

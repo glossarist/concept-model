@@ -1,0 +1,30 @@
+# Completeness Taxonomy
+#
+# SKOS ConceptScheme for the completeness of a PartitiveRelation.
+# Two values: complete (fitted together constitute the comprehensive)
+# and partial (other partitives exist beyond those encoded).
+#
+# Source: ISO 704 (rake backline notation), Glossarist v2.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:completeness a skos:ConceptScheme ;
+  skos:prefLabel "Completeness"@en ;
+  skos:definition "Whether the encoded partitives fitted together constitute the comprehensive (complete) or only some of it (partial)."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/completeness/complete> a skos:Concept ;
+  skos:inScheme gloss:completeness ;
+  skos:prefLabel "complete"@en ;
+  skos:definition "The encoded partitives fitted together constitute the comprehensive concept. No further partitives exist."@en .
+
+<https://www.glossarist.org/ontologies/completeness/partial> a skos:Concept ;
+  skos:inScheme gloss:completeness ;
+  skos:prefLabel "partial"@en ;
+  skos:definition "The encoded partitives are some of the partitives of the comprehensive; others exist but are not encoded."@en .
+
+gloss:completeness skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/completeness/complete> ,
+    <https://www.glossarist.org/ontologies/completeness/partial> .

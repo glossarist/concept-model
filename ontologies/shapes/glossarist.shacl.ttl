@@ -51,8 +51,8 @@ gloss:ConceptShape a sh:NodeShape ;
     sh:class gloss:RelatedConcept ;
   ] ;
   sh:property [
-    sh:path gloss:hasPartitiveHyperedge ;
-    sh:class gloss:PartitiveHyperedge ;
+    sh:path gloss:hasPartitiveRelation ;
+    sh:class gloss:PartitiveRelation ;
   ] ;
   sh:property [
     sh:path gloss:hasDate ;
@@ -722,11 +722,11 @@ gloss:RelatedConceptShape a sh:NodeShape ;
   ] .
 
 # ══════════════════════════════════════════════════════════════════════════
-# Partitive Hyperedge shapes
+# Partitive Relation shapes (ISO 704 / 1087-1 / 12620)
 # ══════════════════════════════════════════════════════════════════════════
 
-gloss:PartitiveHyperedgeShape a sh:NodeShape ;
-  sh:targetClass gloss:PartitiveHyperedge ;
+gloss:PartitiveRelationShape a sh:NodeShape ;
+  sh:targetClass gloss:PartitiveRelation ;
   sh:property [
     sh:path gloss:comprehensive ;
     sh:class gloss:ConceptRef ;
@@ -734,45 +734,89 @@ gloss:PartitiveHyperedgeShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hasPart ;
-    sh:class gloss:ConceptRef ;
-    sh:minCount 1 ;
+    sh:path gloss:hasPartitive ;
+    sh:class gloss:PartitiveMember ;
+    sh:minCount 2 ;                          # ISO 704: "two or more"
   ] ;
   sh:property [
-    sh:path gloss:enumeration ;
+    sh:path gloss:completeness ;
     sh:class skos:Concept ;
-    sh:valuesFrom <https://www.glossarist.org/ontologies/partitiveEnumeration> ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/completeness> ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hasPluralityMarker ;
-    sh:class skos:Concept ;
-    sh:valuesFrom <https://www.glossarist.org/ontologies/pluralityMarker> ;
+    sh:path gloss:hasPlurality ;
+    sh:class gloss:TypeSharedPlurality ;
+    sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hyperedgeContent ;
-    sh:datatype xsd:string ;
+    sh:path gloss:criterion ;
+    sh:datatype rdf:langString ;
+  ] .
+
+gloss:PartitiveMemberShape a sh:NodeShape ;
+  sh:targetClass gloss:PartitiveMember ;
+  sh:property [
+    sh:path gloss:ref ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:certainty ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/memberCertainty> ;
     sh:maxCount 1 ;
   ] .
 
-# Ownership invariant — soft (warning severity). A PartitiveHyperedge
-# is *conventionally* carried by its comprehensive's own concept entry:
-#   <concept/X> gloss:hasPartitiveHyperedge [
-#     gloss:comprehensive [ a gloss:ConceptRef ; gloss:ref-id "X" ]
-#   ] .
-#
-# Datasets in the wild may legitimately cross-reference (a concept
-# carries a hyperedge whose comprehensive points elsewhere — e.g. for
-# indexing). We do not forbid this; we warn so reviewers can confirm
-# the cross-reference is intentional.
-#
-# The SPARQL constraint matches when the carrying concept's URI-ending
-# identifier differs from the comprehensive ConceptRef's `gloss:id`
-# literal.
-gloss:PartitiveHyperedgeOwnershipShape a sh:NodeShape ;
-  sh:targetClass gloss:PartitiveHyperedge ;
+gloss:TypeSharedPluralityShape a sh:NodeShape ;
+  sh:targetClass gloss:TypeSharedPlurality ;
+  sh:property [
+    sh:path gloss:isShared ;
+    sh:datatype xsd:boolean ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:isUncertain ;
+    sh:datatype xsd:boolean ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:sharedType ;
+    sh:class gloss:ConceptRef ;
+    sh:maxCount 1 ;
+  ] .
+
+# ExternalConcept coherence — an external concept (status: external)
+# must NOT have a definition or sources; that would contradict its
+# status. Soft warning to allow transitional data.
+gloss:ExternalConceptCoherenceShape a sh:NodeShape ;
+  sh:targetSubjectsOf gloss:hasStatus ;
   sh:severity sh:Warning ;
-  sh:message "partitive_hyperedge is carried by a concept that is not its comprehensive — confirm the cross-reference is intentional."@en ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes [
+      sh:declare [ sh:prefix "gloss" ; sh:namespace "https://www.glossarist.org/ontologies/"^^xsd:anyURI ] ;
+    ] ;
+    sh:select """
+      SELECT $this ?definition
+      WHERE {
+        $this gloss:hasStatus <https://www.glossarist.org/ontologies/status/external> .
+        $this gloss:hasDefinition ?definition .
+      }
+    """ ;
+    sh:message "An external concept should not have a definition — that contradicts status: external."@en ;
+  ] .
+
+# Ownership invariant — soft (warning severity). A PartitiveRelation
+# is *conventionally* carried by its comprehensive's own concept entry.
+# Datasets may legitimately cross-reference; we warn so reviewers can
+# confirm the cross-reference is intentional.
+gloss:PartitiveRelationOwnershipShape a sh:NodeShape ;
+  sh:targetClass gloss:PartitiveRelation ;
+  sh:severity sh:Warning ;
+  sh:message "partitive_relation is carried by a concept that is not its comprehensive — confirm the cross-reference is intentional."@en ;
   sh:sparql [
     a sh:SPARQLConstraint ;
     sh:prefixes [
@@ -788,32 +832,14 @@ gloss:PartitiveHyperedgeOwnershipShape a sh:NodeShape ;
     sh:select """
       SELECT $this ?carryingConcept ?compRef
       WHERE {
-        ?carryingConcept gloss:hasPartitiveHyperedge $this .
+        ?carryingConcept gloss:hasPartitiveRelation $this .
         $this gloss:comprehensive ?compRef .
-        # Two encoding shapes exist:
-        #   (a) ?compRef is a gloss:ConceptRef node with gloss:conceptRefId
-        #   (b) ?compRef is a direct URI ending in /<concept_id>
-        # We bind ?compKey to whichever form is present, then compare
-        # against the URI suffix of the carrying concept.
         OPTIONAL { ?compRef gloss:conceptRefId ?literalId . }
         BIND(COALESCE(?literalId, STRAFTER(STR(?compRef), CONCAT(STR(?carryingConcept), "/"))) AS ?compKey)
         FILTER (BOUND(?compKey) && !STRENDS(STR(?carryingConcept), CONCAT("/", ?compKey)))
       }
     """ ;
   ] .
-
-# ── Enum scheme shapes ───────────────────────────────────────────────────
-# PartitiveEnumeration and PluralityMarker are modelled as owl:Class
-# but functionally are SKOS ConceptSchemes. The shape asserts the
-# scheme contract: every instance must be a skos:ConceptScheme.
-
-gloss:PartitiveEnumerationShape a sh:NodeShape ;
-  sh:targetClass gloss:PartitiveEnumeration ;
-  sh:class skos:ConceptScheme .
-
-gloss:PluralityMarkerShape a sh:NodeShape ;
-  sh:targetClass gloss:PluralityMarker ;
-  sh:class skos:ConceptScheme .
 
 # ── Non-verbal entity hierarchy ──────────────────────────────────────────
 # Abstract base + shared dataset-wide entity. Concrete shapes

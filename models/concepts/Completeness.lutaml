@@ -1,0 +1,31 @@
+enum Completeness {
+  definition {
+    Whether the encoded partitives of a PartitiveRelation fitted
+    together constitute the whole comprehensive concept (complete)
+    or only some of it (partial — other partitives exist that are
+    not encoded).
+
+    ISO 704 depicts this as the rake's backline: a backline ending
+    with a tooth is complete; a backline continuing without a tooth
+    is partial.
+  }
+
+  complete {
+    definition {
+      The encoded partitives fitted together constitute the
+      comprehensive concept. The backline ends with a tooth: no
+      further partitive concepts exist. Adding or removing a
+      partitive would change the relationship.
+    }
+  }
+
+  partial {
+    definition {
+      The encoded partitives are some of the partitives of the
+      comprehensive; others exist but are not encoded here, either
+      because they are unknown or out of scope. The relationship
+      asserts only that the comprehensive has at least these
+      partitives.
+    }
+  }
+}

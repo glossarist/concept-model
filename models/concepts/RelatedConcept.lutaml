@@ -20,8 +20,8 @@ class RelatedConcept {
     restricted to the designation-level subset (ISO 10241-1 §5.4.2).
 
     For one-to-many partitive decompositions with diagram notation,
-    use `PartitiveHyperedge` instead — see
-    models/concepts/PartitiveHyperedge.lutaml.
+    use `PartitiveRelation` instead — see
+    models/concepts/PartitiveRelation.lutaml.
   }
   +type: RelatedConceptType {
     definition {

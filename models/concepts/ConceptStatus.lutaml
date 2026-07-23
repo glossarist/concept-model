@@ -37,4 +37,23 @@ enum ConceptStatus {
       The term was formerly valid, and is no longer valid.
     }
   }
+  external {
+    definition {
+      A concept referenced from this dataset but defined elsewhere.
+      The concept exists in the world (we know its designation);
+      we don't define it ourselves.
+
+      Resolves to another dataset's concept when one is loaded that
+      defines it (see RelatedConceptType#provided_by). ISO 704 calls
+      these "parenthetic terms" — concepts taken as primitives,
+      assumed generally understood. "External" describes the
+      semantic role; "parenthetic" describes the typographic
+      convention only.
+
+      ManagedConcept fields that are normally required (definition,
+      sources) become optional for status:external concepts. At
+      minimum, the concept must have one designation (the name by
+      which it is referenced).
+    }
+  }
 }

@@ -1,0 +1,27 @@
+enum MemberCertainty {
+  definition {
+    Per-partitive certainty within a PartitiveRelation.
+
+    Glossarist extension beyond ISO 704 notation, which only
+    supports set-level plurality uncertainty (broken line).
+    Per-member certainty allows expressing cases like "A is
+    composed of {b, c} (sure) and {d} (possible)" within one
+    relation.
+  }
+
+  confirmed {
+    definition {
+      This partitive concept is definitely a member of the
+      decomposition. The default when certainty is omitted.
+    }
+  }
+
+  possible {
+    definition {
+      This partitive concept may or may not be a member of the
+      decomposition. Used when sources disagree, when
+      identification is provisional, or when the source diagram
+      depicts this tooth with a dashed line.
+    }
+  }
+}
