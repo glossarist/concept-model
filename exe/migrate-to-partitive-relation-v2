@@ -1,0 +1,152 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require "yaml"
+require "fileutils"
+require "pathname"
+require "set"
+
+# Migrate v1 PartitiveHyperedge YAML to v2 PartitiveRelation YAML.
+#
+# Transforms:
+#   partitive_hyperedges → partitive_relations
+#   parts (ConceptRef[]) → partitives (PartitiveMember[])
+#   enumeration: closed/open → completeness: complete/partial
+#   markers: [double, dashed] → plurality: { is_shared, is_uncertain }
+#   content (any) → dropped (moved to comment if valuable)
+#
+# Lossy cases flagged for review:
+#   - markers: [dashed] alone (no [double]) → is_uncertain without
+#     is_shared; semantically odd but preserved
+#   - per-partitive certainty → all migrated as confirmed (no source
+#     data to distinguish which tooth was uncertain)
+#
+# Usage:
+#   migrate-to-partitive-relation-v2 [--dry-run] [--backup] PATH [PATH...]
+
+module Glossarist
+  module ConceptModel
+    module Migration
+      class PartitiveRelationV2
+        attr_reader :options, :stats
+
+        def initialize(options)
+          @options = options
+          @stats = Hash.new(0)
+        end
+
+        def call(paths)
+          paths.each { |path| migrate_path(Pathname.new(path)) }
+          print_summary
+        end
+
+        private
+
+        def migrate_path(path)
+          if path.directory?
+            Dir.glob("#{path}/**/*.yaml").sort.each { |f| migrate_file(Pathname.new(f)) }
+          else
+            migrate_file(path)
+          end
+        end
+
+        def migrate_file(path)
+          docs = YAML.load_stream(path.read)
+          changed = false
+
+          docs.each do |doc|
+            next unless doc.is_a?(Hash)
+            next unless doc.key?("partitive_hyperedges")
+
+            old_relations = doc.delete("partitive_hyperedges")
+            doc["partitive_relations"] = old_relations.map { |old| migrate_relation(old, path) }
+            changed = true
+          end
+
+          return unless changed
+
+          @stats[:files_migrated] += 1
+
+          if options[:dry_run]
+            $stdout.puts "WOULD CHANGE: #{path}"
+            return
+          end
+
+          backup(path) if options[:backup]
+          write_docs(path, docs)
+          $stdout.puts "MIGRATED: #{path}"
+        end
+
+        def migrate_relation(old, path)
+          new = {
+            "comprehensive" => old["comprehensive"],
+            "partitives" => Array(old["parts"]).map { |ref| { "ref" => ref } },
+            "completeness" => old["enumeration"] == "open" ? "partial" : "complete",
+          }
+
+          markers = Array(old["markers"])
+          unless markers.empty?
+            plural = migrate_plurality(markers, path)
+            new["plurality"] = plural if plural
+          end
+
+          # criterion: omitted (reviewer fills in)
+          # content: dropped (structural edges don't carry prose)
+          new
+        end
+
+        def migrate_plurality(markers, path)
+          set = markers.to_set
+          is_shared = set.include?("double")
+          is_uncertain = set.include?("dashed")
+
+          # Lossy case: dashed without double
+          if is_uncertain && !is_shared
+            @stats[:lossy_dashed_alone] += 1
+            $stderr.puts "WARN: #{path}: [dashed] marker without [double] — semantically odd, preserved as-is"
+          end
+
+          result = { "is_shared" => is_shared }
+          result["is_uncertain"] = true if is_uncertain
+          result
+        end
+
+        def backup(path)
+          FileUtils.cp(path, "#{path}.bak")
+        end
+
+        def write_docs(path, docs)
+          content = docs.map { |d| d.nil? ? "---\n" : YAML.dump(d) }.join
+          File.write(path, content)
+        end
+
+        def print_summary
+          $stdout.puts ""
+          $stdout.puts "Summary:"
+          $stdout.puts "  Files migrated:     #{@stats[:files_migrated]}"
+          $stdout.puts "  Lossy cases flagged: #{@stats[:lossy_dashed_alone]}"
+          $stdout.puts "    - relations with [dashed] alone (no [double])" if @stats[:lossy_dashed_alone] > 0
+        end
+      end
+    end
+  end
+end
+
+options = { dry_run: false, backup: false }
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options] PATH [PATH...]"
+  opts.on("--dry-run", "Print changes without writing") { options[:dry_run] = true }
+  opts.on("--backup", "Write .bak files before overwriting") { options[:backup] = true }
+  opts.on("-h", "--help", "Show this help") do
+    $stdout.puts opts
+    exit 0
+  end
+end.parse!
+
+if ARGV.empty?
+  $stderr.puts "Error: at least one PATH required"
+  exit 1
+end
+
+Glossarist::ConceptModel::Migration::PartitiveRelationV2.new(options).call(ARGV)
