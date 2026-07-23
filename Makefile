@@ -43,7 +43,8 @@ BUNDLE := bundle exec
 
 validate: validate-ontologies validate-examples validate-negative-examples \
           check-enum-drift check-jsonld-context check-shacl-coverage \
-          check-lutaml-references
+          check-lutaml-references check-partitive-relation-coherence \
+          check-external-concept-shape check-binary-has-part-redundancy
 	@echo "All validation checks passed."
 
 validate-ontologies:
@@ -67,9 +68,20 @@ check-shacl-coverage:
 check-lutaml-references:
 	$(BUNDLE) exe/check-lutaml-references
 
+check-partitive-relation-coherence:
+	$(BUNDLE) exe/check-partitive-relation-coherence
+
+check-external-concept-shape:
+	$(BUNDLE) exe/check-external-concept-shape
+
+check-binary-has-part-redundancy:
+	$(BUNDLE) exe/check-binary-has-part-redundancy
+
 validate-scripts:
 	$(BUNDLE) rspec spec/ --format documentation
 
 .PHONY: clean validate validate-ontologies validate-examples \
         validate-negative-examples check-enum-drift check-jsonld-context \
-        check-shacl-coverage check-lutaml-references validate-scripts
+        check-shacl-coverage check-lutaml-references \
+        check-partitive-relation-coherence check-external-concept-shape \
+        check-binary-has-part-redundancy validate-scripts

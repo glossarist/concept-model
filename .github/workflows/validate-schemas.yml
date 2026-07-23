@@ -42,6 +42,9 @@ jobs:
       - run: bundle exec exe/check-jsonld-context
       - run: bundle exec exe/check-shacl-coverage
       - run: bundle exec exe/check-lutaml-references
+      - run: bundle exec exe/check-partitive-relation-coherence
+      - run: bundle exec exe/check-external-concept-shape
+      - run: bundle exec exe/check-binary-has-part-redundancy
 
   rspec:
     name: RSpec test suite
