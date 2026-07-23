@@ -30,9 +30,15 @@ localizations.
 | 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
 | 17 | Dataset register (URN resolution) | `17-register-dataset.yaml` | — |
 | 18 | Hierarchical sections | `18-hierarchical-sections-concept.yaml` | — (companion: `18-hierarchical-sections-register.yaml`) |
-| 20 | Partitive hyperedge (closed, with plurality marker) | `20-partitive-hyperedge-closed.yaml` | — |
-| 21 | Partitive hyperedge (open enumeration) | `21-partitive-hyperedge-open.yaml` | — |
-| 22 | Partitive hyperedge (uncertain plurality, both markers) | `22-partitive-hyperedge-marked.yaml` | — |
+| 20 | Partitive relation (complete, type-shared plurality) | `20-partitive-relation-closed.yaml` | — |
+| 21 | Partitive relation (partial decomposition) | `21-partitive-relation-partial.yaml` | — |
+| 22 | Partitive relation (mixed per-partitive certainty) | `22-partitive-relation-mixed-certainty.yaml` | — |
+| 23 | Partitive relation (plain complete, minimal form) | `23-partitive-relation-plain.yaml` | — |
+| 24 | Partitive relation with ExternalConcept partitive | `24-partitive-relation-external.yaml` | — (companion: `_external/ext-qft.yaml`) |
+| 25 | Partitive relation with shared_type | `25-partitive-relation-shared-type.yaml` | — |
+| 26 | Same comprehensive, distinct criteria | `26-partitive-relation-dual-criteria.yaml` | — |
+| 28 | ExternalConcept resolved via provided_by | `28-external-concept-resolved.yaml` | — |
+| 29 | Plurality uncertain | `29-partitive-relation-plurality-uncertain.yaml` | — |
 
 ---
 
@@ -298,7 +304,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | `status` (7 values) | 01 (valid), 11 (valid), 13 (superseded) |
 | `date_accepted` | 01, 06, 11 |
 | `related` (52 types) | 06 (all 52), 11 (supersedes), 13 (superseded_by, deprecates) |
-| `partitive_hyperedges` (closed, open, marked) | 20 (closed + double), 21 (open), 22 (open + double + dashed) |
+| `partitive_relations` (complete, partial, mixed, plain) | 20 (complete + shared), 21 (partial), 22 (mixed certainty), 23 (plain) |
 | `sources` (concept-level) | 01, 05, 06, 07, 08, 10, 11 |
 
 ### Localized concept features (`localized-concept.yaml`)
@@ -421,11 +427,21 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | Designation | `abbreviated_form_for` | 02-abbreviation |
 | Designation | `short_form_for` | 02-abbreviation |
 
-### Partitive hyperedge coverage
+### Partitive relation coverage
 
-| Enumeration | Markers | Example |
-|-------------|---------|---------|
-| closed      | (none)  | 23 |
-| closed      | double  | 20 |
-| open        | (none)  | 21 |
-| open        | double, dashed | 22 |
+| Completeness | Plurality | Certainty | Example |
+|--------------|-----------|-----------|---------|
+| complete     | (none)    | confirmed | 23 (plain minimal) |
+| complete     | is_shared | confirmed | 20 (close-set double line) |
+| complete     | is_shared + shared_type | confirmed | 25 |
+| partial      | (none)    | confirmed | 21 |
+| partial      | (none)    | mixed     | 22 (per-partitive certainty extension) |
+| partial      | is_shared + is_uncertain | confirmed | 29 (broken line) |
+| partial      | (none)    | possible (external) | 24 (ExternalConcept partitive) |
+
+### ExternalConcept coverage
+
+| Status | Provided by | Example |
+|--------|-------------|---------|
+| external (unresolved) | (none) | `_external/ext-qft.yaml` |
+| external (resolved)   | VIM:112-03-26 | 28 |

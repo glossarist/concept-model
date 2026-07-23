@@ -1,0 +1,5 @@
+# 06 — Status value not in concept_status enum.
+id: "900-06-01"
+data:
+  identifier: "900-06-01"
+status: bogus_status

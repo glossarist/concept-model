@@ -1,0 +1,53 @@
+# 25 — Type-shared plurality with shared_type filled in
+#
+# Three partitives of the same type; the type is known and
+# explicitly recorded. Glossarist extension — ISO 704's
+# close-set double line notation does not encode which type
+# is shared; it's left for the reader to infer.
+#
+# Use case: the comprehensive decomposes into three coordinate
+# concepts that all share a common type (115-01-05).
+
+---
+id: "115-01-01"
+data:
+  identifier: "115-01-01"
+  localized_concepts:
+    eng: 55555555-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-115-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "115-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "115-01-02" }
+      - ref: { source: "EXAMPLE", id: "115-01-03" }
+      - ref: { source: "EXAMPLE", id: "115-01-04" }
+    completeness: complete
+    plurality:
+      is_shared: true
+      shared_type: { source: "EXAMPLE", id: "115-01-05" }
+    criterion:
+      eng: shared-type decomposition
+
+status: valid
+date_accepted: "2026-07-23T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-23"
+      type: accepted
+  definition:
+    - content: "example shared-type comprehensive"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example shared-type"
+  language_code: eng
+  entry_status: valid

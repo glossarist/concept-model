@@ -1,0 +1,13 @@
+# 03 — Invalid completeness value (not in {complete, partial}).
+id: "900-03-01"
+data:
+  identifier: "900-03-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-03-01"
+    partitives:
+      - ref: { source: "X", id: "900-03-02" }
+      - ref: { source: "X", id: "900-03-03" }
+    completeness: closed
+status: valid

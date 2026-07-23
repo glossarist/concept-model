@@ -1,0 +1,25 @@
+# ExternalConcept companion for example 24.
+#
+# An ExternalConcept: a concept referenced from this dataset but
+# defined elsewhere. We know the designation ("quantum field
+# theory") but don't define the concept ourselves.
+#
+# When another dataset that defines this concept is loaded, the
+# collection manager adds a `provided_by` edge (see example 28).
+#
+# Note: status is "external"; no definition, no sources.
+
+id: ext-qft
+status: external
+data:
+  identifier: ext-qft
+  designations:
+    - designation: "quantum field theory"
+      type: expression
+      normative_status: admitted
+  domains:
+    - concept_id: physics
+      source: "EXAMPLE"
+      ref_type: domain
+
+date_accepted: "2026-07-23T00:00:00+00:00"

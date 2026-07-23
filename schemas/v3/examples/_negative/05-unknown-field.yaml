@@ -1,0 +1,13 @@
+# 05 — Unknown field on relation (rejected by additionalProperties: false).
+id: "900-05-01"
+data:
+  identifier: "900-05-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-05-01"
+    partitives:
+      - ref: { source: "X", id: "900-05-02" }
+      - ref: { source: "X", id: "900-05-03" }
+    bogus_field: true
+status: valid

@@ -1,0 +1,27 @@
+# 28 — ExternalConcept resolved via provided_by
+#
+# Demonstrates: an ExternalConcept whose resolution was found in
+# another dataset. The provided_by edge was added by the
+# collection manager (human or auto-resolution routine).
+#
+# Future references to ext-resolved can transparently use the
+# provided_by link to access the resolving concept's data.
+
+id: ext-resolved
+status: external
+data:
+  identifier: ext-resolved
+  designations:
+    - designation: "measurement uncertainty"
+      type: expression
+      normative_status: admitted
+  domains:
+    - concept_id: section-3
+      source: "EXAMPLE"
+      ref_type: domain
+
+related:
+  - type: provided_by
+    ref: { source: "VIM", id: "112-03-26" }
+
+date_accepted: "2026-07-23T00:00:00+00:00"

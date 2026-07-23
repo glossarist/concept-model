@@ -1,0 +1,12 @@
+# 02 — Fewer than 2 partitives (violates ISO 704 "two or more").
+id: "900-02-01"
+data:
+  identifier: "900-02-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-02-01"
+    partitives:
+      - ref: { source: "X", id: "900-02-02" }
+    completeness: complete
+status: valid
