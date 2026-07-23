@@ -1,0 +1,58 @@
+# 26 — Two distinct decompositions of the same comprehensive
+#
+# Demonstrates criterion coherence: two PartitiveRelations on the
+# same comprehensive, distinguished by criterion. The coherence
+# validator accepts this because the criteria differ — they are
+# genuinely different decompositions.
+#
+# Relation 1: comprehensive decomposed by physical structure
+# Relation 2: comprehensive decomposed by functional subsystem
+
+---
+id: "116-01-01"
+data:
+  identifier: "116-01-01"
+  localized_concepts:
+    eng: 66666666-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-116-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "116-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "116-01-02" }
+      - ref: { source: "EXAMPLE", id: "116-01-03" }
+    completeness: complete
+    criterion:
+      eng: physical structure
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "116-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "116-01-04" }
+      - ref: { source: "EXAMPLE", id: "116-01-05" }
+    completeness: complete
+    criterion:
+      eng: functional subsystem
+
+status: valid
+date_accepted: "2026-07-23T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-23"
+      type: accepted
+  definition:
+    - content: "example multi-criterion comprehensive"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example multi-criterion"
+  language_code: eng
+  entry_status: valid

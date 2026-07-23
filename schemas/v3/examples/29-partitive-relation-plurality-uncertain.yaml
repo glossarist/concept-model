@@ -1,0 +1,47 @@
+# 29 — Type-shared plurality with uncertainty
+#
+# ISO 704 broken line: type-shared plurality exists but its
+# boundaries (which partitives, how many) are uncertain.
+# Encoded as is_uncertain: true on the plurality block.
+
+---
+id: "117-01-01"
+data:
+  identifier: "117-01-01"
+  localized_concepts:
+    eng: 77777777-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-117-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "117-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "117-01-02" }
+      - ref: { source: "EXAMPLE", id: "117-01-03" }
+    completeness: partial
+    plurality:
+      is_shared: true
+      is_uncertain: true
+      shared_type: { source: "EXAMPLE", id: "117-01-04" }
+
+status: valid
+date_accepted: "2026-07-23T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-23"
+      type: accepted
+  definition:
+    - content: "example uncertain-plurality comprehensive"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example uncertain-plurality"
+  language_code: eng
+  entry_status: valid

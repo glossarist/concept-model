@@ -1,0 +1,13 @@
+# 08 — External concept with a definition (contradicts status: external).
+# Coherence rule: external concepts must not have definitions or
+# sources — that's the point of status: external.
+id: ext-bad
+status: external
+data:
+  identifier: ext-bad
+  designations:
+    - designation: "bad external"
+      type: expression
+  definition:
+    - content: "This shouldn't be here for an external concept."
+status: external

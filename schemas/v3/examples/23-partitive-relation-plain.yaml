@@ -1,0 +1,44 @@
+# 23 — Partitive Relation (plain complete decomposition)
+#
+# The minimal v2 form: a comprehensive composed of exactly two
+# partitives, no plurality claim, no per-partitive uncertainty.
+# Demonstrates the simplest valid PartitiveRelation shape.
+
+---
+id: "113-01-01"
+data:
+  identifier: "113-01-01"
+  localized_concepts:
+    eng: 33333333-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-113-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "113-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "113-01-02" }
+      - ref: { source: "EXAMPLE", id: "113-01-03" }
+    # completeness omitted → defaults to complete
+    # criterion omitted → no sibling relation to distinguish from
+
+status: valid
+date_accepted: "2026-07-01T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-01"
+      type: accepted
+  definition:
+    - content: "example comprehensive concept"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example comprehensive"
+  language_code: eng
+  entry_status: valid

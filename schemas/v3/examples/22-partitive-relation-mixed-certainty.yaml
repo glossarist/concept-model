@@ -1,0 +1,53 @@
+# 22 — Partitive Relation (mixed per-partitive certainty)
+#
+# Demonstrates the Glossarist extension beyond ISO 704 notation:
+# per-partitive certainty. The source rake has two confirmed
+# partitives (1.4, 1.5) and one possible partitive (1.22) whose
+# membership in the decomposition is uncertain.
+#
+# ISO 704's broken-line notation only expresses set-level plurality
+# uncertainty. Per-member certainty is finer-grained.
+
+---
+id: "112-01-03"
+data:
+  identifier: "112-01-03"
+  localized_concepts:
+    eng: 22222222-aaaa-bbbb-cccc-000000000031
+  domains:
+    - concept_id: section-1
+      source: "VIM"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "VIM"
+      id: "112-01-03"
+    partitives:
+      - ref: { source: "VIM", id: "112-01-04" }
+        certainty: confirmed
+      - ref: { source: "VIM", id: "112-01-05" }
+        certainty: confirmed
+      - ref: { source: "VIM", id: "112-01-22" }
+        certainty: possible
+    completeness: partial
+    criterion:
+      eng: quantity classification
+
+status: valid
+date_accepted: "2012-01-01T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2012-01-01"
+      type: accepted
+  definition:
+    - content: "set of quantities together with a set of non-contradictory equations relating those quantities"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "system of quantities"
+  language_code: eng
+  entry_status: valid

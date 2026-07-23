@@ -1,0 +1,10 @@
+# 07 — Related type not in related_concept_type enum.
+id: "900-07-01"
+data:
+  identifier: "900-07-01"
+related:
+  - type: bogus_relationship
+    ref:
+      source: "X"
+      id: "900-07-02"
+status: valid

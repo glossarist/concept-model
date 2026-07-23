@@ -1,0 +1,14 @@
+# 04 — Invalid certainty value (not in {confirmed, possible}).
+id: "900-04-01"
+data:
+  identifier: "900-04-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-04-01"
+    partitives:
+      - ref: { source: "X", id: "900-04-02" }
+        certainty: maybe
+      - ref: { source: "X", id: "900-04-03" }
+    completeness: complete
+status: valid

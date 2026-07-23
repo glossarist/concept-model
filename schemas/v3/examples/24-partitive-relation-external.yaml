@@ -1,0 +1,51 @@
+# 24 — Partitive Relation with an ExternalConcept as a partitive
+#
+# Demonstrates: a comprehensive whose partitives include an
+# external concept (status: external). The external concept lives
+# at schemas/v3/examples/_external/ext-qft.yaml.
+#
+# Use case: we know "quantum field theory" is a part of a larger
+# theoretical framework, but we don't define it ourselves — it's
+# defined in another dataset we haven't loaded yet.
+
+---
+id: "114-01-01"
+data:
+  identifier: "114-01-01"
+  localized_concepts:
+    eng: 44444444-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-114-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "114-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "114-01-02" }
+        certainty: confirmed
+      - ref: { source: "EXAMPLE", id: "ext-qft" }
+        certainty: possible
+    completeness: partial
+    criterion:
+      eng: theoretical framework decomposition
+
+status: valid
+date_accepted: "2026-07-23T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-23"
+      type: accepted
+  definition:
+    - content: "example theoretical framework concept"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example framework"
+  language_code: eng
+  entry_status: valid

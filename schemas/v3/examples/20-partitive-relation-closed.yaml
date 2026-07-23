@@ -1,0 +1,48 @@
+# 20 — Partitive Relation (complete, type-shared plurality)
+#
+# Source analogue: VIM 2012 Fig. A.6 — measurement result (2.9) is
+# composed of measured quantity value (2.10) and measurement
+# uncertainty (2.26); these are all the parts (complete), and
+# they share a type (close-set double line notation).
+
+---
+id: "112-02-09"
+data:
+  identifier: "112-02-09"
+  localized_concepts:
+    eng: 22222222-aaaa-bbbb-cccc-000000000009
+  domains:
+    - concept_id: section-2
+      source: "VIM"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "VIM"
+      id: "112-02-09"
+    partitives:
+      - ref: { source: "VIM", id: "112-02-10" }
+      - ref: { source: "VIM", id: "112-03-26" }
+    completeness: complete
+    plurality:
+      is_shared: true
+    criterion:
+      eng: measurement result composition
+
+status: valid
+date_accepted: "2012-01-01T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2012-01-01"
+      type: accepted
+  definition:
+    - content: "result of a measurement"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "measurement result"
+  language_code: eng
+  entry_status: valid

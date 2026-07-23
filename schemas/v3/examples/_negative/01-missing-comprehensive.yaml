@@ -1,10 +1,9 @@
-# 01 — Missing required `comprehensive` field on a hyperedge.
+# 01 — Missing required `comprehensive` field on a relation.
 id: "900-01-01"
 data:
   identifier: "900-01-01"
-partitive_hyperedges:
-  - parts:
-      - source: "X"
-        id: "900-01-02"
-    enumeration: closed
+partitive_relations:
+  - partitives:
+      - ref: { source: "X", id: "900-01-02" }
+    completeness: complete
 status: valid
