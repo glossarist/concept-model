@@ -16,7 +16,7 @@ data:
       and separated from their environment
   related:
   - type: see
-    content: { eng: open system }
+    content: open system
     ref:
       source: IEC
       id: 102-03-05
