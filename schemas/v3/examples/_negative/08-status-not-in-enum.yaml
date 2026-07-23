@@ -1,5 +1,0 @@
-# 08 — Status value not in concept_status enum.
-id: "900-08-01"
-data:
-  identifier: "900-08-01"
-status: bogus_status

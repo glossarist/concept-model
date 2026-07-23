@@ -1,0 +1,26 @@
+class PartitiveMember {
+  definition {
+    One member of a PartitiveRelation — a partitive concept plus
+    optional certainty metadata.
+
+    A PartitiveMember with no certainty field is implicitly
+    confirmed.
+  }
+  +ref: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The subordinate concept partitive — the part. Encoded as a
+      ConceptRef (source + id, optional text), same shape as
+      RelatedConcept#ref.
+    }
+  }
+  +certainty: MemberCertainty [0..1] {
+    definition {
+      Glossarist extension beyond ISO 704 notation, which only
+      supports set-level plurality uncertainty. Per-member certainty
+      allows cases like "A is composed of {b, c} (sure) and {d}
+      (possible)" within one relation.
+
+      Defaults to confirmed when omitted.
+    }
+  }
+}

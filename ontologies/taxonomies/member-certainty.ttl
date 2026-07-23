@@ -1,0 +1,31 @@
+# Member Certainty Taxonomy
+#
+# SKOS ConceptScheme for the certainty of a partitive member within
+# a PartitiveRelation. Glossarist extension beyond ISO notation,
+# which only supports set-level plurality uncertainty.
+#
+# Two values: confirmed (default; definitely a member) and possible
+# (might be a member).
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:memberCertainty a skos:ConceptScheme ;
+  skos:prefLabel "Member Certainty"@en ;
+  skos:definition "Per-partitive certainty within a PartitiveRelation. Glossarist extension beyond ISO 704 notation."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/memberCertainty/confirmed> a skos:Concept ;
+  skos:inScheme gloss:memberCertainty ;
+  skos:prefLabel "confirmed"@en ;
+  skos:definition "This partitive is definitely a member of the decomposition."@en .
+
+<https://www.glossarist.org/ontologies/memberCertainty/possible> a skos:Concept ;
+  skos:inScheme gloss:memberCertainty ;
+  skos:prefLabel "possible"@en ;
+  skos:definition "This partitive may or may not be a member of the decomposition. Used when sources disagree or identification is provisional."@en .
+
+gloss:memberCertainty skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/memberCertainty/confirmed> ,
+    <https://www.glossarist.org/ontologies/memberCertainty/possible> .

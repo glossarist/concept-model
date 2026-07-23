@@ -297,4 +297,38 @@ enum RelatedConceptType {
       The current designation is a short form of the related designation.
     }
   }
+
+  // ── ExternalConcept resolution (Glossarist extension) ──────────
+  provides {
+    definition {
+      The current concept provides the substance for an external
+      concept (ManagedConcept with status: external). Established
+      at the collection level: the collection manager (human or
+      auto-resolution routine) who has both datasets loaded adds
+      this edge when matching an external concept to its real
+      definition.
+
+      Direction: real concept (subject) → external concept (object).
+      The inverse is `provided_by`.
+
+      Distinct from supersedes / superseded_by (which replace one
+      concept with another). The external concept remains — it is
+      still referenced by places that used it; this edge just
+      records that its substance now comes from elsewhere.
+    }
+  }
+  provided_by {
+    definition {
+      The current external concept is provided by the object
+      concept — the object concept is its real definition.
+
+      Direction: external concept (subject) → real concept (object).
+      The inverse is `provides`.
+
+      Convention: store the edge on the ExternalConcept (in its
+      home dataset) rather than on the providing concept. The
+      ExternalConcept is the source of truth for its own
+      placeholders.
+    }
+  }
 }

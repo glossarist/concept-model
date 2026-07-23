@@ -48,4 +48,13 @@ gloss:status a skos:ConceptScheme ;
   skos:prefLabel "retired"@en ;
   skos:definition "The concept has been retired from active use."@en .
 
-gloss:status skos:hasTopConcept <https://www.glossarist.org/ontologies/status/draft> , <https://www.glossarist.org/ontologies/status/valid> , <https://www.glossarist.org/ontologies/status/retired> .
+<https://www.glossarist.org/ontologies/status/external> a skos:Concept ;
+  skos:inScheme gloss:status ;
+  skos:prefLabel "external"@en ;
+  skos:definition "A concept referenced from this dataset but defined elsewhere. Resolves via RelatedConceptType#provided_by when a defining dataset is loaded."@en .
+
+gloss:status skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/status/draft> ,
+    <https://www.glossarist.org/ontologies/status/valid> ,
+    <https://www.glossarist.org/ontologies/status/retired> ,
+    <https://www.glossarist.org/ontologies/status/external> .

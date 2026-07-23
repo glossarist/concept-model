@@ -9,16 +9,21 @@ class ManagedConcept {
       standard semantics).
     }
   }
-  +partitive_hyperedges: PartitiveHyperedge [0..*] {
+  +partitive_relations: PartitiveRelation [0..*] {
     definition {
-      One-to-many partitive decompositions. Each entry asserts that
-      the current concept (as comprehensive) is decomposed into a
-      significant set of parts, optionally qualified by plurality
-      markers and enumeration completeness.
+      ISO 704 / 1087-1 / 12620 partitive relations. Each entry
+      connects the current concept (as comprehensive — superordinate
+      concept partitive) to two or more partitive concepts
+      (subordinate concepts partitive) which fitted together
+      constitute the comprehensive.
 
-      Independent of `related`. A concept may have both. Hyperedges
-      are used when the source diagram depicts a rake whose
-      membership or notation is jointly significant.
+      Independent of `related` (which is binary). A concept may have
+      both. PartitiveRelation is used when the source diagram depicts
+      a rake whose membership, completeness, or plurality is jointly
+      significant.
+
+      For single pairwise part-of assertions without completeness
+      claims, use the binary has_part / is_part_of edge instead.
     }
   }
   +status: ConceptStatus {

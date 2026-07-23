@@ -192,45 +192,54 @@ gloss:Reference a owl:Class ;
 gloss:RelatedConcept a owl:Class ;
   rdfs:label "Related Concept"@en ;
   rdfs:comment """
-    A concept with a typed relationship (deprecates, broader, equivalent, etc.).
-    Binary: one source concept, one target concept via a ConceptRef.
-    For one-to-many partitive decompositions with plurality markers or
-    open/closed enumeration, use gloss:PartitiveHyperedge.
+    A concept with a typed relationship (deprecates, broader,
+    equivalent, etc.). Binary: one source concept, one target
+    concept via a ConceptRef.
+
+    For one-to-many partitive decompositions (ISO 704 rake), use
+    gloss:PartitiveRelation. For ExternalConcept resolution, use
+    gloss:provides / gloss:providedBy.
   """@en .
 
-gloss:PartitiveHyperedge a owl:Class ;
-  rdfs:label "Partitive Hyperedge"@en ;
+gloss:PartitiveRelation a owl:Class ;
+  rdfs:label "Partitive Relation"@en ;
   rdfs:comment """
-    A one-to-many partitive decomposition: one comprehensive (whole)
-    concept related to one or more parts as a SINGLE relationship.
+    ISO 704 / ISO 1087-1 / ISO 12620 partitive relation. Connects
+    a comprehensive concept (superordinate concept partitive) to
+    two or more partitive concepts (subordinate concepts
+    partitive) which fitted together constitute the comprehensive.
 
-    Used when the source diagram depicts a partitive rake whose
-    membership or notation is jointly significant — i.e. the
-    decomposition cannot be faithfully split into binary
-    RelatedConcept edges without losing invariants (which
-    comprehensive a part belongs to, the plurality of the rake,
-    the completeness of the enumeration).
+    Shown as a rake or bracket in source diagrams. All partitives
+    within one relation are coordinate concepts (ISO 12620): they
+    share the comprehensive AND the criterion of subdivision.
 
-    Independent of gloss:hasRelatedConcept. A concept may have both
-    binary related entries and partitive hyperedges.
+    Glossarist extensions beyond ISO notation:
+      - Per-partitive certainty (MemberCertainty on PartitiveMember)
+      - TypeSharedPlurality.shared_type (the type the partitives share)
+      - criterion as structured multilingual data
+
+    Distinct from binary has_part / is_part_of edges, which express
+    pairwise part-of assertions without completeness claims.
   """@en .
 
-gloss:PartitiveEnumeration a owl:Class ;
-  rdfs:label "Partitive Enumeration"@en ;
+gloss:PartitiveMember a owl:Class ;
+  rdfs:label "Partitive Member"@en ;
   rdfs:comment """
-    Whether the parts array of a PartitiveHyperedge constitutes the
-    COMPLETE decomposition of the comprehensive (closed) or only a
-    PARTIAL one (open). Orthogonal to PluralityMarker.
+    One member of a PartitiveRelation — a partitive concept (via
+    ConceptRef) plus optional certainty metadata. A PartitiveMember
+    with no certainty is implicitly confirmed.
   """@en .
 
-gloss:PluralityMarker a owl:Class ;
-  rdfs:label "Plurality Marker"@en ;
+gloss:TypeSharedPlurality a owl:Class ;
+  rdfs:label "Type-Shared Plurality"@en ;
   rdfs:comment """
-    Diagram notation flags that travel with a PartitiveHyperedge so
-    the rendering layer can reproduce the source diagram's notation
-    (close-set double line, dashed line). Originates from VIM
-    (International Vocabulary of Metrology) concept-relationship
-    diagrams. Orthogonal to PartitiveEnumeration.
+    Semantic claims encoded by ISO 704's close-set double line
+    (is_shared: several partitives of a given type are involved)
+    and broken line (is_uncertain: such plurality is uncertain).
+
+    Promoted from rendering flags to structured data. Distinct
+    from cardinality alone: three partitives of different types do
+    not satisfy is_shared; three partitives of the same type do.
   """@en .
 
 gloss:DesignationRelationship a owl:Class ;
@@ -352,35 +361,82 @@ gloss:hasRelatedConcept a owl:ObjectProperty ;
   rdfs:label "has related concept"@en ;
   rdfs:comment "DATA: Typed binary semantic relationship — applicable at concept and localization levels."@en .
 
-gloss:hasPartitiveHyperedge a owl:ObjectProperty ;
+gloss:hasPartitiveRelation a owl:ObjectProperty ;
   rdfs:domain gloss:Concept ;
-  rdfs:range gloss:PartitiveHyperedge ;
-  rdfs:label "has partitive hyperedge"@en ;
-  rdfs:comment "DATA: One-to-many partitive decomposition on a managed concept. Concept-level only — hyperedges are not localized."@en .
+  rdfs:range gloss:PartitiveRelation ;
+  rdfs:label "has partitive relation"@en ;
+  rdfs:comment "DATA: ISO 704 partitive relation on a managed concept. Concept-level only — relations are not localized."@en .
 
 gloss:comprehensive a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveHyperedge ;
+  rdfs:domain gloss:PartitiveRelation ;
   rdfs:range gloss:ConceptRef ;
   rdfs:label "comprehensive"@en ;
-  rdfs:comment "The whole concept that owns the parts in a partitive hyperedge. Exactly one per hyperedge."@en .
+  rdfs:comment "The superordinate concept partitive — the whole that the partitives fitted together constitute. Exactly one per relation."@en .
 
-gloss:hasPart a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveHyperedge ;
+gloss:hasPartitive a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveRelation ;
+  rdfs:range gloss:PartitiveMember ;
+  rdfs:label "has partitive"@en ;
+  rdfs:comment "A partitive member of a relation. ISO 704 requires two or more."@en .
+
+gloss:ref a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveMember ;
   rdfs:range gloss:ConceptRef ;
-  rdfs:label "has part"@en ;
-  rdfs:comment "A partitive member of a hyperedge. A hyperedge has one or more parts."@en .
+  rdfs:label "ref"@en ;
+  rdfs:comment "The ConceptRef identifying the partitive concept."@en .
 
-gloss:enumeration a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveHyperedge ;
-  rdfs:range gloss:PartitiveEnumeration ;
-  rdfs:label "enumeration"@en ;
-  rdfs:comment "Whether the encoded parts constitute a complete (closed) or partial (open) decomposition."@en .
+gloss:certainty a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveMember ;
+  rdfs:range skos:Concept ;
+  rdfs:label "certainty"@en ;
+  rdfs:comment "Glossarist extension. Per-member certainty (confirmed or possible). Defaults to confirmed."@en .
 
-gloss:hasPluralityMarker a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveHyperedge ;
-  rdfs:range gloss:PluralityMarker ;
-  rdfs:label "has plurality marker"@en ;
-  rdfs:comment "Diagram notation flag on a hyperedge (double for close-set double line, dashed for uncertainty)."@en .
+gloss:completeness a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveRelation ;
+  rdfs:range skos:Concept ;
+  rdfs:label "completeness"@en ;
+  rdfs:comment "Whether the encoded partitives fitted together constitute the comprehensive (complete) or only some of it (partial)."@en .
+
+gloss:hasPlurality a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveRelation ;
+  rdfs:range gloss:TypeSharedPlurality ;
+  rdfs:label "has plurality"@en ;
+  rdfs:comment "Optional type-shared plurality block on a partitive relation."@en .
+
+gloss:isShared a owl:DatatypeProperty ;
+  rdfs:domain gloss:TypeSharedPlurality ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "is shared"@en ;
+  rdfs:comment "ISO 704 close-set double line. True when several partitives of a given type are involved."@en .
+
+gloss:isUncertain a owl:DatatypeProperty ;
+  rdfs:domain gloss:TypeSharedPlurality ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "is uncertain"@en ;
+  rdfs:comment "ISO 704 broken line. True when the type-shared plurality is uncertain."@en .
+
+gloss:sharedType a owl:ObjectProperty ;
+  rdfs:domain gloss:TypeSharedPlurality ;
+  rdfs:range gloss:ConceptRef ;
+  rdfs:label "shared type"@en ;
+  rdfs:comment "Glossarist extension. The type the partitives share, when known."@en .
+
+gloss:criterion a owl:DatatypeProperty ;
+  rdfs:domain gloss:PartitiveRelation ;
+  rdfs:range rdf:langString ;
+  rdfs:label "criterion"@en ;
+  rdfs:comment "ISO 12620 coordinate-concept coherence: the subdivision criterion for a partitive relation."@en .
+
+gloss:provides a owl:ObjectProperty ;
+  rdfs:subPropertyOf gloss:hasRelatedConcept ;
+  rdfs:label "provides"@en ;
+  rdfs:comment "The subject concept provides substance for the object external concept."@en .
+
+gloss:providedBy a owl:ObjectProperty ;
+  rdfs:subPropertyOf gloss:hasRelatedConcept ;
+  rdfs:label "provided by"@en ;
+  rdfs:comment "The subject external concept is provided by the object concept."@en ;
+  owl:inverseOf gloss:provides .
 
 gloss:hasDate a owl:ObjectProperty ;
   rdfs:domain [
@@ -699,12 +755,6 @@ gloss:relationshipContent a owl:DatatypeProperty ;
   rdfs:range xsd:string ;
   rdfs:label "relationship content"@en ;
   rdfs:comment "Free-text description of the relationship."@en .
-
-gloss:hyperedgeContent a owl:DatatypeProperty ;
-  rdfs:domain gloss:PartitiveHyperedge ;
-  rdfs:range xsd:string ;
-  rdfs:label "hyperedge content"@en ;
-  rdfs:comment "Free-form text associated with a PartitiveHyperedge, e.g. a diagram caption or label."@en .
 
 gloss:relationshipRef a owl:ObjectProperty ;
   rdfs:domain gloss:RelatedConcept ;

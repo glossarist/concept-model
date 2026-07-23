@@ -1,0 +1,77 @@
+class PartitiveRelation {
+  definition {
+    ISO 704 / ISO 1087-1 / ISO 12620 partitive relation.
+
+    Connects a comprehensive concept (superordinate concept
+    partitive) to two or more partitive concepts (subordinate
+    concepts partitive) which fitted together constitute the
+    comprehensive concept.
+
+    Shown as a rake or bracket in source diagrams. All partitives
+    within one relation are coordinate concepts (ISO 12620): they
+    share the comprehensive AND share the criterion of subdivision.
+
+    Distinct from RelatedConcept binary edges has_part / is_part_of,
+    which express pairwise part-of assertions without completeness
+    or plurality claims. A single partitive should be expressed as
+    a binary edge, not a PartitiveRelation (ISO requires two or
+    more partitives).
+
+    Glossarist extensions beyond ISO notation:
+      - Per-partitive certainty (MemberCertainty on PartitiveMember)
+      - TypeSharedPlurality.shared_type (the type the partitives share)
+      - criterion as structured multilingual data (not just diagrammatic)
+  }
+  +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The superordinate concept partitive — the whole that the
+      partitives fitted together constitute.
+    }
+  }
+  +partitives: PartitiveMember [2..*] {
+    definition {
+      The subordinate concepts partitive — the parts. Each member
+      carries a ConceptRef and optional certainty metadata.
+
+      ISO 704 requires "two or more." A single partitive should be
+      expressed as a binary has_part edge instead.
+    }
+  }
+  +completeness: Completeness [0..1] {
+    definition {
+      Whether the encoded partitives fitted together constitute the
+      comprehensive (complete) or only some of it (partial — other
+      partitives exist that are not encoded).
+
+      Defaults to complete when omitted.
+    }
+  }
+  +plurality: TypeSharedPlurality [0..1] {
+    definition {
+      Optional block carrying the type-shared plurality claim for
+      this relation. Absent means no such claim is made.
+
+      Encodes ISO 704's close-set double line (is_shared) and broken
+      line (is_uncertain) as data, not as diagram-notation markers.
+    }
+  }
+  +criterion: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      The principle by which the comprehensive is divided into
+      partitives. ISO 12620 coordinate-concept coherence: partitives
+      within one relation share the comprehensive AND the criterion.
+
+      Two PartitiveRelations on the same comprehensive with the same
+      criterion are duplicates (validation error). Two with different
+      criteria are distinct decompositions.
+
+      Multilingual (concept-level metadata). Examples:
+        - "physical structure"
+        - "functional subsystem"
+        - "temporal phases"
+        - "spatial regions"
+
+      Optional in v1 (most existing data won't have one).
+    }
+  }
+}
