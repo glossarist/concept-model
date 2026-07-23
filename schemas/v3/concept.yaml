@@ -65,18 +65,24 @@ properties:
     items:
       $ref: "#/$defs/related_concept"
     description: Zero or more binary related concepts at the concept level.
-  partitive_hyperedges:
+  partitive_relations:
     type: array
     items:
-      $ref: "#/$defs/partitive_hyperedge"
+      $ref: "#/$defs/partitive_relation"
     description: |
-      Zero or more one-to-many partitive decompositions. Each entry
-      asserts that this concept (as comprehensive) is decomposed into
-      a significant set of parts, optionally qualified by plurality
-      markers and enumeration completeness (open vs closed).
+      Zero or more ISO 704 / 1087-1 / 12620 partitive relations.
+      Each entry connects this concept (as comprehensive —
+      superordinate concept partitive) to two or more partitive
+      concepts (subordinate concepts partitive) which fitted
+      together constitute the comprehensive.
 
-      Independent of `related` (which is binary). A concept may have
-      both.
+      Independent of `related` (which is binary). A concept may
+      have both. PartitiveRelation is used when the source diagram
+      depicts a rake whose membership, completeness, or plurality
+      is jointly significant.
+
+      For single pairwise part-of assertions without completeness
+      claims, use the binary has_part / is_part_of edge instead.
   sources:
     type: array
     items:
@@ -91,6 +97,26 @@ properties:
     examples:
       - "2021-05-01T00:00:00+00:00"
 
+allOf:
+  # ExternalConcept conditional: when status is 'external', the
+  # data block must NOT include definition or sources (those would
+  # contradict the external status). When status is anything else,
+  # the data block must include designations and definition per
+  # the normal ManagedConcept contract.
+  - if:
+      properties:
+        status:
+          const: external
+    then:
+      properties:
+        data:
+          properties:
+            definition:
+              not: {}
+            sources:
+              not: {}
+          required: [identifier, designations]
+
 $defs:
   # Concept Status enum
   concept_status:
@@ -104,6 +130,7 @@ $defs:
       - valid
       - superseded
       - retired
+      - external
 
   # Concept Date
   concept_date:
@@ -227,6 +254,9 @@ $defs:
       # Designation-level (ISO 10241-1)
       - abbreviated_form_for
       - short_form_for
+      # ExternalConcept resolution (Glossarist extension)
+      - provides
+      - provided_by
 
   # Reference (typed classification — domains, typed references)
   reference:
@@ -323,14 +353,21 @@ $defs:
         type: string
         description: Version of the document.
 
-  # ConceptRef (used in RelatedConcept#ref and PartitiveHyperedge)
-    additionalProperties: false
+  # ConceptRef (used in RelatedConcept#ref, PartitiveMember#ref,
+  # TypeSharedPlurality#shared_type, and standalone as ExternalConcept placeholder)
   concept_ref:
     type: object
     description: |
-      A concept reference used in related concept entries and
-      partitive hyperedge endpoints. Has source, id, and optional
-      text. No version, locality, or link.
+      A concept reference. Three forms:
+        1. (source, id, text) — fully resolved, with optional
+           display text
+        2. (source, id) — resolved
+        3. (text) — text-only placeholder for an ExternalConcept
+           (ManagedConcept with status: external)
+
+      Form 3 is for inline convenience in authored YAML. The
+      deserializer creates or looks up an ExternalConcept with
+      that text as its preferred designation.
     properties:
       source:
         type: string
@@ -340,76 +377,145 @@ $defs:
         description: Concept identifier within the registry (e.g. "102-01-01").
       text:
         type: string
-        description: Target designation text for lexical relationships.
-
-  # Partitive Enumeration enum
+        description: Target designation text for lexical relationships, or the placeholder label for an unresolved ExternalConcept.
+    anyOf:
+      - required: [source, id]
+      - required: [text]
     additionalProperties: false
-  partitive_enumeration:
+
+  # Completeness enum
+  completeness:
     type: string
     description: |
-      Whether the parts array of a PartitiveHyperedge constitutes the
-      COMPLETE decomposition of the comprehensive concept (closed) or
-      only a PARTIAL one (open).
+      Whether the partitives of a PartitiveRelation fitted together
+      constitute the whole comprehensive concept (complete) or only
+      some of it (partial — other partitives exist that are not
+      encoded).
     enum:
-      - closed
-      - open
+      - complete
+      - partial
 
-  # Plurality Marker enum
-  plurality_marker:
+  # Member Certainty enum (Glossarist extension beyond ISO notation)
+  member_certainty:
     type: string
     description: |
-      Diagram notation flags originating from VIM concept-relationship
-      diagrams. Orthogonal to enumeration; both may be set on the same
-      hyperedge.
+      Per-partitive certainty within a PartitiveRelation. Allows
+      cases like "A is composed of {b, c} (confirmed) and {d}
+      (possible)" within one relation.
     enum:
-      - double
-      - dashed
+      - confirmed
+      - possible
 
-  # Partitive Hyperedge
-  partitive_hyperedge:
+  # Concept reference — used by PartitiveMember, RelatedConcept,
+  # and as standalone text-only placeholder for ExternalConcept.
+  # (Defined earlier in this file.)
+
+  # Partitive Member
+  partitive_member:
     type: object
     description: |
-      A hyperedge relating one comprehensive (whole) concept to one or
-      more partitive concepts as a SINGLE relationship. Used when the
-      source diagram depicts a partitive decomposition whose
-      membership or notation is jointly significant and cannot be
-      faithfully decomposed into binary edges.
+      One member of a PartitiveRelation — a partitive concept plus
+      optional certainty metadata.
+    properties:
+      ref:
+        $ref: "#/$defs/concept_ref"
+      certainty:
+        $ref: "#/$defs/member_certainty"
+        default: confirmed
+    required:
+      - ref
+    additionalProperties: false
+
+  # Type-Shared Plurality
+  type_shared_plurality:
+    type: object
+    description: |
+      Type-shared plurality claim encoded by ISO 704's close-set
+      double line (is_shared) and broken line (is_uncertain).
+      Promoted from diagram-notation markers to structured data.
+    properties:
+      is_shared:
+        type: boolean
+        description: |
+          ISO 704 close-set double line. True when several
+          partitives of a given type are involved. Distinct from
+          cardinality alone — three partitives of different types
+          do not satisfy this.
+      is_uncertain:
+        type: boolean
+        default: false
+        description: |
+          ISO 704 broken line. True when the type-shared plurality
+          is uncertain. Requires is_shared = true for semantic
+          coherence.
+      shared_type:
+        $ref: "#/$defs/concept_ref"
+        description: |
+          Glossarist extension. The type the partitives share, when
+          known. ISO notation does not encode this. Optional even
+          when is_shared is true.
+    required:
+      - is_shared
+    additionalProperties: false
+
+  # Partitive Relation (ISO 704 / 1087-1 / 12620)
+  partitive_relation:
+    type: object
+    description: |
+      ISO 704 / 1087-1 / 12620 partitive relation. Connects a
+      comprehensive concept to two or more partitive concepts which
+      fitted together constitute the comprehensive. Shown as a rake
+      or bracket in source diagrams.
+
+      All partitives within one relation are coordinate concepts
+      (ISO 12620): they share the comprehensive AND the criterion
+      of subdivision.
+
+      Glossarist extensions: MemberCertainty (per-partitive),
+      TypeSharedPlurality.shared_type, criterion as structured data.
     properties:
       comprehensive:
         $ref: "#/$defs/concept_ref"
-      parts:
+      partitives:
         type: array
-        minItems: 1
+        minItems: 2
         items:
-          $ref: "#/$defs/concept_ref"
-      enumeration:
-        $ref: "#/$defs/partitive_enumeration"
-        default: closed
+          $ref: "#/$defs/partitive_member"
         description: |
-          Completeness of the parts list. `closed` (default) asserts
-          that the encoded parts are ALL parts of the comprehensive.
-          `open` asserts that the encoded parts are SOME of the parts;
-          others may exist but are not encoded.
-      markers:
-        type: array
-        items:
-          $ref: "#/$defs/plurality_marker"
-        uniqueItems: true
-      content:
+          The subordinate concepts partitive — the parts. ISO 704
+          requires "two or more." A single partitive should be
+          expressed as a binary has_part edge instead.
+      completeness:
+        $ref: "#/$defs/completeness"
+        default: complete
+        description: |
+          Completeness of the partitives list. `complete` (default)
+          asserts that the encoded partitives fitted together
+          constitute the comprehensive. `partial` asserts that
+          other partitives exist beyond those encoded.
+      plurality:
+        $ref: "#/$defs/type_shared_plurality"
+        description: |
+          Optional type-shared plurality claim. Absent means no
+          such claim is made. Encodes ISO 704's close-set double
+          line and broken line as data.
+      criterion:
         type: object
+        description: |
+          The subdivision criterion for this relation. ISO 12620
+          coordinate-concept coherence: partitives within one
+          relation share the comprehensive AND the criterion. Two
+          PartitiveRelations on the same comprehensive with the
+          same criterion are duplicates (validation error).
+
+          Multilingual: keys are ISO 639 language codes.
         additionalProperties:
           type: string
-        description: |
-          Optional localized label or note, keyed by ISO 639 language
-          code: `{ "eng": "...", "fra": "..." }`.
-
-          All free-form text fields in Glossarist are localized —
-          the project is multi-language by domain. Plain strings are
-          NOT accepted; wrap single-language text as
-          `{ "eng": "..." }`.
+        propertyNames:
+          $ref: "#/$defs/iso639_three_char_code"
     required:
       - comprehensive
-      - parts
+      - partitives
     additionalProperties: false
 
   # Concept Source
