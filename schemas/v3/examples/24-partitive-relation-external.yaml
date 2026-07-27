@@ -27,9 +27,8 @@ partitive_relations:
       id: "114-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "114-01-02" }
-        certainty: confirmed
       - ref: { source: "EXAMPLE", id: "ext-qft" }
-        certainty: possible
+        multiplicity: optional
     completeness: partial
     criterion:
       eng: theoretical framework decomposition

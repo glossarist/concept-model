@@ -1,4 +1,4 @@
-# 25 — Type-shared plurality with shared_type filled in
+# 25 — Partitive Relation with delimiting parts (ISO 704:2022)
 #
 # Three partitives of the same type; the type is known and
 # explicitly recorded. Glossarist extension — ISO 704's
@@ -27,14 +27,13 @@ partitive_relations:
       id: "115-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "115-01-02" }
+        is_delimiting: true
       - ref: { source: "EXAMPLE", id: "115-01-03" }
+        is_delimiting: true
       - ref: { source: "EXAMPLE", id: "115-01-04" }
     completeness: complete
-    plurality:
-      is_shared: true
-      shared_type: { source: "EXAMPLE", id: "115-01-05" }
     criterion:
-      eng: shared-type decomposition
+      eng: delimiting parts decomposition
 
 status: valid
 date_accepted: "2026-07-23T00:00:00+00:00"

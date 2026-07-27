@@ -214,9 +214,9 @@ gloss:PartitiveRelation a owl:Class ;
     share the comprehensive AND the criterion of subdivision.
 
     Glossarist extensions beyond ISO notation:
-      - Per-partitive certainty (MemberCertainty on PartitiveMember)
-      - TypeSharedPlurality.shared_type (the type the partitives share)
       - criterion as structured multilingual data
+      - Per-member multiplicity (ISO 704:2022 diagram line notation)
+      - is_delimiting (ISO 704 delimiting part, bold 3x-width line)
 
     Distinct from binary has_part / is_part_of edges, which express
     pairwise part-of assertions without completeness claims.
@@ -226,20 +226,11 @@ gloss:PartitiveMember a owl:Class ;
   rdfs:label "Partitive Member"@en ;
   rdfs:comment """
     One member of a PartitiveRelation — a partitive concept (via
-    ConceptRef) plus optional certainty metadata. A PartitiveMember
-    with no certainty is implicitly confirmed.
-  """@en .
-
-gloss:TypeSharedPlurality a owl:Class ;
-  rdfs:label "Type-Shared Plurality"@en ;
-  rdfs:comment """
-    Semantic claims encoded by ISO 704's close-set double line
-    (is_shared: several partitives of a given type are involved)
-    and broken line (is_uncertain: such plurality is uncertain).
-
-    Promoted from rendering flags to structured data. Distinct
-    from cardinality alone: three partitives of different types do
-    not satisfy is_shared; three partitives of the same type do.
+    ConceptRef) plus ISO 704:2022 multiplicity and delimiting metadata.
+    multiplicity encodes the diagram line notation (solid/dashed/counts).
+    is_delimiting is orthogonal: a delimiting part behaves like a
+    delimiting characteristic, distinguishing the comprehensive from
+    coordinate concepts (ISO 704 bold 3x-width line).
   """@en .
 
 gloss:DesignationRelationship a owl:Class ;
@@ -385,41 +376,23 @@ gloss:ref a owl:ObjectProperty ;
   rdfs:label "ref"@en ;
   rdfs:comment "The ConceptRef identifying the partitive concept."@en .
 
-gloss:certainty a owl:ObjectProperty ;
+gloss:multiplicity a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveMember ;
   rdfs:range skos:Concept ;
-  rdfs:label "certainty"@en ;
-  rdfs:comment "Glossarist extension. Per-member certainty (confirmed or possible). Defaults to confirmed."@en .
+  rdfs:label "multiplicity"@en ;
+  rdfs:comment "ISO 704:2022 partitive member multiplicity. Encodes diagram line notation: compulsory (1 solid), optional (1 dashed), compulsory_multiple (2 solid), optional_multiple (2 dashed), at_least_one (1 solid + 1 dashed)."@en .
+
+gloss:isDelimiting a owl:DatatypeProperty ;
+  rdfs:domain gloss:PartitiveMember ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "is delimiting"@en ;
+  rdfs:comment "ISO 704 delimiting part (bold 3x-width line). When true, this part behaves like a delimiting characteristic distinguishing the comprehensive from coordinate concepts."@en .
 
 gloss:completeness a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveRelation ;
   rdfs:range skos:Concept ;
   rdfs:label "completeness"@en ;
   rdfs:comment "Whether the encoded partitives fitted together constitute the comprehensive (complete) or only some of it (partial)."@en .
-
-gloss:hasPlurality a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveRelation ;
-  rdfs:range gloss:TypeSharedPlurality ;
-  rdfs:label "has plurality"@en ;
-  rdfs:comment "Optional type-shared plurality block on a partitive relation."@en .
-
-gloss:isShared a owl:DatatypeProperty ;
-  rdfs:domain gloss:TypeSharedPlurality ;
-  rdfs:range xsd:boolean ;
-  rdfs:label "is shared"@en ;
-  rdfs:comment "ISO 704 close-set double line. True when several partitives of a given type are involved."@en .
-
-gloss:isUncertain a owl:DatatypeProperty ;
-  rdfs:domain gloss:TypeSharedPlurality ;
-  rdfs:range xsd:boolean ;
-  rdfs:label "is uncertain"@en ;
-  rdfs:comment "ISO 704 broken line. True when the type-shared plurality is uncertain."@en .
-
-gloss:sharedType a owl:ObjectProperty ;
-  rdfs:domain gloss:TypeSharedPlurality ;
-  rdfs:range gloss:ConceptRef ;
-  rdfs:label "shared type"@en ;
-  rdfs:comment "Glossarist extension. The type the partitives share, when known."@en .
 
 gloss:criterion a owl:DatatypeProperty ;
   rdfs:domain gloss:PartitiveRelation ;

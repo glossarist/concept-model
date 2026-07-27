@@ -1,8 +1,11 @@
-# 29 — Type-shared plurality with uncertainty
+# 29 — Partitive Relation with optional member (ISO 704:2022)
 #
-# ISO 704 broken line: type-shared plurality exists but its
-# boundaries (which partitives, how many) are uncertain.
-# Encoded as is_uncertain: true on the plurality block.
+# ISO 704 §5.5.4.2.2 mouse example: an optomechanical mouse's
+# "mouse wheel" is OPTIONAL — not found on all mice. In ISO 704
+# diagram notation this is shown as 1 dashed line. In data it
+# becomes multiplicity: optional.
+#
+# The other parts are compulsory (1 solid line, the default).
 
 ---
 id: "117-01-01"
@@ -23,12 +26,12 @@ partitive_relations:
       id: "117-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "117-01-02" }
+        is_delimiting: true
       - ref: { source: "EXAMPLE", id: "117-01-03" }
+        multiplicity: optional
     completeness: partial
-    plurality:
-      is_shared: true
-      is_uncertain: true
-      shared_type: { source: "EXAMPLE", id: "117-01-04" }
+    criterion:
+      eng: optional member decomposition
 
 status: valid
 date_accepted: "2026-07-23T00:00:00+00:00"
@@ -38,10 +41,10 @@ data:
     - date: "2026-07-23"
       type: accepted
   definition:
-    - content: "example uncertain-plurality comprehensive"
+    - content: "example optional-member comprehensive"
   terms:
     - type: expression
       normative_status: preferred
-      designation: "example uncertain-plurality"
+      designation: "example optional-member"
   language_code: eng
   entry_status: valid

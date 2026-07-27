@@ -13,13 +13,13 @@ class PartitiveRelation {
 
     Distinct from RelatedConcept binary edges has_part / is_part_of,
     which express pairwise part-of assertions without completeness
-    or plurality claims. A single partitive should be expressed as
+    or multiplicity claims. A single partitive should be expressed as
     a binary edge, not a PartitiveRelation (ISO requires two or
     more partitives).
 
     Glossarist extensions beyond ISO notation:
-      - Per-partitive certainty (MemberCertainty on PartitiveMember)
-      - TypeSharedPlurality.shared_type (the type the partitives share)
+      - Per-member multiplicity (ISO 704:2022 diagram line notation)
+      - Per-member is_delimiting (ISO 704 delimiting part)
       - criterion as structured multilingual data (not just diagrammatic)
   }
   +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
@@ -31,7 +31,8 @@ class PartitiveRelation {
   +partitives: PartitiveMember [2..*] {
     definition {
       The subordinate concepts partitive — the parts. Each member
-      carries a ConceptRef and optional certainty metadata.
+      carries a ConceptRef plus ISO 704:2022 multiplicity and
+      delimiting metadata.
 
       ISO 704 requires "two or more." A single partitive should be
       expressed as a binary has_part edge instead.
@@ -44,15 +45,6 @@ class PartitiveRelation {
       partitives exist that are not encoded).
 
       Defaults to complete when omitted.
-    }
-  }
-  +plurality: TypeSharedPlurality [0..1] {
-    definition {
-      Optional block carrying the type-shared plurality claim for
-      this relation. Absent means no such claim is made.
-
-      Encodes ISO 704's close-set double line (is_shared) and broken
-      line (is_uncertain) as data, not as diagram-notation markers.
     }
   }
   +criterion: <<BasicDocument>> LocalizedString [0..1] {

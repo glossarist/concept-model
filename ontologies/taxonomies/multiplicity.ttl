@@ -1,0 +1,45 @@
+# Multiplicity Taxonomy (ISO 704:2022)
+#
+# SKOS ConceptScheme for partitive member multiplicity. Encodes the
+# diagram line notation as structured data.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:multiplicity a skos:ConceptScheme ;
+  skos:prefLabel "Multiplicity"@en ;
+  skos:definition "ISO 704:2022 partitive member multiplicity."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/multiplicity/compulsory> a skos:Concept ;
+  skos:inScheme gloss:multiplicity ;
+  skos:prefLabel "compulsory"@en ;
+  skos:definition "1 solid line. Must exist in every instance."@en .
+
+<https://www.glossarist.org/ontologies/multiplicity/optional> a skos:Concept ;
+  skos:inScheme gloss:multiplicity ;
+  skos:prefLabel "optional"@en ;
+  skos:definition "1 dashed line. Exists in some instances only."@en .
+
+<https://www.glossarist.org/ontologies/multiplicity/compulsory_multiple> a skos:Concept ;
+  skos:inScheme gloss:multiplicity ;
+  skos:prefLabel "compulsory multiple"@en ;
+  skos:definition "2 solid lines. Multiple must exist."@en .
+
+<https://www.glossarist.org/ontologies/multiplicity/optional_multiple> a skos:Concept ;
+  skos:inScheme gloss:multiplicity ;
+  skos:prefLabel "optional multiple"@en ;
+  skos:definition "2 dashed lines. Multiple may exist."@en .
+
+<https://www.glossarist.org/ontologies/multiplicity/at_least_one> a skos:Concept ;
+  skos:inScheme gloss:multiplicity ;
+  skos:prefLabel "at least one"@en ;
+  skos:definition "1 solid + 1 dashed line. At least one must exist."@en .
+
+gloss:multiplicity skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/multiplicity/compulsory> ,
+    <https://www.glossarist.org/ontologies/multiplicity/optional> ,
+    <https://www.glossarist.org/ontologies/multiplicity/compulsory_multiple> ,
+    <https://www.glossarist.org/ontologies/multiplicity/optional_multiple> ,
+    <https://www.glossarist.org/ontologies/multiplicity/at_least_one> .

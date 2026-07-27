@@ -745,11 +745,6 @@ gloss:PartitiveRelationShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hasPlurality ;
-    sh:class gloss:TypeSharedPlurality ;
-    sh:maxCount 1 ;
-  ] ;
-  sh:property [
     sh:path gloss:criterion ;
     sh:datatype rdf:langString ;
   ] .
@@ -763,28 +758,14 @@ gloss:PartitiveMemberShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:certainty ;
+    sh:path gloss:multiplicity ;
     sh:class skos:Concept ;
-    sh:valuesFrom <https://www.glossarist.org/ontologies/memberCertainty> ;
-    sh:maxCount 1 ;
-  ] .
-
-gloss:TypeSharedPluralityShape a sh:NodeShape ;
-  sh:targetClass gloss:TypeSharedPlurality ;
-  sh:property [
-    sh:path gloss:isShared ;
-    sh:datatype xsd:boolean ;
-    sh:minCount 1 ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/multiplicity> ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:isUncertain ;
+    sh:path gloss:isDelimiting ;
     sh:datatype xsd:boolean ;
-    sh:maxCount 1 ;
-  ] ;
-  sh:property [
-    sh:path gloss:sharedType ;
-    sh:class gloss:ConceptRef ;
     sh:maxCount 1 ;
   ] .
 

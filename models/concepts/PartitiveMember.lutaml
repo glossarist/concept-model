@@ -1,10 +1,7 @@
 class PartitiveMember {
   definition {
     One member of a PartitiveRelation — a partitive concept plus
-    optional certainty metadata.
-
-    A PartitiveMember with no certainty field is implicitly
-    confirmed.
+    ISO 704:2022 multiplicity and delimiting metadata.
   }
   +ref: <<StandardDocument>> ReferenceToTermbase [1] {
     definition {
@@ -13,14 +10,32 @@ class PartitiveMember {
       RelatedConcept#ref.
     }
   }
-  +certainty: MemberCertainty [0..1] {
+  +multiplicity: Multiplicity [0..1] {
     definition {
-      Glossarist extension beyond ISO 704 notation, which only
-      supports set-level plurality uncertainty. Per-member certainty
-      allows cases like "A is composed of {b, c} (sure) and {d}
-      (possible)" within one relation.
+      ISO 704:2022 partitive member multiplicity. Encodes the diagram
+      line notation as structured data:
+        compulsory          — 1 solid line (must exist in every instance)
+        optional            — 1 dashed line (exists in some instances only)
+        compulsory_multiple — 2 solid lines (multiple must exist)
+        optional_multiple   — 2 dashed lines (multiple may exist)
+        at_least_one        — 1 solid + 1 dashed line (at least one must exist)
 
-      Defaults to confirmed when omitted.
+      Defaults to compulsory when omitted.
+    }
+  }
+  +is_delimiting: Boolean [0..1] {
+    definition {
+      ISO 704 delimiting part (bold 3x-width line in diagram). When
+      true, this part behaves like a delimiting characteristic: it
+      distinguishes the comprehensive from coordinate concepts.
+
+      Example (ISO 704 §5.5.4.2.2): for "optomechanical mouse", the
+      delimiting parts are mouse ball, x/y-axis rollers, and IR
+      emitter/sensor — they distinguish it from "mechanical mouse"
+      and "optical mouse". Mouse button is NOT delimiting (all
+      computer mice have buttons).
+
+      Orthogonal to multiplicity. Defaults to false when omitted.
     }
   }
 }
