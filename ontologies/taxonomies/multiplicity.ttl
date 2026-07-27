@@ -34,7 +34,7 @@ gloss:multiplicity a skos:ConceptScheme ;
 
 <https://www.glossarist.org/ontologies/multiplicity/compulsory_at_least_one> a skos:Concept ;
   skos:inScheme gloss:multiplicity ;
-  skos:prefLabel "at least one"@en ;
+  skos:prefLabel "compulsory at least one"@en ;
   skos:definition "1 solid + 1 dashed line. At least one must exist."@en .
 
 gloss:multiplicity skos:hasTopConcept
