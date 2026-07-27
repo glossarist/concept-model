@@ -1,7 +1,7 @@
 # 23 — Partitive Relation (plain complete decomposition)
 #
 # The minimal v2 form: a comprehensive composed of exactly two
-# partitives, no plurality claim, no per-partitive uncertainty.
+# partitives, no plurality, all compulsory (default multiplicity).
 # Demonstrates the simplest valid PartitiveRelation shape.
 
 ---

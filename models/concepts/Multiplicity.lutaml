@@ -1,0 +1,16 @@
+enum Multiplicity {
+  definition {
+    ISO 704:2022 partitive member multiplicity. Encodes the diagram
+    line notation as structured data:
+      compulsory          — 1 solid line (must exist in every instance)
+      optional            — 1 dashed line (exists in some instances only)
+      compulsory_multiple — 2 solid lines (multiple must exist)
+      optional_multiple   — 2 dashed lines (multiple may exist)
+      at_least_one        — 1 solid + 1 dashed line (at least one must exist)
+  }
+  compulsory { definition { Must exist in every instance. } }
+  optional { definition { Exists in some instances only. } }
+  compulsory_multiple { definition { Multiple must exist. } }
+  optional_multiple { definition { Multiple may exist. } }
+  at_least_one { definition { At least one must exist. } }
+}

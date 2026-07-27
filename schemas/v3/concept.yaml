@@ -78,7 +78,7 @@ properties:
 
       Independent of `related` (which is binary). A concept may
       have both. PartitiveRelation is used when the source diagram
-      depicts a rake whose membership, completeness, or plurality
+      depicts a rake whose membership, completeness, or multiplicity
       is jointly significant.
 
       For single pairwise part-of assertions without completeness
@@ -354,7 +354,7 @@ $defs:
         description: Version of the document.
 
   # ConceptRef (used in RelatedConcept#ref, PartitiveMember#ref,
-  # TypeSharedPlurality#shared_type, and standalone as ExternalConcept placeholder)
+  # multiplicity and is_delimiting, and standalone as ExternalConcept placeholder)
   concept_ref:
     type: object
     description: |
@@ -395,16 +395,24 @@ $defs:
       - complete
       - partial
 
-  # Member Certainty enum (Glossarist extension beyond ISO notation)
-  member_certainty:
+  # Multiplicity enum (ISO 704:2022 partitive member notation)
+  multiplicity:
     type: string
     description: |
-      Per-partitive certainty within a PartitiveRelation. Allows
-      cases like "A is composed of {b, c} (confirmed) and {d}
-      (possible)" within one relation.
+      ISO 704:2022 partitive member multiplicity. Encodes the diagram
+      line notation as structured data:
+        compulsory          — 1 solid line (must exist in every instance)
+        optional            — 1 dashed line (exists in some instances only)
+        compulsory_multiple — 2 solid lines (multiple must exist)
+        optional_multiple   — 2 dashed lines (multiple may exist)
+        at_least_one        — 1 solid + 1 dashed line (at least one must exist)
+      Default: compulsory.
     enum:
-      - confirmed
-      - possible
+      - compulsory
+      - optional
+      - compulsory_multiple
+      - optional_multiple
+      - at_least_one
 
   # Concept reference — used by PartitiveMember, RelatedConcept,
   # and as standalone text-only placeholder for ExternalConcept.
@@ -415,47 +423,30 @@ $defs:
     type: object
     description: |
       One member of a PartitiveRelation — a partitive concept plus
-      optional certainty metadata.
+      ISO 704:2022 multiplicity and delimiting metadata.
+
+      multiplicity encodes the diagram line notation (solid/dashed/
+      counts). is_delimiting is orthogonal: a delimiting part behaves
+      like a delimiting characteristic, distinguishing the comprehensive
+      from coordinate concepts (ISO 704 bold 3x-width line).
     properties:
       ref:
         $ref: "#/$defs/concept_ref"
-      certainty:
-        $ref: "#/$defs/member_certainty"
-        default: confirmed
-    required:
-      - ref
-    additionalProperties: false
-
-  # Type-Shared Plurality
-  type_shared_plurality:
-    type: object
-    description: |
-      Type-shared plurality claim encoded by ISO 704's close-set
-      double line (is_shared) and broken line (is_uncertain).
-      Promoted from diagram-notation markers to structured data.
-    properties:
-      is_shared:
-        type: boolean
-        description: |
-          ISO 704 close-set double line. True when several
-          partitives of a given type are involved. Distinct from
-          cardinality alone — three partitives of different types
-          do not satisfy this.
-      is_uncertain:
+      multiplicity:
+        $ref: "#/$defs/multiplicity"
+        default: compulsory
+      is_delimiting:
         type: boolean
         default: false
         description: |
-          ISO 704 broken line. True when the type-shared plurality
-          is uncertain. Requires is_shared = true for semantic
-          coherence.
-      shared_type:
-        $ref: "#/$defs/concept_ref"
-        description: |
-          Glossarist extension. The type the partitives share, when
-          known. ISO notation does not encode this. Optional even
-          when is_shared is true.
+          ISO 704 delimiting part (bold 3x-width line in diagram).
+          When true, this part behaves like a delimiting characteristic:
+          it distinguishes the comprehensive from coordinate concepts.
+          Example: for "optomechanical mouse", the rollers and IR
+          emitter/sensor are delimiting (distinguish from mechanical
+          and optical mice); mouse button is NOT delimiting.
     required:
-      - is_shared
+      - ref
     additionalProperties: false
 
   # Partitive Relation (ISO 704 / 1087-1 / 12620)
@@ -471,8 +462,10 @@ $defs:
       (ISO 12620): they share the comprehensive AND the criterion
       of subdivision.
 
-      Glossarist extensions: MemberCertainty (per-partitive),
-      TypeSharedPlurality.shared_type, criterion as structured data.
+      Per-member metadata (ISO 704:2022): multiplicity (5 values
+      encoding line notation) + is_delimiting (orthogonal flag
+      for delimiting parts). Glossarist extension: criterion as
+      structured data.
     properties:
       comprehensive:
         $ref: "#/$defs/concept_ref"
@@ -493,12 +486,6 @@ $defs:
           asserts that the encoded partitives fitted together
           constitute the comprehensive. `partial` asserts that
           other partitives exist beyond those encoded.
-      plurality:
-        $ref: "#/$defs/type_shared_plurality"
-        description: |
-          Optional type-shared plurality claim. Absent means no
-          such claim is made. Encodes ISO 704's close-set double
-          line and broken line as data.
       criterion:
         type: object
         description: |

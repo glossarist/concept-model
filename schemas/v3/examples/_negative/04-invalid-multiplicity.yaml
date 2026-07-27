@@ -1,4 +1,4 @@
-# 04 — Invalid certainty value (not in {confirmed, possible}).
+# 04 — Invalid multiplicity value (not in {compulsory, optional, compulsory_multiple, optional_multiple, at_least_one}).
 id: "900-04-01"
 data:
   identifier: "900-04-01"
@@ -8,7 +8,7 @@ partitive_relations:
       id: "900-04-01"
     partitives:
       - ref: { source: "X", id: "900-04-02" }
-        certainty: maybe
+        multiplicity: maybe
       - ref: { source: "X", id: "900-04-03" }
     completeness: complete
 status: valid

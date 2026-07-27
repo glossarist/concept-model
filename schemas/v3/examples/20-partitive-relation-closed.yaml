@@ -1,4 +1,4 @@
-# 20 — Partitive Relation (complete, type-shared plurality)
+# 20 — Partitive Relation (complete, compulsory delimiting parts)
 #
 # Source analogue: VIM 2012 Fig. A.6 — measurement result (2.9) is
 # composed of measured quantity value (2.10) and measurement
@@ -26,8 +26,6 @@ partitive_relations:
       - ref: { source: "VIM", id: "112-02-10" }
       - ref: { source: "VIM", id: "112-03-26" }
     completeness: complete
-    plurality:
-      is_shared: true
     criterion:
       eng: measurement result composition
 
