@@ -1,0 +1,46 @@
+# 32 — Partitive Relation (compulsory_at_least_one multiplicity)
+#
+# ISO 704:2022: 1 solid + 1 dashed line. At least one partitive of
+# this type must exist. Use case: a comprehensive that must have at
+# least one mounting bracket, but could have more.
+
+---
+id: "120-01-01"
+data:
+  identifier: "120-01-01"
+  localized_concepts:
+    eng: aaaaaaaa-aaaa-bbbb-cccc-000000000001
+  domains:
+    - concept_id: section-120-1
+      source: "EXAMPLE"
+      ref_type: section
+
+related: []
+
+partitive_relations:
+  - comprehensive:
+      source: "EXAMPLE"
+      id: "120-01-01"
+    partitives:
+      - ref: { source: "EXAMPLE", id: "120-01-02" }
+        multiplicity: compulsory_at_least_one
+      - ref: { source: "EXAMPLE", id: "120-01-03" }
+    completeness: complete
+    criterion:
+      eng: structural mounting decomposition
+
+status: valid
+date_accepted: "2026-07-27T00:00:00+00:00"
+---
+data:
+  dates:
+    - date: "2026-07-27"
+      type: accepted
+  definition:
+    - content: "example with compulsory_at_least_one multiplicity"
+  terms:
+    - type: expression
+      normative_status: preferred
+      designation: "example at-least-one"
+  language_code: eng
+  entry_status: valid
