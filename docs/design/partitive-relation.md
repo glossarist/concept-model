@@ -62,7 +62,7 @@ notation as structured data:
 - **optional** — exists in some instances only
 - **compulsory_multiple** — multiple must exist
 - **optional_multiple** — multiple may exist
-- **at_least_one** — at least one must exist (1 solid + 1 dashed line)
+- **compulsory_at_least_one** — at least one must exist (1 solid + 1 dashed line)
 
 ### is_delimiting (ISO 704:2022)
 

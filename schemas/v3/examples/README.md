@@ -39,6 +39,9 @@ localizations.
 | 26 | Same comprehensive, distinct criteria | `26-partitive-relation-dual-criteria.yaml` | — |
 | 28 | ExternalConcept resolved via provided_by | `28-external-concept-resolved.yaml` | — |
 | 29 | Partitive relation with optional member | `29-partitive-relation-optional-member.yaml` | — |
+| 30 | Partitive relation (compulsory_multiple) | `30-partitive-relation-compulsory-multiple.yaml` | — |
+| 31 | Partitive relation (optional_multiple) | `31-partitive-relation-optional-multiple.yaml` | — |
+| 32 | Partitive relation (compulsory_at_least_one) | `32-partitive-relation-compulsory-at-least-one.yaml` | — |
 
 ---
 

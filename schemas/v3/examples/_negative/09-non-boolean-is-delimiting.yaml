@@ -1,0 +1,14 @@
+# 09 — Non-boolean is_delimiting value (must be boolean).
+id: "900-09-01"
+data:
+  identifier: "900-09-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-09-01"
+    partitives:
+      - ref: { source: "X", id: "900-09-02" }
+        is_delimiting: "yes"
+      - ref: { source: "X", id: "900-09-03" }
+    completeness: complete
+status: valid
