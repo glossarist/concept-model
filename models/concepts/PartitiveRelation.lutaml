@@ -17,9 +17,12 @@ class PartitiveRelation {
     a binary edge, not a PartitiveRelation (ISO requires two or
     more partitives).
 
-    Glossarist extensions beyond ISO notation:
-      - Per-member multiplicity (ISO 704:2022 diagram line notation)
-      - Per-member is_delimiting (ISO 704 delimiting part)
+    ISO 704:2022 per-member features:
+      - multiplicity (5 values: compulsory, optional, compulsory_multiple,
+        optional_multiple, compulsory_at_least_one — including compulsory_compulsory_at_least_one)
+      - is_delimiting (delimiting part — bold 3x-width line)
+
+    Glossarist extension:
       - criterion as structured multilingual data (not just diagrammatic)
   }
   +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {

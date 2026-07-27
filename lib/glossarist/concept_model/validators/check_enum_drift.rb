@@ -101,7 +101,7 @@ module Glossarist
             scheme = soln.subject
             values = graph.query([nil, SKOS_IN_SCHEME, scheme]).map do |s|
               label_stmt = graph.query([s.subject, SKOS_PREF_LABEL, nil]).first
-              label_stmt&.object&.to_s
+              normalize_member(label_stmt&.object&.to_s)
             end.compact.to_set
             out[scheme.to_s] = values
           end
@@ -132,7 +132,7 @@ module Glossarist
         end
 
         def normalize_member(name)
-          name.gsub(/(?<!^)(?=[A-Z])/, "_").gsub("-", "_").downcase
+          name.gsub(/(?<!^)(?=[A-Z])/, "_").gsub("-", "_").gsub(" ", "_").downcase
         end
       end
     end
