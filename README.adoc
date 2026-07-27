@@ -125,21 +125,19 @@ Typed semantic links between concepts, spanning five standards:
 In addition to the pairwise binary `broader_partitive` and
 `narrower_partitive` relations above, glossarist's `[Unreleased]` work
 introduces `PartitiveRelation` for *one-to-many* partitive decompositions
-(ISO 704 rake notation) where the membership, completeness, and type-shared
-plurality matter as a single invariant. Each relation carries:
+(ISO 704:2022 rake notation) where the membership, completeness, and
+per-member multiplicity matter as a single invariant. Each relation carries:
 
 - `comprehensive` — the superordinate concept partitive (the whole)
 - `partitives` — two or more subordinate concepts partitive (the parts),
-  each a `PartitiveMember` carrying a `ref` (ConceptRef) and optional
-  `certainty` (confirmed/possible)
+  each a `PartitiveMember` carrying a `ref` (ConceptRef), optional
+  `multiplicity` (ISO 704:2022: compulsory, optional, compulsory_multiple,
+  optional_multiple, at_least_one), and optional `is_delimiting` (boolean)
 - `completeness` — `complete` (default; the encoded partitives fitted
   together constitute the comprehensive) or `partial` (other partitives
   exist beyond those encoded)
-- `plurality` — optional type-shared plurality block encoding ISO 704's
-  close-set double line (`is_shared`) and broken line (`is_uncertain`),
-  plus optional `shared_type` (Glossarist extension)
 - `criterion` — optional multilingual subdivision criterion (ISO 12620
-  coordinate-concept coherence)
+  coordinate-concept coherence; Glossarist extension)
 
 [source,yaml]
 ----
@@ -151,15 +149,13 @@ partitive_relations:
       - ref: { source: VIM, id: '112-02-10' }
       - ref: { source: VIM, id: '112-03-26' }
     completeness: complete
-    plurality:
-      is_shared: true
     criterion:
       eng: measurement result composition
 ----
 
 See link:docs/design/partitive-relation.md[] for the design rationale,
 and `schemas/v3/examples/20-partitive-relation-closed.yaml` through
-`29-partitive-relation-plurality-uncertain.yaml` for example payloads.
+`29-partitive-relation-optional-member.yaml` for example payloads.
 
 Binary `broader_partitive` edges and `PartitiveRelation` coexist;
 no automatic consolidation is performed. The

@@ -30,15 +30,15 @@ localizations.
 | 16 | Tags (organizational metadata) | `16-tags.yaml` | — |
 | 17 | Dataset register (URN resolution) | `17-register-dataset.yaml` | — |
 | 18 | Hierarchical sections | `18-hierarchical-sections-concept.yaml` | — (companion: `18-hierarchical-sections-register.yaml`) |
-| 20 | Partitive relation (complete, type-shared plurality) | `20-partitive-relation-closed.yaml` | — |
+| 20 | Partitive relation (complete, compulsory parts) | `20-partitive-relation-closed.yaml` | — |
 | 21 | Partitive relation (partial decomposition) | `21-partitive-relation-partial.yaml` | — |
-| 22 | Partitive relation (mixed per-partitive certainty) | `22-partitive-relation-mixed-certainty.yaml` | — |
+| 22 | Partitive relation (mixed multiplicity) | `22-partitive-relation-mixed-multiplicity.yaml` | — |
 | 23 | Partitive relation (plain complete, minimal form) | `23-partitive-relation-plain.yaml` | — |
 | 24 | Partitive relation with ExternalConcept partitive | `24-partitive-relation-external.yaml` | — (companion: `_external/ext-qft.yaml`) |
-| 25 | Partitive relation with shared_type | `25-partitive-relation-shared-type.yaml` | — |
+| 25 | Partitive relation with delimiting parts | `25-partitive-relation-delimiting-parts.yaml` | — |
 | 26 | Same comprehensive, distinct criteria | `26-partitive-relation-dual-criteria.yaml` | — |
 | 28 | ExternalConcept resolved via provided_by | `28-external-concept-resolved.yaml` | — |
-| 29 | Plurality uncertain | `29-partitive-relation-plurality-uncertain.yaml` | — |
+| 29 | Partitive relation with optional member | `29-partitive-relation-optional-member.yaml` | — |
 
 ---
 
@@ -304,7 +304,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | `status` (7 values) | 01 (valid), 11 (valid), 13 (superseded) |
 | `date_accepted` | 01, 06, 11 |
 | `related` (52 types) | 06 (all 52), 11 (supersedes), 13 (superseded_by, deprecates) |
-| `partitive_relations` (complete, partial, mixed, plain) | 20 (complete + shared), 21 (partial), 22 (mixed certainty), 23 (plain) |
+| `partitive_relations` (complete, partial, mixed, plain) | 20 (complete + compulsory), 21 (partial), 22 (mixed multiplicity), 23 (plain) |
 | `sources` (concept-level) | 01, 05, 06, 07, 08, 10, 11 |
 
 ### Localized concept features (`localized-concept.yaml`)
@@ -435,7 +435,7 @@ The tables below map each schema feature to the example(s) that demonstrate it.
 | complete     | is_shared | confirmed | 20 (close-set double line) |
 | complete     | is_shared + shared_type | confirmed | 25 |
 | partial      | (none)    | confirmed | 21 |
-| partial      | (none)    | mixed     | 22 (per-partitive certainty extension) |
+| partial      | (none)    | mixed     | 22 (mixed multiplicity — ISO 704:2022) |
 | partial      | is_shared + is_uncertain | confirmed | 29 (broken line) |
 | partial      | (none)    | possible (external) | 24 (ExternalConcept partitive) |
 

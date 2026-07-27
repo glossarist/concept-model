@@ -32,7 +32,7 @@ gloss:multiplicity a skos:ConceptScheme ;
   skos:prefLabel "optional multiple"@en ;
   skos:definition "2 dashed lines. Multiple may exist."@en .
 
-<https://www.glossarist.org/ontologies/multiplicity/at_least_one> a skos:Concept ;
+<https://www.glossarist.org/ontologies/multiplicity/compulsory_at_least_one> a skos:Concept ;
   skos:inScheme gloss:multiplicity ;
   skos:prefLabel "at least one"@en ;
   skos:definition "1 solid + 1 dashed line. At least one must exist."@en .
@@ -42,4 +42,4 @@ gloss:multiplicity skos:hasTopConcept
     <https://www.glossarist.org/ontologies/multiplicity/optional> ,
     <https://www.glossarist.org/ontologies/multiplicity/compulsory_multiple> ,
     <https://www.glossarist.org/ontologies/multiplicity/optional_multiple> ,
-    <https://www.glossarist.org/ontologies/multiplicity/at_least_one> .
+    <https://www.glossarist.org/ontologies/multiplicity/compulsory_at_least_one> .

@@ -380,7 +380,7 @@ gloss:multiplicity a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveMember ;
   rdfs:range skos:Concept ;
   rdfs:label "multiplicity"@en ;
-  rdfs:comment "ISO 704:2022 partitive member multiplicity. Encodes diagram line notation: compulsory (1 solid), optional (1 dashed), compulsory_multiple (2 solid), optional_multiple (2 dashed), at_least_one (1 solid + 1 dashed)."@en .
+  rdfs:comment "ISO 704:2022 partitive member multiplicity. Encodes diagram line notation: compulsory (1 solid), optional (1 dashed), compulsory_multiple (2 solid), optional_multiple (2 dashed), compulsory_at_least_one (1 solid + 1 dashed)."@en .
 
 gloss:isDelimiting a owl:DatatypeProperty ;
   rdfs:domain gloss:PartitiveMember ;

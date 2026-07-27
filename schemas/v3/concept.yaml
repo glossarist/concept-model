@@ -405,14 +405,14 @@ $defs:
         optional            — 1 dashed line (exists in some instances only)
         compulsory_multiple — 2 solid lines (multiple must exist)
         optional_multiple   — 2 dashed lines (multiple may exist)
-        at_least_one        — 1 solid + 1 dashed line (at least one must exist)
+        compulsory_at_least_one        — 1 solid + 1 dashed line (at least one must exist)
       Default: compulsory.
     enum:
       - compulsory
       - optional
       - compulsory_multiple
       - optional_multiple
-      - at_least_one
+      - compulsory_at_least_one
 
   # Concept reference — used by PartitiveMember, RelatedConcept,
   # and as standalone text-only placeholder for ExternalConcept.

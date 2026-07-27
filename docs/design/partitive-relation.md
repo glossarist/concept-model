@@ -1,44 +1,34 @@
 # PartitiveRelation design
 
-This is the canonical design rationale for the `PartitiveRelation`
-model. Originally authored as a planning document during the
-hyperedge rollout; published here so consumers can cite it.
+Canonical design rationale for the `PartitiveRelation` model.
 
 ## Why
 
 The VIM concept-relationship diagrams encode information that the
 binary-only `RelatedConcept` model cannot represent:
 
-1. **One-to-many partitive relationships as a single relationship.** A
-   bracket-rake notation on the diagram says "this concept is the
-   comprehensive whole, and these N concepts together compose it as
-   parts." Splitting the rake into N binary `broader_partitive` edges
-   loses the "this is one rake" invariant.
-
-2. **Plurality markers on the rake.** VIM diagrams use:
-   - a close-set **double line** at the receiver end to say "several
-     partitive concepts **of a given type** are involved" (a type-shared
-     plurality claim)
-   - a **broken line** to say "such plurality is uncertain"
-
-3. **Completeness (complete vs partial).** A rake whose backline
-   ends with a tooth is **complete**; a rake with a backline
-   continuing without a tooth is **partial**.
+1. **One-to-many membership as a single invariant.** A rake notation
+   says "this whole is composed of exactly these parts as one
+   relationship."
+2. **Per-member multiplicity.** ISO 704:2022 distinguishes compulsory,
+   optional, compulsory-multiple, optional-multiple, and at-least-one
+   members via line notation (solid/dashed, single/double).
+3. **Delimiting parts.** ISO 704:2022 marks parts that behave like
+   delimiting characteristics (bold 3x-width line), distinguishing the
+   comprehensive from coordinate concepts.
+4. **Completeness.** Whether the encoded partitives fitted together
+   constitute the comprehensive (complete) or only some of it (partial).
 
 ## ISO terminology
 
-ISO 704 / 1087-1 / 12620 provide canonical role names:
+ISO 704:2022 / ISO 1087-1 / ISO 12620 canonical role names:
 
-| Role | ISO 12620 name |
-|------|---------------|
-| comprehensive concept | superordinate concept partitive |
-| partitive concept | subordinate concept partitive |
-| the relation itself | partitive relation |
-| siblings within a rake | coordinate concepts |
-
-Partitives within one PartitiveRelation are **coordinate concepts** —
-they share the comprehensive AND the **criterion of subdivision**
-(ISO 12620).
+| Role | ISO name |
+|------|----------|
+| The whole concept | superordinate concept partitive |
+| Each part concept | subordinate concept partitive |
+| The relation | partitive relation |
+| Siblings in a rake | coordinate concepts |
 
 ## Design
 
@@ -46,146 +36,85 @@ they share the comprehensive AND the **criterion of subdivision**
       +comprehensive: ConceptRef [1]
       +partitives: PartitiveMember [2..*]
       +completeness: Completeness [0..1]            # default: complete
-      +plurality: TypeSharedPlurality [0..1]
-      +criterion: LocalizedString [0..1]            # subdivision criterion
+      +criterion: LocalizedString [0..1]            # Glossarist extension
 
     PartitiveMember
       +ref: ConceptRef [1]
-      +certainty: MemberCertainty [0..1]            # default: confirmed
+      +multiplicity: Multiplicity [0..1]            # default: compulsory
+      +is_delimiting: Boolean [0..1]               # default: false
 
-    TypeSharedPlurality
-      +is_shared: Boolean [1..1]                    # ISO 704 close-set double line
-      +is_uncertain: Boolean [0..1]                 # ISO 704 broken line
-      +shared_type: ConceptRef [0..1]               # Glossarist extension
+    Multiplicity (ISO 704:2022)
+      compulsory          — 1 solid line
+      optional            — 1 dashed line
+      compulsory_multiple — 2 solid lines
+      optional_multiple   — 2 dashed lines
+      at_least_one        — 1 solid + 1 dashed line
 
 Wired into `ManagedConcept` as `+partitive_relations:
 PartitiveRelation [0..*]`.
 
-## Why a separate model (not extending RelatedConcept)
+### Multiplicity (ISO 704:2022)
 
-Three alternatives were considered.
+Each partitive carries a multiplicity that encodes the diagram line
+notation as structured data:
 
-### A. Extend `RelatedConcept` with `refs: ConceptRef [0..*]`
+- **compulsory** (default) — must exist in every instance
+- **optional** — exists in some instances only
+- **compulsory_multiple** — multiple must exist
+- **optional_multiple** — multiple may exist
+- **at_least_one** — at least one must exist (1 solid + 1 dashed line)
 
-Rejected: semantics muddied. `RelatedConcept` is binary in
-ISO 10241-1 / SKOS / ISO 25964.
+### is_delimiting (ISO 704:2022)
 
-### B. Generalize to a single `HyperedgeRelationship`
+A delimiting part behaves like a delimiting characteristic: it
+distinguishes the comprehensive from coordinate concepts. Drawn as
+a bold (3x-width) line in ISO 704 diagrams.
 
-Rejected: YAGNI. Only partitive rakes need n-ary semantics today.
+Example (ISO 704 §5.5.4.2.2): for "optomechanical mouse", the
+delimiting parts are mouse ball, x/y-axis rollers, and IR
+emitter/sensor — they distinguish it from "mechanical mouse" and
+"optical mouse". Mouse button is NOT delimiting (all computer mice
+have buttons).
 
-### C. (Chosen) `PartitiveRelation` as its own class
+Orthogonal to multiplicity.
 
-- Backward compatible — existing binary `related` entries parse
-  unchanged.
-- Clear semantics.
-- Open for extension: if hierarchical or associative relations
-  ever need n-ary form, they get their own classes.
+### criterion (Glossarist extension)
 
-## MECE responsibilities
+The principle by which the comprehensive is divided into partitives.
+ISO 12620 coordinate-concept coherence: partitives within one
+relation share the comprehensive AND the criterion.
 
-| Concept class              | Owns                                                       | Does NOT own                                      |
-|----------------------------|------------------------------------------------------------|---------------------------------------------------|
-| `RelatedConcept` (binary)  | One-to-one typed links between concepts                    | Plurality, completeness, joint-decomposition claims |
-| `PartitiveRelation`        | One-to-many whole/part decomposition with metadata         | Non-partitive relationships                       |
-| `ConceptReference`         | Domain/section classification (typed)                      | Concept-to-concept semantic relationships         |
-| `ConceptSource`            | Bibliographic provenance                                   | Concept-to-concept relationships                  |
+Two PartitiveRelations on the same comprehensive with the same
+criterion are duplicates (validation error). Two with different
+criteria are distinct decompositions.
 
-## OCP strategy
+## When to use PartitiveRelation vs. binary has_part
 
-Adding new n-ary relation types (e.g., `SequentialRelation` for
-ISO 12620 sequential concept systems) in the future goes through:
+| Shape | Use when |
+|-------|----------|
+| Binary has_part / is_part_of | Pairwise assertion, no completeness/multiplicity claim |
+| PartitiveRelation | 2+ partitives with completeness, multiplicity, or delimiting |
 
-1. Add a new `XRelation` class to the model.
-2. Wire it as `+x_relations` on `ManagedConcept`.
-3. Add a new extractor in the data pipeline.
-4. Add a new rendering branch in the UI.
+ISO 704 requires "two or more." A single partitive should be a
+binary edge.
 
-No existing class opens for modification.
+Both shapes coexist. The `check-binary-has-part-redundancy`
+validator warns when binary edges duplicate a PartitiveRelation.
 
-## Complete vs partial: data shape
-
-### Complete example
-
-    partitive_relations:
-      - comprehensive: { source: VIM, id: "112-02-09" }
-        partitives:
-          - ref: { source: VIM, id: "112-02-10" }
-          - ref: { source: VIM, id: "112-03-26" }
-        completeness: complete
-        plurality:
-          is_shared: true
-        criterion:
-          eng: measurement result composition
-
-Asserts: **2.9 is composed of exactly 2.10 and 2.26; they share a
-type; no other partitives exist.**
-
-### Partial example
-
-    partitive_relations:
-      - comprehensive: { source: VIM, id: "112-01-03" }
-        partitives:
-          - ref: { source: VIM, id: "112-01-04" }
-            certainty: confirmed
-          - ref: { source: VIM, id: "112-01-05" }
-            certainty: confirmed
-          - ref: { source: VIM, id: "112-01-22" }
-            certainty: possible
-        completeness: partial
-        criterion:
-          eng: quantity classification
-
-Asserts: **1.3 has at least 1.4 and 1.5 as partitives (confirmed);
-1.22 might be a partitive (possible); other partitives may also
-exist.**
-
-## Coexistence with binary `has_part` / `is_part_of`
+## Coexistence with binary has_part
 
 The binary `related_concept_type` enum still contains `has_part`,
 `is_part_of`, `broader_partitive`, `narrower_partitive`. These
 remain valid for simple pairwise assertions.
 
-Use `PartitiveRelation` when:
-- The decomposition has 2+ partitives AND membership is jointly
-  significant (a "rake"), OR
-- Type-shared plurality applies, OR
-- Completeness is meaningful, OR
-- Per-partitive certainty is needed, OR
-- The criterion of subdivision should be recorded
-
-Use a binary edge when:
-- The assertion is a single pairwise "X has part Y" with no joint
-  claim
-
-Both representations can coexist. The
-`check-binary-has-part-redundancy` validator warns when binary
-`has_part` edges duplicate PartitiveRelation assertions.
-
 ## ExternalConcept (status: external)
 
-PartitiveRelations (and binary RelatedConcepts) may reference
-ExternalConcepts — concepts we reference but don't define
-ourselves. ISO 704 calls these "parenthetic terms"; we use the
-semantic name `ExternalConcept` (a ManagedConcept with
-`status: external`).
+PartitiveRelations may reference ExternalConcepts — concepts we
+reference but don't define. Resolves via `provided_by` when a
+defining dataset is loaded.
 
-When another dataset defining the external concept is loaded, the
-collection manager adds a `provided_by` binary edge from the
-ExternalConcept to the defining concept.
+## Extraction trigger for a base Relationship class
 
-## Performance considerations
-
-- PartitiveRelations are rare (~5–10 per dataset based on VIM).
-- The build pipeline emits a parallel `partitive_relations.json`.
-- Stats counts both binary edges and n-ary relations separately
-  to avoid double-counting.
-
-## Extraction trigger for a base `Relationship` class
-
-**SequentialRelation** (ISO 12620 sequential concept systems) is
-the most likely addition.
-
-**Extraction trigger:** when **three** n-ary relation types exist,
-extract a base `Relation` class with common fields. If only one or
-two exist, do not extract.
+When three n-ary relation types exist, extract a base class.
+SequentialRelation (ISO 12620 sequential concept systems) is the
+most likely addition.

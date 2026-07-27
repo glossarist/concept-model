@@ -13,14 +13,14 @@ require "set"
 #   partitive_hyperedges → partitive_relations
 #   parts (ConceptRef[]) → partitives (PartitiveMember[])
 #   enumeration: closed/open → completeness: complete/partial
-#   markers: [double, dashed] → plurality: { is_shared, is_uncertain }
-#   content (any) → dropped (moved to comment if valuable)
+#   markers: [dashed] → per-member multiplicity: optional
+#   markers: [double] → dropped (subsumed by per-member multiplicity)
+#   content (any) → dropped (structural edges don't carry prose)
 #
 # Lossy cases flagged for review:
-#   - markers: [dashed] alone (no [double]) → is_uncertain without
-#     is_shared; semantically odd but preserved
-#   - per-partitive certainty → all migrated as confirmed (no source
-#     data to distinguish which tooth was uncertain)
+#   - markers: [double] alone → dropped; no per-member semantic equivalent
+#   - markers: [dashed] → all members set to multiplicity: optional
+#     (can't determine which specific tooth was dashed from v1 data)
 #
 # Usage:
 #   migrate-to-partitive-relation-v2 [--dry-run] [--backup] PATH [PATH...]
@@ -79,37 +79,22 @@ module Glossarist
         end
 
         def migrate_relation(old, path)
-          new = {
+          partitives = Array(old["parts"]).map { |ref| { "ref" => ref } }
+
+          markers = Array(old["markers"]).to_set
+          if markers.include?("dashed")
+            partitives.each { |m| m["multiplicity"] = "optional" }
+          end
+          if markers.include?("double")
+            @stats[:lossy_double] += 1
+            $stderr.puts "WARN: #{path}: [double] marker dropped — no per-member semantic equivalent in ISO 704:2022 multiplicity"
+          end
+
+          {
             "comprehensive" => old["comprehensive"],
-            "partitives" => Array(old["parts"]).map { |ref| { "ref" => ref } },
+            "partitives" => partitives,
             "completeness" => old["enumeration"] == "open" ? "partial" : "complete",
           }
-
-          markers = Array(old["markers"])
-          unless markers.empty?
-            plural = migrate_plurality(markers, path)
-            new["plurality"] = plural if plural
-          end
-
-          # criterion: omitted (reviewer fills in)
-          # content: dropped (structural edges don't carry prose)
-          new
-        end
-
-        def migrate_plurality(markers, path)
-          set = markers.to_set
-          is_shared = set.include?("double")
-          is_uncertain = set.include?("dashed")
-
-          # Lossy case: dashed without double
-          if is_uncertain && !is_shared
-            @stats[:lossy_dashed_alone] += 1
-            $stderr.puts "WARN: #{path}: [dashed] marker without [double] — semantically odd, preserved as-is"
-          end
-
-          result = { "is_shared" => is_shared }
-          result["is_uncertain"] = true if is_uncertain
-          result
         end
 
         def backup(path)
@@ -124,9 +109,9 @@ module Glossarist
         def print_summary
           $stdout.puts ""
           $stdout.puts "Summary:"
-          $stdout.puts "  Files migrated:     #{@stats[:files_migrated]}"
-          $stdout.puts "  Lossy cases flagged: #{@stats[:lossy_dashed_alone]}"
-          $stdout.puts "    - relations with [dashed] alone (no [double])" if @stats[:lossy_dashed_alone] > 0
+          $stdout.puts "  Files migrated:      #{@stats[:files_migrated]}"
+          $stdout.puts "  Lossy [double] drops: #{@stats[:lossy_double]}"
+          $stdout.puts "    - no per-member semantic equivalent in ISO 704:2022 multiplicity" if @stats[:lossy_double] > 0
         end
       end
     end

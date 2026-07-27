@@ -1,4 +1,4 @@
-# 04 — Invalid multiplicity value (not in {compulsory, optional, compulsory_multiple, optional_multiple, at_least_one}).
+# 04 — Invalid multiplicity value (not in {compulsory, optional, compulsory_multiple, optional_multiple, compulsory_at_least_one}).
 id: "900-04-01"
 data:
   identifier: "900-04-01"
