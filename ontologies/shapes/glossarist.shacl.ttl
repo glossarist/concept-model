@@ -775,6 +775,28 @@ gloss:PartitiveMemberShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
+# Reject the vacuous combination presence=optional + count=at_least_one.
+# When a part is optional, at_least_one is vacuous and collapses to
+# (optional, multiple). Per ISO 704:2022 §5.5.4.2.
+gloss:PartitiveMemberVacuousComboShape a sh:NodeShape ;
+  sh:targetClass gloss:PartitiveMember ;
+  sh:sparql [
+    a sh:SPARQLConstraint ;
+    sh:prefixes [
+      sh:declare [ sh:prefix "gloss" ; sh:namespace "https://www.glossarist.org/ontologies/"^^xsd:anyURI ] ;
+      sh:declare [ sh:prefix "partitivePresence" ; sh:namespace "https://www.glossarist.org/ontologies/partitivePresence/"^^xsd:anyURI ] ;
+      sh:declare [ sh:prefix "partitiveCount" ; sh:namespace "https://www.glossarist.org/ontologies/partitiveCount/"^^xsd:anyURI ] ;
+    ] ;
+    sh:select """
+      SELECT $this
+      WHERE {
+        $this gloss:presence <https://www.glossarist.org/ontologies/partitivePresence/optional> .
+        $this gloss:count <https://www.glossarist.org/ontologies/partitiveCount/at_least_one> .
+      }
+    """ ;
+    sh:message "presence=optional + count=at_least_one is vacuous — use (optional, multiple) instead."@en ;
+  ] .
+
 # ExternalConcept coherence — an external concept (status: external)
 # must NOT have a definition or sources; that would contradict its
 # status. Soft warning to allow transitional data.

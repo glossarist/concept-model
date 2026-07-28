@@ -118,6 +118,13 @@ allOf:
           required: [identifier, designations]
 
 $defs:
+  # ISO 639-3 three-letter language code (used by localized_concepts
+  # propertyNames and criterion propertyNames)
+  iso639_three_char_code:
+    type: string
+    pattern: "^[a-z]{3}$"
+    description: ISO 639-3 three-letter language code (e.g. "eng", "fra").
+
   # Concept Status enum
   concept_status:
     type: string
@@ -440,14 +447,165 @@ $defs:
         count         — exactly_one (default) | at_least_one | multiple
         is_delimiting — false (default) | true
 
-  # Partitive presence (ISO 704:2022 line style)
-  partitive_presence:
-    type: string
-    enum: [required, optional]
-    default: required
+      ISO 704:2022 MECE mapping (6 combinations, 5 valid):
 
-  # Partitive count (ISO 704:2022 line count)
-  partitive_count:
+      | presence  | count        | visual       | ISO 704 name              |
+      |-----------|--------------|--------------|---------------------------|
+      | required  | exactly_one  | 1 solid      | compulsory                |
+      | optional  | exactly_one  | 1 dashed     | optional                  |
+      | required  | multiple     | 2 solid      | compulsory_multiple       |
+      | optional  | multiple     | 2 dashed     | optional_multiple         |
+      | required  | at_least_one | 1 solid + 1d | compulsory_at_least_one   |
+      | optional  | at_least_one | INVALID      | (collapses to optional_*) |
+
+      The invalid combination (optional + at_least_one) is rejected
+      by the allOf/if-then constraint below: an optional part has
+      vacuous at-least-one, so it collapses to (optional, multiple).
+
+      Consumers that need the ISO 704 flat-enum name for display
+      should use a utility like multiplicityFromPair(presence, count)
+      rather than storing a derived field on the model.
+    properties:
+      ref:
+        $ref: "#/$defs/concept_ref"
+      presence:
+        $ref: "#/$defs/partitive_presence"
+      count:
+        $ref: "#/$defs/partitive_count"
+      is_delimiting:
+        type: boolean
+        default: false
+        description: |
+          ISO 704:2022 delimiting part (bold 3x-width line in diagram).
+          When true, this part behaves like a delimiting characteristic:
+          it distinguishes the comprehensive from coordinate concepts.
+
+          Orthogonal to presence and count.
+    required: [ref]
+    additionalProperties: false
+    not:
+      # Reject (presence: optional + count: at_least_one) — vacuous combo
+      # that collapses to (optional, multiple). Each allOf entry requires
+      # its property to be present, so the constraint only fires when BOTH
+      # are explicitly set.
+      allOf:
+        - properties:
+            presence: { const: optional }
+          required: [presence]
+        - properties:
+            count: { const: at_least_one }
+          required: [count]
+
+  # Partitive Relation
+  partitive_relation:
+    type: object
+    description: |
+      An ISO 704 / ISO 1087-1 / ISO 12620 partitive relation connecting
+      a comprehensive concept (superordinate concept partitive) to two
+      or more partitive concepts (subordinate concepts partitive) which
+      fitted together constitute the comprehensive.
+    properties:
+      comprehensive:
+        $ref: "#/$defs/concept_ref"
+      partitives:
+        type: array
+        items:
+          $ref: "#/$defs/partitive_member"
+        minItems: 2
+        description: |
+          Two or more partitive members. ISO 704 requires "two or more";
+          a single pairwise part-of assertion should be expressed as a
+          binary has_part / is_part_of edge, not a PartitiveRelation.
+      completeness:
+        $ref: "#/$defs/completeness"
+      criterion:
+        type: object
+        additionalProperties:
+          type: string
+        description: |
+          Free-form localized text describing the criterion that binds
+          these partitives into a coherent decomposition, keyed by ISO
+          639 language code.
+    required: [comprehensive, partitives]
+    additionalProperties: false
+
+  # Locality
+  locality:
+    type: object
+    description: A locality within a cited document.
+    properties:
+      type:
+        type: string
+        description: Type of the locality (section, clause, page, etc.)
+      reference_from:
+        type: string
+      reference_to:
+        type: string
+    additionalProperties: false
+
+  # Concept Source Type enum
+  concept_source_type:
     type: string
-    enum: [exactly_one, at_least_one, multiple]
-    default: exactly_one
+    description: Type of concept source.
+    enum:
+      - authoritative
+      - lineage
+
+  # Concept Source Status enum
+  concept_source_status:
+    type: string
+    description: The status of the managed term relative to the source.
+    enum:
+      - identical
+      - similar
+      - modified
+      - restyle
+      - context_added
+      - generalisation
+      - specialisation
+      - unspecified
+      - related
+      - not_equal
+
+  # Concept Source
+  concept_source:
+    type: object
+    description: |
+      Bibliographic reference for a concept or designation.
+      May carry an optional `id` for inline reference via
+      `{{cite:id}}` mentions in the concept's text.
+    properties:
+      id:
+        type: string
+        description: |
+          Optional stable identifier for the source, used by
+          inline `{{cite:id}}` references in the concept's
+          text. The id is local to the concept; it must be
+          unique within the concept's sources list (across
+          concept-level, localization-level, and
+          designation-level sources).
+      type:
+        $ref: "#/$defs/concept_source_type"
+      status:
+        $ref: "#/$defs/concept_source_status"
+      origin:
+        $ref: "#/$defs/citation"
+      modification:
+        type: string
+        description: How the concept was modified from the source.
+      sourced_from:
+        type: array
+        description: |
+          Citations to the documents that this source was itself sourced
+          from. Only valid on sources of type `lineage`; authoritative
+          sources are terminal. When present, `status` and `modification`
+          describe how `origin` relates to these upstream sources.
+          Each citation MUST include a `locality` so the reader can
+          locate the definition in the upstream document.
+        items:
+          allOf:
+            - $ref: "#/$defs/citation"
+          required:
+            - ref
+            - locality
+    additionalProperties: false
