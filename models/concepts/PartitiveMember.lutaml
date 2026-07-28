@@ -1,7 +1,16 @@
 class PartitiveMember {
   definition {
     One member of a PartitiveRelation — a partitive concept plus
-    ISO 704:2022 multiplicity and delimiting metadata.
+    ISO 704:2022 presence, count, and delimiting metadata.
+
+    Three orthogonal dimensions (MECE):
+      presence      — required (default) | optional
+      count         — exactly_one (default) | at_least_one | multiple
+      is_delimiting — false (default) | true
+
+    The combination (optional, at_least_one) is invalid: if a part
+    is optional, the at-least-one constraint is vacuous and collapses
+    to (optional, multiple).
   }
   +ref: <<StandardDocument>> ReferenceToTermbase [1] {
     definition {
@@ -10,24 +19,30 @@ class PartitiveMember {
       RelatedConcept#ref.
     }
   }
-  +multiplicity: Multiplicity [0..1] {
+  +presence: PartitivePresence [0..1] {
     definition {
-      ISO 704:2022 partitive member multiplicity. Encodes the diagram
-      line notation as structured data:
-        compulsory          — 1 solid line (must exist in every instance)
-        optional            — 1 dashed line (exists in some instances only)
-        compulsory_multiple — 2 solid lines (multiple must exist)
-        optional_multiple   — 2 dashed lines (multiple may exist)
-        compulsory_at_least_one        — 1 solid + 1 dashed line (at least one must exist)
+      Whether this partitive must exist in every instance
+      (required) or may exist only in some instances (optional).
 
-      Defaults to compulsory when omitted.
+      Defaults to required when omitted. ISO 704:2022 encodes
+      this as the line style: solid (required) vs dashed (optional).
+    }
+  }
+  +count: PartitiveCount [0..1] {
+    definition {
+      How many instances of this partitive exist. ISO 704:2022
+      encodes this via the number of lines.
+
+      Defaults to exactly_one when omitted. The combination
+      presence: optional + count: at_least_one is invalid and
+      collapses to (optional, multiple).
     }
   }
   +is_delimiting: Boolean [0..1] {
     definition {
-      ISO 704 delimiting part (bold 3x-width line in diagram). When
-      true, this part behaves like a delimiting characteristic: it
-      distinguishes the comprehensive from coordinate concepts.
+      ISO 704:2022 delimiting part (bold 3x-width line in diagram).
+      When true, this part behaves like a delimiting characteristic:
+      it distinguishes the comprehensive from coordinate concepts.
 
       Example (ISO 704 §5.5.4.2.2): for "optomechanical mouse", the
       delimiting parts are mouse ball, x/y-axis rollers, and IR
@@ -35,7 +50,7 @@ class PartitiveMember {
       and "optical mouse". Mouse button is NOT delimiting (all
       computer mice have buttons).
 
-      Orthogonal to multiplicity. Defaults to false when omitted.
+      Orthogonal to presence and count. Defaults to false when omitted.
     }
   }
 }

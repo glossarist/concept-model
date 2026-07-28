@@ -13,13 +13,13 @@ class PartitiveRelation {
 
     Distinct from RelatedConcept binary edges has_part / is_part_of,
     which express pairwise part-of assertions without completeness
-    or multiplicity claims. A single partitive should be expressed as
-    a binary edge, not a PartitiveRelation (ISO requires two or
+    or presence/count claims. A single partitive should be expressed
+    as a binary edge, not a PartitiveRelation (ISO requires two or
     more partitives).
 
-    ISO 704:2022 per-member features:
-      - multiplicity (5 values: compulsory, optional, compulsory_multiple,
-        optional_multiple, compulsory_at_least_one — including compulsory_compulsory_at_least_one)
+    ISO 704:2022 per-member features (MECE decomposition):
+      - presence (required | optional)
+      - count (exactly_one | at_least_one | multiple)
       - is_delimiting (delimiting part — bold 3x-width line)
 
     Glossarist extension:
@@ -34,7 +34,7 @@ class PartitiveRelation {
   +partitives: PartitiveMember [2..*] {
     definition {
       The subordinate concepts partitive — the parts. Each member
-      carries a ConceptRef plus ISO 704:2022 multiplicity and
+      carries a ConceptRef plus ISO 704:2022 presence, count, and
       delimiting metadata.
 
       ISO 704 requires "two or more." A single partitive should be

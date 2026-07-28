@@ -10,13 +10,11 @@ binary-only `RelatedConcept` model cannot represent:
 1. **One-to-many membership as a single invariant.** A rake notation
    says "this whole is composed of exactly these parts as one
    relationship."
-2. **Per-member multiplicity.** ISO 704:2022 distinguishes compulsory,
-   optional, compulsory-multiple, optional-multiple, and at-least-one
-   members via line notation (solid/dashed, single/double).
-3. **Delimiting parts.** ISO 704:2022 marks parts that behave like
-   delimiting characteristics (bold 3x-width line), distinguishing the
-   comprehensive from coordinate concepts.
-4. **Completeness.** Whether the encoded partitives fitted together
+2. **Per-member presence, count, and delimiting.** ISO 704:2022
+   distinguishes required/optional, exactly-one/at-least-one/multiple,
+   and delimiting/non-delimiting via line notation (solid/dashed,
+   single/double, normal/bold).
+3. **Completeness.** Whether the encoded partitives fitted together
    constitute the comprehensive (complete) or only some of it (partial).
 
 ## ISO terminology
@@ -38,37 +36,45 @@ ISO 704:2022 / ISO 1087-1 / ISO 12620 canonical role names:
       +completeness: Completeness [0..1]            # default: complete
       +criterion: LocalizedString [0..1]            # Glossarist extension
 
-    PartitiveMember
+    PartitiveMember (MECE: 3 orthogonal dimensions)
       +ref: ConceptRef [1]
-      +multiplicity: Multiplicity [0..1]            # default: compulsory
-      +is_delimiting: Boolean [0..1]               # default: false
+      +presence: PartitivePresence [0..1]         # required (default) | optional
+      +count: PartitiveCount [0..1]               # exactly_one (default) | at_least_one | multiple
+      +is_delimiting: Boolean [0..1]               # false (default) | true
 
-    Multiplicity (ISO 704:2022)
-      compulsory          — 1 solid line
-      optional            — 1 dashed line
-      compulsory_multiple — 2 solid lines
-      optional_multiple   — 2 dashed lines
-      at_least_one        — 1 solid + 1 dashed line
+    PartitivePresence (ISO 704:2022)
+      required    — 1 solid line (must exist in every instance)
+      optional    — 1 dashed line (exists in some instances only)
+
+    PartitiveCount (ISO 704:2022)
+      exactly_one  — single line
+      at_least_one — 1 solid + 1 dashed (at least one must exist)
+      multiple     — double line (two or more)
 
 Wired into `ManagedConcept` as `+partitive_relations:
 PartitiveRelation [0..*]`.
 
-### Multiplicity (ISO 704:2022)
+### MECE decomposition: 6 combinations, 5 valid
 
-Each partitive carries a multiplicity that encodes the diagram line
-notation as structured data:
+| Presence | Count | Visual | Valid? |
+|----------|-------|--------|--------|
+| required | exactly_one | 1 solid | yes (compulsory) |
+| optional | exactly_one | 1 dashed | yes (optional) |
+| required | multiple | 2 solid | yes (compulsory_multiple) |
+| optional | multiple | 2 dashed | yes (optional_multiple) |
+| required | at_least_one | 1 solid + 1 dashed | yes (compulsory_at_least_one) |
+| optional | at_least_one | (invalid — collapses to optional_multiple) | **no** |
 
-- **compulsory** (default) — must exist in every instance
-- **optional** — exists in some instances only
-- **compulsory_multiple** — multiple must exist
-- **optional_multiple** — multiple may exist
-- **compulsory_at_least_one** — at least one must exist (1 solid + 1 dashed line)
+The `optional + at_least_one` combination is rejected: if a part is
+optional, the at-least-one constraint is vacuous (the part may not
+exist at all), so it collapses to `optional_multiple`. The schema
+enforces this via an `allOf/if-then` block on `partitive_member`.
 
 ### is_delimiting (ISO 704:2022)
 
 A delimiting part behaves like a delimiting characteristic: it
-distinguishes the comprehensive from coordinate concepts. Drawn as
-a bold (3x-width) line in ISO 704 diagrams.
+distinguishes the comprehensive from coordinate concepts. Drawn as a
+bold (3x-width) line in ISO 704 diagrams.
 
 Example (ISO 704 §5.5.4.2.2): for "optomechanical mouse", the
 delimiting parts are mouse ball, x/y-axis rollers, and IR
@@ -76,7 +82,7 @@ emitter/sensor — they distinguish it from "mechanical mouse" and
 "optical mouse". Mouse button is NOT delimiting (all computer mice
 have buttons).
 
-Orthogonal to multiplicity.
+Orthogonal to presence and count.
 
 ### criterion (Glossarist extension)
 
@@ -88,24 +94,32 @@ Two PartitiveRelations on the same comprehensive with the same
 criterion are duplicates (validation error). Two with different
 criteria are distinct decompositions.
 
+## Why the product space (vs. flat enum)
+
+The previous design used a flat `Multiplicity` enum with 5 values
+that was a product space in disguise. Splitting into two
+`PartitivePresence` and `PartitiveCount` enums (2+3=5 values) is:
+
+- **DRY**: Adding a new count type (e.g., "range") is a one-value
+  addition, not a 5-value cascade.
+- **MECE**: Every combination is either valid (5 of 6) or explicitly
+  invalid (1 of 6). The invalid one is rejected with a clear error.
+- **OCP**: A new count type is additive — no existing values change.
+- **ISO alignment**: The two dimensions map directly to ISO 704's
+  line-style and line-count notation axes.
+
 ## When to use PartitiveRelation vs. binary has_part
 
 | Shape | Use when |
 |-------|----------|
-| Binary has_part / is_part_of | Pairwise assertion, no completeness/multiplicity claim |
-| PartitiveRelation | 2+ partitives with completeness, multiplicity, or delimiting |
+| Binary has_part / is_part_of | Pairwise assertion, no completeness/presence/count claim |
+| PartitiveRelation | 2+ partitives with completeness, presence, count, or delimiting |
 
 ISO 704 requires "two or more." A single partitive should be a
 binary edge.
 
 Both shapes coexist. The `check-binary-has-part-redundancy`
 validator warns when binary edges duplicate a PartitiveRelation.
-
-## Coexistence with binary has_part
-
-The binary `related_concept_type` enum still contains `has_part`,
-`is_part_of`, `broader_partitive`, `narrower_partitive`. These
-remain valid for simple pairwise assertions.
 
 ## ExternalConcept (status: external)
 

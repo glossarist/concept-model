@@ -19,8 +19,8 @@ class ManagedConcept {
 
       Independent of `related` (which is binary). A concept may have
       both. PartitiveRelation is used when the source diagram depicts
-      a rake whose membership, completeness, or multiplicity is jointly
-      significant.
+      a rake whose membership, completeness, or per-member
+      presence/count is jointly significant.
 
       For single pairwise part-of assertions without completeness
       claims, use the binary has_part / is_part_of edge instead.

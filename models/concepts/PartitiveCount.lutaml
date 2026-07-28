@@ -1,0 +1,27 @@
+enum PartitiveCount {
+  definition {
+    How many instances of this partitive member exist.
+
+    ISO 704:2022 encodes this via the number of lines in the
+    diagram notation (1 line = exactly_one or at_least_one;
+    2 lines = multiple).
+
+    Defaults to exactly_one when omitted.
+  }
+
+  exactly_one {
+    definition { Exactly one instance. ISO 704:2022 single line. }
+  }
+
+  at_least_one {
+    definition {
+      One or more instances must exist. ISO 704:2022 combines a
+      solid and a dashed line. Only valid with presence: required —
+      if presence is optional, at_least_one collapses to multiple.
+    }
+  }
+
+  multiple {
+    definition { Two or more instances. ISO 704:2022 double line. }
+  }
+}

@@ -1,4 +1,4 @@
-# 32 — Partitive Relation (compulsory_at_least_one multiplicity)
+# 32 — Partitive Relation (compulsory_at_least_one)
 #
 # ISO 704:2022: 1 solid + 1 dashed line. At least one partitive of
 # this type must exist. Use case: a comprehensive that must have at
@@ -23,7 +23,7 @@ partitive_relations:
       id: "120-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "120-01-02" }
-        multiplicity: compulsory_at_least_one
+        count: at_least_one
       - ref: { source: "EXAMPLE", id: "120-01-03" }
     completeness: complete
     criterion:
@@ -37,7 +37,7 @@ data:
     - date: "2026-07-27"
       type: accepted
   definition:
-    - content: "example with compulsory_at_least_one multiplicity"
+    - content: "example with compulsory_at_least_one"
   terms:
     - type: expression
       normative_status: preferred

@@ -78,7 +78,7 @@ properties:
 
       Independent of `related` (which is binary). A concept may
       have both. PartitiveRelation is used when the source diagram
-      depicts a rake whose membership, completeness, or multiplicity
+      depicts a rake whose membership, completeness, or per-member presence/count
       is jointly significant.
 
       For single pairwise part-of assertions without completeness
@@ -354,7 +354,7 @@ $defs:
         description: Version of the document.
 
   # ConceptRef (used in RelatedConcept#ref, PartitiveMember#ref,
-  # multiplicity and is_delimiting, and standalone as ExternalConcept placeholder)
+  # presence, count, and is_delimiting, and standalone as ExternalConcept placeholder)
   concept_ref:
     type: object
     description: |
@@ -395,24 +395,36 @@ $defs:
       - complete
       - partial
 
-  # Multiplicity enum (ISO 704:2022 partitive member notation)
-  multiplicity:
+  # Partitive Presence enum (ISO 704:2022 — solid vs dashed line)
+  partitive_presence:
     type: string
     description: |
-      ISO 704:2022 partitive member multiplicity. Encodes the diagram
-      line notation as structured data:
-        compulsory          — 1 solid line (must exist in every instance)
-        optional            — 1 dashed line (exists in some instances only)
-        compulsory_multiple — 2 solid lines (multiple must exist)
-        optional_multiple   — 2 dashed lines (multiple may exist)
-        compulsory_at_least_one        — 1 solid + 1 dashed line (at least one must exist)
-      Default: compulsory.
+      Whether this partitive member must exist in every instance
+      (required) or may exist in some instances only (optional).
+
+      ISO 704:2022 encodes this as the line style: solid (required)
+      vs dashed (optional). Defaults to required when omitted.
     enum:
-      - compulsory
+      - required
       - optional
-      - compulsory_multiple
-      - optional_multiple
-      - compulsory_at_least_one
+
+  # Partitive Count enum (ISO 704:2022 — single vs double line)
+  partitive_count:
+    type: string
+    description: |
+      How many instances of this partitive member exist.
+
+      ISO 704:2022 encodes this via the number of lines in the
+      diagram notation (1 line = exactly_one or at_least_one;
+      2 lines = multiple). Defaults to exactly_one when omitted.
+
+      The combination presence: optional + count: at_least_one is
+      invalid — if a part is optional, at_least_one is vacuous and
+      collapses to (optional, multiple).
+    enum:
+      - exactly_one
+      - at_least_one
+      - multiple
 
   # Concept reference — used by PartitiveMember, RelatedConcept,
   # and as standalone text-only placeholder for ExternalConcept.
@@ -423,18 +435,24 @@ $defs:
     type: object
     description: |
       One member of a PartitiveRelation — a partitive concept plus
-      ISO 704:2022 multiplicity and delimiting metadata.
+      three orthogonal dimensions (MECE):
+        presence      — required (default) | optional
+        count         — exactly_one (default) | at_least_one | multiple
+        is_delimiting — false (default) | true
 
-      multiplicity encodes the diagram line notation (solid/dashed/
-      counts). is_delimiting is orthogonal: a delimiting part behaves
-      like a delimiting characteristic, distinguishing the comprehensive
-      from coordinate concepts (ISO 704 bold 3x-width line).
+      These replace the prior multiplicity enum with a product space
+      that is DRY (2+3=5 values vs 5 enum values), MECE (every
+      combination is valid or explicitly invalid), and OCP (adding
+      a count type doesn't change existing values).
     properties:
       ref:
         $ref: "#/$defs/concept_ref"
-      multiplicity:
-        $ref: "#/$defs/multiplicity"
-        default: compulsory
+      presence:
+        $ref: "#/$defs/partitive_presence"
+        default: required
+      count:
+        $ref: "#/$defs/partitive_count"
+        default: exactly_one
       is_delimiting:
         type: boolean
         default: false
@@ -442,12 +460,22 @@ $defs:
           ISO 704 delimiting part (bold 3x-width line in diagram).
           When true, this part behaves like a delimiting characteristic:
           it distinguishes the comprehensive from coordinate concepts.
-          Example: for "optomechanical mouse", the rollers and IR
-          emitter/sensor are delimiting (distinguish from mechanical
-          and optical mice); mouse button is NOT delimiting.
     required:
       - ref
     additionalProperties: false
+    # Reject invalid combination: presence=optional + count=at_least_one.
+    # If a part is optional, at_least_one is vacuous and collapses to multiple.
+    allOf:
+      - if:
+          properties:
+            presence:
+              const: optional
+          required: [presence, count]
+        then:
+          properties:
+            count:
+              not:
+                const: at_least_one
 
   # Partitive Relation (ISO 704 / 1087-1 / 12620)
   partitive_relation:
@@ -462,10 +490,9 @@ $defs:
       (ISO 12620): they share the comprehensive AND the criterion
       of subdivision.
 
-      Per-member metadata (ISO 704:2022): multiplicity (5 values
-      encoding line notation) + is_delimiting (orthogonal flag
-      for delimiting parts). Glossarist extension: criterion as
-      structured data.
+      Per-member metadata (ISO 704:2022): presence + count + is_delimiting
+      (three orthogonal MECE dimensions). Glossarist extension:
+      criterion as structured data.
     properties:
       comprehensive:
         $ref: "#/$defs/concept_ref"
