@@ -1,9 +1,9 @@
-# 22 — Partitive Relation (mixed multiplicity per member)
+# 22 — Partitive Relation (mixed presence/count per member)
 #
-# Demonstrates the Glossarist extension beyond ISO 704 notation:
-# per-member multiplicity. Two members are compulsory (default)
-# partitives (1.4, 1.5) and one possible partitive (1.22) whose
-# membership in the decomposition is uncertain.
+# ISO 704:2022 MECE decomposition. Two members are required
+# (presence: required, count: exactly_one — the defaults), and
+# one member is optional (presence: optional, count: exactly_one).
+# In ISO 704 diagram notation: two solid teeth and one dashed tooth.
 #
 
 
