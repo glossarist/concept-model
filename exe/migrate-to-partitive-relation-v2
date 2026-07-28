@@ -83,11 +83,11 @@ module Glossarist
 
           markers = Array(old["markers"]).to_set
           if markers.include?("dashed")
-            partitives.each { |m| m["multiplicity"] = "optional" }
+            partitives.each { |m| m["presence"] = "optional" }
           end
           if markers.include?("double")
             @stats[:lossy_double] += 1
-            $stderr.puts "WARN: #{path}: [double] marker dropped — no per-member semantic equivalent in ISO 704:2022 multiplicity"
+            $stderr.puts "WARN: #{path}: [double] marker dropped — no per-member semantic equivalent in ISO 704:2022 presence/count"
           end
 
           {

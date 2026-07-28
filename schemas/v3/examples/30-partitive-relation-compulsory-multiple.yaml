@@ -1,4 +1,4 @@
-# 30 — Partitive Relation (compulsory_multiple multiplicity)
+# 30 — Partitive Relation (compulsory_multiple)
 #
 # ISO 704:2022: 2 solid lines. Multiple partitives of this type must
 # exist. Use case: a comprehensive that has multiple rollers (e.g.,
@@ -23,7 +23,7 @@ partitive_relations:
       id: "118-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "118-01-02" }
-        multiplicity: compulsory_multiple
+        count: multiple
       - ref: { source: "EXAMPLE", id: "118-01-03" }
     completeness: complete
     criterion:
@@ -37,7 +37,7 @@ data:
     - date: "2026-07-27"
       type: accepted
   definition:
-    - content: "example with compulsory_multiple multiplicity"
+    - content: "example with compulsory_multiple"
   terms:
     - type: expression
       normative_status: preferred

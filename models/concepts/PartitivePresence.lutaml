@@ -1,0 +1,19 @@
+enum PartitivePresence {
+  definition {
+    Whether this partitive member must exist (required) or may
+    exist only in some instances (optional).
+
+    ISO 704:2022 encodes this as the line style: solid (required)
+    vs dashed (optional).
+
+    Defaults to required when omitted.
+  }
+
+  required {
+    definition { Must exist in every instance. ISO 704:2022 solid line. }
+  }
+
+  optional {
+    definition { Exists in some instances only. ISO 704:2022 dashed line. }
+  }
+}

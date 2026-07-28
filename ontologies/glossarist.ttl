@@ -215,7 +215,9 @@ gloss:PartitiveRelation a owl:Class ;
 
     Glossarist extensions beyond ISO notation:
       - criterion as structured multilingual data
-      - Per-member multiplicity (ISO 704:2022 diagram line notation)
+      - Per-member presence + count (ISO 704:2022 MECE decomposition
+        of the diagram line notation: required/optional ×
+        exactly_one/at_least_one/multiple)
       - is_delimiting (ISO 704 delimiting part, bold 3x-width line)
 
     Distinct from binary has_part / is_part_of edges, which express
@@ -226,8 +228,10 @@ gloss:PartitiveMember a owl:Class ;
   rdfs:label "Partitive Member"@en ;
   rdfs:comment """
     One member of a PartitiveRelation — a partitive concept (via
-    ConceptRef) plus ISO 704:2022 multiplicity and delimiting metadata.
-    multiplicity encodes the diagram line notation (solid/dashed/counts).
+    ConceptRef) plus ISO 704:2022 presence, count, and delimiting
+    metadata. presence + count decompose the line notation: presence
+    (required/optional) encodes the line style (solid/dashed), count
+    (exactly_one/at_least_one/multiple) encodes the line count.
     is_delimiting is orthogonal: a delimiting part behaves like a
     delimiting characteristic, distinguishing the comprehensive from
     coordinate concepts (ISO 704 bold 3x-width line).
@@ -376,11 +380,17 @@ gloss:ref a owl:ObjectProperty ;
   rdfs:label "ref"@en ;
   rdfs:comment "The ConceptRef identifying the partitive concept."@en .
 
-gloss:multiplicity a owl:ObjectProperty ;
+gloss:presence a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveMember ;
   rdfs:range skos:Concept ;
-  rdfs:label "multiplicity"@en ;
-  rdfs:comment "ISO 704:2022 partitive member multiplicity. Encodes diagram line notation: compulsory (1 solid), optional (1 dashed), compulsory_multiple (2 solid), optional_multiple (2 dashed), compulsory_at_least_one (1 solid + 1 dashed)."@en .
+  rdfs:label "presence"@en ;
+  rdfs:comment "ISO 704:2022 partitive member presence: required (solid line) or optional (dashed line). Whether the part must exist or may exist."@en .
+
+gloss:count a owl:ObjectProperty ;
+  rdfs:domain gloss:PartitiveMember ;
+  rdfs:range skos:Concept ;
+  rdfs:label "count"@en ;
+  rdfs:comment "ISO 704:2022 partitive member count: exactly_one (single line), at_least_one (1 solid + 1 dashed), multiple (double line). How many instances exist."@en .
 
 gloss:isDelimiting a owl:DatatypeProperty ;
   rdfs:domain gloss:PartitiveMember ;

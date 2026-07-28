@@ -758,9 +758,15 @@ gloss:PartitiveMemberShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:multiplicity ;
+    sh:path gloss:presence ;
     sh:class skos:Concept ;
-    sh:valuesFrom <https://www.glossarist.org/ontologies/multiplicity> ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/partitivePresence> ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:count ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/partitiveCount> ;
     sh:maxCount 1 ;
   ] ;
   sh:property [

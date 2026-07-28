@@ -29,7 +29,7 @@ partitive_relations:
       - ref: { source: "VIM", id: "112-01-04" }
       - ref: { source: "VIM", id: "112-01-05" }
       - ref: { source: "VIM", id: "112-01-22" }
-        multiplicity: optional
+        presence: optional
     completeness: partial
     criterion:
       eng: quantity classification

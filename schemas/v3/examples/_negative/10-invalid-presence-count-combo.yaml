@@ -1,0 +1,17 @@
+# 10 — Invalid combination: presence=optional + count=at_least_one.
+# If a part is optional, the at-least-one constraint is vacuous and
+# collapses to (optional, multiple). This combination is rejected.
+id: "900-10-01"
+data:
+  identifier: "900-10-01"
+partitive_relations:
+  - comprehensive:
+      source: "X"
+      id: "900-10-01"
+    partitives:
+      - ref: { source: "X", id: "900-10-02" }
+        presence: optional
+        count: at_least_one
+      - ref: { source: "X", id: "900-10-03" }
+    completeness: complete
+status: valid

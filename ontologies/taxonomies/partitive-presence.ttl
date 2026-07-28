@@ -1,0 +1,28 @@
+# Partitive Presence Taxonomy (ISO 704:2022)
+#
+# SKOS ConceptScheme for partitive member presence. Two values:
+# required (solid line — must exist) and optional (dashed line —
+# may exist). Orthogonal to count and is_delimiting.
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:partitivePresence a skos:ConceptScheme ;
+  skos:prefLabel "Partitive Presence"@en ;
+  skos:definition "ISO 704:2022 partitive member presence: required or optional."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/partitivePresence/required> a skos:Concept ;
+  skos:inScheme gloss:partitivePresence ;
+  skos:prefLabel "required"@en ;
+  skos:definition "Must exist in every instance. ISO 704:2022 solid line."@en .
+
+<https://www.glossarist.org/ontologies/partitivePresence/optional> a skos:Concept ;
+  skos:inScheme gloss:partitivePresence ;
+  skos:prefLabel "optional"@en ;
+  skos:definition "Exists in some instances only. ISO 704:2022 dashed line."@en .
+
+gloss:partitivePresence skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/partitivePresence/required> ,
+    <https://www.glossarist.org/ontologies/partitivePresence/optional> .

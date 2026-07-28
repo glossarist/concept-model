@@ -1,8 +1,8 @@
 # 23 — Partitive Relation (plain complete decomposition)
 #
-# The minimal v2 form: a comprehensive composed of exactly two
-# partitives, no plurality, all compulsory (default multiplicity).
-# Demonstrates the simplest valid PartitiveRelation shape.
+# The minimal form: a comprehensive composed of exactly two
+# partitives, no plurality, all required with default count
+# (exactly_one). Demonstrates the simplest valid PartitiveRelation shape.
 
 ---
 id: "113-01-01"

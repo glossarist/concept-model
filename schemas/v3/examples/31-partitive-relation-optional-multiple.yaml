@@ -1,4 +1,4 @@
-# 31 — Partitive Relation (optional_multiple multiplicity)
+# 31 — Partitive Relation (optional_multiple)
 #
 # ISO 704:2022: 2 dashed lines. Multiple partitives of this type may
 # exist. Use case: a comprehensive that may have multiple optional
@@ -23,7 +23,8 @@ partitive_relations:
       id: "119-01-01"
     partitives:
       - ref: { source: "EXAMPLE", id: "119-01-02" }
-        multiplicity: optional_multiple
+        presence: optional
+        count: multiple
       - ref: { source: "EXAMPLE", id: "119-01-03" }
     completeness: partial
     criterion:
@@ -37,7 +38,7 @@ data:
     - date: "2026-07-27"
       type: accepted
   definition:
-    - content: "example with optional_multiple multiplicity"
+    - content: "example with optional_multiple"
   terms:
     - type: expression
       normative_status: preferred

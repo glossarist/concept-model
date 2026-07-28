@@ -11,7 +11,8 @@ module Glossarist
       #   1. Each relation has ≥2 partitives (ISO "two or more")
       #   2. No duplicate (comprehensive + criterion) on the same concept
       #   3. Warns when a concept has 2+ relations and any lack criterion
-      #   4. Warns on multiplicity/delimiting incoherence
+      #   4. Warns on presence/delimiting incoherence (a delimiting
+      #      partitive should be required, not optional)
       class CheckPartitiveRelationCoherence < Glossarist::ConceptModel::Validator
         def run
           failures = []
@@ -52,16 +53,16 @@ module Glossarist
               end
             end
 
-            # Check 4: multiplicity coherence (ISO 704:2022)
-            # A delimiting part should not be optional — if it's optional,
-            # it can't be relied upon to distinguish the comprehensive from
-            # coordinate concepts. Warn (not error) since ISO 704 doesn't
-            # explicitly forbid it.
+            # Check 4: presence/delimiting coherence
+            # A delimiting part should be required (not optional) — if it's
+            # optional, it can't be relied upon to distinguish the
+            # comprehensive from coordinate concepts. Warn (not error)
+            # since ISO 704 doesn't explicitly forbid it.
             relations.each_with_index do |rel, i|
               (rel["partitives"] || []).each_with_index do |member, j|
                 next unless member["is_delimiting"]
-                mult = member["multiplicity"] || "compulsory"
-                if mult == "optional" || mult == "optional_multiple"
+                presence = member["presence"] || "required"
+                if presence == "optional"
                   warnings << "#{relative(path)}: relation #{i} partitive #{j} is delimiting but optional (semantically incoherent)"
                 end
               end

@@ -3,7 +3,7 @@
 # ISO 704 §5.5.4.2.2 mouse example: an optomechanical mouse's
 # "mouse wheel" is OPTIONAL — not found on all mice. In ISO 704
 # diagram notation this is shown as 1 dashed line. In data it
-# becomes multiplicity: optional.
+# becomes presence: optional.
 #
 # The other parts are compulsory (1 solid line, the default).
 
@@ -28,7 +28,7 @@ partitive_relations:
       - ref: { source: "EXAMPLE", id: "117-01-02" }
         is_delimiting: true
       - ref: { source: "EXAMPLE", id: "117-01-03" }
-        multiplicity: optional
+        presence: optional
     completeness: partial
     criterion:
       eng: optional member decomposition

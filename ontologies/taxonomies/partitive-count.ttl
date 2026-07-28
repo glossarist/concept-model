@@ -1,0 +1,37 @@
+# Partitive Count Taxonomy (ISO 704:2022)
+#
+# SKOS ConceptScheme for partitive member count. Three values:
+# exactly_one (single line), at_least_one (1 solid + 1 dashed),
+# multiple (double line). Orthogonal to presence and is_delimiting.
+#
+# Invalid combination: presence=optional + count=at_least_one
+# (collapses to optional_multiple = presence=optional + count=multiple).
+
+@prefix gloss:   <https://www.glossarist.org/ontologies/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+gloss:partitiveCount a skos:ConceptScheme ;
+  skos:prefLabel "Partitive Count"@en ;
+  skos:definition "ISO 704:2022 partitive member count: exactly_one, at_least_one, or multiple."@en ;
+  dcterms:source <https://www.glossarist.org/schemas/v3/concept> .
+
+<https://www.glossarist.org/ontologies/partitiveCount/exactly_one> a skos:Concept ;
+  skos:inScheme gloss:partitiveCount ;
+  skos:prefLabel "exactly one"@en ;
+  skos:definition "Exactly one instance. ISO 704:2022 single line."@en .
+
+<https://www.glossarist.org/ontologies/partitiveCount/at_least_one> a skos:Concept ;
+  skos:inScheme gloss:partitiveCount ;
+  skos:prefLabel "at least one"@en ;
+  skos:definition "One or more instances must exist. ISO 704:2022 combines a solid and a dashed line. Only valid with presence: required."@en .
+
+<https://www.glossarist.org/ontologies/partitiveCount/multiple> a skos:Concept ;
+  skos:inScheme gloss:partitiveCount ;
+  skos:prefLabel "multiple"@en ;
+  skos:definition "Two or more instances. ISO 704:2022 double line."@en .
+
+gloss:partitiveCount skos:hasTopConcept
+    <https://www.glossarist.org/ontologies/partitiveCount/exactly_one> ,
+    <https://www.glossarist.org/ontologies/partitiveCount/at_least_one> ,
+    <https://www.glossarist.org/ontologies/partitiveCount/multiple> .
