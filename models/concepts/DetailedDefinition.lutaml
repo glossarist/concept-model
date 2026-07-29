@@ -8,6 +8,22 @@ class DetailedDefinition {
       The text of the definition of the managed term.
     }
   }
+  +type: DefinitionType [0..1] {
+    definition {
+      The definition strategy per ISO 704:2022 §5.3.
+
+      Four values:
+        - intensional (default): genus + differentiae
+        - extensional: enumerate instances or species
+        - partitive:   describe composition
+        - translated:  translated from another language
+
+      When omitted, treated as intensional. Tools may filter, validate,
+      and render based on the type.
+
+      See docs/design/definition-types.md.
+    }
+  }
   +sources: ConceptSource [0..*] {
     definition {
       Bibliographic references for this particular definition of the managed term.

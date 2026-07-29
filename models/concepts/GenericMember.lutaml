@@ -1,0 +1,45 @@
+class GenericMember {
+  definition {
+    One member of a GenericRelation — a specific concept (species)
+    plus ISO 704:2022 presence, count, and delimiting metadata.
+
+    Mirrors ConceptSystemMember shape exactly. Kept as a distinct
+    leaf class for type safety and to leave room for generic-specific
+    extensions if needed.
+
+    ISO 704:2022 MECE dimensions (inherited shape):
+      presence      — required (default) | optional
+      count         — exactly_one (default) | at_least_one | multiple
+      is_delimiting — false (default) | true
+
+    The combination (optional, at_least_one) is invalid.
+  }
+  +ref: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The specific concept — the species in a genus–species rake.
+      Encoded as a ConceptRef (source + id, optional text).
+    }
+  }
+  +presence: PartitivePresence [0..1] {
+    definition {
+      Whether this species must be present in every instance of the
+      genus (required) or only in some (optional).
+
+      ISO 704:2022 line style: solid (required) vs dashed (optional).
+      Defaults to required.
+    }
+  }
+  +count: PartitiveCount [0..1] {
+    definition {
+      How many instances of this species exist. Defaults to exactly_one.
+      Invalid in combination with presence: optional + count: at_least_one.
+    }
+  }
+  +is_delimiting: Boolean [0..1] {
+    definition {
+      ISO 704:2022 delimiting species. When true, this species
+      distinguishes the genus from coordinate genera. Orthogonal to
+      presence and count. Defaults to false.
+    }
+  }
+}

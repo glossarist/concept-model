@@ -4,6 +4,10 @@
 # composed of measured quantity value (2.10) and measurement
 # uncertainty (2.26); these are all the parts (complete), and
 # they share a type (close-set double line notation).
+#
+# The concept file (this one) no longer carries n-ary relations inline.
+# The relation lives at:
+#   relations/112-02-09/measurement-result-composition.yaml
 
 ---
 id: "112-02-09"
@@ -17,17 +21,6 @@ data:
       ref_type: section
 
 related: []
-
-partitive_relations:
-  - comprehensive:
-      source: "VIM"
-      id: "112-02-09"
-    partitives:
-      - ref: { source: "VIM", id: "112-02-10" }
-      - ref: { source: "VIM", id: "112-03-26" }
-    completeness: complete
-    criterion:
-      eng: measurement result composition
 
 status: valid
 date_accepted: "2012-01-01T00:00:00+00:00"

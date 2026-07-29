@@ -1,0 +1,18 @@
+---
+"$id": example-118-01-01/mechanical-decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 118-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 118-01-02
+  count: multiple
+- ref:
+    source: EXAMPLE
+    id: 118-01-03
+completeness: complete
+criterion:
+  eng: mechanical decomposition
+

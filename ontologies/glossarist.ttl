@@ -222,6 +222,9 @@ gloss:PartitiveRelation a owl:Class ;
 
     Distinct from binary has_part / is_part_of edges, which express
     pairwise part-of assertions without completeness claims.
+
+    Stored per-file at relations/<comprehensive-id>/<slug>.yaml —
+    see docs/design/relations-as-files.md.
   """@en .
 
 gloss:PartitiveMember a owl:Class ;
@@ -235,6 +238,61 @@ gloss:PartitiveMember a owl:Class ;
     is_delimiting is orthogonal: a delimiting part behaves like a
     delimiting characteristic, distinguishing the comprehensive from
     coordinate concepts (ISO 704 bold 3x-width line).
+  """@en .
+
+gloss:ConceptSystemMember a owl:Class ;
+  rdfs:label "Concept System Member"@en ;
+  rdfs:comment """
+    Abstract base shape for members of any n-ary concept-system
+    relation (PartitiveMember, GenericMember, future AssociativeMember).
+    Carries the shared MECE dimensions: presence (required/optional),
+    count (exactly_one/at_least_one/multiple), is_delimiting (boolean).
+
+    The three dimensions are orthogonal. The combination (optional,
+    at_least_one) is invalid and collapses to (optional, multiple).
+
+    See docs/design/abstract-nary-relation.md for the rationale.
+  """@en .
+
+gloss:AbstractNaryRelation a owl:Class ;
+  rdfs:label "Abstract N-ary Relation"@en ;
+  rdfs:comment """
+    Abstract base shape for all n-ary concept-system relations.
+    Declares the shared fields: comprehensive, members[2..*],
+    completeness, criterion, sources, notes, status.
+
+    Concrete leaves: PartitiveRelation, GenericRelation, future
+    AssociativeRelation / SequentialRelation. See
+    docs/design/abstract-nary-relation.md.
+  """@en .
+
+gloss:GenericRelation a owl:Class ;
+  rdfs:label "Generic Relation"@en ;
+  rdfs:comment """
+    ISO 704 / ISO 1087-1 / ISO 12620 generic relation. Connects
+    a comprehensive concept (the genus) to two or more specific
+    concepts (the species) which together constitute a decomposition
+    by some criterion of subdivision.
+
+    Shown as a rake or bracket in source diagrams (ISO 704 §5.5.4.1).
+    All species within one relation are coordinate concepts.
+
+    Distinct from binary broader_generic / narrower_generic edges.
+    A single species should be expressed as a binary edge, not a
+    GenericRelation.
+
+    Justified by OIML V 2-200:2010 evidence (~8 generic hyperedges,
+    several with 6+ criterion groups). See docs/design/generic-relation.md.
+
+    Stored per-file at relations/<comprehensive-id>/<slug>.yaml.
+  """@en .
+
+gloss:GenericMember a owl:Class ;
+  rdfs:label "Generic Member"@en ;
+  rdfs:comment """
+    One member of a GenericRelation — a specific concept (species)
+    plus ISO 704:2022 presence, count, and delimiting metadata.
+    Same MECE shape as PartitiveMember.
   """@en .
 
 gloss:DesignationRelationship a owl:Class ;
@@ -360,43 +418,82 @@ gloss:hasPartitiveRelation a owl:ObjectProperty ;
   rdfs:domain gloss:Concept ;
   rdfs:range gloss:PartitiveRelation ;
   rdfs:label "has partitive relation"@en ;
-  rdfs:comment "DATA: ISO 704 partitive relation on a managed concept. Concept-level only — relations are not localized."@en .
+  rdfs:comment "DATA: ISO 704 partitive relation on a managed concept. Concept-level only — relations are not localized. Per-file storage under relations/<id>/."@en .
+
+gloss:hasGenericRelation a owl:ObjectProperty ;
+  rdfs:domain gloss:Concept ;
+  rdfs:range gloss:GenericRelation ;
+  rdfs:label "has generic relation"@en ;
+  rdfs:comment "DATA: ISO 704 §5.5.4.1 generic relation on a managed concept. Concept-level only. Per-file storage under relations/<id>/."@en .
+
+gloss:hasGeneric a owl:ObjectProperty ;
+  rdfs:domain gloss:GenericRelation ;
+  rdfs:range gloss:GenericMember ;
+  rdfs:label "has generic"@en ;
+  rdfs:comment "A generic member (species) of a GenericRelation."@en .
+
+gloss:hasMember a owl:ObjectProperty ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:PartitiveRelation gloss:GenericRelation )
+  ] ;
+  rdfs:range gloss:ConceptSystemMember ;
+  rdfs:label "has member"@en ;
+  rdfs:comment "DATA: Uniform wire-name for any n-ary relation member. Type-discriminated on the relation."@en .
+
+gloss:hasDefinitionType a owl:ObjectProperty ;
+  rdfs:domain gloss:DetailedDefinition ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has definition type"@en ;
+  rdfs:comment "ISO 704:2022 §5.3 definition strategy (intensional, extensional, partitive, translated). Defaults to intensional when omitted."@en .
+
+gloss:hasNote a owl:ObjectProperty ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:Concept gloss:LocalizedConcept gloss:AbstractNaryRelation )
+  ] ;
+  rdfs:range rdf:langString ;
+  rdfs:label "has note"@en ;
+  rdfs:comment "Free-form localized note. Used on concepts, localizations, and (new) n-ary relations."@en .
 
 gloss:comprehensive a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveRelation ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:PartitiveRelation gloss:GenericRelation )
+  ] ;
   rdfs:range gloss:ConceptRef ;
   rdfs:label "comprehensive"@en ;
-  rdfs:comment "The superordinate concept partitive — the whole that the partitives fitted together constitute. Exactly one per relation."@en .
+  rdfs:comment "The superordinate concept of an n-ary rake. For PartitiveRelation: the whole; for GenericRelation: the genus. Exactly one per relation."@en .
 
 gloss:hasPartitive a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveRelation ;
   rdfs:range gloss:PartitiveMember ;
   rdfs:label "has partitive"@en ;
-  rdfs:comment "A partitive member of a relation. ISO 704 requires two or more."@en .
+  rdfs:comment "A partitive member of a relation. ISO 704 requires two or more. Equivalent to gloss:hasMember on the Partitive wire type."@en .
 
 gloss:ref a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveMember ;
+  rdfs:domain gloss:ConceptSystemMember ;
   rdfs:range gloss:ConceptRef ;
   rdfs:label "ref"@en ;
-  rdfs:comment "The ConceptRef identifying the partitive concept."@en .
+  rdfs:comment "The ConceptRef identifying the target concept of an n-ary member."@en .
 
 gloss:presence a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveMember ;
+  rdfs:domain gloss:ConceptSystemMember ;
   rdfs:range skos:Concept ;
   rdfs:label "presence"@en ;
-  rdfs:comment "ISO 704:2022 partitive member presence: required (solid line) or optional (dashed line). Whether the part must exist or may exist."@en .
+  rdfs:comment "ISO 704:2022 member presence: required (solid line) or optional (dashed line). Whether the member must exist or may exist."@en .
 
 gloss:count a owl:ObjectProperty ;
-  rdfs:domain gloss:PartitiveMember ;
+  rdfs:domain gloss:ConceptSystemMember ;
   rdfs:range skos:Concept ;
   rdfs:label "count"@en ;
-  rdfs:comment "ISO 704:2022 partitive member count: exactly_one (single line), at_least_one (1 solid + 1 dashed), multiple (double line). How many instances exist."@en .
+  rdfs:comment "ISO 704:2022 member count: exactly_one (single line), at_least_one (1 solid + 1 dashed), multiple (double line)."@en .
 
 gloss:isDelimiting a owl:DatatypeProperty ;
-  rdfs:domain gloss:PartitiveMember ;
+  rdfs:domain gloss:ConceptSystemMember ;
   rdfs:range xsd:boolean ;
   rdfs:label "is delimiting"@en ;
-  rdfs:comment "ISO 704 delimiting part (bold 3x-width line). When true, this part behaves like a delimiting characteristic distinguishing the comprehensive from coordinate concepts."@en .
+  rdfs:comment "ISO 704 delimiting member (bold 3x-width line). When true, this member behaves like a delimiting characteristic distinguishing the comprehensive from coordinate concepts."@en .
 
 gloss:completeness a owl:ObjectProperty ;
   rdfs:domain gloss:PartitiveRelation ;

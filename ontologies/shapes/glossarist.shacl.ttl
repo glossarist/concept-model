@@ -734,8 +734,8 @@ gloss:PartitiveRelationShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] ;
   sh:property [
-    sh:path gloss:hasPartitive ;
-    sh:class gloss:PartitiveMember ;
+    sh:path gloss:hasMember ;
+    sh:class gloss:ConceptSystemMember ;
     sh:minCount 2 ;                          # ISO 704: "two or more"
   ] ;
   sh:property [
@@ -749,8 +749,8 @@ gloss:PartitiveRelationShape a sh:NodeShape ;
     sh:datatype rdf:langString ;
   ] .
 
-gloss:PartitiveMemberShape a sh:NodeShape ;
-  sh:targetClass gloss:PartitiveMember ;
+gloss:ConceptSystemMemberShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptSystemMember ;
   sh:property [
     sh:path gloss:ref ;
     sh:class gloss:ConceptRef ;
@@ -775,11 +775,52 @@ gloss:PartitiveMemberShape a sh:NodeShape ;
     sh:maxCount 1 ;
   ] .
 
-# Reject the vacuous combination presence=optional + count=at_least_one.
-# When a part is optional, at_least_one is vacuous and collapses to
-# (optional, multiple). Per ISO 704:2022 §5.5.4.2.
-gloss:PartitiveMemberVacuousComboShape a sh:NodeShape ;
+gloss:PartitiveMemberShape a sh:NodeShape ;
   sh:targetClass gloss:PartitiveMember ;
+  sh:property [
+    sh:path gloss:ref ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+gloss:GenericRelationShape a sh:NodeShape ;
+  sh:targetClass gloss:GenericRelation ;
+  sh:property [
+    sh:path gloss:comprehensive ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasMember ;
+    sh:class gloss:ConceptSystemMember ;
+    sh:minCount 2 ;
+  ] ;
+  sh:property [
+    sh:path gloss:completeness ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/completeness> ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:criterion ;
+    sh:datatype rdf:langString ;
+  ] .
+
+gloss:GenericMemberShape a sh:NodeShape ;
+  sh:targetClass gloss:GenericMember ;
+  sh:property [
+    sh:path gloss:ref ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] .
+
+# Reject the vacuous combination presence=optional + count=at_least_one.
+# Applies to all ConceptSystemMember subclasses (Partitive + Generic).
+gloss:ConceptSystemMemberVacuousComboShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptSystemMember ;
   sh:sparql [
     a sh:SPARQLConstraint ;
     sh:prefixes [
@@ -795,6 +836,39 @@ gloss:PartitiveMemberVacuousComboShape a sh:NodeShape ;
       }
     """ ;
     sh:message "presence=optional + count=at_least_one is vacuous — use (optional, multiple) instead."@en ;
+  ] .
+
+# Standalone relation file shape — validates per-file format.
+# Each file must have $id matching <comprehensive-id>/<criterion-slug>
+# pattern, a valid type, comprehensive, and ≥2 members.
+gloss:StandaloneRelationFileShape a sh:NodeShape ;
+  sh:targetClass gloss:AbstractNaryRelation ;
+  sh:property [
+    sh:path gloss:relationFileType ;
+    sh:in ( "partitive_relation" "generic_relation" ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:comprehensive ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasMember ;
+    sh:class gloss:ConceptSystemMember ;
+    sh:minCount 2 ;
+  ] .
+
+# DetailedDefinition type — ISO 704:2022 §5.3 definition strategy.
+gloss:DetailedDefinitionTypeShape a sh:NodeShape ;
+  sh:targetClass gloss:DetailedDefinition ;
+  sh:property [
+    sh:path gloss:hasDefinitionType ;
+    sh:class skos:Concept ;
+    sh:valuesFrom <https://www.glossarist.org/ontologies/taxonomies/definition-type> ;
+    sh:maxCount 1 ;
   ] .
 
 # ExternalConcept coherence — an external concept (status: external)

@@ -56,11 +56,13 @@ module Glossarist
             "concept"          => YAML.load_file(Repo::CONCEPT_SCHEMA),
             "localized-concept" => YAML.load_file(Repo::LOCALIZED_SCHEMA),
             "register"         => YAML.load_file(Repo::REGISTER_SCHEMA),
+            "figure"           => YAML.load_file(Repo::SCHEMAS_DIR / "figure.yaml"),
           }
         end
 
         def schema_for_filename(name)
           lower = name.downcase
+          return "figure"            if lower.include?("non-verbal-entit") || lower.include?("non-verbal-entities")
           return "register"          if Repo::REGISTER_MARKERS.any? { |m| lower.include?(m) }
           return "localized-concept" if Repo::LOCALIZED_MARKERS.any? { |m| lower.include?(m) }
           "concept"

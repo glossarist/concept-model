@@ -1,0 +1,19 @@
+---
+"$id": example-119-01-01/sensor-subsystem-decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 119-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 119-01-02
+  presence: optional
+  count: multiple
+- ref:
+    source: EXAMPLE
+    id: 119-01-03
+completeness: partial
+criterion:
+  eng: sensor subsystem decomposition
+

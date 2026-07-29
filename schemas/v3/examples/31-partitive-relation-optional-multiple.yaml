@@ -1,47 +1,26 @@
-# 31 — Partitive Relation (optional_multiple)
-#
-# ISO 704:2022: 2 dashed lines. Multiple partitives of this type may
-# exist. Use case: a comprehensive that may have multiple optional
-# sensors of the same type.
-
 ---
-id: "119-01-01"
+id: 119-01-01
 data:
-  identifier: "119-01-01"
+  identifier: 119-01-01
   localized_concepts:
     eng: 99999999-aaaa-bbbb-cccc-000000000001
   domains:
-    - concept_id: section-119-1
-      source: "EXAMPLE"
-      ref_type: section
-
+  - concept_id: section-119-1
+    source: EXAMPLE
+    ref_type: section
 related: []
-
-partitive_relations:
-  - comprehensive:
-      source: "EXAMPLE"
-      id: "119-01-01"
-    partitives:
-      - ref: { source: "EXAMPLE", id: "119-01-02" }
-        presence: optional
-        count: multiple
-      - ref: { source: "EXAMPLE", id: "119-01-03" }
-    completeness: partial
-    criterion:
-      eng: sensor subsystem decomposition
-
 status: valid
-date_accepted: "2026-07-27T00:00:00+00:00"
+date_accepted: '2026-07-27T00:00:00+00:00'
 ---
 data:
   dates:
-    - date: "2026-07-27"
-      type: accepted
+  - date: '2026-07-27'
+    type: accepted
   definition:
-    - content: "example with optional_multiple"
+  - content: example with optional_multiple
   terms:
-    - type: expression
-      normative_status: preferred
-      designation: "example optional-multiple"
+  - type: expression
+    normative_status: preferred
+    designation: example optional-multiple
   language_code: eng
   entry_status: valid

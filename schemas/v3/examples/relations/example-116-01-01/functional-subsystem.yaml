@@ -1,0 +1,17 @@
+---
+"$id": example-116-01-01/functional-subsystem
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 116-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 116-01-04
+- ref:
+    source: EXAMPLE
+    id: 116-01-05
+completeness: complete
+criterion:
+  eng: functional subsystem
+

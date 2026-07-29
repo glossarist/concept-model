@@ -1,0 +1,54 @@
+# Definition Type Taxonomy (ISO 704:2022 §5.3)
+#
+# SKOS ConceptScheme enumerating the four definition strategies
+# ISO 704 distinguishes. Used by gloss:hasDefinitionType on
+# gloss:DetailedDefinition.
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gloss: <https://www.glossarist.org/ontologies/> .
+
+<https://www.glossarist.org/ontologies/taxonomies/definition-type> a skos:ConceptScheme ;
+  dcterms:title "Definition Type"@en ;
+  dcterms:description """
+    ISO 704:2022 §5.3 definition strategies. Each DetailedDefinition
+    carries one of these types, governing how the definition prose is
+    interpreted and rendered.
+  """@en ;
+  dcterms:created "2026-07-29"^^xsd:date .
+
+<https://www.glossarist.org/ontologies/taxonomies/definition-type/intensional> a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/taxonomies/definition-type> ;
+  skos:prefLabel "intensional"@en ;
+  skos:definition """
+    A definition by genus and differentiae — the standard form.
+    Identifies the genus to which the concept belongs and the
+    characteristics that distinguish it from coordinate concepts.
+  """@en ;
+  skos:scopeNote "Default when type is omitted."@en .
+
+<https://www.glossarist.org/ontologies/taxonomies/definition-type/extensional> a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/taxonomies/definition-type> ;
+  skos:prefLabel "extensional"@en ;
+  skos:definition """
+    A definition by enumeration of the instances or species that
+    constitute the concept's extension.
+  """@en .
+
+<https://www.glossarist.org/ontologies/taxonomies/definition-type/partitive> a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/taxonomies/definition-type> ;
+  skos:prefLabel "partitive"@en ;
+  skos:definition """
+    A definition by composition — describes the parts that fitted
+    together constitute the comprehensive concept.
+  """@en ;
+  skos:scopeNote "Pairs with PartitiveRelation assertions on the same concept."@en .
+
+<https://www.glossarist.org/ontologies/taxonomies/definition-type/translated> a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/taxonomies/definition-type> ;
+  skos:prefLabel "translated"@en ;
+  skos:definition """
+    A definition translated from another language, carrying potential
+    semantic shifts that should be flagged for review.
+  """@en .

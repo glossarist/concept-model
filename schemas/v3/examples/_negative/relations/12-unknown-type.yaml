@@ -1,0 +1,10 @@
+# Negative: relation file with unknown `type` value.
+---
+$id: x-900-12-01/decomposition
+type: associative_relation
+comprehensive:
+  source: "X"
+  id: "900-12-01"
+members:
+  - ref: { source: "X", id: "900-12-02" }
+  - ref: { source: "X", id: "900-12-03" }

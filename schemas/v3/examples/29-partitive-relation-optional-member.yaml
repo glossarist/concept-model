@@ -1,50 +1,26 @@
-# 29 — Partitive Relation with optional member (ISO 704:2022)
-#
-# ISO 704 §5.5.4.2.2 mouse example: an optomechanical mouse's
-# "mouse wheel" is OPTIONAL — not found on all mice. In ISO 704
-# diagram notation this is shown as 1 dashed line. In data it
-# becomes presence: optional.
-#
-# The other parts are compulsory (1 solid line, the default).
-
 ---
-id: "117-01-01"
+id: 117-01-01
 data:
-  identifier: "117-01-01"
+  identifier: 117-01-01
   localized_concepts:
     eng: 77777777-aaaa-bbbb-cccc-000000000001
   domains:
-    - concept_id: section-117-1
-      source: "EXAMPLE"
-      ref_type: section
-
+  - concept_id: section-117-1
+    source: EXAMPLE
+    ref_type: section
 related: []
-
-partitive_relations:
-  - comprehensive:
-      source: "EXAMPLE"
-      id: "117-01-01"
-    partitives:
-      - ref: { source: "EXAMPLE", id: "117-01-02" }
-        is_delimiting: true
-      - ref: { source: "EXAMPLE", id: "117-01-03" }
-        presence: optional
-    completeness: partial
-    criterion:
-      eng: optional member decomposition
-
 status: valid
-date_accepted: "2026-07-23T00:00:00+00:00"
+date_accepted: '2026-07-23T00:00:00+00:00'
 ---
 data:
   dates:
-    - date: "2026-07-23"
-      type: accepted
+  - date: '2026-07-23'
+    type: accepted
   definition:
-    - content: "example optional-member comprehensive"
+  - content: example optional-member comprehensive
   terms:
-    - type: expression
-      normative_status: preferred
-      designation: "example optional-member"
+  - type: expression
+    normative_status: preferred
+    designation: example optional-member
   language_code: eng
   entry_status: valid

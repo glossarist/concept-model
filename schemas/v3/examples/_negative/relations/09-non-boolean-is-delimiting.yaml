@@ -1,0 +1,12 @@
+# Negative: member with non-boolean is_delimiting.
+---
+$id: x-900-09-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-09-01"
+members:
+  - ref: { source: "X", id: "900-09-02" }
+    is_delimiting: "yes-please"
+  - ref: { source: "X", id: "900-09-03" }
+completeness: complete

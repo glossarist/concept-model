@@ -1,46 +1,26 @@
-# 30 — Partitive Relation (compulsory_multiple)
-#
-# ISO 704:2022: 2 solid lines. Multiple partitives of this type must
-# exist. Use case: a comprehensive that has multiple rollers (e.g.,
-# optomechanical mouse has multiple x-axis rollers).
-
 ---
-id: "118-01-01"
+id: 118-01-01
 data:
-  identifier: "118-01-01"
+  identifier: 118-01-01
   localized_concepts:
     eng: 88888888-aaaa-bbbb-cccc-000000000001
   domains:
-    - concept_id: section-118-1
-      source: "EXAMPLE"
-      ref_type: section
-
+  - concept_id: section-118-1
+    source: EXAMPLE
+    ref_type: section
 related: []
-
-partitive_relations:
-  - comprehensive:
-      source: "EXAMPLE"
-      id: "118-01-01"
-    partitives:
-      - ref: { source: "EXAMPLE", id: "118-01-02" }
-        count: multiple
-      - ref: { source: "EXAMPLE", id: "118-01-03" }
-    completeness: complete
-    criterion:
-      eng: mechanical decomposition
-
 status: valid
-date_accepted: "2026-07-27T00:00:00+00:00"
+date_accepted: '2026-07-27T00:00:00+00:00'
 ---
 data:
   dates:
-    - date: "2026-07-27"
-      type: accepted
+  - date: '2026-07-27'
+    type: accepted
   definition:
-    - content: "example with compulsory_multiple"
+  - content: example with compulsory_multiple
   terms:
-    - type: expression
-      normative_status: preferred
-      designation: "example compulsory-multiple"
+  - type: expression
+    normative_status: preferred
+    designation: example compulsory-multiple
   language_code: eng
   entry_status: valid

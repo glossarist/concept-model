@@ -1,0 +1,18 @@
+---
+$id: oiml-5-1/by-metrological-hierarchy
+type: generic_relation
+status: valid
+comprehensive:
+  source: OIML
+  id: "5.1"
+members:
+  - ref: { source: OIML, id: "5.4" }       # primary measurement standard
+  - ref: { source: OIML, id: "5.5" }       # secondary measurement standard
+completeness: complete
+criterion:
+  eng: by metrological hierarchy
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: section, reference_from: "5.1" }

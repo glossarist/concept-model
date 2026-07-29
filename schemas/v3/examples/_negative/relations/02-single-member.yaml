@@ -1,0 +1,10 @@
+# Negative: relation with only one member (ISO 704 requires >=2).
+---
+$id: x-900-02-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-02-01"
+members:
+  - ref: { source: "X", id: "900-02-02" }
+completeness: complete

@@ -1,0 +1,22 @@
+---
+"$id": example-115-01-01/delimiting-parts-decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 115-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 115-01-02
+  is_delimiting: true
+- ref:
+    source: EXAMPLE
+    id: 115-01-03
+  is_delimiting: true
+- ref:
+    source: EXAMPLE
+    id: 115-01-04
+completeness: complete
+criterion:
+  eng: delimiting parts decomposition
+

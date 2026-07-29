@@ -1,0 +1,28 @@
+---
+$id: oiml-ext-precision-condition/by-condition-type
+type: generic_relation
+status: valid
+comprehensive:
+  # ExternalConcept placeholder — defined elsewhere, used as comprehensive here.
+  # The matching ExternalConcept file lives at concepts/ext-precision-condition.yaml
+  # with status: external and a provided_by edge pointing to the resolving dataset.
+  source: OIML
+  id: ext-precision-condition
+  text: "(precision condition of measurement)"
+members:
+  - ref: { source: OIML, id: "2.20" }       # repeatability condition
+  - ref: { source: OIML, id: "2.22" }       # intermediate precision condition
+  - ref: { source: OIML, id: "2.24" }       # reproducibility condition
+completeness: complete
+criterion:
+  eng: by precision type
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: section, reference_from: "2" }
+notes:
+  eng: >
+    Condition of measurement sub-types per ISO/IEC Guide 99 (VIM).
+    The comprehensive is a parenthetical term in the source; it is
+    modeled as an ExternalConcept and resolved via provided_by.

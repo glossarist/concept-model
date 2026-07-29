@@ -1,0 +1,13 @@
+# Negative: relation file with $id in invalid format (uppercase + space).
+# JSON Schema pattern rejects anything not matching
+# ^[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*$.
+---
+$id: "BadID With Space/decomposition"
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-11-01"
+members:
+  - ref: { source: "X", id: "900-11-02" }
+  - ref: { source: "X", id: "900-11-03" }
+completeness: complete

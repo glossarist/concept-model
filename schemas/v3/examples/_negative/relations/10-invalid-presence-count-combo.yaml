@@ -1,0 +1,15 @@
+# Negative: invalid (presence=optional + count=at_least_one) combo.
+# ISO 704:2022 §5.5.4.2 — at_least_one is vacuous when optional;
+# collapses to (optional, multiple).
+---
+$id: x-900-10-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-10-01"
+members:
+  - ref: { source: "X", id: "900-10-02" }
+    presence: optional
+    count: at_least_one
+  - ref: { source: "X", id: "900-10-03" }
+completeness: complete

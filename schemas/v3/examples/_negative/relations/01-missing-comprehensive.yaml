@@ -1,0 +1,9 @@
+# Negative: relation missing `comprehensive` field.
+# Relation schema requires `comprehensive`; this should fail.
+---
+$id: x-900-01-01/decomposition
+type: partitive_relation
+members:
+  - ref: { source: "X", id: "900-01-02" }
+  - ref: { source: "X", id: "900-01-03" }
+completeness: complete
