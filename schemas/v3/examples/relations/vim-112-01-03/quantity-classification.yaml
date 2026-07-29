@@ -1,0 +1,21 @@
+---
+"$id": vim-112-01-03/quantity-classification
+type: partitive_relation
+comprehensive:
+  source: VIM
+  id: 112-01-03
+members:
+- ref:
+    source: VIM
+    id: 112-01-04
+- ref:
+    source: VIM
+    id: 112-01-05
+- ref:
+    source: VIM
+    id: 112-01-22
+  presence: optional
+completeness: partial
+criterion:
+  eng: quantity classification
+

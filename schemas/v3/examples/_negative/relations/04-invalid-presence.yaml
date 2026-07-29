@@ -1,0 +1,12 @@
+# Negative: relation member with invalid presence value.
+---
+$id: x-900-04-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-04-01"
+members:
+  - ref: { source: "X", id: "900-04-02" }
+    presence: maybe
+  - ref: { source: "X", id: "900-04-03" }
+completeness: complete

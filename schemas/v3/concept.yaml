@@ -64,30 +64,23 @@ properties:
     type: array
     items:
       $ref: "#/$defs/related_concept"
-    description: Zero or more binary related concepts at the concept level.
-  partitive_relations:
-    type: array
-    items:
-      $ref: "#/$defs/partitive_relation"
     description: |
-      Zero or more ISO 704 / 1087-1 / 12620 partitive relations.
-      Each entry connects this concept (as comprehensive —
-      superordinate concept partitive) to two or more partitive
-      concepts (subordinate concepts partitive) which fitted
-      together constitute the comprehensive.
+      Zero or more binary related concepts at the concept level.
 
-      Independent of `related` (which is binary). A concept may
-      have both. PartitiveRelation is used when the source diagram
-      depicts a rake whose membership, completeness, or per-member presence/count
-      is jointly significant.
+      For one-to-many n-ary decompositions (ISO 704 rake diagrams),
+      use the per-file relation format under `relations/<id>/`.
+      See `schemas/v3/relation.yaml` and `docs/design/relations-as-files.md`.
 
-      For single pairwise part-of assertions without completeness
-      claims, use the binary has_part / is_part_of edge instead.
   sources:
     type: array
     items:
       $ref: "#/$defs/concept_source"
     description: Concept-level bibliographical sources.
+  dates:
+    type: array
+    items:
+      $ref: "#/$defs/concept_date"
+    description: Concept-level governance dates (lifecycle events).
   status:
     $ref: "#/$defs/concept_status"
   date_accepted:
@@ -96,6 +89,8 @@ properties:
     description: Date and time when the concept was accepted.
     examples:
       - "2021-05-01T00:00:00+00:00"
+
+additionalProperties: false
 
 allOf:
   # ExternalConcept conditional: when status is 'external', the
@@ -433,101 +428,24 @@ $defs:
       - at_least_one
       - multiple
 
-  # Concept reference — used by PartitiveMember, RelatedConcept,
-  # and as standalone text-only placeholder for ExternalConcept.
-  # (Defined earlier in this file.)
+  # Concept reference — used by RelatedConcept, ExternalConcept
+  # placeholders, and (via relation.yaml#$defs/concept_system_member)
+  # by members of n-ary Partitive / Generic relations.
 
-  # Partitive Member
-  partitive_member:
-    type: object
+  # Definition Type enum (ISO 704:2022 §5.3)
+  definition_type:
+    type: string
     description: |
-      One member of a PartitiveRelation — a partitive concept plus
-      three orthogonal dimensions (MECE):
-        presence      — required (default) | optional
-        count         — exactly_one (default) | at_least_one | multiple
-        is_delimiting — false (default) | true
+      The definition strategy, per ISO 704:2022 §5.3. Used on
+      DetailedDefinition#type. Defaults to intensional when omitted.
 
-      ISO 704:2022 MECE mapping (6 combinations, 5 valid):
-
-      | presence  | count        | visual       | ISO 704 name              |
-      |-----------|--------------|--------------|---------------------------|
-      | required  | exactly_one  | 1 solid      | compulsory                |
-      | optional  | exactly_one  | 1 dashed     | optional                  |
-      | required  | multiple     | 2 solid      | compulsory_multiple       |
-      | optional  | multiple     | 2 dashed     | optional_multiple         |
-      | required  | at_least_one | 1 solid + 1d | compulsory_at_least_one   |
-      | optional  | at_least_one | INVALID      | (collapses to optional_*) |
-
-      The invalid combination (optional + at_least_one) is rejected
-      by the allOf/if-then constraint below: an optional part has
-      vacuous at-least-one, so it collapses to (optional, multiple).
-
-      Consumers that need the ISO 704 flat-enum name for display
-      should use a utility like multiplicityFromPair(presence, count)
-      rather than storing a derived field on the model.
-    properties:
-      ref:
-        $ref: "#/$defs/concept_ref"
-      presence:
-        $ref: "#/$defs/partitive_presence"
-      count:
-        $ref: "#/$defs/partitive_count"
-      is_delimiting:
-        type: boolean
-        default: false
-        description: |
-          ISO 704:2022 delimiting part (bold 3x-width line in diagram).
-          When true, this part behaves like a delimiting characteristic:
-          it distinguishes the comprehensive from coordinate concepts.
-
-          Orthogonal to presence and count.
-    required: [ref]
-    additionalProperties: false
-    not:
-      # Reject (presence: optional + count: at_least_one) — vacuous combo
-      # that collapses to (optional, multiple). Each allOf entry requires
-      # its property to be present, so the constraint only fires when BOTH
-      # are explicitly set.
-      allOf:
-        - properties:
-            presence: { const: optional }
-          required: [presence]
-        - properties:
-            count: { const: at_least_one }
-          required: [count]
-
-  # Partitive Relation
-  partitive_relation:
-    type: object
-    description: |
-      An ISO 704 / ISO 1087-1 / ISO 12620 partitive relation connecting
-      a comprehensive concept (superordinate concept partitive) to two
-      or more partitive concepts (subordinate concepts partitive) which
-      fitted together constitute the comprehensive.
-    properties:
-      comprehensive:
-        $ref: "#/$defs/concept_ref"
-      partitives:
-        type: array
-        items:
-          $ref: "#/$defs/partitive_member"
-        minItems: 2
-        description: |
-          Two or more partitive members. ISO 704 requires "two or more";
-          a single pairwise part-of assertion should be expressed as a
-          binary has_part / is_part_of edge, not a PartitiveRelation.
-      completeness:
-        $ref: "#/$defs/completeness"
-      criterion:
-        type: object
-        additionalProperties:
-          type: string
-        description: |
-          Free-form localized text describing the criterion that binds
-          these partitives into a coherent decomposition, keyed by ISO
-          639 language code.
-    required: [comprehensive, partitives]
-    additionalProperties: false
+      See docs/design/definition-types.md for the rationale and
+      rendering guidance per type.
+    enum:
+      - intensional
+      - extensional
+      - partitive
+      - translated
 
   # Locality
   locality:

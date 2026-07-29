@@ -1,0 +1,11 @@
+# Negative: relation with unknown top-level field.
+---
+$id: x-900-05-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-05-01"
+members:
+  - ref: { source: "X", id: "900-05-02" }
+  - ref: { source: "X", id: "900-05-03" }
+unknown_field: oops

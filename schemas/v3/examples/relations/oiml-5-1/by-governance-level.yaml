@@ -1,0 +1,18 @@
+---
+$id: oiml-5-1/by-governance-level
+type: generic_relation
+status: valid
+comprehensive:
+  source: OIML
+  id: "5.1"
+members:
+  - ref: { source: OIML, id: "5.2" }       # international measurement standard
+  - ref: { source: OIML, id: "5.3" }       # national measurement standard
+completeness: partial
+criterion:
+  eng: by governance level
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: section, reference_from: "5.1" }

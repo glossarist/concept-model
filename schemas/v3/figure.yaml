@@ -88,8 +88,13 @@ $defs:
       type:
         type: string
         enum: [authoritative, lineage]
+      status:
+        type: string
       origin:
         type: object
+      modification:
+        type: string
+        description: How the figure was modified from the source.
       sourced_from:
         type: array
         description: |

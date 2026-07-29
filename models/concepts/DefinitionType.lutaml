@@ -1,0 +1,24 @@
+class DefinitionType {
+  definition {
+    The strategy used to define a concept, per ISO 704:2022 §5.3.
+
+    ISO 704 distinguishes four definition strategies:
+      - intensional: genus + differentiae (the standard form)
+      - extensional: enumerate instances or species
+      - partitive:   describe composition (parts of the whole)
+      - translated:  a definition translated from another language
+
+    Glossarist carries the type as a wire field on DetailedDefinition
+    so that tools can filter, validate, and render based on definition
+    strategy.
+
+    Default is intensional when omitted (backward-compatible with
+    existing data).
+  }
+  values {
+    intensional
+    extensional
+    partitive
+    translated
+  }
+}

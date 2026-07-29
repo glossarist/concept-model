@@ -1,0 +1,197 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Migrate bundled partitive_relations arrays in concept YAML files
+# to per-file relation format under relations/<comprehensive-id>/.
+#
+# Clean-break migration (no backward compatibility needed).
+#
+# Usage:
+#   bundle exec exe/migrate-to-per-file-relations [--dry-run] [--backup] PATH
+#
+# PATH is a directory containing concepts/*.yaml. Outputs relation
+# files to PATH/relations/<comprehensive-id>/<slug>.yaml.
+
+require "optparse"
+require "fileutils"
+require "yaml"
+require "pathname"
+
+module MigrateToPerFileRelations
+  SLUG_MAX_LEN = 60
+
+  module_function
+
+  def slugify(text)
+    return "decomposition-#{Time.now.to_i}" if text.nil? || text.to_s.empty?
+
+    s = text.to_s.downcase
+          .gsub(/[^a-z0-9\s-]/, "")
+            .strip
+            .gsub(/\s+/, "-")
+            .gsub(/-+/, "-")
+            .slice(0, SLUG_MAX_LEN)
+    s.empty? ? "decomposition" : s
+  end
+
+  def derive_slug(criterion)
+    return "decomposition" unless criterion.is_a?(Hash)
+
+    text = criterion["eng"] || criterion.values.first
+    slugify(text)
+  end
+
+  def concept_id_from_rel(comprehensive)
+    [comprehensive && comprehensive["source"],
+     comprehensive && comprehensive["id"]].compact.join("-").downcase.gsub(/[^a-z0-9-]/, "-").gsub(/-+/, "-")
+  end
+
+  def transform_relation(rel, type_label)
+    return nil unless rel.is_a?(Hash)
+
+    comprehensive = rel["comprehensive"]
+    criterion = rel["criterion"]
+    slug = derive_slug(criterion)
+    concept_id = concept_id_from_rel(comprehensive)
+    return nil if concept_id.empty?
+
+    members = (rel["partitives"] || rel["members"] || []).map do |m|
+      m.is_a?(Hash) ? m : { "ref" => m }
+    end
+
+    {
+      "$id" => "#{concept_id}/#{slug}",
+      "type" => type_label,
+      "comprehensive" => comprehensive,
+      "members" => members,
+      "completeness" => rel["completeness"],
+      "criterion" => criterion,
+      "sources" => rel["sources"],
+      "notes" => rel["notes"],
+      "status" => rel["status"]
+    }.compact
+  end
+
+  def migrate_concept_doc(doc)
+    return [doc, []] unless doc.is_a?(Hash)
+
+    relations_to_write = []
+    new_doc = doc.dup
+
+    if doc["partitive_relations"]
+      doc["partitive_relations"].each do |rel|
+        transformed = transform_relation(rel, "partitive_relation")
+        next unless transformed
+        relations_to_write << transformed
+      end
+      new_doc.delete("partitive_relations")
+    end
+
+    if doc["generic_relations"]
+      doc["generic_relations"].each do |rel|
+        transformed = transform_relation(rel, "generic_relation")
+        next unless transformed
+        relations_to_write << transformed
+      end
+      new_doc.delete("generic_relations")
+    end
+
+    [new_doc, relations_to_write]
+  end
+
+  def relation_path(root, transformed)
+    rel_dir = root / "relations" / transformed["$id"].split("/").first
+    rel_dir.mkpath unless rel_dir.exist?
+    slug = transformed["$id"].split("/").last
+    rel_dir / "#{slug}.yaml"
+  end
+
+  def write_relation_file(path, transformed)
+    content = transformed.each_with_object({}) { |(k, v), h| h[k] = v }
+    path.write("#{YAML.dump(content)}\n")
+  end
+
+  def process_file(path, root, dry_run:, backup:)
+    docs = YAML.load_stream(path.read)
+    transformed_relations = []
+    new_docs = []
+
+    docs.each do |doc|
+      new_doc, rels = migrate_concept_doc(doc)
+      new_docs << new_doc
+      transformed_relations.concat(rels)
+    end
+
+    return [0, 0] if transformed_relations.empty?
+
+    if backup && !dry_run
+      FileUtils.cp(path, "#{path}.bak")
+    end
+
+    unless dry_run
+      path.write(new_docs.map { |d| YAML.dump(d) }.join)
+      transformed_relations.each do |t|
+        rel_path = relation_path(root, t)
+        write_relation_file(rel_path, t)
+      end
+    end
+
+    [1, transformed_relations.length]
+  end
+
+  def run(argv)
+    options = { dry_run: false, backup: false }
+    parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{File.basename($0)} [options] PATH"
+      opts.on("--dry-run", "Print what would happen, no writes") { options[:dry_run] = true }
+      opts.on("--backup", "Copy originals to .bak before modifying") { options[:backup] = true }
+      opts.on("-h", "--help", "Show this help") { puts opts; exit 0 }
+    end
+    parser.parse!(argv)
+
+    if argv.empty?
+      warn parser
+      exit 1
+    end
+
+    root = Pathname.new(argv.first).expand_path
+    unless root.directory?
+      abort "ERROR: #{root} is not a directory"
+    end
+
+    concept_glob = root / "concepts" / "*.yaml"
+    concept_paths = Dir.glob(concept_glob).sort.map { |p| Pathname.new(p) }
+    # Also handle examples directly under root (no concepts/ subdir)
+    if concept_paths.empty?
+      concept_paths = Dir.glob("#{root}/*.yaml").sort.map { |p| Pathname.new(p) }
+    end
+
+    if concept_paths.empty?
+      warn "No concept YAML files found under #{root}"
+      exit 0
+    end
+
+    mode = options[:dry_run] ? "[dry-run] " : ""
+    puts "#{mode}Scanning #{concept_paths.length} YAML files under #{root}..."
+
+    total_files = 0
+    total_rels = 0
+    concept_paths.each do |p|
+      files, rels = process_file(p, root, **options)
+      total_files += files
+      total_rels += rels
+      if options[:dry_run] && rels.positive?
+        puts "  would migrate #{rels} relation(s) from #{p.relative_path_from(root)}"
+      elsif rels.positive?
+        puts "  migrated #{rels} relation(s) from #{p.relative_path_from(root)}"
+      end
+    end
+
+    puts "#{mode}Done: #{total_files} concept file(s) updated, #{total_rels} relation file(s) written."
+    puts "Relation files are under #{root}/relations/<comprehensive-id>/"
+  end
+end
+
+if $PROGRAM_NAME == __FILE__
+  MigrateToPerFileRelations.run(ARGV)
+end

@@ -710,11 +710,15 @@ $defs:
 
   detailed_definition:
     type: object
-    description: A definition, note, or example with optional sources.
+    description: |
+      A definition, note, or example with optional sources and an
+      ISO 704:2022 §5.3 definition-type tag.
     properties:
       content:
         type: string
         description: The text content.
+      type:
+        $ref: "#/$defs/definition_type"
       sources:
         type: array
         items:
@@ -729,6 +733,18 @@ $defs:
           nested inside a NOTE or definition). Empty when the example is
           concept-level, in which case it lives on the concept's
           top-level examples collection directly.
+
+  # Definition Type enum (ISO 704:2022 §5.3)
+  definition_type:
+    type: string
+    description: |
+      The definition strategy, per ISO 704:2022 §5.3. Defaults to
+      intensional when omitted. See docs/design/definition-types.md.
+    enum:
+      - intensional
+      - extensional
+      - partitive
+      - translated
 
   related_concept:
     type: object

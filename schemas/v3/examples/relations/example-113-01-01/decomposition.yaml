@@ -1,0 +1,14 @@
+---
+"$id": example-113-01-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 113-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 113-01-02
+- ref:
+    source: EXAMPLE
+    id: 113-01-03
+

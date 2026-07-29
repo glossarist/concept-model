@@ -1,0 +1,13 @@
+---
+$id: example-example-generic-1/genus-decomposition
+type: generic_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: example-generic-1
+members:
+  - ref: { source: EXAMPLE, id: example-species-1 }
+  - ref: { source: EXAMPLE, id: example-species-2 }
+completeness: complete
+criterion:
+  eng: by type

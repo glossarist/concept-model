@@ -1,0 +1,22 @@
+---
+$id: oiml-5-1/by-realization-medium
+type: generic_relation
+status: valid
+comprehensive:
+  source: OIML
+  id: "5.1"
+members:
+  - ref: { source: OIML, id: "5.13" }     # reference material
+  - ref: { source: OIML, id: "3.2" }       # measuring system
+  - ref: { source: OIML, id: "3.6" }       # material measure
+completeness: complete
+criterion:
+  eng: by realization medium
+  fra: par milieu de réalisation
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: section, reference_from: "5.1" }
+notes:
+  eng: A measurement standard may be realized through any of these media.

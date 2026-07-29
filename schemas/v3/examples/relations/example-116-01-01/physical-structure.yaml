@@ -1,0 +1,17 @@
+---
+"$id": example-116-01-01/physical-structure
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 116-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 116-01-02
+- ref:
+    source: EXAMPLE
+    id: 116-01-03
+completeness: complete
+criterion:
+  eng: physical structure
+

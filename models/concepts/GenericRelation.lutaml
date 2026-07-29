@@ -1,0 +1,89 @@
+class GenericRelation {
+  definition {
+    ISO 704 / ISO 1087-1 / ISO 12620 generic relation.
+
+    Connects a comprehensive concept (the genus) to two or more
+    specific concepts (the species) which together constitute a
+    decomposition by some criterion of subdivision.
+
+    Shown as a rake or bracket in source diagrams (ISO 704 §5.5.4.1).
+    All species within one relation are coordinate concepts (ISO 12620):
+    they share the comprehensive AND share the criterion.
+
+    Distinct from binary RelatedConcept edges broader_generic /
+    narrower_generic, which express pairwise genus–species assertions
+    without completeness or presence/count claims. A single species
+    should be expressed as a binary edge, not a GenericRelation.
+
+    Per-file storage: lives at
+    `relations/<comprehensive-id>/<criterion-slug>.yaml`. See
+    docs/design/relations-as-files.md.
+
+    Mirrors AbstractNaryRelation shape. Field `comprehensive` denotes
+    the genus concept for GenericRelation.
+
+    Justified by OIML V 2-200:2010 evidence — see
+    docs/design/generic-relation.md.
+  }
+  +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The genus concept — the superordinate in a genus–species rake.
+      Encoded as a ConceptRef (source + id, optional text).
+
+      May reference an ExternalConcept when the genus is a parenthetical
+      term defined elsewhere (e.g., "(precision condition of measurement)"
+      in OIML V 2-200:2010).
+    }
+  }
+  +members: GenericMember [2..*] {
+    definition {
+      The species concepts. Each member carries a ConceptRef plus
+      ISO 704:2022 presence, count, and delimiting metadata.
+
+      ISO 704 requires "two or more." A single species should be
+      expressed as a binary broader_generic edge instead.
+    }
+  }
+  +completeness: Completeness [0..1] {
+    definition {
+      Whether the encoded species fitted together constitute the
+      comprehensive (complete) or only some of it (partial — other
+      species exist that are not encoded).
+
+      Defaults to complete when omitted.
+    }
+  }
+  +criterion: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      The principle by which the genus is divided into species.
+      ISO 12620 coordinate-concept coherence: species within one
+      relation share the comprehensive AND the criterion.
+
+      Two GenericRelations on the same comprehensive with the same
+      criterion are duplicates (validation error). Two with different
+      criteria are distinct decompositions.
+
+      OIML V 2-200:2010 example: 5.1 measurement standard has 6
+      GenericRelations, distinguished by criteria such as
+      "by realization medium", "by governance level", etc.
+
+      Multilingual (relation-level metadata).
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references for this specific generic relation.
+    }
+  }
+  +notes: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Free-form localized commentary on this relation.
+    }
+  }
+  +status: ConceptStatus [0..1] {
+    definition {
+      Lifecycle status of this relation, independent of the
+      comprehensive concept's status.
+    }
+  }
+}

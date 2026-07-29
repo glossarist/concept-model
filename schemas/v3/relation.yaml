@@ -1,0 +1,140 @@
+%YAML 1.1
+---
+$id: "https://github.com/glossarist/concept-model/v3/relation"
+title: YAML Schema for standalone concept-system relation files (v3)
+description: |
+  A metaschema for n-ary concept-system relation files. Each file lives
+  at `relations/<comprehensive-id>/<criterion-slug>.yaml` and encodes
+  exactly one relation (one comprehensive + one criterion + its members).
+
+  Two relation types are currently supported:
+    - partitive_relation  (ISO 704 §5.5.4.3 — whole/part decomposition)
+    - generic_relation    (ISO 704 §5.5.4.1 — genus/species decomposition)
+
+  Both share the same wire shape. The `type` field discriminates which
+  semantic relation the file encodes.
+
+  See docs/design/relations-as-files.md and
+  docs/design/abstract-nary-relation.md for the architectural rationale.
+type: object
+required: [$id, type, comprehensive, members]
+properties:
+  $id:
+    type: string
+    pattern: "^[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*$"
+    description: |
+      Stable identifier of the form `<comprehensive-id>/<criterion-slug>`.
+      The comprehensive-id must match the directory the file lives in;
+      the criterion-slug must match the filename (without extension).
+  type:
+    type: string
+    enum:
+      - partitive_relation
+      - generic_relation
+    description: |
+      The semantic type of n-ary relation. Determines validator rules
+      and downstream rendering.
+
+      `partitive_relation`: comprehensive = whole; members = parts.
+      `generic_relation`:   comprehensive = genus; members = species.
+  comprehensive:
+    $ref: "concept.yaml#/$defs/concept_ref"
+  members:
+    type: array
+    minItems: 2
+    items:
+      $ref: "#/$defs/concept_system_member"
+    description: |
+      Two or more members. ISO 704 requires "two or more"; a single
+      pairwise assertion should be expressed as a binary edge
+      (has_part, broader_generic, related), not an n-ary relation.
+  completeness:
+    $ref: "concept.yaml#/$defs/completeness"
+  criterion:
+    type: object
+    description: |
+      Free-form localized text describing the criterion that binds
+      these members into a coherent decomposition, keyed by ISO 639
+      language code.
+
+      ISO 12620 coordinate-concept coherence: members within one
+      relation share the comprehensive AND the criterion. Two n-ary
+      relations on the same comprehensive with the same criterion are
+      duplicates (validation error).
+    additionalProperties:
+      $ref: "concept.yaml#/$defs/iso639_three_char_code"
+    patternProperties:
+      "^[a-z]{3}$":
+        type: string
+  sources:
+    type: array
+    description: Bibliographic references for this specific relation.
+    items:
+      $ref: "concept.yaml#/$defs/concept_source"
+  notes:
+    type: object
+    description: Free-form localized commentary, keyed by ISO 639 code.
+    patternProperties:
+      "^[a-z]{3}$":
+        type: string
+  status:
+    $ref: "concept.yaml#/$defs/concept_status"
+
+additionalProperties: false
+
+$defs:
+  # Concept System Member — shared MECE shape for Partitive and Generic members
+  concept_system_member:
+    type: object
+    description: |
+      One member of an n-ary relation — a target concept plus three
+      orthogonal MECE dimensions from ISO 704:2022:
+
+        presence      — required (default) | optional
+        count         — exactly_one (default) | at_least_one | multiple
+        is_delimiting — false (default) | true
+
+      ISO 704:2022 MECE mapping (6 combinations, 5 valid):
+
+      | presence  | count        | visual       | ISO 704 name              |
+      |-----------|--------------|--------------|---------------------------|
+      | required  | exactly_one  | 1 solid      | compulsory                |
+      | optional  | exactly_one  | 1 dashed     | optional                  |
+      | required  | multiple     | 2 solid      | compulsory_multiple       |
+      | optional  | multiple     | 2 dashed     | optional_multiple         |
+      | required  | at_least_one | 1 solid + 1d | compulsory_at_least_one   |
+      | optional  | at_least_one | INVALID      | (collapses to optional_*) |
+
+      The invalid combination (optional + at_least_one) is rejected by
+      the allOf/if-then constraint below. Consumers needing the ISO 704
+      flat-enum name should use Multiplicity.from_pair(presence, count).
+    properties:
+      ref:
+        $ref: "concept.yaml#/$defs/concept_ref"
+      presence:
+        $ref: "concept.yaml#/$defs/partitive_presence"
+      count:
+        $ref: "concept.yaml#/$defs/partitive_count"
+      is_delimiting:
+        type: boolean
+        default: false
+        description: |
+          ISO 704:2022 delimiting member (bold 3x-width line in diagram).
+          When true, this member behaves like a delimiting characteristic:
+          it distinguishes the comprehensive from coordinate concepts.
+
+          Orthogonal to presence and count. Defaults to false.
+    required: [ref]
+    additionalProperties: false
+    not:
+      # Reject (presence: optional + count: at_least_one) — vacuous combo
+      # that collapses to (optional, multiple). Each allOf entry requires
+      # its property to be present, so the constraint only fires when BOTH
+      # are explicitly set.
+      allOf:
+        - properties:
+            presence: { const: optional }
+          required: [presence]
+        - properties:
+            count: { const: at_least_one }
+          required: [count]

@@ -1,0 +1,18 @@
+---
+"$id": example-114-01-01/theoretical-framework-decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 114-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 114-01-02
+- ref:
+    source: EXAMPLE
+    id: ext-qft
+  presence: optional
+completeness: partial
+criterion:
+  eng: theoretical framework decomposition
+

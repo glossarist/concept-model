@@ -1,29 +1,23 @@
 class ManagedConcept {
   definition {
     A managed term, including its relations with other terms.
+
+    N-ary concept-system relations (PartitiveRelation, GenericRelation)
+    live in per-file storage at `relations/<id>/<slug>.yaml`. They are
+    NOT declared as a field on ManagedConcept — discovery is by
+    directory convention. See docs/design/relations-as-files.md.
+
+    Binary `related` edges remain inline in the concept file.
   }
   +related: RelatedConcept [0..*] {
     definition {
       Binary terms related to the term. Each entry asserts a single
       typed link to one other concept (ISO 10241-1 / SKOS / ISO 25964
       standard semantics).
-    }
-  }
-  +partitive_relations: PartitiveRelation [0..*] {
-    definition {
-      ISO 704 / 1087-1 / 12620 partitive relations. Each entry
-      connects the current concept (as comprehensive — superordinate
-      concept partitive) to two or more partitive concepts
-      (subordinate concepts partitive) which fitted together
-      constitute the comprehensive.
 
-      Independent of `related` (which is binary). A concept may have
-      both. PartitiveRelation is used when the source diagram depicts
-      a rake whose membership, completeness, or per-member
-      presence/count is jointly significant.
-
-      For single pairwise part-of assertions without completeness
-      claims, use the binary has_part / is_part_of edge instead.
+      For one-to-many partitive or generic decompositions (ISO 704
+      rake diagrams), use the per-file n-ary relation format under
+      `relations/<id>/`.
     }
   }
   +status: ConceptStatus {

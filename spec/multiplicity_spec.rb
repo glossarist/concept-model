@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "yaml"
 require "glossarist/concept_model/multiplicity"
 
 module Glossarist
@@ -72,16 +73,29 @@ module Glossarist
     RSpec.describe "MECE example coverage" do
       it "covers all 5 valid presence/count combinations in examples" do
         combos_seen = Set.new
-        Dir.glob("schemas/v3/examples/{2,3}*.yaml").sort.each do |f|
+        # Per-file relation storage: scan relations/ directory.
+        # Pre-per-file-storage legacy examples under examples/*.yaml
+        # are also scanned for backward compatibility.
+        legacy_files = Dir.glob("schemas/v3/examples/{2,3}*.yaml").sort
+        relation_files = Dir.glob("schemas/v3/examples/relations/**/*.yaml").sort
+
+        (legacy_files + relation_files).each do |f|
           YAML.load_stream(File.read(f)).each do |doc|
-            next unless doc.is_a?(Hash) && doc["partitive_relations"]
-            doc["partitive_relations"].each do |rel|
-              (rel["partitives"] || []).each do |p|
-                # Collect ALL members including defaults (when neither
-                # presence nor count is explicitly set, defaults apply:
-                # required + exactly_one).
-                combos_seen << [p["presence"] || "required", p["count"] || "exactly_one"]
+            next unless doc.is_a?(Hash)
+            # Per-file format: top-level `members` array
+            members = doc["members"]
+            # Legacy / inline concept format: `partitive_relations[].partitives`
+            unless members
+              next unless doc["partitive_relations"]
+              doc["partitive_relations"].each do |rel|
+                (rel["partitives"] || []).each do |p|
+                  combos_seen << [p["presence"] || "required", p["count"] || "exactly_one"]
+                end
               end
+              next
+            end
+            members.each do |p|
+              combos_seen << [p["presence"] || "required", p["count"] || "exactly_one"]
             end
           end
         end

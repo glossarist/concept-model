@@ -1,0 +1,13 @@
+---
+$id: vim-112-02-09/measurement-result-composition
+type: partitive_relation
+status: valid
+comprehensive:
+  source: "VIM"
+  id: "112-02-09"
+members:
+  - ref: { source: "VIM", id: "112-02-10" }
+  - ref: { source: "VIM", id: "112-03-26" }
+completeness: complete
+criterion:
+  eng: measurement result composition

@@ -1,0 +1,107 @@
+class AbstractNaryRelation {
+  definition {
+    Abstract base shape for all n-ary concept-system relations:
+    PartitiveRelation, GenericRelation, and future
+    AssociativeRelation / SequentialRelation.
+
+    All n-ary relations share:
+      - one comprehensive concept (the superordinate / genus / frame)
+      - two or more members with MECE (presence, count, is_delimiting)
+      - completeness (complete | partial)
+      - criterion of subdivision (the coherence principle)
+      - sources (bibliographic provenance)
+      - notes (localized free-form commentary)
+      - status (independent lifecycle from the comprehensive concept)
+
+    LUTAML files do not express inheritance — each leaf class
+    re-declares these fields with leaf-specific documentation.
+    Ruby/JS consumers use real inheritance from an AbstractNaryRelation
+    base class. See docs/design/abstract-nary-relation.md.
+
+    Wire field name `members` is uniform across all n-ary relation
+    types. The `type` field on the wire object discriminates which
+    leaf class to instantiate.
+
+    Per-file storage: each n-ary relation lives in
+    `relations/<comprehensive-id>/<criterion-slug>.yaml`. See
+    docs/design/relations-as-files.md.
+  }
+  +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The superordinate concept of the rake.
+
+      For PartitiveRelation: the whole (superordinate concept partitive).
+      For GenericRelation: the genus (superordinate concept generic).
+      For future AssociativeRelation: the frame concept.
+
+      Always encoded as a ConceptRef (source + id, optional text).
+      May reference an ExternalConcept (status: external) when the
+      comprehensive is a parenthetical term defined elsewhere.
+    }
+  }
+  +members: ConceptSystemMember [2..*] {
+    definition {
+      Two or more members of the rake. ISO 704 requires "two or more";
+      a single pairwise assertion should be expressed as a binary
+      edge (has_part, broader_generic, related), not an n-ary relation.
+
+      Each member carries ISO 704:2022 MECE dimensions: presence,
+      count, is_delimiting. See ConceptSystemMember.
+
+      Leaf classes constrain the member type (PartitiveMember for
+      PartitiveRelation, GenericMember for GenericRelation).
+    }
+  }
+  +completeness: Completeness [0..1] {
+    definition {
+      Whether the encoded members fitted together constitute the
+      comprehensive (complete) or only some of it (partial).
+
+      Defaults to complete when omitted.
+    }
+  }
+  +criterion: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      The principle by which the comprehensive is divided into members.
+      ISO 12620 coordinate-concept coherence: members within one
+      relation share the comprehensive AND share the criterion.
+
+      Two n-ary relations on the same comprehensive with the same
+      criterion are duplicates (validation error). Two with different
+      criteria are distinct decompositions.
+
+      Multilingual (relation-level metadata, lives with the relation
+      not the comprehensive). Required when the comprehensive has
+      more than one relation (otherwise distinctness cannot be verified).
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references for this specific relation. Independent
+      of the comprehensive concept's own sources.
+
+      Use case: a rake is introduced by a specific source (e.g., OIML
+      V 2-200:2010 §5.1 Figure 1) that may differ from the sources of
+      the comprehensive concept itself.
+    }
+  }
+  +notes: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Free-form localized commentary on this relation. Independent of
+      the comprehensive concept's notes.
+
+      Use case: explaining why a particular decomposition was chosen,
+      or noting editorial decisions about which species were included.
+    }
+  }
+  +status: ConceptStatus [0..1] {
+    definition {
+      Lifecycle status of this relation, independent of the comprehensive
+      concept's status. Defaults to the comprehensive's status when omitted.
+
+      Use case: a comprehensive concept is `valid` while a rake
+      decomposition is `draft` (newly proposed) — the relation file's
+      status reflects this.
+    }
+  }
+}

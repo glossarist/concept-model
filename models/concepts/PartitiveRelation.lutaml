@@ -17,13 +17,20 @@ class PartitiveRelation {
     as a binary edge, not a PartitiveRelation (ISO requires two or
     more partitives).
 
+    Mirrors AbstractNaryRelation shape. Field `comprehensive` denotes
+    the whole concept (superordinate concept partitive).
+
+    Per-file storage: lives at
+    `relations/<comprehensive-id>/<criterion-slug>.yaml`. See
+    docs/design/relations-as-files.md.
+
     ISO 704:2022 per-member features (MECE decomposition):
       - presence (required | optional)
       - count (exactly_one | at_least_one | multiple)
       - is_delimiting (delimiting part — bold 3x-width line)
 
-    Glossarist extension:
-      - criterion as structured multilingual data (not just diagrammatic)
+    Wire field `members` is uniform across all n-ary relation types
+    (was: `partitives` — renamed in the v3.3 clean break).
   }
   +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
     definition {
@@ -31,7 +38,7 @@ class PartitiveRelation {
       partitives fitted together constitute.
     }
   }
-  +partitives: PartitiveMember [2..*] {
+  +members: PartitiveMember [2..*] {
     definition {
       The subordinate concepts partitive — the parts. Each member
       carries a ConceptRef plus ISO 704:2022 presence, count, and
@@ -60,13 +67,24 @@ class PartitiveRelation {
       criterion are duplicates (validation error). Two with different
       criteria are distinct decompositions.
 
-      Multilingual (concept-level metadata). Examples:
-        - "physical structure"
-        - "functional subsystem"
-        - "temporal phases"
-        - "spatial regions"
-
-      Optional in v1 (most existing data won't have one).
+      Multilingual (relation-level metadata).
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references for this specific partitive relation.
+      Independent of the comprehensive concept's own sources.
+    }
+  }
+  +notes: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Free-form localized commentary on this relation.
+    }
+  }
+  +status: ConceptStatus [0..1] {
+    definition {
+      Lifecycle status of this relation, independent of the
+      comprehensive concept's status.
     }
   }
 }

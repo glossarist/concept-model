@@ -1,0 +1,11 @@
+# Negative: relation with invalid completeness value.
+---
+$id: x-900-03-01/decomposition
+type: partitive_relation
+comprehensive:
+  source: "X"
+  id: "900-03-01"
+members:
+  - ref: { source: "X", id: "900-03-02" }
+  - ref: { source: "X", id: "900-03-03" }
+completeness: maybe

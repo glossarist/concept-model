@@ -1,0 +1,70 @@
+class ConceptSystemMember {
+  definition {
+    Abstract base shape for a member of any n-ary concept-system
+    relation — PartitiveRelation, GenericRelation, and future
+    AssociativeRelation / SequentialRelation.
+
+    Carries the ISO 704:2022 MECE dimensions on every member:
+      presence      — required (default) | optional
+      count         — exactly_one (default) | at_least_one | multiple
+      is_delimiting — false (default) | true
+
+    These three dimensions are orthogonal and apply uniformly across
+    all n-ary relation types. The combination (optional, at_least_one)
+    is invalid and collapses to (optional, multiple).
+
+    LUTAML files do not express inheritance — each leaf class
+    (PartitiveMember, GenericMember) re-declares these fields with
+    leaf-specific documentation. Ruby/JS consumers use real inheritance
+    from a ConceptSystemMember base class. See
+    docs/design/abstract-nary-relation.md.
+
+    The abstract shape is the canonical reference; the leaves exist for
+    type safety in code and to leave room for type-specific extensions
+    (e.g., AssociativeMember will gain a `role` field).
+  }
+  +ref: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The target concept of this relation member. Encoded as a
+      ConceptRef (source + id, optional text), same shape as
+      RelatedConcept#ref.
+
+      For Partitive: the partitive concept (subordinate).
+      For Generic: the specific concept (species).
+    }
+  }
+  +presence: PartitivePresence [0..1] {
+    definition {
+      Whether this member must exist in every instance (required) or
+      may exist only in some instances (optional).
+
+      ISO 704:2022 encodes this as the line style: solid (required) vs
+      dashed (optional). Defaults to required when omitted.
+
+      Field name retains "partitive" prefix for backward compatibility
+      with existing SKOS taxonomy URIs; the dimension itself applies
+      to all n-ary relation types uniformly.
+    }
+  }
+  +count: PartitiveCount [0..1] {
+    definition {
+      How many instances of this member exist. ISO 704:2022 encodes
+      this via the number of lines in the diagram notation.
+
+      Defaults to exactly_one when omitted. The combination
+      presence: optional + count: at_least_one is invalid.
+    }
+  }
+  +is_delimiting: Boolean [0..1] {
+    definition {
+      ISO 704:2022 delimiting part (bold 3x-width line in diagram).
+      When true, this member behaves like a delimiting characteristic:
+      it distinguishes the comprehensive from coordinate concepts.
+
+      Orthogonal to presence and count. Defaults to false when omitted.
+
+      Contextual to the relation it belongs to — the same part may be
+      delimiting in one PartitiveRelation and not in another.
+    }
+  }
+}

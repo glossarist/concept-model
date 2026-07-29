@@ -3,6 +3,10 @@ class PartitiveMember {
     One member of a PartitiveRelation — a partitive concept plus
     ISO 704:2022 presence, count, and delimiting metadata.
 
+    Mirrors ConceptSystemMember shape exactly. Kept as a distinct
+    leaf class for type safety and to leave room for partitive-
+    specific extensions if needed.
+
     Three orthogonal dimensions (MECE):
       presence      — required (default) | optional
       count         — exactly_one (default) | at_least_one | multiple

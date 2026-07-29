@@ -1,0 +1,20 @@
+---
+"$id": vim-112-01-03/quantity-system-decomposition
+type: partitive_relation
+comprehensive:
+  source: VIM
+  id: 112-01-03
+members:
+- ref:
+    source: VIM
+    id: 112-01-04
+- ref:
+    source: VIM
+    id: 112-01-05
+- ref:
+    source: VIM
+    id: 112-01-22
+completeness: partial
+criterion:
+  eng: quantity system decomposition
+

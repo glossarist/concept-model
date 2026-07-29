@@ -1,0 +1,19 @@
+---
+"$id": example-117-01-01/optional-member-decomposition
+type: partitive_relation
+comprehensive:
+  source: EXAMPLE
+  id: 117-01-01
+members:
+- ref:
+    source: EXAMPLE
+    id: 117-01-02
+  is_delimiting: true
+- ref:
+    source: EXAMPLE
+    id: 117-01-03
+  presence: optional
+completeness: partial
+criterion:
+  eng: optional member decomposition
+
