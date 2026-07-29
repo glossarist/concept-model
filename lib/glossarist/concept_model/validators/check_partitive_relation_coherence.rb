@@ -13,7 +13,15 @@ module Glossarist
       #   3. Warns when a concept has 2+ relations and any lack criterion
       #   4. Errors on invalid (optional + at_least_one) MECE combo
       #   5. Warns on delimiting+optional incoherence
+      #
+      # The MECE mapping table is owned by Glossarist::ConceptModel::Multiplicity
+      # — this validator delegates pair validity and invalid-pair detection
+      # to it (DRY: single source of truth across validator, JSON Schema,
+      # and SHACL shape).
       class CheckPartitiveRelationCoherence < Glossarist::ConceptModel::Validator
+        DEFAULT_PRESENCE = "required"
+        DEFAULT_COUNT = "exactly_one"
+
         def run
           failures = []
           warnings = []
@@ -53,18 +61,20 @@ module Glossarist
               end
             end
 
-            # Check 4: invalid (optional + at_least_one) combination
-            # The schema rejects this via allOf/if-then, but the error
-            # message is generic. This check produces a clear semantic
-            # explanation matching the glossarist-js construction-time error.
+            # Check 4: invalid MECE combinations.
+            # The schema rejects this via allOf/not, but the error message
+            # is generic. This check produces a clear semantic explanation
+            # matching the glossarist-js construction-time error.
+            # Delegates to Multiplicity.invalid_pair? — the SSOT table.
             relations.each_with_index do |rel, i|
               (rel["partitives"] || []).each_with_index do |member, j|
-                if member["presence"] == "optional" && member["count"] == "at_least_one"
-                  failures << "#{relative(path)}: relation #{i} partitive #{j} has " \
-                               "presence=optional + count=at_least_one — invalid; " \
-                               "an optional part has vacuous at-least-one, " \
-                               "use count=multiple instead"
-                end
+                presence = member["presence"] || DEFAULT_PRESENCE
+                count = member["count"] || DEFAULT_COUNT
+                next unless Multiplicity.invalid_pair?(presence, count)
+                failures << "#{relative(path)}: relation #{i} partitive #{j} has " \
+                             "presence=#{presence} + count=#{count} — invalid; " \
+                             "an optional part has vacuous at-least-one, " \
+                             "use count=multiple instead"
               end
             end
 
@@ -75,10 +85,9 @@ module Glossarist
             relations.each_with_index do |rel, i|
               (rel["partitives"] || []).each_with_index do |member, j|
                 next unless member["is_delimiting"]
-                presence = member["presence"] || "required"
-                if presence == "optional"
-                  warnings << "#{relative(path)}: relation #{i} partitive #{j} is delimiting but optional (semantically incoherent)"
-                end
+                presence = member["presence"] || DEFAULT_PRESENCE
+                next unless presence == "optional"
+                warnings << "#{relative(path)}: relation #{i} partitive #{j} is delimiting but optional (semantically incoherent)"
               end
             end
           end
