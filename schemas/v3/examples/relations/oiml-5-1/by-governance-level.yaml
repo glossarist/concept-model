@@ -6,8 +6,12 @@ comprehensive:
   source: OIML
   id: "5.1"
 members:
-  - ref: { source: OIML, id: "5.2" }       # international measurement standard
-  - ref: { source: OIML, id: "5.3" }       # national measurement standard
+  - ref: { source: OIML, id: "5.2" }
+    characteristic:
+      eng: recognized by signatory states of an international agreement
+  - ref: { source: OIML, id: "5.3" }
+    characteristic:
+      eng: recognized by a national metrology authority
 completeness: partial
 criterion:
   eng: by governance level

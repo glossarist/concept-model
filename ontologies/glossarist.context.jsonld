@@ -134,6 +134,7 @@
     "count":                { "@id": "gloss:count",                "@type": "@id" },
     "isDelimiting":         { "@id": "gloss:isDelimiting",         "@type": "xsd:boolean" },
     "criterion":            { "@id": "gloss:criterion",            "@container": "@language" },
+    "characteristic":       { "@id": "gloss:characteristic",       "@container": "@language" },
     "notes":                { "@id": "gloss:hasNote",              "@container": "@language" },
     "definition_type":      { "@id": "gloss:hasDefinitionType",    "@type": "@id" },
     "provides":             { "@id": "gloss:provides",             "@type": "@id" },

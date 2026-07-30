@@ -505,7 +505,26 @@ gloss:criterion a owl:DatatypeProperty ;
   rdfs:domain gloss:PartitiveRelation ;
   rdfs:range rdf:langString ;
   rdfs:label "criterion"@en ;
-  rdfs:comment "ISO 12620 coordinate-concept coherence: the subdivision criterion for a partitive relation."@en .
+  rdfs:comment "ISO 12620 coordinate-concept coherence: the subdivision criterion for an n-ary hyperedge."@en .
+
+gloss:characteristic a owl:DatatypeProperty ;
+  rdfs:domain gloss:GenericMember ;
+  rdfs:range rdf:langString ;
+  rdfs:label "characteristic"@en ;
+  rdfs:comment """
+    ISO 704:2022 §5.5.4.2.1 delimiting characteristic — the
+    intension-difference that distinguishes this species from
+    coordinate concepts within the same generic rake.
+
+    Example (computer mouse by movement detection):
+      mechanical mouse:     'detecting movement by means of rollers'
+      optomechanical mouse: 'detecting movement by means of rollers and light sensors'
+      optical mouse:        'detecting movement by means of light sensors'
+
+    Without characteristic text, a rake is just a list of narrower
+    concepts, not a coordinated decomposition per §5.5.4.2.1.
+  """@en .
+
 
 gloss:provides a owl:ObjectProperty ;
   rdfs:subPropertyOf gloss:hasRelatedConcept ;

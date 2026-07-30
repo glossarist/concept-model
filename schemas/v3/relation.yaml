@@ -83,16 +83,15 @@ properties:
 additionalProperties: false
 
 $defs:
-  # Concept System Member — shared MECE shape for Partitive and Generic members
+  # Concept System Member — shared MECE shape (ref + presence + count + is_delimiting)
+  # for Partitive and Generic members. GenericMember adds the `characteristic`
+  # field on top via allOf composition.
   concept_system_member:
     type: object
     description: |
-      One member of an n-ary relation — a target concept plus three
-      orthogonal MECE dimensions from ISO 704:2022:
-
-        presence      — required (default) | optional
-        count         — exactly_one (default) | at_least_one | multiple
-        is_delimiting — false (default) | true
+      Shared MECE shape for any n-ary hyperedge member (partitive or generic).
+      Carries the four fields common to all member types:
+        ref, presence, count, is_delimiting
 
       ISO 704:2022 MECE mapping (6 combinations, 5 valid):
 
@@ -108,6 +107,11 @@ $defs:
       The invalid combination (optional + at_least_one) is rejected by
       the allOf/if-then constraint below. Consumers needing the ISO 704
       flat-enum name should use Multiplicity.from_pair(presence, count).
+
+      For generic relations (§5.5.4.2.1), use the `generic_member` $def
+      below which adds the `characteristic` field (delimiting
+      characteristic text — the intension-difference that makes the
+      species coordinate within its rake).
     properties:
       ref:
         $ref: "concept.yaml#/$defs/concept_ref"
@@ -138,3 +142,38 @@ $defs:
         - properties:
             count: { const: at_least_one }
           required: [count]
+
+  # Generic Member — ISO 704:2022 §5.5.4.2.1 species with delimiting characteristic
+  generic_member:
+    allOf:
+      - $ref: "#/$defs/concept_system_member"
+      - type: object
+        description: |
+          A species (specific concept) in a generic rake. Adds the
+          `characteristic` field per ISO 704:2022 §5.5.4.2.1: the
+          delimiting characteristic that distinguishes this species
+          from coordinate concepts within the same rake.
+
+          Example (ISO 704:2022 §5.5.4.2.1 — computer mouse by movement
+          detection):
+            mechanical mouse:     "detecting movement by means of rollers"
+            optomechanical mouse: "detecting movement by means of rollers and light sensors"
+            optical mouse:        "detecting movement by means of light sensors"
+
+          The characteristic is the intension-difference that makes the
+          species coordinate with its siblings. Without it, the rake is
+          just a list of narrower concepts, not a coordinated decomposition.
+        properties:
+          characteristic:
+            type: object
+            description: |
+              Delimiting characteristic text (per ISO 704:2022 §5.5.4.2.1),
+              keyed by ISO 639 language code. The intension-difference
+              that makes this species coordinate with its siblings within
+              the same rake.
+            patternProperties:
+              "^[a-z]{3}$":
+                type: string
+            additionalProperties: false
+        required: []
+

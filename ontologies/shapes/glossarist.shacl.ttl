@@ -815,6 +815,13 @@ gloss:GenericMemberShape a sh:NodeShape ;
     sh:class gloss:ConceptRef ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:characteristic ;
+    sh:datatype rdf:langString ;
+    sh:maxCount 1 ;
+    sh:severity sh:Info ;
+    rdfs:comment "ISO 704:2022 §5.5.4.2.1 delimiting characteristic. Recommended but not required; some datasets only carry the criterion on the rake, not the characteristic on each species."@en ;
   ] .
 
 # Reject the vacuous combination presence=optional + count=at_least_one.
