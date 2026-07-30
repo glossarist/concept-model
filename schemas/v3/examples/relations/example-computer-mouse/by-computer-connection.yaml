@@ -1,0 +1,18 @@
+$id: example-computer-mouse/by-computer-connection
+type: generic_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: "computer-mouse"
+members:
+  - ref: { source: EXAMPLE, id: "wired-mouse" }
+    characteristic:
+      eng: using a corded electrical connection
+  - ref: { source: EXAMPLE, id: "wireless-mouse" }
+    characteristic:
+      eng: using a cordless light or sound connection
+completeness: partial
+criterion:
+  eng: computer connection
+notes:
+  eng: Second criterion of subdivision on the same genus (multidimensionality, ISO 704:2022 §5.6.3). Coordinate with siblings within this rake; NOT coordinate with the movement-detection rake above.

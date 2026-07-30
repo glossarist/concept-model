@@ -1,11 +1,12 @@
 class GenericMember {
   definition {
-    One member of a GenericRelation — a specific concept (species)
+    One member of a GenericHyperedge — a specific concept (species)
     plus ISO 704:2022 presence, count, and delimiting metadata.
 
-    Mirrors ConceptSystemMember shape exactly. Kept as a distinct
-    leaf class for type safety and to leave room for generic-specific
-    extensions if needed.
+    Mirrors HyperedgeMember shape exactly, plus the `characteristic`
+    field (ISO 704:2022 §5.5.4.2.1 delimiting characteristic text)
+    that distinguishes this species from coordinate concepts within
+    the same rake.
 
     ISO 704:2022 MECE dimensions (inherited shape):
       presence      — required (default) | optional
@@ -42,4 +43,25 @@ class GenericMember {
       presence and count. Defaults to false.
     }
   }
+  +characteristic: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      ISO 704:2022 §5.5.4.2.1 delimiting characteristic text — the
+      intension-difference that distinguishes this species from
+      coordinate concepts within the same rake.
+
+      Example (ISO 704:2022 §5.5.4.2.1 — computer mouse by movement
+      detection):
+        mechanical mouse:     "detecting movement by means of rollers"
+        optomechanical mouse: "detecting movement by means of rollers and light sensors"
+        optical mouse:        "detecting movement by means of light sensors"
+
+      Without characteristic text, the rake is just a list of narrower
+      concepts rather than a coordinated decomposition. The field is
+      optional but recommended; some datasets only carry the criterion
+      on the rake, not the characteristic on each species.
+
+      Localized — carry text keyed by ISO 639 language code.
+    }
+  }
 }
+

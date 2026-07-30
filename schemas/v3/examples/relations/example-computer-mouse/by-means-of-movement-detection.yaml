@@ -1,0 +1,21 @@
+$id: example-computer-mouse/by-means-of-movement-detection
+type: generic_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: "computer-mouse"
+members:
+  - ref: { source: EXAMPLE, id: "mechanical-mouse" }
+    characteristic:
+      eng: detecting movement by means of rollers
+  - ref: { source: EXAMPLE, id: "optomechanical-mouse" }
+    characteristic:
+      eng: detecting movement by means of rollers and light sensors
+  - ref: { source: EXAMPLE, id: "optical-mouse" }
+    characteristic:
+      eng: detecting movement by means of light sensors
+completeness: partial
+criterion:
+  eng: means of movement detection
+notes:
+  eng: ISO 704:2022 §5.5.4.2.1 canonical example. Ellipsis (...) in source diagram indicates further species not encoded here.

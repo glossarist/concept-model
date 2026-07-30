@@ -6,9 +6,15 @@ comprehensive:
   source: OIML
   id: "5.1"
 members:
-  - ref: { source: OIML, id: "5.13" }     # reference material
-  - ref: { source: OIML, id: "3.2" }       # measuring system
-  - ref: { source: OIML, id: "3.6" }       # material measure
+  - ref: { source: OIML, id: "5.13" }
+    characteristic:
+      eng: material sufficiently homogeneous and stable for a certified property
+  - ref: { source: OIML, id: "3.2" }
+    characteristic:
+      eng: assembly of measuring instruments and auxiliary apparatus
+  - ref: { source: OIML, id: "3.6" }
+    characteristic:
+      eng: device that reproduces a given quantity value during use
 completeness: complete
 criterion:
   eng: by realization medium
