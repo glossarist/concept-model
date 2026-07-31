@@ -7,12 +7,15 @@ description: |
   at `relations/<comprehensive-id>/<criterion-slug>.yaml` and encodes
   exactly one relation (one comprehensive + one criterion + its members).
 
-  Two relation types are currently supported:
-    - partitive_relation  (ISO 704 §5.5.4.3 — whole/part decomposition)
-    - generic_relation    (ISO 704 §5.5.4.1 — genus/species decomposition)
+  Three relation types are currently supported:
+    - partitive_relation   (ISO 704 §5.5.4.3 — whole/part decomposition)
+    - generic_relation     (ISO 704 §5.5.4.1 — genus/species decomposition)
+    - sequential_relation  (ISO 12620 A.6.3 — ordered sequence:
+                            temporal/spatial/causal/developmental)
 
-  Both share the same wire shape. The `type` field discriminates which
-  semantic relation the file encodes.
+  All three share the same wire shape. The `type` field discriminates
+  which semantic relation the file encodes. For sequential, member
+  array order is significant (members are ordered).
 
   See docs/design/relations-as-files.md and
   docs/design/abstract-nary-relation.md for the architectural rationale.
@@ -31,12 +34,17 @@ properties:
     enum:
       - partitive_relation
       - generic_relation
+      - sequential_relation
     description: |
       The semantic type of n-ary relation. Determines validator rules
       and downstream rendering.
 
-      `partitive_relation`: comprehensive = whole; members = parts.
-      `generic_relation`:   comprehensive = genus; members = species.
+      `partitive_relation`:  comprehensive = whole; members = parts (unordered).
+      `generic_relation`:    comprehensive = genus; members = species (unordered).
+      `sequential_relation`: comprehensive = start/whole; members = ordered
+                             steps in a sequence (temporal/spatial/causal/
+                             developmental). Member order in the array IS
+                             significant for this type.
   comprehensive:
     $ref: "concept.yaml#/$defs/concept_ref"
   members:

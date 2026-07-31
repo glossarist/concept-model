@@ -1,0 +1,28 @@
+class ConceptType {
+  definition {
+    Whether a concept corresponds to a category of objects (general
+    concept) or to a single unique object (individual concept).
+
+    Per ISO 704:2022 §5.2-5.3:
+      - General concepts depict a potentially unlimited number of
+        objects sharing properties. Designations take the form of
+        terms (including appellations) or symbols.
+      - Individual concepts correspond to a unique object or
+        composition considered as a unique object. Designations take
+        the form of proper names or symbols.
+
+    Individual concepts occupy the bottom rung of a concept ladder
+    and cannot be subdivided further into more specific concepts
+    (ISO 704:2022 §5.5.4.2.2). However, an individual concept CAN
+    be subdivided into parts via a partitive relation (§5.5.4.3.2).
+
+    Defaults to `general` when omitted. Most terminology work
+    concerns general concepts; individual concepts appear in
+    domains with proper-name terminology (geography, organizations,
+    products, biological taxa sometimes).
+  }
+  values {
+    general
+    individual
+  }
+}

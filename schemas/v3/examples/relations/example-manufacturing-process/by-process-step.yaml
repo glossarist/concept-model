@@ -1,0 +1,19 @@
+$id: example-manufacturing-process/by-process-step
+type: sequential_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: "manufacturing-process"
+members:
+  - ref: { source: EXAMPLE, id: "raw-material-procurement" }
+  - ref: { source: EXAMPLE, id: "design" }
+  - ref: { source: EXAMPLE, id: "prototyping" }
+  - ref: { source: EXAMPLE, id: "production" }
+  - ref: { source: EXAMPLE, id: "quality-control" }
+  - ref: { source: EXAMPLE, id: "packaging" }
+  - ref: { source: EXAMPLE, id: "distribution" }
+completeness: complete
+criterion:
+  eng: process step (temporal order)
+notes:
+  eng: ISO 12620 A.6.3 — sequential concept system. Typical manufacturing lifecycle. Member array order reflects process flow.

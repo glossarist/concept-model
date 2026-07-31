@@ -1,0 +1,43 @@
+class SequentialMember {
+  definition {
+    One member of a SequentialHyperedge — a subordinate concept in
+    an ordered sequence, plus ISO 704:2022 multiplicity dimensions.
+
+    Members within a SequentialHyperedge are ORDERED — the array
+    order matters and reflects the sequence (temporal, spatial,
+    causal, developmental, process step). This is the key semantic
+    difference from PartitiveMember and GenericMember, where member
+    order is insignificant.
+
+    Inherits the MECE dimensions from the shared hyperedge member
+    shape:
+      presence      — required (default) | optional
+      count         — exactly_one (default) | at_least_one | multiple
+      is_delimiting — false (default) | true
+
+    The combination (optional, at_least_one) is invalid.
+  }
+  +ref: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The subordinate concept at this position in the sequence.
+    }
+  }
+  +presence: PartitivePresence [0..1] {
+    definition {
+      Whether this member must occur in every instance of the
+      sequence (required) or only in some (optional).
+    }
+  }
+  +count: PartitiveCount [0..1] {
+    definition {
+      How many instances of this member occur at this position.
+    }
+  }
+  +is_delimiting: Boolean [0..1] {
+    definition {
+      ISO 704:2022 delimiting member. When true, this member
+      distinguishes the comprehensive sequence from coordinate
+      sequences. Defaults to false.
+    }
+  }
+}

@@ -1,0 +1,27 @@
+$id: example-frog-life-cycle/by-developmental-stage
+type: sequential_relation
+status: valid
+comprehensive:
+  source: EXAMPLE
+  id: "frog-life-cycle"
+members:
+  - ref: { source: EXAMPLE, id: "egg" }
+    characteristic:
+      eng: aquatic egg mass laid in water
+  - ref: { source: EXAMPLE, id: "tadpole" }
+    characteristic:
+      eng: aquatic larval stage with gills and tail
+  - ref: { source: EXAMPLE, id: "tadpole-with-legs" }
+    characteristic:
+      eng: larval stage developing hind legs
+  - ref: { source: EXAMPLE, id: "froglet" }
+    characteristic:
+      eng: transitional stage with both tail and limbs
+  - ref: { source: EXAMPLE, id: "adult-frog" }
+    characteristic:
+      eng: adult form with lungs, no tail, four limbs
+completeness: complete
+criterion:
+  eng: developmental stage (temporal order)
+notes:
+  eng: ISO 704:2022 §5.5.5 Table 1 — developmental relation subtype of sequential relation. Member array order IS significant (earliest → latest).

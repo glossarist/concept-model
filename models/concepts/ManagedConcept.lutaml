@@ -2,12 +2,30 @@ class ManagedConcept {
   definition {
     A managed term, including its relations with other terms.
 
-    N-ary concept-system relations (PartitiveRelation, GenericRelation)
-    live in per-file storage at `relations/<id>/<slug>.yaml`. They are
-    NOT declared as a field on ManagedConcept — discovery is by
-    directory convention. See docs/design/relations-as-files.md.
+    N-ary concept-system relations (PartitiveHyperedge, GenericHyperedge,
+    SequentialHyperedge) live in per-file storage at
+    `relations/<id>/<slug>.yaml`. They are NOT declared as a field on
+    ManagedConcept — discovery is by directory convention. See
+    docs/design/relations-as-files.md.
 
     Binary `related` edges remain inline in the concept file.
+  }
+  +concept_type: ConceptType [0..1] {
+    definition {
+      Whether this concept is general (corresponds to a category of
+      objects, designated by terms/symbols) or individual (corresponds
+      to a unique object, designated by proper names).
+
+      Per ISO 704:2022 §5.2-5.3. Defaults to `general` when omitted.
+      Individual concepts occupy the bottom rung of a concept ladder
+      (ISO 704:2022 §5.5.4.2.2) and cannot be subdivided further into
+      more specific concepts, but CAN be subdivided into parts via a
+      partitive relation (§5.5.4.3.2).
+
+      Most terminology work concerns general concepts; set to
+      `individual` for proper-name terminology (geographic names,
+      organizations, product names, etc.).
+    }
   }
   +related: RelatedConcept [0..*] {
     definition {

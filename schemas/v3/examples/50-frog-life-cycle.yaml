@@ -1,0 +1,8 @@
+id: example-frog-life-cycle
+concept_type: general
+status: valid
+data:
+  identifier: example-frog-life-cycle
+  localized_concepts:
+    eng: 00000000-0000-0000-0000-000000000001
+related: []
