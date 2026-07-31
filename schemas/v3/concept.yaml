@@ -83,6 +83,8 @@ properties:
     description: Concept-level governance dates (lifecycle events).
   status:
     $ref: "#/$defs/concept_status"
+  concept_type:
+    $ref: "#/$defs/concept_type"
   date_accepted:
     type: string
     format: date-time
@@ -133,6 +135,27 @@ $defs:
       - superseded
       - retired
       - external
+
+  # Concept Type enum (ISO 704:2022 §5.2-5.3)
+  concept_type:
+    type: string
+    description: |
+      Whether the concept corresponds to a category of objects
+      (`general`) or to a single unique object (`individual`).
+
+      Per ISO 704:2022 §5.2-5.3:
+        - General concepts are designated by terms or symbols
+        - Individual concepts are designated by proper names
+          (appellations) or symbols
+
+      Individual concepts occupy the bottom rung of a concept ladder
+      and cannot be subdivided into more specific concepts, but CAN
+      be subdivided into parts via a partitive relation.
+
+      Defaults to `general` when omitted.
+    enum:
+      - general
+      - individual
 
   # Concept Date
   concept_date:

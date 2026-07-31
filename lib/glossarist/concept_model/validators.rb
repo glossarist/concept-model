@@ -13,10 +13,12 @@ module Glossarist
       autoload :CheckLutamlReferences,          "glossarist/concept_model/validators/check_lutaml_references"
       autoload :CheckPartitiveRelationCoherence, "glossarist/concept_model/validators/check_partitive_relation_coherence"
       autoload :CheckGenericRelationCoherence,  "glossarist/concept_model/validators/check_generic_relation_coherence"
+      autoload :CheckSequentialRelationCoherence, "glossarist/concept_model/validators/check_sequential_relation_coherence"
       autoload :CheckRelationFileShape,         "glossarist/concept_model/validators/check_relation_file_shape"
       autoload :CheckExternalAsComprehensive,   "glossarist/concept_model/validators/check_external_as_comprehensive"
       autoload :CheckExternalConceptShape,      "glossarist/concept_model/validators/check_external_concept_shape"
       autoload :CheckBinaryHasPartRedundancy,   "glossarist/concept_model/validators/check_binary_has_part_redundancy"
+      autoload :CheckDefinitionRules,           "glossarist/concept_model/validators/check_definition_rules"
       autoload :NaryCoherence,                  "glossarist/concept_model/validators/nary_coherence"
     end
   end

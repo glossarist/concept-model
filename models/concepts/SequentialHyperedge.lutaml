@@ -1,0 +1,72 @@
+class SequentialHyperedge {
+  definition {
+    An ISO 12620 A.6.3 / ISO 704:2022 §5.5.5 sequential relation
+    connecting a comprehensive concept to two or more subordinate
+    concepts that are ordered by some criterion of sequencing
+    (temporal, spatial, causal, developmental, process-step, etc.).
+
+    Mirror of PartitiveHyperedge and GenericHyperedge. Members are
+    ordered (unlike Partitive/Generic where order is insignificant).
+    The same comprehensive can have multiple sequential rakes
+    distinguished by criterion of subdivision (multidimensionality,
+    ISO 704:2022 §5.6.3).
+
+    ISO 12620 A.6.3 subtypes:
+      temporal relation   — earlier/later occurrence (cause → effect)
+      spatial relation    — relative position in space (floor → ceiling)
+      developmental       — step in a process (tadpole → frog)
+      causal              — cause → effect (humidity → corrosion)
+
+    Use cases:
+      manufacturing process steps
+      biological life cycles
+      software release lifecycles
+      supply chain stages
+      geological eras
+
+    Distinct from binary sequentially_related / spatially_related /
+    temporally_related edges. A single sequential assertion should
+    use the binary edge; a rake of N ordered steps should use
+    SequentialHyperedge.
+  }
+  +comprehensive: <<StandardDocument>> ReferenceToTermbase [1] {
+    definition {
+      The starting or comprehensive concept of the sequence.
+    }
+  }
+  +members: SequentialMember [2..*] {
+    definition {
+      Two or more subordinate concepts in the sequence, in the order
+      they appear in the sequence.
+    }
+  }
+  +completeness: Completeness [0..1] {
+    definition {
+      Whether the encoded members constitute the entire sequence
+      (complete) or only some of it (partial).
+    }
+  }
+  +criterion: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      The sequencing criterion (temporal order, spatial order, causal
+      chain, process step index, etc.). Distinguishes distinct rakes
+      on the same comprehensive per ISO 704:2022 §5.6.3.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references for this specific hyperedge.
+    }
+  }
+  +notes: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Free-form localized commentary.
+    }
+  }
+  +status: ConceptStatus [0..1] {
+    definition {
+      Lifecycle status, independent of the comprehensive concept's
+      status.
+    }
+  }
+}

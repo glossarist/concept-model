@@ -1,0 +1,73 @@
+class AppellationDesignation {
+  definition {
+    A verbal designation of an individual concept (ISO 1087-1:2000,
+    3.4.2; ISO 10241-1:2011 §3.4.1.1.6; ISO 704:2022 §7.3.3).
+
+    Per ISO 704:2022 §5.3, individual concepts correspond to a unique
+    object (or composition considered unique). Their designations are
+    proper names — distinct from terms, which designate general
+    concepts.
+
+    Examples (ISO 704:2022 §5.3):
+      - "United Nations" (organization)
+      - "IBM" (organization)
+      - "Statue of Liberty" (monument)
+      - "Canada" (geographic region)
+      - "Canadian Radio-television and Telecommunications Commission"
+
+    Note: A proper name with a linking element like "and" is still
+    ONE individual concept (e.g. "North, Central and South America"
+    refers to a single region with three parts). See ISO 704:2022
+    §5.3 Example 2.
+
+    Appellations may carry normative status (preferred/admitted/
+    deprecated) just like terms (ISO 10241-1:2011 §3.4.1.3 Note 1).
+
+    Distinct from ExpressionDesignation (which designates general
+    concepts). Concepts with `concept_type: individual` should use
+    AppellationDesignation; concepts with `concept_type: general`
+    should use ExpressionDesignation.
+  }
+  +designation: <<BasicDocument>> LocalizedString [1] {
+    definition {
+      The proper name text, localized.
+    }
+  }
+  +normativeStatus: NormativeStatus [0..1] {
+    definition {
+      Preferred, admitted, or deprecated. There can be more than one
+      of each (ISO 10241-1:2011 §3.4.1.3).
+    }
+  }
+  +absent: Boolean [0..1] {
+    definition {
+      Indication that the appellation is missing for this concept in
+      this language.
+    }
+  }
+  +fieldofapplication: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Subject field disambiguator.
+    }
+  }
+  +usageinfo: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Usage disambiguator.
+    }
+  }
+  +geographicArea: Iso3166Code [0..*] {
+    definition {
+      Geographic area where the proper name is used.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic references.
+    }
+  }
+  +language: Iso639ThreeCharCode [0..1] {
+    definition {
+      ISO 639-3 language code.
+    }
+  }
+}

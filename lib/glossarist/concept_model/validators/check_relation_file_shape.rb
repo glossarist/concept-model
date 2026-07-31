@@ -10,15 +10,17 @@ module Glossarist
       #
       # Each relation file must:
       #   1. Have a $id matching the pattern <comprehensive-id>/<criterion-slug>
-      #   2. Have a valid `type` (partitive_relation or generic_relation)
+      #   2. Have a valid `type` (partitive_relation, generic_relation,
+      #      or sequential_relation)
       #   3. Have a `comprehensive` matching the directory name
       #   4. Have `members` with at least 2 entries
       #
       # Also enforces the clean-break: no concept file should still carry
-      # an inline `partitive_relations` or `generic_relations` array.
+      # an inline `partitive_relations`, `generic_relations`, or
+      # `sequential_relations` array.
       class CheckRelationFileShape < Glossarist::ConceptModel::Validator
         ID_PATTERN = /\A[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*\z/
-        VALID_TYPES = %w[partitive_relation generic_relation].freeze
+        VALID_TYPES = %w[partitive_relation generic_relation sequential_relation].freeze
 
         def run
           failures = []
@@ -84,6 +86,9 @@ module Glossarist
               end
               if doc["generic_relations"]
                 failures << "#{relative(Pathname.new(path))}: still carries inline generic_relations (use per-file format)"
+              end
+              if doc["sequential_relations"]
+                failures << "#{relative(Pathname.new(path))}: still carries inline sequential_relations (use per-file format)"
               end
             end
           end
