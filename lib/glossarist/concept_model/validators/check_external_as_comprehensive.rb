@@ -12,13 +12,15 @@ module Glossarist
       # Without provided_by, the decomposition dangles — readers can
       # see the rake structure but cannot resolve what the comprehensive
       # actually refers to.
+      #
+      # Uses ConceptIndex for O(1) lookups (workstream 03).
       class CheckExternalAsComprehensive < Glossarist::ConceptModel::Validator
         def run
           warnings = []
-          external_concepts = load_external_concepts
+          index = ConceptIndex.build
 
           each_relation_with_external_comprehensive do |path, comp_id|
-            ext = external_concepts[comp_id]
+            ext = index.find_external(comp_id)
             if ext.nil?
               warnings << "#{relative(path)}: comprehensive #{comp_id} looks external but no matching ExternalConcept file"
             elsif ext && !ext[:has_provided_by]
@@ -33,36 +35,13 @@ module Glossarist
 
         private
 
-        def load_external_concepts
-          {}.tap do |h|
-            Dir.glob("#{Repo::EXAMPLES_DIR}/**/*.yaml").sort.each do |path|
-              YAML.load_stream(File.read(path)).each do |doc|
-                next unless doc.is_a?(Hash)
-                next unless doc["status"] == "external"
-
-                identifier = doc.dig("data", "identifier") || doc["id"]
-                next unless identifier
-
-                related = doc["related"] || []
-                has_provided_by = related.any? { |r| r.is_a?(Hash) && r["type"] == "provided_by" }
-                h[identifier.to_s] = { path: path, has_provided_by: has_provided_by }
-              end
-            end
-          end
-        end
-
         def each_relation_with_external_comprehensive
-          relations_dir = Repo::EXAMPLES_DIR / "relations"
-          return unless relations_dir.exist?
-
-          Dir.glob("#{relations_dir}/**/*.yaml").sort.each do |path|
-            doc = YAML.load_file(path)
-            next unless doc.is_a?(Hash)
-
+          index = ConceptIndex.build
+          index.each_relation do |path, doc|
             comp = doc["comprehensive"] || {}
             next unless comp["text"] || looks_external?(comp)
 
-            yield Pathname.new(path), comp["id"].to_s
+            yield path, comp["id"].to_s
           end
         end
 

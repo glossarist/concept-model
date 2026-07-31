@@ -16,6 +16,13 @@
 
     "Concept":             "gloss:Concept",
     "ConceptCollection":   "gloss:ConceptCollection",
+    "ConceptSystem":       "gloss:ConceptSystem",
+    "ConceptSystemType":   "gloss:ConceptSystemType",
+
+    "hasSystemType":       { "@id": "gloss:hasSystemType",     "@type": "@id" },
+    "hasSystemMember":     { "@id": "gloss:hasSystemMember",   "@type": "@id" },
+    "hasHyperedge":        { "@id": "gloss:hasHyperedge",      "@type": "@id" },
+    "hasRootConcept":      { "@id": "gloss:hasRootConcept",    "@type": "@id" },
     "LocalizedConcept":    "gloss:LocalizedConcept",
     "Designation":         "gloss:Designation",
     "Expression":          "gloss:Expression",

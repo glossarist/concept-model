@@ -1,0 +1,39 @@
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.glossarist.org/ontologies/conceptSystemType>
+  a skos:ConceptScheme ;
+  dcterms:title "Concept System Type (ISO 12620 A.7.1)"@en ;
+  dcterms:description "Types of concept systems per ISO 12620 A.7.1: generic, partitive, sequential, associative, mixed."@en ;
+  dcterms:created "2026-07-31"^^xsd:date .
+
+<https://www.glossarist.org/ontologies/conceptSystemType/generic>
+  a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/conceptSystemType> ;
+  skos:prefLabel "generic"@en ;
+  skos:definition "A concept system in which concepts that belong to the category of the narrower concept (species) are part of the extension of the broader concept (genus)."@en .
+
+<https://www.glossarist.org/ontologies/conceptSystemType/partitive>
+  a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/conceptSystemType> ;
+  skos:prefLabel "partitive"@en ;
+  skos:definition "A concept system based on whole-part or part-whole relations."@en .
+
+<https://www.glossarist.org/ontologies/conceptSystemType/sequential>
+  a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/conceptSystemType> ;
+  skos:prefLabel "sequential"@en ;
+  skos:definition "A concept system based on spatial and temporal relations."@en .
+
+<https://www.glossarist.org/ontologies/conceptSystemType/associative>
+  a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/conceptSystemType> ;
+  skos:prefLabel "associative"@en ;
+  skos:definition "A concept system based on associative (thematic or pragmatic) relations."@en .
+
+<https://www.glossarist.org/ontologies/conceptSystemType/mixed>
+  a skos:Concept ;
+  skos:inScheme <https://www.glossarist.org/ontologies/conceptSystemType> ;
+  skos:prefLabel "mixed"@en ;
+  skos:definition "A concept system combining two or more of the above types (the realistic case for most terminological datasets)."@en .

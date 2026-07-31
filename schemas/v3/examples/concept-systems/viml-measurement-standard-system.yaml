@@ -1,0 +1,32 @@
+$id: viml-measurement-standard-system
+name:
+  eng: Measurement Standard System
+  fra: Système des étalons de mesure
+type: mixed
+domain:
+  source: VIML
+  id: metrology
+purpose:
+  eng: Defines the complete taxonomy of measurement standards across realization media, governance levels, and metrological hierarchy.
+members:
+  - { source: VIML, id: "5.1" }
+  - { source: VIML, id: "5.13" }
+  - { source: VIML, id: "3.2" }
+  - { source: VIML, id: "3.6" }
+  - { source: VIML, id: "5.2" }
+  - { source: VIML, id: "5.3" }
+hyperedges:
+  - viml-5-1/by-realization-medium
+  - viml-5-1/by-governance-level
+  - viml-5-1/by-metrological-hierarchy
+  - viml-5-1/by-reference-or-working
+  - viml-5-1/by-calibration-role
+  - viml-5-1/by-travel
+root_concepts:
+  - { source: VIML, id: "5.1" }
+sources:
+  - type: authoritative
+    origin:
+      ref: { source: OIML, id: "V 2-200:2010" }
+      locality: { type: section, reference_from: "5" }
+status: valid

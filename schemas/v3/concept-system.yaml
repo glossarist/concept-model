@@ -1,0 +1,85 @@
+%YAML 1.1
+---
+$id: "https://github.com/glossarist/concept-model/v3/concept-system"
+title: YAML Schema for ConceptSystem (v3)
+description: |
+  A metaschema for first-class concept systems per ISO 12620 A.7.1.
+  Each file lives at `concept-systems/<id>.yaml` and encodes exactly
+  one concept system — a structured set of concepts with relations.
+
+  Promoting concept systems from implicit (the relation graph) to
+  explicit first-class entities enables:
+    - Concept-system-level navigation
+    - ISO 12620 A.7.2 concept position queries
+    - ISO 10241-1 §5.1 systematic-order rendering
+
+  See docs/design/concept-systems.md for the architectural rationale.
+type: object
+required: [$id, name, type, members]
+additionalProperties: false
+properties:
+  $id:
+    type: string
+    pattern: "^[a-z0-9][a-z0-9-]*$"
+    description: |
+      Stable identifier, dataset-unique. Must match the filename
+      (without extension).
+  name:
+    type: object
+    description: Localized name, keyed by ISO 639 language code.
+    patternProperties:
+      "^[a-z]{3}$":
+        type: string
+    additionalProperties: false
+  type:
+    $ref: "#/$defs/concept_system_type"
+  domain:
+    $ref: "concept.yaml#/$defs/reference"
+  purpose:
+    type: object
+    description: Localized purpose statement.
+    patternProperties:
+      "^[a-z]{3}$":
+        type: string
+    additionalProperties: false
+  members:
+    type: array
+    minItems: 1
+    items:
+      $ref: "concept.yaml#/$defs/concept_ref"
+    description: |
+      Concepts in this system. Order is NOT significant; the system
+      structure comes from the hyperedges + binary edges below.
+  hyperedges:
+    type: array
+    items:
+      type: string
+      pattern: "^[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*$"
+    description: |
+      References to per-file hyperedge $ids that belong to this system.
+      E.g., ["viml-5-1/by-realization-medium", "viml-5-1/by-governance-level"].
+  root_concepts:
+    type: array
+    items:
+      $ref: "concept.yaml#/$defs/concept_ref"
+    description: Top-level concepts (no superordinate/comprehensive in this system).
+  sources:
+    type: array
+    items:
+      $ref: "concept.yaml#/$defs/concept_source"
+  status:
+    $ref: "concept.yaml#/$defs/concept_status"
+
+$defs:
+  concept_system_type:
+    type: string
+    description: |
+      The type of concept system per ISO 12620 A.7.1. The dominant
+      relation type determines the system type; "mixed" covers the
+      realistic case where multiple relation types coexist.
+    enum:
+      - generic
+      - partitive
+      - sequential
+      - associative
+      - mixed

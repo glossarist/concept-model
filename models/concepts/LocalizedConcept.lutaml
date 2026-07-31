@@ -1,6 +1,11 @@
 class LocalizedConcept {
   definition {
     A managed term, localised to a speficic language.
+
+    Cross-language equivalence is captured by `equivalence_degree`
+    per ISO 704:2022 §7.7.3: full / partial / none / directional.
+    When partial or directional, an `equivalence_note` should
+    explain the difference.
   }
   +language: Iso639ThreeCharCode {
     definition {
@@ -17,4 +22,29 @@ class LocalizedConcept {
       The localised version of the managed term.
     }
   }
+  +equivalence_degree: EquivalenceDegree [0..1] {
+    definition {
+      The degree of equivalence between this localization and the
+      concept's primary definition (or designated reference language).
+
+      Per ISO 704:2022 §7.7.3:
+        - full (default): equivalent intension
+        - partial: overlapping but not identical intension
+        - none: no corresponding concept in this language
+        - directional: monodirectional equivalence
+
+      When partial or directional, `equivalence_note` should explain
+      the difference.
+    }
+  }
+  +equivalence_note: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Free-form localized note explaining the equivalence difference
+      when `equivalence_degree` is `partial` or `directional`.
+
+      Example: "Partiellement équivalent — la portée est plus étroite
+      en français canadien."
+    }
+  }
 }
+

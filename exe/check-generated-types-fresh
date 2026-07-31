@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Validator-style wrapper around generate-types-from-schemas --check.
+# Fails if generated TypeScript types drift from JSON Schemas.
+
+require "glossarist/concept_model"
+exit Glossarist::ConceptModel::SchemaTypeGenerator.new(check_mode: true).run

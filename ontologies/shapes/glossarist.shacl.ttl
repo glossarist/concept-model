@@ -722,6 +722,39 @@ gloss:RelatedConceptShape a sh:NodeShape ;
   ] .
 
 # ══════════════════════════════════════════════════════════════════════════
+# Concept System shape (ISO 12620 A.7)
+# ══════════════════════════════════════════════════════════════════════════
+
+gloss:ConceptSystemShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptSystem ;
+  sh:property [
+    sh:path gloss:hasSystemType ;
+    sh:class skos:Concept ;
+    sh:in (
+      <https://www.glossarist.org/ontologies/conceptSystemType/generic>
+      <https://www.glossarist.org/ontologies/conceptSystemType/partitive>
+      <https://www.glossarist.org/ontologies/conceptSystemType/sequential>
+      <https://www.glossarist.org/ontologies/conceptSystemType/associative>
+      <https://www.glossarist.org/ontologies/conceptSystemType/mixed>
+    ) ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path gloss:hasMember ;
+    sh:class gloss:ConceptRef ;
+    sh:minCount 1 ;
+  ] .
+
+gloss:ConceptSystemTypeShape a sh:NodeShape ;
+  sh:targetClass gloss:ConceptSystemType ;
+  sh:property [
+    sh:path skos:inScheme ;
+    sh:hasValue <https://www.glossarist.org/ontologies/conceptSystemType> ;
+    sh:minCount 1 ;
+  ] .
+
+# ══════════════════════════════════════════════════════════════════════════
 # Partitive Relation shapes (ISO 704 / 1087-1 / 12620)
 # ══════════════════════════════════════════════════════════════════════════
 

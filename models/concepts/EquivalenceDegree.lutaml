@@ -1,0 +1,25 @@
+class EquivalenceDegree {
+  definition {
+    The degree of equivalence between a localized concept and its
+    counterpart in another language, per ISO 704:2022 §7.7.3.
+
+    Equivalence is not always full. Cross-language terminology work
+    needs to distinguish:
+      - full:        same concept, same intension across languages
+      - partial:     overlapping but not identical intension
+                     (e.g., English "privacy" vs German "Privatheit")
+      - none:        no corresponding concept in this language
+      - directional: monodirectional equivalence
+                     (e.g., glue ↔ adhésif in Canadian French context,
+                     but not the reverse — see ISO 704:2022 §7.7.3)
+
+    Defaults to `full` when omitted. Partial and directional should
+    be accompanied by an `equivalence_note` explaining the difference.
+  }
+  values {
+    full
+    partial
+    none
+    directional
+  }
+}

@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# JSON Schema → TypeScript types generator (CLI).
+#
+# Walks schemas/v3/*.yaml and emits TypeScript interfaces / type
+# aliases / const arrays to schemas/v3/types/*.ts. Single source of
+# truth (schemas) → typed output for downstream TS consumers.
+#
+# Usage:
+#   bundle exec ruby exe/generate-types-from-schemas
+#   bundle exec ruby exe/generate-types-from-schemas --check  # fail on drift
+#
+# Output is committed for review; CI runs --check to catch drift.
+
+require "optparse"
+require "glossarist/concept_model"
+
+options = { check_mode: false }
+OptionParser.new do |opts|
+  opts.banner = "Usage: generate-types-from-schemas [options]"
+  opts.on("--check", "Fail if generated output drifts from committed") do
+    options[:check_mode] = true
+  end
+end.parse!
+
+exit Glossarist::ConceptModel::SchemaTypeGenerator.new(**options).run
