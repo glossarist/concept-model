@@ -1,0 +1,21 @@
+class ConceptSystemType {
+  definition {
+    The type of a concept system per ISO 12620 A.7.1.
+
+    Permissible instances:
+      - generic:     concepts that belong to the category of the narrower
+                     (species) are part of the extension of the broader (genus)
+      - partitive:   based on whole-part or part-whole relations
+      - sequential:  based on spatial and temporal relations
+      - associative: based on associative (thematic or pragmatic) relations
+      - mixed:       two or more of the above (the realistic case for
+                     most terminological datasets)
+  }
+  values {
+    generic
+    partitive
+    sequential
+    associative
+    mixed
+  }
+}

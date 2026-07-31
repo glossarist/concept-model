@@ -1,0 +1,82 @@
+class ConceptSystem {
+  definition {
+    A structured set of concepts established according to the relations
+    between them, each concept being determined by its position in
+    the set (ISO 12620 A.7.1).
+
+    Promoting concept systems from implicit (the relation graph) to
+    explicit first-class entities enables:
+      - Concept-system-level navigation in concept-browser (the
+        entire measurement-standard system as one navigable unit)
+      - ISO 12620 A.7.2 concept position queries (broader /
+        superordinate / subordinate / coordinate / related) as
+        first-class operations
+      - ISO 10241-1 §5.1 systematic-order rendering of terminological
+        entries (preferred over alphabetical)
+      - Aligns Glossarist with the standard's explicit modeling
+
+    Storage: per-file at `concept-systems/<id>.yaml`, mirroring the
+    relations/ pattern.
+
+    Multidimensionality: a concept can appear in multiple concept
+    systems; the same concept occupies different positions in each.
+  }
+  +id: String [1] {
+    definition {
+      Stable identifier, dataset-unique. Kebab-case recommended.
+    }
+  }
+  +name: <<BasicDocument>> LocalizedString [1] {
+    definition {
+      Human-readable name, localized per ISO 639.
+    }
+  }
+  +type: ConceptSystemType [1] {
+    definition {
+      The type of concept system. Per ISO 12620 A.7.1, the dominant
+      relation type determines the system type. Mixed systems are
+      common in real datasets.
+    }
+  }
+  +domain: <<StandardDocument>> ReferenceToTermbase [0..1] {
+    definition {
+      Optional subject-area classification.
+    }
+  }
+  +purpose: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      What this concept system is for (e.g., "to define the
+      components of measurement standards").
+    }
+  }
+  +members: <<StandardDocument>> ReferenceToTermbase [1..*] {
+    definition {
+      All concepts in the system. Concepts may appear in multiple
+      systems; the same concept occupies different positions in each.
+    }
+  }
+  +hyperedges: <<StandardDocument>> ReferenceToTermbase [0..*] {
+    definition {
+      References to n-ary hyperedges (PartitiveHyperedge,
+      GenericHyperedge, SequentialHyperedge) that belong to this
+      system. References point to the per-file hyperedge $id.
+    }
+  }
+  +root_concepts: <<StandardDocument>> ReferenceToTermbase [0..*] {
+    definition {
+      Top-level concepts in the system — those with no superordinate
+      or comprehensive in this system. A system may have multiple
+      roots if it spans multiple independent hierarchies.
+    }
+  }
+  +sources: ConceptSource [0..*] {
+    definition {
+      Bibliographic provenance for the system itself.
+    }
+  }
+  +status: ConceptStatus [0..1] {
+    definition {
+      Lifecycle status of the concept system.
+    }
+  }
+}

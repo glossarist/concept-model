@@ -220,6 +220,199 @@ enum RelatedConceptType {
     }
   }
 
+  // ── Associative — contiguity (ISO 704:2022 §5.5.5 Table 1) ─────
+  enhances {
+    definition { tool – accessory (smartphone – selfie stick). }
+  }
+  enhanced_by {
+    definition { accessory – tool (inverse of enhances). }
+  }
+  contains {
+    definition { container – contained (milk carton – milk). }
+  }
+  contained_by_container {
+    definition { contained – container (inverse of contains). }
+  }
+  contained_by_contained {
+    definition { contained – contained relative to a shared container (fish – shellfish re: sea). }
+  }
+  attaches {
+    definition { tool – connection (screen – HDMI port). }
+  }
+  attached_to {
+    definition { connection – tool (inverse of attaches). }
+  }
+  made_of {
+    definition { concrete item – material (seawater – salt). }
+  }
+  material_of {
+    definition { material – concrete item (inverse of made_of). }
+  }
+  has_property {
+    definition { material – state (air – humidity). }
+  }
+  property_of {
+    definition { state – material (inverse of has_property). }
+  }
+  owns {
+    definition { owner – object (state – enterprise). }
+  }
+  owned_by {
+    definition { object – owner (inverse of owns). }
+  }
+  ranks_above {
+    definition { higher rank – lower rank (chair – vice-chair). }
+  }
+  ranks_below {
+    definition { lower rank – higher rank (inverse of ranks_above). }
+  }
+
+  // ── Associative — sequential (ISO 704:2022 §5.5.5 Table 1) ──────
+  causes {
+    definition { cause – effect (humidity – corrosion). }
+  }
+  caused_by {
+    definition { effect – cause (inverse of causes). }
+  }
+  develops_into {
+    definition { earlier developmental stage – later (tadpole – frog). }
+  }
+  develops_from {
+    definition { later developmental stage – earlier (inverse of develops_into). }
+  }
+
+  // ── Associative — activity (ISO 704:2022 §5.5.5 Table 1) ────────
+  performed_by {
+    definition { action – actor (energy conversion – energy). }
+  }
+  performs_action {
+    definition { actor – action (inverse of performed_by). }
+  }
+  done_by_method {
+    definition { action – method (teach – e-learning). }
+  }
+  method_of {
+    definition { method – action (inverse of done_by_method). }
+  }
+  done_at {
+    definition { action – place (teach – school). }
+  }
+  place_of_action {
+    definition { place – action (inverse of done_at). }
+  }
+  done_for_purpose {
+    definition { action – objective (medical examination – diagnosis). }
+  }
+  purpose_of_action {
+    definition { objective – action (inverse of done_for_purpose). }
+  }
+  done_for_beneficiary {
+    definition { action – beneficiary (hospital discharge – patient). }
+  }
+  beneficiary_of_action {
+    definition { beneficiary – action (inverse of done_for_beneficiary). }
+  }
+  acts_on_object {
+    definition { action – object (learn – school). }
+  }
+  object_of_action {
+    definition { object – action (inverse of acts_on_object). }
+  }
+  done_with_tool {
+    definition { action – instrument (click – computer mouse). }
+  }
+  tool_of_action {
+    definition { instrument – action (inverse of done_with_tool). }
+  }
+  acts_on_patient {
+    definition { action – patient (psychotherapy – client). }
+  }
+  patient_of_action {
+    definition { patient – action (inverse of acts_on_patient). }
+  }
+
+  // ── Associative — instrumental (ISO 704:2022 §5.5.5 Table 1) ────
+  produces {
+    definition { producer – product (baker – bread). }
+  }
+  produced_by {
+    definition { product – producer (inverse of produces). }
+  }
+  made_from_ingredient {
+    definition { raw material – product (wood – desk). }
+  }
+  ingredient_of {
+    definition { product – raw material (inverse of made_from_ingredient). }
+  }
+  produced_by_instrument {
+    definition { tool – product (oven – bread). }
+  }
+  instrument_product_of {
+    definition { product – tool (inverse of produced_by_instrument). }
+  }
+  employed_by_professional {
+    definition { professional – tool employed (painter – brush). }
+  }
+  employs_tool {
+    definition { tool – professional (inverse of employed_by_professional). }
+  }
+  handled_by_tool {
+    definition { object – tool used for handling (time – clock). }
+  }
+  tool_handles {
+    definition { tool – object handled (inverse of handled_by_tool). }
+  }
+  applied_to_patient {
+    definition { tool – patient (baby sling – baby). }
+  }
+  patient_of_tool {
+    definition { patient – tool (inverse of applied_to_patient). }
+  }
+
+  // ── Associative — interactional (ISO 704:2022 §5.5.5 Table 1) ───
+  controlled_by {
+    definition { controlled – controller (pointer – computer mouse). }
+  }
+  controls {
+    definition { controller – controlled (inverse of controlled_by). }
+  }
+  represented_by {
+    definition { entity – representative (length – metre). }
+  }
+  represents {
+    definition { representative – entity (inverse of represented_by). }
+  }
+
+  // ── Associative — origination (ISO 704:2022 §5.5.5 Table 1) ─────
+  originates_from {
+    definition { alias of produces (producer – product). }
+  }
+  origin_of {
+    definition { alias of produced_by. }
+  }
+
+  // ── Associative — transmission (ISO 704:2022 §5.5.5 Table 1) ────
+  sends_to {
+    definition { sender – receiver (satellite – parabolic dish antenna). }
+  }
+  receives_from {
+    definition { receiver – sender (inverse of sends_to). }
+  }
+  sends_object {
+    definition { sender – object sent (mobile phone – text message). }
+  }
+  object_sent_by {
+    definition { object – sender (inverse of sends_object). }
+  }
+
+  // ── Associative — opposite (ISO 704:2022 §5.5.5 Table 1) ────────
+  opposite_of {
+    definition {
+      Bidirectional opposite relation (encoding – decoding;
+      positive – negative). Single value — symmetric.
+    }
+  }
+
   // ── Lexical (ISO 12620 / TBX) ───────────────────────────────────
   homograph {
     definition {

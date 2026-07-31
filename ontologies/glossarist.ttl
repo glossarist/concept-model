@@ -81,6 +81,47 @@ gloss:ConceptCollection a owl:Class ;
     Corresponds to ManagedConceptCollection in glossarist-ruby.
   """@en .
 
+gloss:ConceptSystem a owl:Class ;
+  rdfs:subClassOf skos:Collection ;
+  rdfs:label "Concept System"@en ;
+  rdfs:comment """
+    A structured set of concepts established according to the
+    relations between them, each concept being determined by its
+    position in the set (ISO 12620 A.7.1).
+
+    Promotes the previously-implicit concept system to a first-class
+    entity. Lives per-file at concept-systems/<id>.yaml. See
+    docs/design/concept-systems.md.
+  """@en .
+
+gloss:ConceptSystemType a owl:Class ;
+  rdfs:label "Concept System Type"@en ;
+  rdfs:comment "ISO 12620 A.7.1 concept system type: generic | partitive | sequential | associative | mixed."@en .
+
+gloss:hasSystemType a owl:ObjectProperty ;
+  rdfs:domain gloss:ConceptSystem ;
+  rdfs:range skos:Concept ;
+  rdfs:label "has system type"@en ;
+  rdfs:comment "The ISO 12620 A.7.1 type of the concept system."@en .
+
+gloss:hasSystemMember a owl:ObjectProperty ;
+  rdfs:domain gloss:ConceptSystem ;
+  rdfs:range gloss:ConceptRef ;
+  rdfs:label "has system member"@en ;
+  rdfs:comment "A concept in this concept system."@en .
+
+gloss:hasHyperedge a owl:ObjectProperty ;
+  rdfs:domain gloss:ConceptSystem ;
+  rdfs:range gloss:AbstractHyperedge ;
+  rdfs:label "has hyperedge"@en ;
+  rdfs:comment "An n-ary hyperedge belonging to this concept system."@en .
+
+gloss:hasRootConcept a owl:ObjectProperty ;
+  rdfs:domain gloss:ConceptSystem ;
+  rdfs:range gloss:ConceptRef ;
+  rdfs:label "has root concept"@en ;
+  rdfs:comment "A top-level concept in this system (no superordinate)."@en .
+
 # ── Localization Layer ───────────────────────────────────────────────────
 
 gloss:LocalizedConcept a owl:Class ;

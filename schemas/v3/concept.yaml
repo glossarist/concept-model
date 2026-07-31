@@ -254,6 +254,72 @@ $defs:
       - related_concept
       - related_concept_broader
       - related_concept_narrower
+      # Associative — contiguity subtype (ISO 704:2022 §5.5.5 Table 1)
+      - enhances                     # tool – accessory (smartphone – selfie stick)
+      - enhanced_by
+      - contains                     # container – contained (milk carton – milk)
+      - contained_by_container
+      - contained_by_contained       # contained – contained (fish – shellfish re: sea)
+      - attaches                     # tool – connection (screen – HDMI port)
+      - attached_to
+      - made_of                      # concrete item – material (seawater – salt)
+      - material_of
+      - has_property                 # material – state (air – humidity)
+      - property_of
+      - owns                         # object – owner (enterprise – state)
+      - owned_by
+      - ranks_above                  # rank (chair – vice-chair)
+      - ranks_below
+      # Associative — sequential subtype (ISO 704:2022 §5.5.5 Table 1)
+      - causes                       # cause – effect (humidity – corrosion)
+      - caused_by
+      - develops_into                # developmental (tadpole – frog)
+      - develops_from
+      # Associative — activity subtype
+      - performed_by                 # action – actor (energy conversion – energy)
+      - performs_action
+      - done_by_method               # action – method (teach – e-learning)
+      - method_of
+      - done_at                      # action – place (teach – school)
+      - place_of_action
+      - done_for_purpose             # action – objective (medical exam – diagnosis)
+      - purpose_of_action
+      - done_for_beneficiary         # action – beneficiary (discharge – patient)
+      - beneficiary_of_action
+      - acts_on_object               # action – object (learn – school)
+      - object_of_action
+      - done_with_tool               # action – instrument (click – mouse)
+      - tool_of_action
+      - acts_on_patient              # action – patient (psychotherapy – client)
+      - patient_of_action
+      # Associative — instrumental subtype
+      - produces                     # producer – product (baker – bread)
+      - produced_by
+      - made_from_ingredient         # raw material – product (wood – desk)
+      - ingredient_of
+      - produced_by_instrument       # tool – product (oven – bread)
+      - instrument_product_of
+      - employed_by_professional     # professional – tool (painter – brush)
+      - employs_tool
+      - handled_by_tool              # object – tool for handling (time – clock)
+      - tool_handles
+      - applied_to_patient           # tool – patient (baby sling – baby)
+      - patient_of_tool
+      # Associative — interactional subtype
+      - controlled_by                # controlled – controller (pointer – mouse)
+      - controls
+      - represented_by               # entity – representative (length – metre)
+      - represents
+      # Associative — origination subtype
+      - originates_from              # producer/product alias
+      - origin_of
+      # Associative — transmission subtype
+      - sends_to                     # sender – receiver (satellite – dish)
+      - receives_from
+      - sends_object                 # sender – object (phone – text message)
+      - object_sent_by
+      # Associative — opposite subtype
+      - opposite_of                  # bidirectional (encoding – decoding)
       # Comparative (ISO 10241-1)
       - compare
       - contrast

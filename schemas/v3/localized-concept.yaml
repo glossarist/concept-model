@@ -20,6 +20,16 @@ properties:
     properties:
       language_code:
         $ref: "#/$defs/language_code"
+      equivalence_degree:
+        $ref: "#/$defs/equivalence_degree"
+      equivalence_note:
+        type: object
+        description: |
+          Free-form localized note explaining the equivalence difference
+          when `equivalence_degree` is `partial` or `directional`.
+          Keyed by ISO 639 language code.
+        additionalProperties:
+          type: string
       entry_status:
         $ref: "#/$defs/entry_status"
       classification:
@@ -761,7 +771,20 @@ $defs:
 
   designation_relationship:
     type: object
-    description: A designation-level relationship between designations of the same concept.
+    description: |
+      A designation-level relationship between designations.
+
+      Per ISO 10241-1:2011:
+        - §3.4.1.4 homograph: same written form, DIFFERENT concept
+          (target_concept required)
+        - §3.4.1.5 antonym: same language, opposite concept
+          (target_concept optional — antonyms often link via concept-level
+          `opposite_of` instead)
+        - abbreviated_form_for / short_form_for: same concept, related
+          designation (target is designation text on the same concept)
+
+      For homograph_of, both `target` (designation text) and
+      `target_concept` (ConceptRef to the other concept) are required.
     properties:
       type:
         type: string
@@ -769,12 +792,21 @@ $defs:
         enum:
           - abbreviated_form_for
           - short_form_for
+          - homograph_of
+          - antonym_of
       content:
         type: string
         description: Text describing the designation relationship.
       target:
         type: string
         description: The target designation text that this designation relates to.
+      target_concept:
+        $ref: "#/$defs/concept_ref"
+        description: |
+          For homograph_of: the ConceptRef of the OTHER concept that
+          has a designation with the same `target` text. Required for
+          homograph_of; optional for antonym_of; not used for
+          abbreviated_form_for / short_form_for.
     required:
       - type
 
@@ -815,6 +847,24 @@ $defs:
 
   language_code:
     $ref: "#/$defs/iso639_three_char_code"
+
+  # Equivalence Degree enum (ISO 704:2022 §7.7.3)
+  equivalence_degree:
+    type: string
+    description: |
+      The degree of equivalence between this localization and the
+      concept's reference-language definition.
+
+      Per ISO 704:2022 §7.7.3:
+        - full (default): equivalent intension across languages
+        - partial: overlapping but not identical intension
+        - none: no corresponding concept in this language
+        - directional: monodirectional equivalence (see equivalence_note)
+    enum:
+      - full
+      - partial
+      - none
+      - directional
 
   # Non-verbal representation
   non_verbal_rep:
