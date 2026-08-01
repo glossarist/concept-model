@@ -106,7 +106,34 @@ module Glossarist
               warnings << "#{rel_path}: extensional definition uses 'or' — confirm " \
                           "this is a generic-extensional definition per ISO 704 §6.4.5.2"
             end
+
+            # §6.4.5.1 — No open-ended wordings in extensional definitions
+            forbidden = detect_open_ended_wording(content)
+            if forbidden
+              warnings << "#{rel_path}: extensional definition contains open-ended " \
+                          "wording '#{forbidden}'; ISO 704 §6.4.5.1 forbids this — " \
+                          "an extensional definition shall enumerate ALL subordinate " \
+                          "concepts, not use '...', 'etc.', 'and similar', etc."
+            end
           end
+        end
+
+        OPEN_ENDED_PATTERNS = [
+          /\.\.\./,                 # ellipsis
+          /\betc\b\.?/i,            # etc. / etc / ETC
+          /\band similar\b/i,       # and similar (items)
+          /\band so on\b/i,         # and so on
+          /\band the like\b/i,      # and the like
+          /\band others?\b/i,       # and other(s)
+          /\bincluding\b/i,         # including (implies non-exhaustive)
+        ].freeze
+
+        def detect_open_ended_wording(content)
+          OPEN_ENDED_PATTERNS.each do |pattern|
+            match = content.match(pattern)
+            return match[0] if match
+          end
+          nil
         end
 
         def starts_with_gerund?(content)
