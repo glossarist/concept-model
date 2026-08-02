@@ -935,10 +935,22 @@ gloss:refType a owl:DatatypeProperty ;
   rdfs:comment "Type qualifier: local, designation, urn, domain."@en .
 
 gloss:urn a owl:DatatypeProperty ;
-  rdfs:domain gloss:Reference ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( gloss:Reference gloss:NonConceptEntity ) ;
+  ] ;
   rdfs:range xsd:anyURI ;
   rdfs:label "URN"@en ;
-  rdfs:comment "Direct URN reference to the target concept."@en .
+  rdfs:comment """
+    Direct URN reference.
+
+    On gloss:Reference: a URN identifying the target concept for
+    cross-dataset resolution.
+    On gloss:NonConceptEntity: an optional canonical URN for cross-dataset
+    figure/table/formula resolution. Enables {{fig:urn:...}} inline
+    mentions to route via the deployment's uriPatterns — same cascade
+    as concept URN resolution.
+  """@en .
 
 gloss:term a owl:DatatypeProperty ;
   rdfs:domain gloss:Reference ;
@@ -1494,7 +1506,7 @@ gloss:sectionOrdering a owl:ObjectProperty ;
   rdfs:label "section ordering"@en ;
   rdfs:comment "Per-section ordering override; if absent, inherits dataset default."@en .
 
-# ── Non-Verbal Entities (ISO 10241-1 §6.5) ──────────────────────────────
+# ── Non-Concept Entities (ISO 10241-1 §6.5) ───────────────────────────
 
 gloss:NonVerbalEntity a owl:Class ;
   rdfs:label "Non-Verbal Entity"@en ;
@@ -1504,17 +1516,29 @@ gloss:NonVerbalEntity a owl:Class ;
     payload: caption, description, alt, sources.
   """@en .
 
-gloss:SharedNonVerbalEntity a owl:Class ;
+gloss:NonConceptEntity a owl:Class ;
   rdfs:subClassOf gloss:NonVerbalEntity ;
-  rdfs:label "Shared Non-Verbal Entity"@en ;
+  rdfs:label "Non-Concept Entity"@en ;
   rdfs:comment """
-    A non-verbal entity that has stable dataset-wide identity. Figure,
-    Table, and Formula inherit from this. Distinct from NonVerbRep,
-    which is concept-local and positional.
+    A dataset-shared entity that is NOT a concept: Figure, Table,
+    Formula. Has stable dataset-wide identity. Distinct from
+    NonVerbRep (which is a concept-local non-verbal designation) and
+    from NonVerbalRepresentation (which is a designation modality of
+    a concept).
+
+    A figure illustrates a concept; it does not designate it. Calling
+    it "non-verbal" was a category error — non-verbal refers to the
+    modality of expression, not the ontological category. These are
+    non-concept entities that happen to use visual/tabular/formulaic
+    modality.
   """@en .
 
+# Deprecated alias — kept for backward compat. New code should use
+# gloss:NonConceptEntity.
+gloss:SharedNonVerbalEntity owl:equivalentClass gloss:NonConceptEntity .
+
 gloss:Figure a owl:Class ;
-  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
+  rdfs:subClassOf gloss:NonConceptEntity ;
   rdfs:label "Figure"@en ;
   rdfs:comment """
     A dataset-level figure entity with localized caption/alt and
@@ -1522,12 +1546,12 @@ gloss:Figure a owl:Class ;
   """@en .
 
 gloss:Table a owl:Class ;
-  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
+  rdfs:subClassOf gloss:NonConceptEntity ;
   rdfs:label "Table"@en ;
   rdfs:comment "A dataset-level table entity with localized content."@en .
 
 gloss:Formula a owl:Class ;
-  rdfs:subClassOf gloss:SharedNonVerbalEntity ;
+  rdfs:subClassOf gloss:NonConceptEntity ;
   rdfs:label "Formula"@en ;
   rdfs:comment "A dataset-level formula entity with localized expression."@en .
 

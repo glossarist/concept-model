@@ -1,0 +1,34 @@
+class NonConceptEntity < NonVerbalEntity {
+  definition {
+    A dataset-shared entity that is NOT a concept: Figure, Table,
+    Formula. Has stable dataset-wide identity.
+
+    Distinct from NonVerbRep (which is a concept-local non-verbal
+    designation) and from NonVerbalRepresentation (which is a
+    designation modality of a concept). A figure illustrates a
+    concept; it does not designate it. Calling it "non-verbal" was
+    a category error — these are non-concept entities that happen
+    to use visual/tabular/formulaic modality.
+  }
+  +id: String [1] {
+    definition {
+      Stable identifier used for cross-referencing. Matches the filename
+      (e.g. "fig_A.23" -> figures/fig_A.23.yaml). Authors cite this id via
+      inline {{fig:id}} mentions or structural figures[] entries.
+    }
+  }
+  +urn: <<BasicDocument>> LocalizedString [0..1] {
+    definition {
+      Optional canonical URN for cross-dataset resolution.
+      When present, {{fig:urn:...}} mentions route via the
+      deployment's uriPatterns — same cascade as concept URN resolution.
+      Example: urn:iso:std:iec:60050:figure:diagram_3
+    }
+  }
+  +identifier: String [0..1] {
+    definition {
+      Human-readable label (e.g. "A.23") used for display and AsciiDoc
+      xref targets like <<fig_A.23>>.
+    }
+  }
+}

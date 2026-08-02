@@ -19,6 +19,14 @@ properties:
     type: string
     description: Stable identifier, dataset-unique. kebab-case recommended.
 
+  urn:
+    type: string
+    description: |
+      Optional canonical URN for cross-dataset resolution.
+      When present, {{fig:urn:...}} mentions route via the
+      deployment's uriPatterns — same cascade as concept URN resolution.
+      Example: urn:iso:std:iec:60050:figure:diagram_3
+
   identifier:
     type: string
     description: Display form (e.g. "Figure 7c"). Optional.

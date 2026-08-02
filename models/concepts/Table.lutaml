@@ -1,4 +1,4 @@
-class Table < SharedNonVerbalEntity {
+class Table < NonConceptEntity {
   definition {
     A dataset-level table entity (ISO 10241-1 §6.5 — non-verbal
     representation). Authored at datasets/{ds}/tables/{table-id}.yaml and

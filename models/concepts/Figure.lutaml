@@ -1,4 +1,4 @@
-class Figure < SharedNonVerbalEntity {
+class Figure < NonConceptEntity {
   definition {
     A dataset-level figure entity (ISO 10241-1 §6.5 — non-verbal
     representation). Authored once at datasets/{ds}/figures/{fig-id}.yaml
