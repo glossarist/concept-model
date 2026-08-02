@@ -989,9 +989,14 @@ gloss:NonVerbalEntityShape a sh:NodeShape ;
     sh:class gloss:ConceptSource ;
   ] .
 
-gloss:SharedNonVerbalEntityShape a sh:NodeShape ;
-  sh:targetClass gloss:SharedNonVerbalEntity ;
+gloss:NonConceptEntityShape a sh:NodeShape ;
+  sh:targetClass gloss:NonConceptEntity ;
   sh:class gloss:NonVerbalEntity ;
+  sh:property [
+    sh:path gloss:urn ;
+    sh:datatype xsd:anyURI ;
+    sh:maxCount 1 ;
+  ] ;
   sh:property [
     sh:path gloss:role ;
     sh:datatype xsd:string ;

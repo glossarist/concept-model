@@ -19,6 +19,8 @@ module Glossarist
       autoload :CheckExternalConceptShape,      "glossarist/concept_model/validators/check_external_concept_shape"
       autoload :CheckBinaryHasPartRedundancy,   "glossarist/concept_model/validators/check_binary_has_part_redundancy"
       autoload :CheckDefinitionRules,           "glossarist/concept_model/validators/check_definition_rules"
+      autoload :CheckBibliographyNotConceptIds, "glossarist/concept_model/validators/check_bibliography_not_concept_ids"
+      autoload :CheckNoRawHtmlInConceptText,   "glossarist/concept_model/validators/check_no_raw_html_in_concept_text"
       autoload :NaryCoherence,                  "glossarist/concept_model/validators/nary_coherence"
     end
   end

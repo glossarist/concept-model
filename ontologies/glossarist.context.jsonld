@@ -51,6 +51,7 @@
     "ConceptDate":         "gloss:ConceptDate",
     "NonVerbalRepresentation": "gloss:NonVerbalRepresentation",
     "NonVerbalEntity":     "gloss:NonVerbalEntity",
+    "NonConceptEntity":    "gloss:NonConceptEntity",
     "SharedNonVerbalEntity": "gloss:SharedNonVerbalEntity",
     "Figure":              "gloss:Figure",
     "Table":               "gloss:Table",

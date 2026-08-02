@@ -16,7 +16,15 @@ additionalProperties: false
 properties:
   bibliography:
     type: array
-    description: Ordered list of bibliographic references.
+    description: |
+      Ordered list of bibliographic references.
+
+      IMPORTANT: Each entry should be a PURE bibliographic record —
+      a paper, standard, or external document that is NOT a concept
+      in any deployed dataset. If the referenced thing IS a concept
+      (e.g., an IEV entry), use a ConceptSource with structured
+      origin.ref instead. Bibliography entries are for case-3-only
+      references that have no underlying concept dataset.
     items:
       type: object
       required: [id, reference]
@@ -24,7 +32,11 @@ properties:
       properties:
         id:
           type: string
-          description: Entry identifier, dataset-unique. Cited from concept sources and inline {{cite:...}} mentions.
+          description: |
+            Entry identifier, dataset-unique. MUST NOT be a concept ID.
+            If this ID matches a concept ID in the same dataset, the
+            entry should probably be a ConceptSource instead.
+            Cited from concept sources and inline {{bib:id}} mentions.
         reference:
           type: string
           description: Publication reference string (e.g. "ISO 704").
