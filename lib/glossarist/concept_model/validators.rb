@@ -21,6 +21,7 @@ module Glossarist
       autoload :CheckDefinitionRules,           "glossarist/concept_model/validators/check_definition_rules"
       autoload :CheckBibliographyNotConceptIds, "glossarist/concept_model/validators/check_bibliography_not_concept_ids"
       autoload :CheckNoRawHtmlInConceptText,   "glossarist/concept_model/validators/check_no_raw_html_in_concept_text"
+      autoload :CheckInlineMentionsSyntax,   "glossarist/concept_model/validators/check_inline_mentions_syntax"
       autoload :NaryCoherence,                  "glossarist/concept_model/validators/nary_coherence"
     end
   end
