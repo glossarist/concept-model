@@ -63,7 +63,7 @@ module Glossarist
             failures << "#{relative(path)}: type #{type.inspect} must be one of #{VALID_TYPES.join(', ')}"
           end
 
-          if comp && id
+          if comp && id && comp["source"] && comp["id"]
             dir_part = id.split("/").first
             expected_dir = "#{comp['source']}-#{comp['id']}".downcase.gsub(/[^a-z0-9-]/, "-").gsub(/-+/, "-")
             unless dir_part == expected_dir

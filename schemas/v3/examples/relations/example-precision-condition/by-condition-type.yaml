@@ -1,0 +1,30 @@
+$id: example-precision-condition/by-condition-type
+type: generic_relation
+status: valid
+comprehensive:
+  text: "precision condition of measurement"
+  external: true
+members:
+  - ref: { source: VIML, id: "2.20" }
+    characteristic:
+      eng: repeatability condition of measurement
+      fra: condition de répétabilité de mesure
+  - ref: { source: VIML, id: "2.22" }
+    characteristic:
+      eng: intermediate precision condition of measurement
+      fra: condition de fidélité intermédiaire de mesure
+  - ref: { source: VIML, id: "2.24" }
+    characteristic:
+      eng: reproducibility condition of measurement
+      fra: condition de reproductibilité de mesure
+  - ref:
+      ellipsis: true
+completeness: partial
+criterion:
+  eng: by precision level
+  fra: par niveau de fidélité
+notes:
+  eng: |
+    The comprehensive is an inline external concept (no separate concept
+    file). The ellipsis member at the end indicates more condition types
+    exist beyond the three encoded.
