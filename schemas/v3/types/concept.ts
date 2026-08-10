@@ -349,8 +349,12 @@ export interface ConceptRef {
   source?: string;
   /** Concept identifier within the registry (e.g. "102-01-01"). */
   id?: string;
-  /** Target designation text for lexical relationships, or the placeholder label for an unresolved ExternalConcept. */
+  /** Target designation text for lexical relationships, or the placeholder label for an unresolved external concept. */
   text?: string;
+  /** When true, this ConceptRef references a parenthetical/external concept — one taken as a primitive in the current analysis but not formally defined in this dataset. The renderer shows the text in parentheses: (text). No separate concept file required. Mutually exclusive with `source`/`id`. */
+  external?: boolean;
+  /** When true, this ConceptRef represents a known gap — a member position that exists but whose target is unidentified. The renderer shows "..." at this position. Mutually exclusive with all other fields. */
+  ellipsis?: boolean;
 }
 
 /**

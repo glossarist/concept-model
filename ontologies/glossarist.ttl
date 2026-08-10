@@ -1095,6 +1095,35 @@ gloss:conceptRefText a owl:DatatypeProperty ;
   rdfs:label "concept ref text"@en ;
   rdfs:comment "Target designation text for lexical relationships (e.g. close_match, abbreviated_form_for)."@en .
 
+gloss:external a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptRef ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "external"@en ;
+  rdfs:comment """
+    When true, this ConceptRef references a parenthetical/external
+    concept — one taken as a primitive in the current analysis but
+    not formally defined in this dataset. The renderer shows the
+    text in parentheses: (text). No separate concept file required.
+
+    Mutually exclusive with source/id. Used in hyperedge members and
+    binary relationships for ISO 704:2022 parenthetic-term notation.
+  """@en .
+
+gloss:ellipsis a owl:DatatypeProperty ;
+  rdfs:domain gloss:ConceptRef ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "ellipsis"@en ;
+  rdfs:comment """
+    When true, this ConceptRef represents a known gap — a member
+    position that exists but whose target is unidentified. The
+    renderer shows '...' at this position.
+
+    Mutually exclusive with all other fields. Used in sequential
+    hyperedges where gap position matters, and for hyperedges where
+    the author wants to explicitly mark that more members exist
+    beyond completeness: partial.
+  """@en .
+
 # ── CustomLocality ─────────────────────────────────────────────────────────
 
 gloss:CustomLocality a owl:Class ;

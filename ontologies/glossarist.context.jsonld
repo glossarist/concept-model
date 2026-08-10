@@ -176,6 +176,8 @@
     "conceptRefSource":    { "@id": "gloss:conceptRefSource", "@type": "xsd:string" },
     "conceptRefId":        { "@id": "gloss:conceptRefId", "@type": "xsd:string" },
     "conceptRefText":      { "@id": "gloss:conceptRefText", "@type": "xsd:string" },
+    "external":            { "@id": "gloss:external", "@type": "xsd:boolean" },
+    "ellipsis":            { "@id": "gloss:ellipsis", "@type": "xsd:boolean" },
 
     "customLocalityName":  { "@id": "gloss:customLocalityName", "@type": "xsd:string" },
     "customLocalityValue": { "@id": "gloss:customLocalityValue", "@type": "xsd:string" },

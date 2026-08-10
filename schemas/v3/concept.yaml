@@ -444,21 +444,26 @@ $defs:
         type: string
         description: Version of the document.
 
-  # ConceptRef (used in RelatedConcept#ref, PartitiveMember#ref,
-  # presence, count, and is_delimiting, and standalone as ExternalConcept placeholder)
+  # ConceptRef (used in RelatedConcept#ref, HyperedgeMember#ref,
+  # and standalone as ExternalConcept placeholder)
   concept_ref:
     type: object
     description: |
-      A concept reference. Three forms:
-        1. (source, id, text) — fully resolved, with optional
-           display text
+      A concept reference. Five forms:
+        1. (source, id, text) — fully resolved, with optional display text
         2. (source, id) — resolved
-        3. (text) — text-only placeholder for an ExternalConcept
-           (ManagedConcept with status: external)
+        3. (text) — text-only placeholder (lexical target or external label)
+        4. (text, external: true) — parenthetical external concept: a concept
+           taken as a primitive in this analysis but not formally defined in
+           this dataset. The renderer shows (text). No separate concept file
+           required.
+        5. (ellipsis: true) — known gap: a member position that exists but
+           whose target is unidentified. The renderer shows "...". Useful for
+           sequential hyperedges where gap position matters, and for binary
+           relationships where the author knows a target exists but can't
+           name it.
 
-      Form 3 is for inline convenience in authored YAML. The
-      deserializer creates or looks up an ExternalConcept with
-      that text as its preferred designation.
+      Forms 4 and 5 are mutually exclusive with form 1.
     properties:
       source:
         type: string
@@ -468,10 +473,30 @@ $defs:
         description: Concept identifier within the registry (e.g. "102-01-01").
       text:
         type: string
-        description: Target designation text for lexical relationships, or the placeholder label for an unresolved ExternalConcept.
+        description: |
+          Target designation text for lexical relationships, or the
+          placeholder label for an unresolved external concept.
+      external:
+        type: boolean
+        default: false
+        description: |
+          When true, this ConceptRef references a parenthetical/external
+          concept — one taken as a primitive in the current analysis but
+          not formally defined in this dataset. The renderer shows the
+          text in parentheses: (text). No separate concept file required.
+          Mutually exclusive with `source`/`id`.
+      ellipsis:
+        type: boolean
+        default: false
+        description: |
+          When true, this ConceptRef represents a known gap — a member
+          position that exists but whose target is unidentified. The
+          renderer shows "..." at this position. Mutually exclusive with
+          all other fields.
     anyOf:
       - required: [source, id]
       - required: [text]
+      - required: [ellipsis]
     additionalProperties: false
 
   # Completeness enum
