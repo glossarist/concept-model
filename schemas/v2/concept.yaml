@@ -1,6 +1,7 @@
 %YAML 1.1
 # yaml-language-server: $schema=http://json-schema.org/draft-07/schema
 ---
+$schema: "http://json-schema.org/draft-07/schema#"
 $id: "https://github.com/glossarist/concept-model/concept"
 title: YAML Schema for Concept model
 description: |
@@ -81,7 +82,9 @@ $defs:
     properties:
       date:
         type: string
-        format: date
+        anyOf:
+          - format: date
+          - format: date-time
         description: The date associated with the managed term.
       type:
         $ref: "#/$defs/concept_date_type"
@@ -106,7 +109,18 @@ $defs:
       type:
         $ref: "#/$defs/related_concept_type"
       ref:
-        type: string
+        anyOf:
+          - type: string
+          - type: object
+            properties:
+              source:
+                type: string
+              id:
+                type: string
+              text:
+                type: string
+              version:
+                type: string
         description: Reference to the related concept
       content:
         type: string

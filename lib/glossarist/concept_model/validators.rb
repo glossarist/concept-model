@@ -5,6 +5,7 @@ module Glossarist
     # Validators namespace. Autoloads each concrete validator.
     module Validators
       autoload :ValidateOntologies,             "glossarist/concept_model/validators/validate_ontologies"
+      autoload :ValidateV2Examples,             "glossarist/concept_model/validators/validate_v2_examples"
       autoload :ValidateExamples,               "glossarist/concept_model/validators/validate_examples"
       autoload :ValidateNegativeExamples,       "glossarist/concept_model/validators/validate_negative_examples"
       autoload :CheckEnumDrift,                 "glossarist/concept_model/validators/check_enum_drift"

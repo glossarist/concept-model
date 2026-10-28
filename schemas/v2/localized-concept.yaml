@@ -1,6 +1,7 @@
 %YAML 1.1
 # yaml-language-server: $schema=http://json-schema.org/draft-07/schema
 ---
+$schema: "http://json-schema.org/draft-07/schema#"
 $id: "https://github.com/glossarist/concept-model/localized-concept"
 title: YAML Schema for LocalizedConcept model
 description: |
@@ -406,14 +407,13 @@ $defs:
         $ref: "#/$defs/custom_locality"
 
   locality:
-    type: string
+    type: object
     description: The locality of the origin
     properties:
       type:
         type: string
         description: Type of the locality
-        pattern:
-          format: section|clause|part|paragraph|chapter|page|title|line|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+
+        pattern: "^(section|clause|part|paragraph|chapter|page|title|line|whole|table|annex|figure|note|list|example|volume|issue|time|anchor|locality:[a-zA-Z0-9_]+)$"
         example: clause
       reference_from:
         type: string
