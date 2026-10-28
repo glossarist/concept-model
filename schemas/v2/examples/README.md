@@ -4,6 +4,17 @@ Concrete YAML examples for every feature of the v2 concept model. Each example
 is a valid instance against the schemas in `../concept.yaml` (managed concept)
 and `../localized-concept.yaml` (localized concept).
 
+Run `bundle exec exe/validate-v2-examples` from the repository root to validate
+and list every v2 YAML example. The existing `validate-schemas` CI workflow runs
+this check with format validation enabled, including lifecycle dates.
+
+The v2 schemas support structured citation localities (`type`, `reference_from`,
+`reference_to`) and structured related-concept references as used by
+[glossarist-ruby's v2 models](https://github.com/glossarist/glossarist-ruby/tree/caa5a7ed77e6a42d6030f0b6bad31388b8058a6d/lib/glossarist/v2).
+Lifecycle dates accept both calendar dates and timestamps. Examples 07, 11 and
+15 retain those supported forms; the schemas describe them without rewriting
+the examples.
+
 Companion files share a numeric prefix and are meant to be read together:
 `NN-topic.yaml` is the managed concept, `NN-topic-localized*.yaml` are its
 localizations.
