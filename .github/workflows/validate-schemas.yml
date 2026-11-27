@@ -7,6 +7,7 @@ on:
       - 'schemas/**'
       - 'models/**'
       - 'ontologies/**'
+      - 'dist/**'
       - 'lib/**'
       - 'exe/**'
       - 'spec/**'
@@ -18,6 +19,7 @@ on:
       - 'schemas/**'
       - 'models/**'
       - 'ontologies/**'
+      - 'dist/**'
       - 'lib/**'
       - 'exe/**'
       - 'spec/**'
@@ -42,6 +44,8 @@ jobs:
       - run: bundle exec exe/check-enum-drift
       - run: bundle exec exe/check-jsonld-context
       - run: bundle exec exe/check-shacl-coverage
+      - run: bundle exec exe/generate-shacl --check
+      - run: bundle exec exe/package-shacl --check
       - run: bundle exec exe/check-lutaml-references
       - run: bundle exec exe/check-partitive-relation-coherence
       - run: bundle exec exe/check-external-concept-shape

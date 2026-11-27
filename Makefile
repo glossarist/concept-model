@@ -43,6 +43,7 @@ BUNDLE := bundle exec
 
 validate: validate-ontologies validate-examples validate-negative-examples \
           check-enum-drift check-jsonld-context check-shacl-coverage \
+          check-shacl-fresh check-packaged-shacl-fresh \
           check-lutaml-references check-partitive-relation-coherence \
           check-external-concept-shape check-binary-has-part-redundancy
 	@echo "All validation checks passed."
@@ -65,6 +66,22 @@ check-jsonld-context:
 check-shacl-coverage:
 	$(BUNDLE) exe/check-shacl-coverage
 
+check-shacl-fresh:
+	$(BUNDLE) exe/generate-shacl --check
+
+check-packaged-shacl-fresh:
+	$(BUNDLE) exe/package-shacl --check
+
+generate-shacl:
+	$(BUNDLE) exe/generate-shacl
+
+package-shacl:
+	$(BUNDLE) exe/package-shacl
+
+validate-shacl:
+	@test -n "$(DATA_DIR)" || { echo "Usage: make validate-shacl DATA_DIR=path/to/jsonld"; exit 2; }
+	$(BUNDLE) exe/validate-shacl $(DATA_DIR)
+
 check-lutaml-references:
 	$(BUNDLE) exe/check-lutaml-references
 
@@ -82,6 +99,8 @@ validate-scripts:
 
 .PHONY: clean validate validate-ontologies validate-examples \
         validate-negative-examples check-enum-drift check-jsonld-context \
-        check-shacl-coverage check-lutaml-references \
-        check-partitive-relation-coherence check-external-concept-shape \
-        check-binary-has-part-redundancy validate-scripts
+        check-shacl-coverage check-shacl-fresh check-packaged-shacl-fresh \
+        generate-shacl package-shacl validate-shacl \
+        check-lutaml-references check-partitive-relation-coherence \
+        check-external-concept-shape check-binary-has-part-redundancy \
+        validate-scripts

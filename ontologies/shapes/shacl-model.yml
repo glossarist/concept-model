@@ -1,0 +1,783 @@
+# Glossarist SHACL constraint model
+#
+# Declarative SSOT for the SHACL-specific semantics that OWL cannot
+# express. Consumed by exe/generate-shacl together with
+# ontologies/glossarist.ttl (classes, property domains/ranges) and
+# ontologies/prefixes.ttl (prefix bindings) to produce
+# ontologies/shapes/glossarist.shacl.ttl.
+#
+# Layers:
+#   sections  — ordered banner sections and their shape order (rendering only)
+#   shapes    — per-shape declaration:
+#                 target_class | target_subjects_of, cotypes (node-level
+#                 sh:class co-typing), severity, message, note,
+#                 paths (fully declared property shapes — external paths,
+#                 OWL-divergent overrides, gloss paths absent from OWL),
+#                 omit (OWL properties with this domain intentionally not
+#                 shaped, with reasons), or (disjunctions), sparql
+#                 (SPARQL constraints, verbatim).
+#   path_overrides — extra constraints on OWL-derived paths, keyed by
+#                 short path name; datatype/class always come from OWL.
+#
+# Derived paths: every OWL property whose rdfs:domain includes a shape's
+# target_class is emitted automatically unless declared or omitted —
+# regenerate after ontology edits rather than hand-editing the Turtle.
+
+sections:
+  - title: Concept shapes
+    shapes:
+      - ConceptShape
+      - LocalizedConceptShape
+      - ConceptCollectionShape
+
+  - title: Designation shapes
+    shapes:
+      - DesignationShape
+      - ExpressionShape
+      - AbbreviationShape
+      - SymbolShape
+      - LetterSymbolShape
+      - GraphicalSymbolShape
+      - PrefixShape
+      - SuffixShape
+      - DesignationRelationshipShape
+
+  - title: Supporting class shapes
+    shapes:
+      - PronunciationShape
+      - DetailedDefinitionShape
+      - ConceptSourceShape
+      - ConceptDateShape
+      - NonVerbalRepresentationShape
+      - FigureShape
+      - TableShape
+      - FormulaShape
+      - ImageShape
+      - ReferenceShape
+      - LocalityShape
+      - CitationShape
+      - CitationRefShape
+      - ConceptRefShape
+      - CustomLocalityShape
+      - RelatedConceptShape
+
+  - title: Concept System shape (ISO 12620 A.7)
+    shapes:
+      - ConceptSystemShape
+      - ConceptSystemTypeShape
+
+  - title: Partitive Relation shapes (ISO 704 / 1087-1 / 12620)
+    shapes:
+      - PartitiveRelationShape
+      - ConceptSystemMemberShape
+      - PartitiveMemberShape
+      - GenericRelationShape
+      - GenericMemberShape
+      - ConceptSystemMemberVacuousComboShape
+      - StandaloneRelationFileShape
+      - DetailedDefinitionTypeShape
+      - ExternalConceptCoherenceShape
+      - PartitiveRelationOwnershipShape
+
+  - title: Non-verbal entity hierarchy
+    shapes:
+      - NonVerbalEntityShape
+      - NonConceptEntityShape
+      - FigureImageShape
+      - GrammarInfoShape
+
+  - title: Dataset Register shapes
+    shapes:
+      - DatasetRegisterShape
+      - SectionShape
+
+shapes:
+
+  # ── Concept shapes ────────────────────────────────────────────────────
+
+  ConceptShape:
+    target_class: gloss:Concept
+    cotypes: [skos:Concept]
+    paths:
+      gloss:identifier:
+        min_count: 1
+        max_count: 1
+      gloss:uri:
+        max_count: 1
+      gloss:hasStatus:
+        values_from: status
+        max_count: 1
+    omit:
+      gloss:hasNote: >-
+        concept-level notes are not serialized as RDF notes; OWL range
+        (rdf:langString) diverges from the JSON-LD context's node reference.
+
+  LocalizedConceptShape:
+    target_class: gloss:LocalizedConcept
+    cotypes: [skos:Concept]
+    paths:
+      gloss:isLocalizationOf:
+        min_count: 1
+        max_count: 1
+      gloss:language:
+        max_count: 1
+      gloss:hasEntryStatus:
+        values_from: entstatus
+        max_count: 1
+      gloss:classification:
+        max_count: 1
+      gloss:domain:
+        max_count: 1
+      gloss:script:
+        max_count: 1
+      gloss:conversionSystem:
+        max_count: 1
+      gloss:release:
+        max_count: 1
+      gloss:lineageSimilarity:
+        max_count: 1
+      gloss:reviewType:
+        max_count: 1
+        in: ["editorial", "substantive"]
+      gloss:hasNote:
+        class_: gloss:DetailedDefinition
+        note: >-
+          OWL range is rdf:langString but the JSON-LD context maps hasNote
+          as a node reference — shapes follow the context; the OWL range is
+          flagged for correction.
+
+  ConceptCollectionShape:
+    target_class: gloss:ConceptCollection
+    cotypes: [skos:Collection]
+    paths:
+      skos:member:
+        class_: gloss:Concept
+      dcterms:title:
+        datatype: xsd:string
+        max_count: 1
+
+  # ── Designation shapes ────────────────────────────────────────────────
+
+  DesignationShape:
+    target_class: gloss:Designation
+    cotypes: [skosxl:Label]
+    paths:
+      skosxl:literalForm:
+        min_count: 1
+        max_count: 1
+      gloss:normativeStatus:
+        values_from: norm
+        max_count: 1
+      gloss:hasTermType:
+        values_from: termtype
+        max_count: 1
+      gloss:language:
+        max_count: 1
+      gloss:script:
+        max_count: 1
+      gloss:conversionSystem:
+        max_count: 1
+      gloss:isInternational:
+        max_count: 1
+      gloss:isAbsent:
+        max_count: 1
+      gloss:register:
+        max_count: 1
+
+  ExpressionShape:
+    target_class: gloss:Expression
+
+  AbbreviationShape:
+    target_class: gloss:Abbreviation
+
+  SymbolShape:
+    target_class: gloss:Symbol
+
+  LetterSymbolShape:
+    target_class: gloss:LetterSymbol
+
+  GraphicalSymbolShape:
+    target_class: gloss:GraphicalSymbol
+
+  PrefixShape:
+    target_class: gloss:Prefix
+
+  SuffixShape:
+    target_class: gloss:Suffix
+
+  DesignationRelationshipShape:
+    target_class: gloss:DesignationRelationship
+    paths:
+      gloss:designationRelationshipType:
+        min_count: 1
+        max_count: 1
+      gloss:designationRelationshipContent:
+        max_count: 1
+      gloss:relationshipTarget:
+        max_count: 1
+
+  # ── Supporting class shapes ───────────────────────────────────────────
+
+  PronunciationShape:
+    target_class: gloss:Pronunciation
+    paths:
+      gloss:pronunciationContent:
+        min_count: 1
+        max_count: 1
+      gloss:pronunciationLanguage:
+        max_count: 1
+      gloss:pronunciationScript:
+        max_count: 1
+      gloss:pronunciationCountry:
+        max_count: 1
+      gloss:pronunciationSystem:
+        max_count: 1
+
+  DetailedDefinitionShape:
+    target_class: gloss:DetailedDefinition
+    paths:
+      rdf:value:
+        min_count: 1
+        max_count: 1
+    omit:
+      gloss:hasDefinitionType: carried by DetailedDefinitionTypeShape.
+
+  ConceptSourceShape:
+    target_class: gloss:ConceptSource
+    paths:
+      gloss:sourceId:
+        max_count: 1
+      gloss:sourceType:
+        values_from: srctype
+        max_count: 1
+      gloss:sourceStatus:
+        values_from: srcstatus
+        max_count: 1
+      gloss:sourceOrigin:
+        max_count: 1
+      gloss:modification:
+        max_count: 1
+    sparql:
+      - message: sourced_from is only allowed on sources of type lineage
+        select: |
+          PREFIX gloss: <https://www.glossarist.org/ontologies/>
+          PREFIX srctype: <https://www.glossarist.org/ontologies/srctype/>
+          SELECT $this
+          WHERE {
+            $this gloss:sourcedFrom ?target .
+            FILTER NOT EXISTS {
+              $this gloss:sourceType srctype:lineage .
+            }
+          }
+
+  ConceptDateShape:
+    target_class: gloss:ConceptDate
+    paths:
+      gloss:dateValue:
+        min_count: 1
+        max_count: 1
+      gloss:dateType:
+        values_from: datetype
+        min_count: 1
+        max_count: 1
+      gloss:eventDescription:
+        max_count: 1
+
+  NonVerbalRepresentationShape:
+    target_class: gloss:NonVerbalRepresentation
+    note: >-
+      Merged from two duplicated hand-authored shapes (representation
+      payload + label/provenance payload); RDF-identical to their union.
+    paths:
+      gloss:representationType:
+        min_count: 1
+        max_count: 1
+        in: ["image", "table", "formula"]
+      gloss:representationRef:
+        min_count: 1
+        max_count: 1
+      skosxl:prefLabel:
+        min_count: 1
+      gloss:image:
+        datatype: xsd:anyURI
+        max_count: 1
+        note: >-
+          declared here historically; OWL rdfs:domain (GraphicalSymbol,
+          Figure) does not include NonVerbalRepresentation.
+      dcterms:description:
+        max_count: 1
+      prov:wasDerivedFrom:
+        class_: prov:Entity
+        max_count: 1
+
+  FigureShape:
+    target_class: gloss:Figure
+    paths:
+      gloss:image:
+        min_count: 1
+      gloss:caption:
+        datatype: xsd:string
+        max_count: 1
+        note: >-
+          OWL range is rdf:langString; the JSON-LD context types caption as
+          xsd:string — shapes follow the context; OWL flagged for correction.
+      dcterms:description:
+        datatype: xsd:string
+        max_count: 1
+
+  TableShape:
+    target_class: gloss:Table
+    paths:
+      gloss:content:
+        min_count: 1
+      gloss:caption:
+        datatype: xsd:string
+        max_count: 1
+        note: >-
+          OWL range is rdf:langString; the JSON-LD context types caption as
+          xsd:string — shapes follow the context; OWL flagged for correction.
+      dcterms:title:
+        datatype: xsd:string
+        max_count: 1
+
+  FormulaShape:
+    target_class: gloss:Formula
+    paths:
+      gloss:expression:
+        min_count: 1
+      gloss:latexForm:
+        max_count: 1
+      dcterms:description:
+        datatype: xsd:string
+        max_count: 1
+
+  ImageShape:
+    target_class: foaf:Image
+    paths:
+      dcterms:format:
+        datatype: xsd:string
+        min_count: 1
+      dcterms:language:
+        datatype: xsd:string
+        max_count: 1
+      dcat:byteSize:
+        datatype: xsd:integer
+        max_count: 1
+
+  ReferenceShape:
+    target_class: gloss:Reference
+    or:
+      - gloss:source:
+          min_count: 1
+      - gloss:refId:
+          min_count: 1
+    paths:
+      gloss:source:
+        max_count: 1
+      gloss:refId:
+        max_count: 1
+      gloss:refVersion:
+        max_count: 1
+      gloss:refLink:
+        max_count: 1
+      gloss:refType:
+        max_count: 1
+      gloss:urn:
+        max_count: 1
+      gloss:term:
+        max_count: 1
+      gloss:hasLocality:
+        max_count: 1
+
+  LocalityShape:
+    target_class: gloss:Locality
+    paths:
+      gloss:localityType:
+        min_count: 1
+        max_count: 1
+      gloss:referenceFrom:
+        max_count: 1
+      gloss:referenceTo:
+        max_count: 1
+
+  CitationShape:
+    target_class: gloss:Citation
+    paths:
+      gloss:hasCitationRef:
+        max_count: 1
+      gloss:hasCitationLocality:
+        max_count: 1
+      gloss:citationLink:
+        max_count: 1
+      gloss:citationOriginal:
+        max_count: 1
+
+  CitationRefShape:
+    target_class: gloss:CitationRef
+    paths:
+      gloss:citationRefSource:
+        max_count: 1
+      gloss:citationRefId:
+        max_count: 1
+      gloss:citationRefVersion:
+        max_count: 1
+
+  ConceptRefShape:
+    target_class: gloss:ConceptRef
+    paths:
+      gloss:conceptRefSource:
+        max_count: 1
+      gloss:conceptRefId:
+        max_count: 1
+      gloss:conceptRefText:
+        max_count: 1
+
+  CustomLocalityShape:
+    target_class: gloss:CustomLocality
+    paths:
+      gloss:customLocalityName:
+        min_count: 1
+        max_count: 1
+      gloss:customLocalityValue:
+        min_count: 1
+        max_count: 1
+
+  RelatedConceptShape:
+    target_class: gloss:RelatedConcept
+    paths:
+      gloss:relationshipType:
+        min_count: 1
+        max_count: 1
+      gloss:relationshipRef:
+        max_count: 1
+      gloss:relationshipContent:
+        max_count: 1
+
+  # ── Concept System (ISO 12620 A.7) ────────────────────────────────────
+
+  ConceptSystemShape:
+    target_class: gloss:ConceptSystem
+    paths:
+      gloss:hasSystemType:
+        min_count: 1
+        max_count: 1
+        in:
+          - <https://www.glossarist.org/ontologies/conceptSystemType/generic>
+          - <https://www.glossarist.org/ontologies/conceptSystemType/partitive>
+          - <https://www.glossarist.org/ontologies/conceptSystemType/sequential>
+          - <https://www.glossarist.org/ontologies/conceptSystemType/associative>
+          - <https://www.glossarist.org/ontologies/conceptSystemType/mixed>
+      gloss:hasMember:
+        class_: gloss:ConceptRef
+        min_count: 1
+        note: >-
+          declared as ConceptRef historically; OWL range of gloss:hasMember
+          is ConceptSystemMember — the OWL range is flagged for review
+          (system members are concept references).
+
+  ConceptSystemTypeShape:
+    target_class: gloss:ConceptSystemType
+    paths:
+      skos:inScheme:
+        min_count: 1
+        has_value: <https://www.glossarist.org/ontologies/conceptSystemType>
+
+  # ── Partitive / generic relations ─────────────────────────────────────
+
+  PartitiveRelationShape:
+    target_class: gloss:PartitiveRelation
+    paths:
+      gloss:comprehensive:
+        min_count: 1
+        max_count: 1
+      gloss:hasMember:
+        min_count: 2
+        note: 'ISO 704: "two or more"'
+      gloss:completeness:
+        values_from: completeness
+        max_count: 1
+
+  ConceptSystemMemberShape:
+    target_class: gloss:ConceptSystemMember
+    paths:
+      gloss:ref:
+        min_count: 1
+        max_count: 1
+      gloss:presence:
+        values_from: partitivePresence
+        max_count: 1
+      gloss:count:
+        values_from: partitiveCount
+        max_count: 1
+      gloss:isDelimiting:
+        max_count: 1
+
+  PartitiveMemberShape:
+    target_class: gloss:PartitiveMember
+    paths:
+      gloss:ref:
+        class_: gloss:ConceptRef
+        min_count: 1
+        max_count: 1
+        note: >-
+          OWL rdfs:domain of gloss:ref is ConceptSystemMember;
+          PartitiveMember specializes it.
+
+  GenericRelationShape:
+    target_class: gloss:GenericRelation
+    paths:
+      gloss:comprehensive:
+        min_count: 1
+        max_count: 1
+      gloss:hasMember:
+        min_count: 2
+      gloss:completeness:
+        values_from: completeness
+        max_count: 1
+      gloss:criterion:
+        datatype: rdf:langString
+        note: >-
+          OWL rdfs:domain covers PartitiveRelation only; adding
+          GenericRelation to the domain union is flagged for the ontology.
+
+  GenericMemberShape:
+    target_class: gloss:GenericMember
+    paths:
+      gloss:ref:
+        class_: gloss:ConceptRef
+        min_count: 1
+        max_count: 1
+        note: >-
+          OWL rdfs:domain of gloss:ref is ConceptSystemMember;
+          GenericMember specializes it.
+      gloss:characteristic:
+        max_count: 1
+        severity: sh:Info
+        comment: >-
+          ISO 704:2022 §5.5.4.2.1 delimiting characteristic. Recommended but
+          not required; some datasets only carry the criterion on the rake,
+          not the characteristic on each species.
+
+  ConceptSystemMemberVacuousComboShape:
+    target_class: gloss:ConceptSystemMember
+    derive: false
+    note: >-
+      Reject the vacuous combination presence=optional + count=at_least_one.
+      Applies to all ConceptSystemMember subclasses (Partitive + Generic).
+    sparql:
+      - type: sh:SPARQLConstraint
+        message: presence=optional + count=at_least_one is vacuous — use (optional, multiple) instead.
+        prefixes:
+          gloss: https://www.glossarist.org/ontologies/
+          partitivePresence: https://www.glossarist.org/ontologies/partitivePresence/
+          partitiveCount: https://www.glossarist.org/ontologies/partitiveCount/
+        select: |
+          SELECT $this
+          WHERE {
+            $this gloss:presence <https://www.glossarist.org/ontologies/partitivePresence/optional> .
+            $this gloss:count <https://www.glossarist.org/ontologies/partitiveCount/at_least_one> .
+          }
+
+  StandaloneRelationFileShape:
+    target_class: gloss:AbstractNaryRelation
+    note: >-
+      Standalone relation file shape — validates per-file format. Each file
+      must have $id matching <comprehensive-id>/<criterion-slug> pattern,
+      a valid type, comprehensive, and >= 2 members.
+    paths:
+      gloss:relationFileType:
+        min_count: 1
+        max_count: 1
+        in: ["partitive_relation", "generic_relation"]
+        note: not declared in glossarist.ttl.
+      gloss:comprehensive:
+        class_: gloss:ConceptRef
+        min_count: 1
+        max_count: 1
+        note: >-
+          OWL rdfs:domain covers PartitiveRelation and GenericRelation;
+          AbstractNaryRelation is their common ancestor.
+      gloss:hasMember:
+        class_: gloss:ConceptSystemMember
+        min_count: 2
+    omit:
+      gloss:hasNote: >-
+        concept-level notes are not serialized as RDF notes; OWL range
+        (rdf:langString) diverges from the JSON-LD context's node reference.
+
+  DetailedDefinitionTypeShape:
+    target_class: gloss:DetailedDefinition
+    derive: false
+    note: DetailedDefinition type — ISO 704:2022 §5.3 definition strategy.
+    paths:
+      gloss:hasDefinitionType:
+        values_from: taxonomies/definition-type
+        max_count: 1
+
+  ExternalConceptCoherenceShape:
+    target_subjects_of: gloss:hasStatus
+    severity: sh:Warning
+    note: >-
+      ExternalConcept coherence — an external concept (status: external)
+      must NOT have a definition or sources; that would contradict its
+      status. Soft warning to allow transitional data.
+    sparql:
+      - type: sh:SPARQLConstraint
+        message: 'An external concept should not have a definition — that contradicts status: external.'
+        prefixes:
+          gloss: https://www.glossarist.org/ontologies/
+        select: |
+          SELECT $this ?definition
+          WHERE {
+            $this gloss:hasStatus <https://www.glossarist.org/ontologies/status/external> .
+            $this gloss:hasDefinition ?definition .
+          }
+
+  PartitiveRelationOwnershipShape:
+    target_class: gloss:PartitiveRelation
+    derive: false
+    severity: sh:Warning
+    message: >-
+      partitive_relation is carried by a concept that is not its
+      comprehensive — confirm the cross-reference is intentional.
+    note: >-
+      Ownership invariant — soft (warning severity). A PartitiveRelation is
+      conventionally carried by its comprehensive's own concept entry.
+      Datasets may legitimately cross-reference; we warn so reviewers can
+      confirm the cross-reference is intentional.
+    sparql:
+      - type: sh:SPARQLConstraint
+        prefixes:
+          gloss: https://www.glossarist.org/ontologies/
+          xsd: http://www.w3.org/2001/XMLSchema#
+        select: |
+          SELECT $this ?carryingConcept ?compRef
+          WHERE {
+            ?carryingConcept gloss:hasPartitiveRelation $this .
+            $this gloss:comprehensive ?compRef .
+            OPTIONAL { ?compRef gloss:conceptRefId ?literalId . }
+            BIND(COALESCE(?literalId, STRAFTER(STR(?compRef), CONCAT(STR(?carryingConcept), "/"))) AS ?compKey)
+            FILTER (BOUND(?compKey) && !STRENDS(STR(?carryingConcept), CONCAT("/", ?compKey)))
+          }
+
+  # ── Non-verbal entity hierarchy ───────────────────────────────────────
+
+  NonVerbalEntityShape:
+    target_class: gloss:NonVerbalEntity
+    paths:
+      gloss:hasSource:
+        class_: gloss:ConceptSource
+        note: >-
+          declared here historically; OWL rdfs:domain union does not include
+          NonVerbalEntity — flagged for addition to the ontology.
+      gloss:caption:
+        datatype: xsd:string
+        max_count: 1
+        note: >-
+          OWL range is rdf:langString; the JSON-LD context types caption as
+          xsd:string — shapes follow the context; OWL flagged for correction.
+      gloss:altText:
+        datatype: xsd:string
+        max_count: 1
+        note: same caption divergence (OWL rdf:langString vs context xsd:string).
+      gloss:description:
+        datatype: xsd:string
+        note: same caption divergence (OWL rdf:langString vs context xsd:string).
+
+  NonConceptEntityShape:
+    target_class: gloss:NonConceptEntity
+    cotypes: [gloss:NonVerbalEntity]
+    paths:
+      gloss:role:
+        datatype: xsd:string
+        max_count: 1
+        note: >-
+          declared here historically; OWL rdfs:domain is FigureImage
+          (where it is also derived).
+
+  FigureImageShape:
+    target_class: gloss:FigureImage
+    paths:
+      gloss:hasSubfigure:
+        class_: gloss:FigureImage
+        note: >-
+          declared here historically; OWL rdfs:domain is Figure (where it is
+          also derived).
+
+  GrammarInfoShape:
+    target_class: gloss:GrammarInfo
+    paths:
+      gloss:gender:
+        values_from: gender
+      gloss:number:
+        values_from: number
+      gloss:partOfSpeech:
+        max_count: 1
+
+  # ── Dataset Register ──────────────────────────────────────────────────
+
+  DatasetRegisterShape:
+    target_class: gloss:DatasetRegister
+    paths:
+      gloss:datasetId:
+        min_count: 1
+        max_count: 1
+      gloss:datasetUrn:
+        min_count: 1
+        max_count: 1
+      gloss:datasetRef:
+        max_count: 1
+      gloss:datasetYear:
+        max_count: 1
+      gloss:datasetStatus:
+        max_count: 1
+        in: ["current", "superseded", "retired"]
+      gloss:supersedesDataset:
+        max_count: 1
+      gloss:owner:
+        max_count: 1
+      gloss:sourceRepo:
+        max_count: 1
+      gloss:hasDefaultOrdering:
+        values_from: orderingmethod
+        max_count: 1
+      gloss:logo:
+        max_count: 1
+
+  SectionShape:
+    target_class: gloss:Section
+    paths:
+      gloss:sectionId:
+        min_count: 1
+        max_count: 1
+      gloss:hasParentSection:
+        max_count: 1
+      gloss:sectionOrdering:
+        values_from: orderingmethod
+        max_count: 1
+
+# Extra constraints on OWL-derived paths, keyed by short path name; the
+# datatype/class still come from OWL. Applied wherever the path is derived
+# (fully declared paths take precedence and carry their own extras).
+path_overrides:
+  gloss:isAcronym:
+    max_count: 1
+  gloss:isInitialism:
+    max_count: 1
+  gloss:isTruncation:
+    max_count: 1
+  gloss:text:
+    max_count: 1
+  gloss:image:
+    max_count: 1
+  gloss:urn:
+    max_count: 1
+  gloss:src:
+    min_count: 1
+    max_count: 1
+  gloss:format:
+    max_count: 1
+  gloss:hasHyperedge:
+    note: >-
+      OWL range gloss:AbstractHyperedge is not declared as an owl:Class in
+      glossarist.ttl — flagged for correction.

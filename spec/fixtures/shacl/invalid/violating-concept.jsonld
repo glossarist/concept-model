@@ -1,0 +1,16 @@
+{
+  "@context": {
+    "gloss": "https://www.glossarist.org/ontologies/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#"
+  },
+  "@graph": [
+    {
+      "@id": "https://example.org/concepts/2",
+      "@type": "gloss:Concept",
+      "gloss:identifier": 2,
+      "gloss:hasStatus": { "@id": "https://example.org/not-a-status-scheme-entry" },
+      "gloss:tag": "needs-review"
+    }
+  ]
+}

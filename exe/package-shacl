@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# SHACL packaging task (CLI).
+#
+# Produces the publishable, byte-stable artifact:
+#
+#   dist/gloss-shacl.ttl          — canonical Turtle copy of the generated
+#                                   shapes (ontologies/shapes/glossarist.shacl.ttl)
+#   dist/gloss-shacl.ttl.sha256   — sha256 checksum of the artifact
+#
+# The generated shapes file is already deterministic canonical Turtle
+# (rendered from the SSOTs by exe/generate-shacl), so packaging is a
+# verified copy: the graph must parse and the bytes must be exactly what
+# regeneration produces.
+#
+# Usage:
+#   bundle exec exe/package-shacl           # write dist/ artifacts
+#   bundle exec exe/package-shacl --check   # fail if dist/ has drifted
+
+require "digest"
+require "fileutils"
+require "optparse"
+require "rdf/turtle"
+require "glossarist/concept_model"
+
+options = { check_mode: false }
+OptionParser.new do |opts|
+  opts.banner = "Usage: package-shacl [options]"
+  opts.on("--check", "Fail if packaged artifacts drift from the sources") do
+    options[:check_mode] = true
+  end
+end.parse!
+
+module Glossarist
+  module ConceptModel
+    module ShaclPackager
+      DIST_DIR = Repo::ROOT / "dist"
+      ARTIFACT = DIST_DIR / "gloss-shacl.ttl"
+      CHECKSUM = DIST_DIR / "gloss-shacl.ttl.sha256"
+
+      module_function
+
+      def run(check_mode:)
+        source = File.read(Repo::SHACL.to_s)
+        checksum = Digest::SHA256.file(Repo::SHACL.to_s).hexdigest
+
+        if check_mode
+          if !File.exist?(ARTIFACT) || File.read(ARTIFACT) != source
+            $stderr.puts "FAIL: #{ARTIFACT} has drifted from #{Repo::SHACL}."
+            $stderr.puts "  Refresh with: bundle exec exe/package-shacl"
+            return 1
+          end
+          if !File.exist?(CHECKSUM) || File.read(CHECKSUM) != "#{checksum}  gloss-shacl.ttl\n"
+            $stderr.puts "FAIL: #{CHECKSUM} is stale."
+            $stderr.puts "  Refresh with: bundle exec exe/package-shacl"
+            return 1
+          end
+          $stdout.puts "OK: packaged artifact is up to date (sha256 #{checksum[0, 12]}…)"
+          return 0
+        end
+
+        verify_parse(Repo::SHACL.to_s)
+        FileUtils.mkdir_p(DIST_DIR)
+        File.write(ARTIFACT, source)
+        File.write(CHECKSUM, "#{checksum}  gloss-shacl.ttl\n")
+
+        graph = RDF::Graph.load(ARTIFACT.to_s)
+        shapes = graph.query([nil, RDF::URI("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),
+                              RDF::URI("http://www.w3.org/ns/shacl#NodeShape")]).count
+        $stdout.puts "OK: wrote #{ARTIFACT} (sha256 #{checksum})"
+        $stdout.puts "    #{shapes} NodeShapes, #{graph.count} triples"
+        0
+      end
+
+      def verify_parse(path)
+        RDF::Graph.load(path)
+      rescue StandardError => e
+        abort "FAIL: #{path} does not parse: #{e.message}"
+      end
+    end
+  end
+end
+
+exit Glossarist::ConceptModel::ShaclPackager.run(**options)

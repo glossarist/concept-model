@@ -43,7 +43,8 @@ ontologies/
 │   ├── ordering-method.ttl       # Ordering methods (systematic/mixed/alphabetical)
 │   └── concept-reference-type.ttl # Reference types (domain/section/local/designation)
 └── shapes/
-    └── glossarist.shacl.ttl      # SHACL validation shapes
+    ├── shacl-model.yml           # SHACL constraint layer (SSOT for cardinalities, schemes, SPARQL constraints)
+    └── glossarist.shacl.ttl      # SHACL validation shapes (GENERATED — do not edit)
 ```
 
 ## Design Principles
@@ -190,12 +191,61 @@ Glossarist-specific relationships are defined as `gloss:` properties:
 
 ## Validation
 
-SHACL shapes in `shapes/glossarist.shacl.ttl` validate:
-- Concept types and required properties
-- Designation class hierarchy and property constraints
-- Source, citation, and date structure
+### Shapes generation (SSOT-driven)
 
-Use [pySHACL](https://github.com/RDFLib/pySHACL) or [Apache Jena](https://jena.apache.org/) to validate instance data against these shapes.
+The SHACL shapes are **generated**, not hand-maintained. They are rendered
+from the same sources that drive the OWL ontology:
+
+- `glossarist.ttl` — classes, properties, `rdfs:domain`/`rdfs:range`
+  (drives `sh:targetClass`, `sh:path`, `sh:datatype`, `sh:class`)
+- `shapes/shacl-model.yml` — the SHACL-specific constraint layer OWL
+  cannot express: cardinalities, `sh:valuesFrom` scheme bindings,
+  `sh:in` enumerations, SPARQL constraints, severities, node co-types,
+  external paths, and explicit `omit` declarations
+- `prefixes.ttl` — canonical prefix bindings
+
+Every OWL property whose `rdfs:domain` includes a shaped class is emitted
+as a `sh:property` on that class's shape unless declared or omitted in the
+model — ontology changes propagate by regeneration, and intentional
+exclusions stay visible and reviewed.
+
+```sh
+bundle exec exe/generate-shacl          # regenerate ontologies/shapes/glossarist.shacl.ttl
+bundle exec exe/generate-shacl --check  # CI gate — fail if committed file drifts
+bundle exec exe/package-shacl           # write dist/gloss-shacl.ttl (+ .sha256) publishing artifact
+bundle exec exe/package-shacl --check   # CI gate for the packaged artifact
+```
+
+Regenerate after any `glossarist.ttl` or `shacl-model.yml` edit; both the
+shapes file and `dist/` artifacts are committed and CI checks freshness.
+
+### Validating instance data
+
+`exe/validate-shacl` validates a directory of JSON-LD aggregate files
+against the shapes and exits non-zero with a per-file violation report:
+
+```sh
+bundle exec exe/validate-shacl path/to/aggregates/     # *.jsonld, recursive
+bundle exec exe/validate-shacl path/to/aggregates/ --max-details 20
+```
+
+The report shows, per file, how many nodes the shapes actually target
+(and flags a *vacuous pass* when zero nodes are targeted) plus every
+violation with focus node, path, constraint component, and value.
+
+**Requirement:** Ruby has no maintained SHACL engine, and no SHACL gem is
+in the Gemfile (adding one is an owner decision), so the harness shells
+out to [pySHACL](https://github.com/RDFLib/pySHACL) via
+`scripts/shacl_validate.py`:
+
+```sh
+python3 -m pip install pyshacl
+```
+
+python3 with `pyshacl` must be on PATH; the harness exits 2 with a clear
+message when it is not. Alternatively, any SHACL-conformant engine (e.g.
+[Apache Jena](https://jena.apache.org/)) can consume the published
+`dist/gloss-shacl.ttl` directly.
 
 ## License
 

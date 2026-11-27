@@ -1,0 +1,114 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# SHACL validation harness (CLI).
+#
+# Validates a directory of JSON-LD aggregate files against the Glossarist
+# SHACL shapes and exits non-zero with a per-file violation report.
+#
+# Requires python3 with pyshacl — Ruby has no maintained SHACL engine and
+# no SHACL gem is in the Gemfile (adding one is an owner decision), so the
+# harness shells out to scripts/shacl_validate.py:
+#
+#   python3 -m pip install pyshacl
+#
+# Usage:
+#   bundle exec exe/validate-shacl DATA_DIR
+#   bundle exec exe/validate-shacl DATA_DIR --max-details 20
+#
+# Exit codes: 0 all files conform; 1 violations or data errors found;
+# 2 pyshacl/python3 tooling unavailable.
+
+require "json"
+require "open3"
+require "optparse"
+require "glossarist/concept_model"
+
+data_dir = nil
+options = { max_details: 10 }
+OptionParser.new do |opts|
+  opts.banner = "Usage: validate-shacl DATA_DIR [options]"
+  opts.on("--max-details N", Integer, "Max violations detailed per file (default 10)") do |v|
+    options[:max_details] = v
+  end
+  opts.on("--recursive", "Descend into subdirectories (default: <register>/<register>.jsonld)") do
+    options[:recursive] = true
+  end
+  opts.on("--shapes PATH", "Shapes file (default ontologies/shapes/glossarist.shacl.ttl)") do |v|
+    options[:shapes] = v
+  end
+end.parse!
+
+data_dir = ARGV[0]
+if data_dir.nil? || !File.directory?(data_dir)
+  abort "Usage: bundle exec exe/validate-shacl DATA_DIR [--max-details N]\n" \
+        "  DATA_DIR must exist and contain .jsonld files"
+end
+
+shapes = options[:shapes] || Glossarist::ConceptModel::Repo::SHACL.to_s
+helper = File.expand_path("../scripts/shacl_validate.py", __dir__)
+
+# Probe the toolchain first so a missing pyshacl is a clear message, not
+# a per-file stack trace. Helper exit 3 = tooling missing, 4 = parse
+# failure (/dev/null is expected to produce 4 — anything else is missing
+# tooling or an unexpected crash).
+probe_out, probe_err, probe_status = Open3.capture3("python3", helper, shapes, "/dev/null")
+if probe_status.exitstatus != 4
+  $stderr.puts "FAIL: python3/pyshacl toolchain unavailable or broken."
+  $stderr.puts "  #{probe_err.strip}"
+  $stderr.puts "  Install with: python3 -m pip install pyshacl"
+  exit 2
+end
+
+# Default scope: aggregates at depth 1 (<file>.jsonld) and depth 2
+# (<register>/<register>.jsonld); --recursive descends further
+# (per-concept interchange files etc.).
+files = if options[:recursive]
+  Dir.glob(File.join(data_dir, "**", "*.jsonld")).sort
+else
+  Dir.glob(File.join(data_dir, "{*,*/*}.jsonld")).sort
+end
+if files.empty?
+  abort "FAIL: no .jsonld files under #{data_dir}"
+end
+
+failures = 0
+files.each do |file|
+  rel = file.sub("#{File.expand_path(data_dir)}/", "")
+  out, err, status = Open3.capture3("python3", helper, shapes, file)
+  unless status.success?
+    failures += 1
+    $stderr.puts "ERROR #{rel}: helper exited #{status.exitstatus}"
+    $stderr.puts "  #{err.strip}"
+    next
+  end
+
+  report = JSON.parse(out)
+  violations = report["violations"]
+  targeted = report["targeted_nodes"]
+  caveat = targeted.zero? ? " (vacuous — no nodes targeted)" : ""
+  caveat += " [#{report['context_tolerance']}]" if report["context_tolerance"]
+
+  if report["conforms"]
+    $stdout.puts "PASS #{rel}: #{targeted} targeted nodes, 0 violations#{caveat}"
+  else
+    failures += 1
+    $stdout.puts "FAIL #{rel}: #{targeted} targeted nodes, #{violations.length} violations"
+    violations.first(options[:max_details]).each do |v|
+      $stdout.puts "  - focus #{v['focus_node']}"
+      $stdout.puts "      path: #{v['path'] || '(none)'}"
+      $stdout.puts "      #{v['component']}: #{v['message']}"
+      $stdout.puts "      value: #{v['value'].inspect}" if v["value"]
+    end
+    hidden = violations.length - options[:max_details]
+    $stdout.puts "  … #{hidden} more (raise --max-details)" if hidden.positive?
+  end
+end
+
+if failures.zero?
+  $stdout.puts "OK: #{files.length} file(s) validated, all conform"
+  exit 0
+else
+  $stderr.puts "FAIL: #{failures} of #{files.length} file(s) have violations or errors"
+  exit 1
+end
