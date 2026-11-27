@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# SHACL shapes generator (CLI).
+#
+# Generates ontologies/shapes/glossarist.shacl.ttl from the OWL ontology
+# (ontologies/glossarist.ttl), the SHACL constraint model
+# (ontologies/shapes/shacl-model.yml), and the canonical prefix bindings
+# (ontologies/prefixes.ttl). Output is committed for review; CI runs
+# --check to catch drift.
+#
+# Usage:
+#   bundle exec exe/generate-shacl
+#   bundle exec exe/generate-shacl --check  # fail on drift
+
+require "optparse"
+require "glossarist/concept_model"
+
+options = { check_mode: false }
+OptionParser.new do |opts|
+  opts.banner = "Usage: generate-shacl [options]"
+  opts.on("--check", "Fail if generated output drifts from committed") do
+    options[:check_mode] = true
+  end
+end.parse!
+
+exit Glossarist::ConceptModel::ShaclGenerator.new(**options).run

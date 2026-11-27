@@ -9,6 +9,7 @@ module Glossarist
     autoload :Multiplicity,        "glossarist/concept_model/multiplicity"
     autoload :ConceptIndex,        "glossarist/concept_model/concept_index"
     autoload :SchemaTypeGenerator, "glossarist/concept_model/schema_type_generator"
+    autoload :ShaclGenerator,      "glossarist/concept_model/shacl_generator"
     autoload :Validators,          "glossarist/concept_model/validators"
   end
 end

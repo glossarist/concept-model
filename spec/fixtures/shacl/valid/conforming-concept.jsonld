@@ -1,0 +1,25 @@
+{
+  "@context": {
+    "gloss": "https://www.glossarist.org/ontologies/",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "skosxl": "http://www.w3.org/2008/05/skos-xl#"
+  },
+  "@graph": [
+    {
+      "@id": "https://example.org/concepts/1",
+      "@type": ["gloss:Concept", "skos:Concept"],
+      "gloss:identifier": "1",
+      "gloss:hasLocalization": { "@id": "https://example.org/concepts/1/eng" }
+    },
+    {
+      "@id": "https://example.org/concepts/1/eng",
+      "@type": ["gloss:LocalizedConcept", "skos:Concept"],
+      "gloss:isLocalizationOf": { "@id": "https://example.org/concepts/1" },
+      "gloss:language": "eng",
+      "gloss:hasEntryStatus": {
+        "@id": "https://www.glossarist.org/ontologies/entstatus/preferred",
+        "@type": "skos:Concept"
+      }
+    }
+  ]
+}
