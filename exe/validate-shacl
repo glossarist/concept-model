@@ -31,6 +31,9 @@ OptionParser.new do |opts|
   opts.on("--max-details N", Integer, "Max violations detailed per file (default 10)") do |v|
     options[:max_details] = v
   end
+  opts.on("--recursive", "Descend into subdirectories (default: <register>/<register>.jsonld)") do
+    options[:recursive] = true
+  end
   opts.on("--shapes PATH", "Shapes file (default ontologies/shapes/glossarist.shacl.ttl)") do |v|
     options[:shapes] = v
   end
@@ -57,7 +60,14 @@ if probe_status.exitstatus != 4
   exit 2
 end
 
-files = Dir.glob(File.join(data_dir, "**", "*.jsonld")).sort
+# Default scope: aggregates at depth 1 (<file>.jsonld) and depth 2
+# (<register>/<register>.jsonld); --recursive descends further
+# (per-concept interchange files etc.).
+files = if options[:recursive]
+  Dir.glob(File.join(data_dir, "**", "*.jsonld")).sort
+else
+  Dir.glob(File.join(data_dir, "{*,*/*}.jsonld")).sort
+end
 if files.empty?
   abort "FAIL: no .jsonld files under #{data_dir}"
 end
@@ -77,6 +87,7 @@ files.each do |file|
   violations = report["violations"]
   targeted = report["targeted_nodes"]
   caveat = targeted.zero? ? " (vacuous — no nodes targeted)" : ""
+  caveat += " [#{report['context_tolerance']}]" if report["context_tolerance"]
 
   if report["conforms"]
     $stdout.puts "PASS #{rel}: #{targeted} targeted nodes, 0 violations#{caveat}"

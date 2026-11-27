@@ -47,10 +47,7 @@ def main():
     except Exception as e:  # noqa: BLE001
         err(f"cannot parse shapes {shapes_path}: {e}", 4)
 
-    try:
-        data = Graph().parse(data_path, format="json-ld")
-    except Exception as e:  # noqa: BLE001
-        err(f"cannot parse data {data_path} as JSON-LD: {e}", 4)
+    data, tolerance = load_data(data_path)
 
     # Targeted-node census: how many data nodes do the shapes actually
     # reach? A conformant run with zero targeted nodes is a vacuous pass
@@ -89,8 +86,66 @@ def main():
         "conforms": bool(conforms),
         "targeted_nodes": len(targeted),
         "data_triples": len(data),
+        "context_tolerance": tolerance,
         "violations": violations,
     }))
+
+
+def load_data(data_path):
+    """Parses JSON-LD data; tolerates the rdflib parser crash on a
+    `"@language": {"@container": "@language"}` context term.
+
+    rdflib 7.6.0 raises TypeError when the context defines @language as
+    a term (seen in OIML aggregates). The fallback drops that context
+    entry and retries — but ONLY when no node body in the document uses
+    an "@language" key (verified first), making the retry semantically
+    inert. The applied tolerance is reported as `context_tolerance`.
+    """
+    import json as _json
+
+    from rdflib import Graph
+
+    def raw_doc():
+        with open(data_path, encoding="utf-8") as f:
+            return _json.load(f)
+
+    try:
+        return Graph().parse(data_path, format="json-ld"), None
+    except TypeError:
+        pass  # context "@language" term bug → tolerant retry below
+    except ValueError as e:
+        # orjson/json.JSONDecodeError — invalid or empty JSON
+        err(f"cannot parse data {data_path} as JSON-LD: {e}", 4)
+
+    try:
+        doc = raw_doc()
+    except Exception as e:  # noqa: BLE001
+        err(f"cannot read data {data_path} as JSON: {e}", 4)
+
+    def uses_language_key(obj):
+        if isinstance(obj, dict):
+            if "@language" in obj:
+                return True
+            return any(uses_language_key(v) for v in obj.values())
+        if isinstance(obj, list):
+            return any(uses_language_key(v) for v in obj)
+        return False
+
+    body = doc.get("@graph", doc)
+    if uses_language_key(body):
+        err(f"{data_path}: rdflib JSON-LD parser failed and the document "
+            f"actually uses an @language key, so the context workaround "
+            f"is not applicable", 4)
+
+    context = doc.get("@context")
+    if isinstance(context, dict):
+        context.pop("@language", None)
+    try:
+        graph = Graph().parse(data=_json.dumps(doc), format="json-ld")
+    except Exception as e:  # noqa: BLE001
+        err(f"cannot parse data {data_path} as JSON-LD: {e}", 4)
+    return graph, ("dropped unused @language container term from context "
+                   "(rdflib JSON-LD parser TypeError)")
 
 
 if __name__ == "__main__":
