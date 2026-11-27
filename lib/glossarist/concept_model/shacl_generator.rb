@@ -2,6 +2,7 @@
 
 require "rdf/turtle"
 require "yaml"
+require "set"
 
 module Glossarist
   module ConceptModel
@@ -144,10 +145,9 @@ module Glossarist
         decl = @model.fetch("shapes").fetch(name) do
           raise KeyError, "shacl-model.yml: no declaration for shape #{name}"
         end
-        @current_shape = name
         declared = declared_paths(decl)
         derived = derive_paths(decl, declared)
-        omitted = _omissions(decl)
+        omitted = omission_map(decl)
 
         Shape.new(
           name: name,
@@ -169,7 +169,7 @@ module Glossarist
 
       # omissions: {path => reason} — OWL properties with this shape's
       # target class in rdfs:domain that are intentionally NOT shaped.
-      def _omissions(decl)
+      def omission_map(decl)
         (decl["omit"] || {}).to_h { |k, v| [k.to_s, v] }
       end
 
